@@ -4,25 +4,44 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 type PostPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
 
-async function getPostBySlug(slug: string) {
+// async function getPostBySlug(slug: string) {
+//   const supabase = await createClient();
+
+//   const { data: post } = await supabase
+//     .from("posts")
+//     .select("id, title, slug, excerpt, content, published_at, created_at")
+//     .eq("slug", slug)
+//     .eq("status", "published")
+//     .single();
+
+//   return post;
+// }
+async function getPostBySlug(rawSlug: string) {
+  const slug = decodeURIComponent(rawSlug).trim();
   const supabase = await createClient();
 
-  const { data: post } = await supabase
+  // console.log("rawSlug =", rawSlug);
+  // console.log("decodedSlug =", slug);
+
+  const { data: post, error } = await supabase
     .from("posts")
-    .select("id, title, slug, excerpt, content, published_at, created_at")
-    .eq("slug", slug)
+    .select("id, title, slug, excerpt, content, published_at, created_at, status")
     .eq("status", "published")
+    .eq("slug", slug)
     .single();
+
+  // console.log("query error =", error);
+  // console.log("post =", post);
 
   return post;
 }
-
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!
 
@@ -130,7 +149,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 
 
         <div className="prose prose-lg max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
             {post.content}
           </ReactMarkdown>
         </div>

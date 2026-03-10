@@ -8,7 +8,8 @@ function slugify(text: string) {
     .toLowerCase()
     .trim()
     .replace(/\s+/g, "-")
-    .replace(/[^\w-]+/g, "");
+    .replace(/[^\w\u4e00-\u9fa5-]+/g, "")
+    .replace(/--+/g, "-");
 }
 
 export default function CreatePostForm() {
@@ -38,6 +39,12 @@ export default function CreatePostForm() {
     }
 
     const slug = slugify(title);
+
+    if (!slug) {
+      setMessage("Title cannot generate slug");
+      setLoading(false);
+      return;
+    }
 
     const { error } = await supabase.from("posts").insert({
       title,
