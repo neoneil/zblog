@@ -82,7 +82,18 @@ export default function CreatePostForm() {
 
       <textarea
         className="w-full rounded border px-3 py-2"
-        placeholder="Content"
+        // placeholder="Content"
+        placeholder={`# Title
+
+        ## Subtitle
+
+        Write your markdown here...
+
+        - item 1
+        - item 2
+
+        **bold**
+        `}
         value={content}
         onChange={(e) => setContent(e.target.value)}
         rows={12}

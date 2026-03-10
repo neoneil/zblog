@@ -2,7 +2,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 type PostPageProps = {
   params: Promise<{
     slug: string;
@@ -41,7 +42,7 @@ export async function generateMetadata(
 
   const description =
     post.excerpt ||
-    post.content.slice(0,160) ||
+    post.content.slice(0, 160) ||
     "Read this article on My Blog."
 
   const url = `${siteUrl}/posts/${post.slug}`
@@ -127,9 +128,16 @@ export default async function PostDetailPage({ params }: PostPageProps) {
           <p className="mb-6 text-lg text-gray-700">{post.excerpt}</p>
         )}
 
-        <div className="prose max-w-none whitespace-pre-wrap">
-          {post.content}
+
+        <div className="prose prose-lg max-w-none">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {post.content}
+          </ReactMarkdown>
         </div>
+
+        {/* <div className="prose max-w-none whitespace-pre-wrap">
+          {post.content}
+        </div> */}
       </article>
     </main>
   );
