@@ -25,7 +25,10 @@ export default async function Navbar() {
   const canManagePosts = role === "admin" || role === "editor";
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b backdrop-blur" style={{
+      background: "var(--navbar-bg)",
+      borderColor: "var(--border)",
+    }}>
       <Container>
         <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 py-3">
           <Link href="/" className="text-lg font-bold tracking-tight sm:text-xl">
@@ -42,7 +45,7 @@ export default async function Navbar() {
 
             <Link
               href="/posts"
-              className="rounded-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black"
+              className="nav-link"
             >
               Posts
             </Link>

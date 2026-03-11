@@ -25,7 +25,7 @@ export default async function HomePage() {
 
   const { data: posts } = await supabase
     .from("posts")
-    .select("title, slug, excerpt, published_at")
+    .select("title, slug, excerpt, published_at, cover_image")
     .eq("status", "published")
     .order("published_at", { ascending: false })
     .limit(6);
@@ -51,7 +51,7 @@ export default async function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/posts"
-                className="rounded-full bg-black px-5 py-3 text-sm font-medium text-white hover:bg-gray-800"
+                className="btn-primary"
               >
                 Browse Posts
               </Link>
@@ -59,7 +59,7 @@ export default async function HomePage() {
               {canManagePosts && (
                 <Link
                   href="/admin/posts/new"
-                  className="rounded-full border px-5 py-3 text-sm font-medium hover:bg-gray-50"
+                  className="btn-secondary"
                 >
                   Write Post
                 </Link>
@@ -87,8 +87,18 @@ export default async function HomePage() {
               {posts.map((post) => (
                 <article
                   key={post.slug}
-                  className="rounded-2xl border bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-sm sm:p-6"
+                  className="card overflow-hidden"
                 >
+
+                  {post.cover_image && (
+                    <Link href={`/posts/${post.slug}`}>
+                      <img
+                        src={post.cover_image}
+                        alt={post.title}
+                        className="aspect-video w-full object-cover"
+                      />
+                    </Link>
+                  )}
                   <p className="mb-3 text-sm text-gray-500">
                     {post.published_at
                       ? new Date(post.published_at).toLocaleDateString()

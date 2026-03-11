@@ -21,7 +21,7 @@ export default function CreatePostForm() {
   const [status, setStatus] = useState<"draft" | "published">("draft");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [cover, setCover] = useState<File | null>(null);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -46,6 +46,29 @@ export default function CreatePostForm() {
       return;
     }
 
+    let coverUrl = null;
+
+    if (cover) {
+      const cleanName = cover.name.replace(/\s+/g, "-");
+      const filename = `${Date.now()}-${cleanName}`;
+
+      const { error } = await supabase.storage
+        .from("images")
+        .upload(filename, cover, {
+          contentType: cover.type,
+        });
+
+      if (!error) {
+        const { data } = supabase.storage
+          .from("images")
+          .getPublicUrl(filename);
+
+        coverUrl = data.publicUrl;
+      }
+    }
+
+
+
     const { error } = await supabase.from("posts").insert({
       title,
       slug,
@@ -53,6 +76,7 @@ export default function CreatePostForm() {
       content,
       status,
       author_id: user.id,
+      cover_image: coverUrl,
       published_at: status === "published" ? new Date().toISOString() : null,
     });
 
@@ -105,6 +129,13 @@ export default function CreatePostForm() {
         onChange={(e) => setContent(e.target.value)}
         rows={12}
       />
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setCover(e.target.files?.[0] ?? null)}
+      />
+
 
       <select
         className="rounded border px-3 py-2"
