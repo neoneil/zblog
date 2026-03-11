@@ -11,18 +11,6 @@ type PostPageProps = {
   }>;
 };
 
-// async function getPostBySlug(slug: string) {
-//   const supabase = await createClient();
-
-//   const { data: post } = await supabase
-//     .from("posts")
-//     .select("id, title, slug, excerpt, content, published_at, created_at")
-//     .eq("slug", slug)
-//     .eq("status", "published")
-//     .single();
-
-//   return post;
-// }
 async function getPostBySlug(rawSlug: string) {
   const slug = decodeURIComponent(rawSlug).trim();
   const supabase = await createClient();
