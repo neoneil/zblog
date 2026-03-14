@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import type { DrawnTarotCard } from "@/types/tarot";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // 暂时还没提供
+  apiKey: process.env.OPENAI_API_KEY, 
 });
 
 export async function POST(req: Request) {
