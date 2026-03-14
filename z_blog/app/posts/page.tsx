@@ -17,7 +17,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
   let query = supabase
     .from("posts")
-    .select("id, title, slug, excerpt, published_at, created_at")
+    .select("id, title, slug, excerpt, cover_image, published_at, created_at")
     .eq("status", "published")
     .order("published_at", { ascending: false });
 
@@ -67,7 +67,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
             {posts.map((post) => (
               <article
                 key={post.id}
-                className="rounded-2xl border bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-sm sm:p-6"
+                className="rounded-2xl border p-5 transition hover:-translate-y-0.5 hover:shadow-sm sm:p-6"
               >
                 <h2 className="mb-2 text-xl font-semibold sm:text-2xl">
                   <Link href={`/posts/${post.slug}`} className="hover:underline">
@@ -80,7 +80,15 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                     ? new Date(post.published_at).toLocaleDateString()
                     : new Date(post.created_at).toLocaleDateString()}
                 </p>
-
+                {post.cover_image && (
+                  <Link href={`/posts/${post.slug}`}>
+                    <img
+                      src={post.cover_image}
+                      alt={post.title}
+                      className="aspect-video w-full object-cover rounded-sm mb-6"
+                    />
+                  </Link>
+                )}
                 {post.excerpt && (
                   <p className="mb-4 text-gray-700">{post.excerpt}</p>
                 )}

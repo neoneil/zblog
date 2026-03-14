@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import Link from "next/link";
 type PostPageProps = {
   params: Promise<{
     slug: string;
@@ -20,7 +21,7 @@ async function getPostBySlug(rawSlug: string) {
 
   const { data: post, error } = await supabase
     .from("posts")
-    .select("id, title, slug, excerpt, content, published_at, created_at, status")
+    .select("id, title, slug, excerpt, content, cover_image, published_at, created_at, status")
     .eq("status", "published")
     .eq("slug", slug)
     .single();
@@ -130,7 +131,15 @@ export default async function PostDetailPage({ params }: PostPageProps) {
             ? new Date(post.published_at).toLocaleDateString()
             : new Date(post.created_at).toLocaleDateString()}
         </p>
-
+            {post.cover_image && (
+                    <Link href={`/posts/${post.slug}`}>
+                      <img
+                        src={post.cover_image}
+                        alt={post.title}
+                        className="aspect-video w-full object-cover rounded-sm mb-6"
+                      />
+                    </Link>
+                  )}
         {post.excerpt && (
           <p className="mb-6 text-lg text-gray-700">{post.excerpt}</p>
         )}

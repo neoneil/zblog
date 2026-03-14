@@ -38,11 +38,15 @@ export default async function Navbar() {
           <nav className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
             <Link
               href="/"
-              className="rounded-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black"
+              className="nav-link"
             >
               Home
             </Link>
-
+            <Link 
+              href="/tarot" 
+              className="nav-link">
+              Tarot
+            </Link>
             <Link
               href="/posts"
               className="nav-link"
@@ -55,7 +59,7 @@ export default async function Navbar() {
                 {canManagePosts && (
                   <Link
                     href="/admin/posts"
-                    className="rounded-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-black"
+                    className="nav-link"
                   >
                     Admin
                   </Link>

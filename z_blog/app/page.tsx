@@ -95,7 +95,7 @@ export default async function HomePage() {
                       <img
                         src={post.cover_image}
                         alt={post.title}
-                        className="aspect-video w-full object-cover"
+                        className="aspect-video w-full object-cover rounded-sm"
                       />
                     </Link>
                   )}
