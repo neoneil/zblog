@@ -3,11 +3,13 @@ import OpenAI from "openai";
 import type { DrawnTarotCard } from "@/types/tarot";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, 
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function POST(req: Request) {
   try {
+    console.log("OPENAI_API_KEY exists:", !!process.env.OPENAI_API_KEY);
+
     const body = await req.json();
     const question: string = body.question ?? "";
     const cards: DrawnTarotCard[] = body.cards ?? [];
@@ -69,7 +71,7 @@ ${cardsText}
 `;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
+      model: "gpt-4o-mini",
       temperature: 0.8,
       messages: [
         {
@@ -83,13 +85,22 @@ ${cardsText}
       ],
     });
 
-    const reading = completion.choices[0]?.message?.content ?? "暂时没有生成解读。";
+    const reading =
+      completion.choices[0]?.message?.content ?? "暂时没有生成解读。";
 
     return NextResponse.json({ reading });
-  } catch (error) {
-    console.error("tarot-reading error:", error);
+  } catch (error: any) {
+    console.error("tarot-reading full error:", error);
+    console.error("message:", error?.message);
+    console.error("status:", error?.status);
+    console.error("code:", error?.code);
+    console.error("type:", error?.type);
+    console.error("response data:", error?.response?.data);
+
     return NextResponse.json(
-      { error: "Failed to generate tarot reading." },
+      {
+        error: error?.message || "Failed to generate tarot reading.",
+      },
       { status: 500 }
     );
   }

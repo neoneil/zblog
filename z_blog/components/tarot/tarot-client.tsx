@@ -42,14 +42,18 @@ export default function TarotClient() {
       setReading(data.reading ?? "");
     } catch (error) {
       console.error(error);
-      setReading("解读生成失败，请稍后再试。");
+      setReading(
+        error instanceof Error
+          ? `解读生成失败：${error.message}`
+          : "解读生成失败，请稍后再试。"
+      );
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(110,80,180,0.32),_transparent_28%),linear-gradient(180deg,_#0a0813_0%,_#120d22_55%,_#0b0815_100%)] text-white">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(110,80,180,0.32),transparent_28%),linear-gradient(180deg,#0a0813_0%,#120d22_55%,#0b0815_100%)] text-white">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="mb-8 max-w-3xl">
           <p className="mb-2 text-sm uppercase tracking-[0.35em] text-purple-200/70">
@@ -73,7 +77,7 @@ export default function TarotClient() {
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="例如：我接下来三个月的感情发展会怎样？"
-                className="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-purple-200/40 focus:border-purple-300/40"
+                className="min-h-30 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none placeholder:text-purple-200/40 focus:border-purple-300/40"
               />
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
@@ -108,11 +112,11 @@ export default function TarotClient() {
             </div>
 
             {drawnCards.length === 0 ? (
-              <div className="flex min-h-[420px] items-center justify-center rounded-3xl border border-dashed border-white/10 text-center text-purple-100/60">
+              <div className="flex min-h-105 items-center justify-center rounded-3xl border border-dashed border-white/10 text-center text-purple-100/60">
                 点击“抽三张牌”后，牌会显示在这里
               </div>
             ) : (
-              <div className="flex min-h-[420px] flex-wrap items-center justify-center gap-4">
+              <div className="flex min-h-105 flex-wrap items-center justify-center gap-4">
                 {drawnCards.map((card, index) => (
                   <TarotCard key={`${card.id}-${card.position}`} card={card} index={index} />
                 ))}

@@ -8,7 +8,7 @@ type TarotDeckProps = {
 
 export default function TarotDeck({ disabled }: TarotDeckProps) {
   return (
-    <div className="relative mx-auto h-[420px] w-[180px]">
+    <div className="relative mx-auto h-105 w-45">
       {Array.from({ length: 12 }).map((_, index) => (
         <motion.div
           key={index}
@@ -23,10 +23,10 @@ export default function TarotDeck({ disabled }: TarotDeckProps) {
             duration: 0.45,
             delay: index * 0.03,
           }}
-          className="absolute left-0 top-0 h-[250px] w-[170px] rounded-[24px] border border-white/10 bg-[linear-gradient(160deg,_#24193d,_#130f24)] shadow-lg"
+          className="absolute left-0 top-0 h-62.5 w-42.5 rounded-3xl border border-white/10 bg-[linear-gradient(160deg,#24193d,#130f24)] shadow-lg"
           style={{ zIndex: 30 - index }}
         >
-          <div className="flex h-full items-center justify-center rounded-[24px] border border-yellow-300/10">
+          <div className="flex h-full items-center justify-center rounded-3xl border border-yellow-300/10">
             <div className="rounded-full border border-yellow-300/20 px-4 py-2 text-xs tracking-[0.35em] text-yellow-100/70 uppercase">
               Tarot
             </div>
