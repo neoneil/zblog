@@ -27,10 +27,10 @@ export default function SignupForm() {
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
-console.log("SIGNUP DATA:", data);
-console.log("SIGNUP ERROR:", error);
+    console.log("SIGNUP DATA:", data);
+    console.log("SIGNUP ERROR:", error);
     if (error) {
-console.error("SIGNUP FAILED:", error);
+      console.error("SIGNUP FAILED:", error);
       setMessage(error.message);
       setLoading(false);
       return;
@@ -48,6 +48,11 @@ console.error("SIGNUP FAILED:", error);
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
+
+        // queryParams: {
+        //   prompt: "select_account",
+        // },
+
       },
     });
 
