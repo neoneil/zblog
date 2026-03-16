@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/auth/logout-button";
+import Image from "next/image";
 import Container from "./container";
 
 export default async function Navbar() {
@@ -23,6 +24,21 @@ export default async function Navbar() {
   }
 
   const canManagePosts = role === "admin" || role === "editor";
+
+
+// 显示google 用户信息 
+
+ const name =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    "User";
+
+  const email = user?.email || "";
+
+  const avatar =
+    user?.user_metadata?.avatar_url ||
+    user?.user_metadata?.picture ||
+    "/default-avatar.png";
 
   return (
     <header className="sticky top-0 z-50 border-b backdrop-blur" style={{
@@ -65,9 +81,28 @@ export default async function Navbar() {
                   </Link>
                 )}
 
-                <span className="hidden text-sm text-gray-400 lg:inline">
+                {/* <span className="hidden text-sm text-gray-400 lg:inline">
                   {user.email}
-                </span>
+                </span> */}
+
+                 <div className="flex items-center gap-2 rounded-full px-2 py-1">
+                  <Image
+                    src={avatar}
+                    alt={name}
+                    width={36}
+                    height={36}
+                    className="h-9 w-9 rounded-full object-cover"
+                  />
+
+                  <div className="hidden lg:flex flex-col leading-tight">
+                    <span className="text-sm font-medium text-(--text)">
+                      {name}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {email}
+                    </span>
+                  </div>
+                </div>
 
                 <LogoutButton />
               </>
