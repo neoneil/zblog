@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/site/navbar";
 import Footer from "@/components/site/footer";
-
+import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   title: {
     default: "My Blog",
@@ -27,6 +27,7 @@ export default function RootLayout({
           <div className="flex-1">{children}</div>
           <Footer />
         </div>
+        <Analytics />
       </body>
     </html>
   );
