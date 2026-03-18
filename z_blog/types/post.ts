@@ -1,5 +1,5 @@
 export type PostStatus = "draft" | "published";
-
+export type PostCategory = "Understanding Children" | "Teaching Practice" | "Family Education" | "Teacher Reflection";
 export interface Post {
   id: string;
   title: string;
@@ -12,4 +12,5 @@ export interface Post {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+  category: PostCategory;
 }

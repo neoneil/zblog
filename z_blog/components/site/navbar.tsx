@@ -48,7 +48,7 @@ export default async function Navbar() {
       <Container>
         <div className="flex min-h-16 flex-wrap items-center justify-between gap-3 py-3">
           <Link href="/" className="text-lg font-bold tracking-tight sm:text-xl">
-            My Blog
+            Cosmic Childhood
           </Link>
 
           <nav className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
@@ -58,7 +58,25 @@ export default async function Navbar() {
             >
               Home
             </Link>
-            <Link 
+            <Link
+              href="/"
+              className="nav-link"
+            >
+              Main categories
+            </Link>
+            <Link
+              href="/"
+              className="nav-link"
+            >
+              Resources
+            </Link>
+            <Link
+              href="/"
+              className="nav-link"
+            >
+              About-us
+            </Link>
+            {/* <Link 
               href="/tarot" 
               className="nav-link">
               Tarot
@@ -68,7 +86,7 @@ export default async function Navbar() {
               className="nav-link"
             >
               Posts
-            </Link>
+            </Link> */}
 
             {user ? (
               <>

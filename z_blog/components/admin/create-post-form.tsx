@@ -22,6 +22,7 @@ export default function CreatePostForm() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [cover, setCover] = useState<File | null>(null);
+  const [category, setCategory] = useState("");
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -78,6 +79,7 @@ export default function CreatePostForm() {
       author_id: user.id,
       cover_image: coverUrl,
       published_at: status === "published" ? new Date().toISOString() : null,
+      category
     });
 
     if (error) {
@@ -91,6 +93,7 @@ export default function CreatePostForm() {
     setExcerpt("");
     setContent("");
     setStatus("draft");
+    setCategory("");
     setLoading(false);
   }
 
@@ -135,7 +138,17 @@ export default function CreatePostForm() {
         accept="image/*"
         onChange={(e) => setCover(e.target.files?.[0] ?? null)}
       />
-
+      <select
+        name="category"
+        value={category}
+        onChange={(e) => setCategory(e.target.value as "Understanding Children" | "Teaching Practice" | "Family Education" | "Teacher Reflection")}
+        className="border rounded px-3 py-2"
+      >
+        <option value="Understanding Children">Understanding Children</option>
+        <option value="Teaching Practice">Teaching Practice</option>
+        <option value="Family Education">Family Education</option>
+        <option value="Teacher Reflection">Teacher Reflection</option>
+      </select>
 
       <select
         className="rounded border px-3 py-2"
