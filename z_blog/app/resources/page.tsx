@@ -63,7 +63,16 @@ export default function ResourcesPage() {
                     title="Tarot"
                     allowFullScreen
                   /> */}
-                  <iframe width="356" height="634" src="https://www.youtube.com/embed/0_y6wD461BI" title="77" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  <iframe
+                    width="356"
+                    height="634"
+                    src="https://www.youtube.com/embed/0_y6wD461BI"
+                    title="77"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  ></iframe>
                 </div>
               </div>
             </div>

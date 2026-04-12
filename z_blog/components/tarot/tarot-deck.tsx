@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -106,50 +105,3 @@ export default function TarotDeck({
     </div>
   );
 }
-
-// "use client";
-
-// import Image from "next/image";
-// import { motion } from "framer-motion";
-// import { tarotCardBack } from "@/lib/tarot/full-deck";
-
-// type TarotDeckProps = {
-//   disabled?: boolean;
-// };
-
-// export default function TarotDeck({ disabled }: TarotDeckProps) {
-//   return (
-//     <div className="relative mx-auto h-[430px] w-[180px]">
-//       {Array.from({ length: 12 }).map((_, index) => (
-//         <motion.div
-//           key={index}
-//           initial={{ opacity: 0, x: 20 }}
-//           animate={{
-//             opacity: 1,
-//             x: 0,
-//             rotate: -10 + index * 1.6,
-//             y: index * 4,
-//           }}
-//           transition={{
-//             duration: 0.45,
-//             delay: index * 0.03,
-//           }}
-//           className="absolute left-0 top-0 h-[260px] w-[170px] overflow-hidden rounded-3xl border border-white/10 shadow-lg"
-//           style={{ zIndex: 30 - index }}
-//         >
-//           <Image
-//             src={encodeURI(tarotCardBack)}
-//             alt="Tarot card back"
-//             fill
-//             sizes="170px"
-//             className="object-cover"
-//           />
-//         </motion.div>
-//       ))}
-
-//       <div className="absolute -bottom-8 left-1/2 w-full -translate-x-1/2 text-center text-sm text-purple-100/70">
-//         {disabled ? "正在抽牌..." : "牌堆"}
-//       </div>
-//     </div>
-//   );
-// }
