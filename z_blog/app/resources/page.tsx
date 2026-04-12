@@ -27,7 +27,7 @@ export default function ResourcesPage() {
       <div className="fixed inset-0 -z-10 bg-black/60" />
 
       {/* 渐变 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-slate-950/45 to-black/70" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/55 via-slate-950/45 to-black/70" />
 
       {/* 光感 */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14),transparent_34%)]" />
@@ -57,12 +57,13 @@ export default function ResourcesPage() {
             <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/8 shadow-2xl backdrop-blur-md">
               <div className="p-6">
                 <div className="aspect-video w-full overflow-hidden rounded-2xl border border-white/10">
-                  <iframe
+                  {/* <iframe
                     className="h-full w-full"
                     src="https://www.youtube.com/embed/TbQSHxK2Gjg"
                     title="Tarot"
                     allowFullScreen
-                  />
+                  /> */}
+                  <iframe width="356" height="634" src="https://www.youtube.com/embed/0_y6wD461BI" title="77" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
               </div>
             </div>

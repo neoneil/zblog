@@ -1,10 +1,14 @@
+export type TarotArcana = "major" | "minor";
+export type TarotSuit = "cups" | "wands" | "swords" | "pentacles";
 export type TarotPosition = "past" | "present" | "future";
 
 export type TarotCard = {
-  id: number;
+  id: string;
   name: string;
   nameCn: string;
-  arcana: "major";
+  arcana: TarotArcana;
+  suit?: TarotSuit;
+  imageSrc: string;
   meaningUp: string[];
   meaningReversed: string[];
 };
