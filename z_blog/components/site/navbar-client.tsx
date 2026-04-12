@@ -44,7 +44,7 @@ export default function NavbarClient({
     "rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white";
 
   return (
-    <header className="sticky top-0 z-50 bg-transparent">
+    <header className=" top-0 z-50 bg-transparent">
       <Container>
         <div className="flex min-h-16 items-center justify-between gap-4 py-3">
           <Link
@@ -105,7 +105,7 @@ export default function NavbarClient({
             </Link>
 
             <Link href="/tarot" className={navLinkClass}>
-              Tarot
+              Tarot AI
             </Link>
 
             {user ? (
@@ -195,7 +195,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                Tarot
+                Tarot AI
               </Link>
 
               {user ? (
