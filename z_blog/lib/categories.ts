@@ -2,6 +2,8 @@ export type CategoryItem = {
   slug: string;
   title: string;
   description: string;
+  backgroundImage: string;
+  buttonVariant: "green" | "gold" | "blue" | "rose";
 };
 
 export const categories: CategoryItem[] = [
@@ -9,24 +11,32 @@ export const categories: CategoryItem[] = [
     slug: "understanding-children",
     title: "Understanding Children",
     description:
-      "Explore how children think, feel, grow, and make sense of the world around them.",
+      "Why play is essential for early childhood development and how to better understand children’s emotional needs.",
+    backgroundImage: "/category-cards/understanding-bg.png",
+    buttonVariant: "green",
   },
   {
-    slug: "learning-and-education",
-    title: "Learning and Education",
+    slug: "teaching-practice",
+    title: "Teaching Practice",
     description:
-      "Ideas, methods, and reflections on teaching, learning, and meaningful educational practice.",
+      "Reflections on play-based learning, classroom strategies, and designing meaningful learning experiences.",
+    backgroundImage: "/category-cards/teaching-bg.png",
+    buttonVariant: "gold",
   },
   {
-    slug: "emotional-wisdom",
-    title: "Emotional Wisdom",
+    slug: "family-education",
+    title: "Family Education",
     description:
-      "Thoughts on emotions, empathy, resilience, inner growth, and emotional understanding.",
+      "Ideas on how parents can support learning at home and build positive parent-teacher partnerships.",
+    backgroundImage: "/category-cards/family-bg.png",
+    buttonVariant: "blue",
   },
   {
-    slug: "cosmic-imagination",
-    title: "Cosmic Imagination",
+    slug: "teacher-reflection",
+    title: "Teacher Reflection",
     description:
-      "A space for wonder, creativity, storytelling, and imaginative ways of seeing life and childhood.",
+      "A space for reflective practice, mindful self-care, and cultivating patience and growth in childcare.",
+    backgroundImage: "/category-cards/reflection-bg.png",
+    buttonVariant: "rose",
   },
 ];

@@ -3,7 +3,8 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
-
+import Circle from "@/components/Circle";
+import Astroplate from "@/components/Astroplate";
 export default async function HomePage() {
   const supabase = await createClient();
 
@@ -61,7 +62,7 @@ export default async function HomePage() {
       <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-size-[48px_48px]" />
 
       {/* Content */}
-      <div className="relative z-10 py-10 sm:py-14 lg:py-16">
+      <div className="relative z-10 pt-4 pb-10 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-14">
         <Container>
           {/* HERO */}
           <section className="mb-14 sm:mb-16">
@@ -73,7 +74,7 @@ export default async function HomePage() {
                     Cosmic Childhood
                   </p>
 
-                  <h1 className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl lg:text-[4rem] lg:leading-[1.05]">
+                  <h1 className="max-w-2xl text-xl font-semibold leading-tight tracking-tight text-white sm:text-2xl lg:text-4xl lg:leading-tight">
                     Raising Children with
                     <span className="block text-white/95">
                       Wisdom, Nature and Stars
@@ -94,33 +95,31 @@ export default async function HomePage() {
                     </Link>
 
                     <Link
-                      href="/posts"
+                      href="/categories"
                       className="inline-flex items-center rounded-2xl border border-white/20 bg-[#f2dfca]/90 px-6 py-3 text-sm font-semibold text-[#5a4236] shadow-lg shadow-black/10 transition hover:scale-[1.02] hover:bg-[#f5e7d6]"
                     >
-                      Explore Articles
+                      Browse Categories
                     </Link>
-
-                    {canManagePosts && (
-                      <Link
-                        href="/admin/posts/new"
-                        className="inline-flex items-center rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
-                      >
-                        Write Post
-                      </Link>
-                    )}
                   </div>
                 </div>
 
                 {/* Right image */}
-                <div className="relative z-10">
-                  <div className="relative mx-auto aspect-[5/4] w-full max-w-[480px] overflow-hidden">
+                <div className="relative z-10 -ml-8 lg:-ml-40">
+                  <div className="relative mx-auto aspect-[3/2] w-full max-w-[500px] overflow-hidden">
                     <Image
-                      src="/hero-family.png"
+                      src="/heromom.png"
+                      alt="family"
+                      width={620}
+                      height={900}
+                      className="hero-fade-image h-auto w-full object-contain drop-shadow-2xl"
+                    />
+                    {/* <Image
+                      src="/heromom.png"
                       alt="Mother and two children learning together"
                       fill
                       priority
                       className="object-contain object-bottom"
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>
@@ -128,6 +127,12 @@ export default async function HomePage() {
           </section>
 
           <CategoriesSection />
+          <section className="w-full py-12">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <Circle />
+              <Astroplate imageSrc="/astroplate.png" />
+            </div>
+          </section>
 
           <section className="rounded-3xl border border-white/10 bg-black/25 p-5 shadow-2xl backdrop-blur-md sm:p-7">
             <div className="mb-6 flex items-center justify-between sm:mb-8">
@@ -199,3 +204,14 @@ export default async function HomePage() {
     </main>
   );
 }
+
+
+
+{/* {canManagePosts && (
+                      <Link
+                        href="/admin/posts/new"
+                        className="inline-flex items-center rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                      >
+                        Write Post
+                      </Link>
+                    )} */}

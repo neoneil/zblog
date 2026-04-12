@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  allowedDevOrigins: [
+    "*.trycloudflare.com",
+    "wallpapers-facing-gender-respiratory.trycloudflare.com",
+  ],
 };
 
 export default nextConfig;
