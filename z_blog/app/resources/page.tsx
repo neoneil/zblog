@@ -13,7 +13,7 @@ export default function ResourcesPage() {
   return (
     <main className="relative min-h-screen overflow-hidden">
       {/* ✅ 核心：fixed 背景 */}
-      <div className="fixed inset-0 -z-10">
+      {/* <div className="fixed inset-0 -z-10">
         <Image
           src="/cosmic-bg.webp"
           alt="Background"
@@ -21,10 +21,10 @@ export default function ResourcesPage() {
           priority
           className="object-cover"
         />
-      </div>
+      </div> */}
 
       {/* 遮罩 */}
-      <div className="fixed inset-0 -z-10 bg-black/60" />
+      {/* <div className="fixed inset-0 -z-10 bg-black/60" /> */}
 
       {/* 渐变 */}
       <div className="absolute inset-0 bg-linear-to-b from-black/55 via-slate-950/45 to-black/70" />
