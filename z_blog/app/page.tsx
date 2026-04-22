@@ -6,7 +6,7 @@ import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
 import Circle from "@/components/Circle";
 import Astroplate from "@/components/Astroplate";
-
+import ParentingLabSection from "@/components/ParentingLabSection";
 export default async function HomePage() {
   const supabase = await createClient();
 
@@ -129,7 +129,7 @@ export default async function HomePage() {
             </div>
           </section>
 
-          <section className="rounded-3xl border border-white/10 bg-black/25 p-5 shadow-2xl backdrop-blur-md sm:p-7">
+          {/* <section className="rounded-3xl border border-white/10 bg-black/25 p-5 shadow-2xl backdrop-blur-md sm:p-7">
             <div className="mb-6 flex items-center justify-between sm:mb-8">
               <h2 className="text-xl font-semibold text-white sm:text-2xl">
                 Latest Posts
@@ -193,7 +193,8 @@ export default async function HomePage() {
                 ))}
               </div>
             )}
-          </section>
+          </section> */}
+          <ParentingLabSection />
         </Container>
       </div>
     </main>

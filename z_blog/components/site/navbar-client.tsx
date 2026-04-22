@@ -100,7 +100,7 @@ export default function NavbarClient({
               Resources
             </Link>
 
-            <Link href="/" className={navLinkClass}>
+            <Link href="/aboutus" className={navLinkClass}>
               About us
             </Link>
 
@@ -183,7 +183,7 @@ export default function NavbarClient({
               </Link>
 
               <Link
-                href="/"
+                href="/aboutus"
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
