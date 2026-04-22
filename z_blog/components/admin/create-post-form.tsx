@@ -11,7 +11,11 @@ function slugify(text: string) {
     .replace(/[^\w\u4e00-\u9fa5-]+/g, "")
     .replace(/--+/g, "-");
 }
-
+type PostCategory =
+  | "Understanding Children"
+  | "Teaching Practice"
+  | "Family Education"
+  | "Teacher Reflection";
 export default function CreatePostForm() {
   const supabase = createClient();
 
@@ -22,7 +26,7 @@ export default function CreatePostForm() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [cover, setCover] = useState<File | null>(null);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<PostCategory>("Understanding Children");
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -93,7 +97,7 @@ export default function CreatePostForm() {
     setExcerpt("");
     setContent("");
     setStatus("draft");
-    setCategory("");
+    setCategory("Understanding Children");
     setLoading(false);
   }
 
