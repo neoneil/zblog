@@ -24,7 +24,7 @@ export default async function NewPostPage() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-12">
+    <main className="mx-auto max-w-4xl px-6 py-12 text-white">
       <h1 className="mb-6 text-3xl font-bold">Create New Post</h1>
       <CreatePostForm />
     </main>
