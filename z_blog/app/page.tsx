@@ -125,7 +125,7 @@ export default async function HomePage() {
           <section className="w-full py-12">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <Circle />
-              <Astroplate imageSrc="/astroplate.png" />
+              <Astroplate imageSrc="/astroplate3.png" />
             </div>
           </section>
 

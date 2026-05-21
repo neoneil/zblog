@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import DeletePostButton from "@/components/admin/delete-post-button";
+// import SubscribeAuthorized from "../subscribe-authorized/subscribe-authorized-client"
 export default async function AdminPostsPage() {
     const supabase = await createClient();
 
@@ -38,6 +39,12 @@ export default async function AdminPostsPage() {
                     className="rounded border px-4 py-2 text-white"
                 >
                     New Post
+                </Link>
+                <Link
+                    href="/admin/subscribe-authorized"
+                    className="rounded border px-4 py-2 text-white"
+                >
+                    授权订阅
                 </Link>
             </div>
 

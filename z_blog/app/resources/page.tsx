@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Container from "@/components/site/container";
+import DownloadPdfButton from "@/components/download-pdf-button";
 
 const videos = Array.from({ length: 10 }, (_, index) => ({
   id: index + 1,
@@ -50,6 +51,107 @@ export default function ResourcesPage() {
                 materials.
               </p>
             </div>
+            <section className="mx-auto mt-20 max-w-6xl px-6">
+  <div className="mb-8">
+    <p className="mb-3 text-sm uppercase tracking-[0.35em] text-blue-200/60">
+      Premium Astrology Guide
+    </p>
+
+    <h2 className="text-4xl font-semibold text-white sm:text-5xl">
+      Download the Astrology Book
+    </h2>
+
+    <p className="mt-4 max-w-2xl text-lg leading-8 text-white/65">
+      Explore planetary houses, birth charts, zodiac energies and deeper
+      spiritual interpretations in our premium astrology guide.
+    </p>
+  </div>
+
+  <DownloadPdfButton>
+    <div
+      className="
+        group relative overflow-hidden
+        rounded-[36px]
+        border border-white/10
+        bg-white/5
+        backdrop-blur-xl
+        cursor-pointer
+      "
+    >
+      {/* 背景光 */}
+      <div
+        className="
+          absolute inset-0
+          bg-[radial-gradient(circle_at_top,rgba(80,140,255,0.28),transparent_55%)]
+          opacity-70
+          transition duration-700
+          group-hover:scale-110
+          group-hover:opacity-100
+        "
+      />
+
+      {/* hover overlay */}
+      <div
+        className="
+          absolute inset-0 z-20
+          flex flex-col items-center justify-center
+          bg-black/55
+          opacity-0
+          transition-all duration-500
+          group-hover:opacity-100
+        "
+      >
+        <div
+          className="
+            mb-4 flex h-20 w-20 items-center justify-center
+            rounded-full border border-white/20
+            bg-white/10 backdrop-blur-md
+            transition-all duration-500
+            group-hover:scale-110
+            group-hover:rotate-6
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-10 w-10 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.8}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 3v12m0 0 4-4m-4 4-4-4m-5 8h18"
+            />
+          </svg>
+        </div>
+
+        <h3 className="text-3xl font-semibold text-white">
+          Download This Book
+        </h3>
+
+        <p className="mt-3 text-base text-white/70">
+          12,842 downloads
+        </p>
+      </div>
+
+      {/* 图片 */}
+      <div className="relative mx-auto aspect-[3/4] max-w-[340px] overflow-hidden">
+        <img
+          src="/tarotCover.png"
+          alt="Astrology Book Cover"
+          className="
+            h-full w-full object-cover
+            transition-all duration-700
+            group-hover:scale-105
+            group-hover:brightness-50
+          "
+        />
+      </div>
+    </div>
+  </DownloadPdfButton>
+</section>
           </section>
 
           {/* Featured */}

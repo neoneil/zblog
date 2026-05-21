@@ -146,12 +146,15 @@ export default function TarotClient() {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(110,80,180,0.32),transparent_28%),linear-gradient(180deg,#0a0813_0%,#120d22_55%,#0b0815_100%)] text-white">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <p className="mb-6 text-sm uppercase tracking-[0.35em] text-green-200/70">
+            此功能为订阅用户特许功能
+          </p>
         <div className="mb-8 max-w-3xl">
           <p className="mb-2 text-sm uppercase tracking-[0.35em] text-purple-200/70">
             Tarot Reading
           </p>
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            三张塔罗牌解读
+            三张塔罗牌解读 
           </h1>
           <p className="mt-4 text-base leading-7 text-purple-100/80">
             先输入你的问题，洗牌、停止、选出三张牌，再由 AI 为你生成一份温和而清晰的中文解读。

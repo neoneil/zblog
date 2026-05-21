@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const supabase = createClient();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +15,7 @@ export default function LoginForm() {
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     setLoading(true);
     setMessage("");
 
@@ -27,7 +30,8 @@ export default function LoginForm() {
       return;
     }
 
-    window.location.href = "/";
+    router.refresh();
+    router.push("/");
   }
 
   async function handleGoogleLogin() {
@@ -37,7 +41,7 @@ export default function LoginForm() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback?next=/`,
       },
     });
 
@@ -50,38 +54,41 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleLogin} className="space-y-4 max-w-md">
       <input
-        className="w-full rounded border px-3 py-2"
+        className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 !text-black placeholder:text-gray-400"
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+
       <input
-        className="w-full rounded border px-3 py-2"
+        className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 !text-black placeholder:text-gray-400"
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="rounded border px-4 py-2"
-      >
-        {loading ? "Loading..." : "Login"}
-      </button>
+      <div className="flex gap-3">
+        <button
+          type="submit"
+          disabled={loading}
+          className="rounded-xl border border-gray-300 bg-white px-4 py-2 !text-black transition hover:bg-gray-100"
+        >
+          {loading ? "Loading..." : "Login"}
+        </button>
 
-      <button
-        type="button"
-        disabled={loading}
-        onClick={handleGoogleLogin}
-        className="ml-2 rounded border px-4 py-2"
-      >
-        Continue with Google
-      </button>
+        <button
+          type="button"
+          disabled={loading}
+          onClick={handleGoogleLogin}
+          className="rounded-xl border border-gray-300 bg-white px-4 py-2 !text-black transition hover:bg-gray-100"
+        >
+          Continue with Google
+        </button>
+      </div>
 
-      {message && <p className="text-sm">{message}</p>}
+      {message && <p className="text-sm text-white">{message}</p>}
     </form>
   );
 }

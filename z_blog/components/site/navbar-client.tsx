@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+
 import LogoutButton from "@/components/auth/logout-button";
 import Container from "./container";
 
@@ -25,6 +28,22 @@ export default function NavbarClient({
 }: NavbarClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const router = useRouter();
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(() => {
+      router.refresh();
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router]);
+
   const name =
     user?.user_metadata?.full_name ||
     user?.user_metadata?.name ||
@@ -44,7 +63,7 @@ export default function NavbarClient({
     "rounded-xl px-3 py-2 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white";
 
   return (
-    <header className=" top-0 z-50 bg-transparent">
+    <header className="top-0 z-50 bg-transparent">
       <Container>
         <div className="flex min-h-16 items-center justify-between gap-4 py-3">
           <Link
@@ -54,7 +73,6 @@ export default function NavbarClient({
             Cosmic Childhood
           </Link>
 
-          {/* mobile button */}
           <button
             type="button"
             aria-label="Toggle navigation menu"
@@ -86,7 +104,6 @@ export default function NavbarClient({
             </svg>
           </button>
 
-          {/* desktop nav */}
           <nav className="hidden items-center justify-end gap-1.5 sm:gap-2 lg:flex lg:gap-3">
             <Link href="/" className={navLinkClass}>
               Home
@@ -129,6 +146,7 @@ export default function NavbarClient({
                     <span className="text-sm font-medium text-white">
                       {name}
                     </span>
+
                     <span className="max-w-40 truncate text-xs text-white/55">
                       {email}
                     </span>
@@ -154,7 +172,6 @@ export default function NavbarClient({
           </nav>
         </div>
 
-        {/* mobile dropdown */}
         {mobileOpen && (
           <div className="mb-3 rounded-2xl border border-white/10 bg-black/60 p-3 backdrop-blur-md lg:hidden">
             <nav className="flex flex-col gap-1">
@@ -218,10 +235,12 @@ export default function NavbarClient({
                       height={40}
                       className="h-10 w-10 rounded-full object-cover ring-1 ring-white/15"
                     />
+
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium text-white">
                         {name}
                       </p>
+
                       <p className="truncate text-xs text-white/60">
                         {email}
                       </p>
