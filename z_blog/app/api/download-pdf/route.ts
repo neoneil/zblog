@@ -24,7 +24,8 @@ export async function GET() {
     .single();
 
   // 非 subscribed
-  if (profile?.role !== "subscribed") {
+  if (profile?.role !== "subscribed" &&
+      profile?.role !== "admin") {
     return NextResponse.json(
       { error: "此功能为订阅功能，请联系主办人." },
       { status: 403 }

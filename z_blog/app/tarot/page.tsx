@@ -27,8 +27,11 @@ export default async function TarotPage() {
     .eq("id", user.id)
     .single();
 
-  // 不是 subscribed
-  if (profile?.role !== "subscribed") {
+  // 不是 subscribed 也不是 admin
+  if (
+    profile?.role !== "subscribed" &&
+    profile?.role !== "admin"
+  ) {
     redirect("/pricing");
   }
 
