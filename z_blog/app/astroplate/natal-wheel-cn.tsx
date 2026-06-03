@@ -55,21 +55,34 @@ type OpenAIChartJson = {
   }>;
 };
 
-const DISPLAY_SUMMARY_KEYS = ["sun", "moon", "ascendant", "mercury", "venus", "mars", "saturn", "midheaven"] as const;
-
+const DISPLAY_SUMMARY_KEYS = ["sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto", "ascendant", "midheaven"] as const;
+const HOUSE_LABELS = [
+  "一",
+  "二",
+  "三",
+  "四",
+  "五",
+  "六",
+  "七",
+  "八",
+  "九",
+  "十",
+  "十一",
+  "十二",
+];
 const SIGN_SYMBOLS = [
-  "羊",
-  "牛",
-  "双",
-  "蟹",
-  "狮",
-  "处",
-  "秤",
-  "蝎",
-  "射",
-  "摩",
-  "瓶",
-  "鱼",
+  "白羊",
+  "金牛",
+  "双子",
+  "巨蟹",
+  "狮子",
+  "处女",
+  "天秤",
+  "天蝎",
+  "射手",
+  "摩羯",
+  "水瓶",
+  "双鱼",
 ];
 
 const POINT_SYMBOLS: Record<string, string> = {
@@ -119,7 +132,7 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
   const markerRadius = 216;
   const aspectRadius = 128;
   const signLabelRadius = 275;
-  const houseLabelRadius = 224;
+  const houseLabelRadius = 155;
   const pointLabelRadius = markerRadius;
 
   const visiblePoints = DISPLAY_SUMMARY_KEYS.map((key) => pointMap.get(key)).filter(Boolean) as ChartPointJson[];
@@ -260,7 +273,7 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
               x={pos.x}
               y={pos.y}
               fill="#efc36b"
-              fontSize="34"
+              fontSize="18"
               textAnchor="middle"
               dominantBaseline="central"
               style={{
@@ -303,7 +316,7 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
               textAnchor="middle"
               dominantBaseline="central"
             >
-              {house.house} 宫
+              {HOUSE_LABELS[index]}
             </text>
           );
         })}
@@ -345,7 +358,7 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
 
         {visiblePoints.map((point, index) => {
           const deg = point.absoluteDegrees + rotation;
-          const spread = (index % 3) * 9;
+          const spread = (index % 5) * 18;
           const pos = polarToCartesian(center, center, pointLabelRadius - spread, deg);
           const isAngle = point.key === "ascendant" || point.key === "midheaven";
 
@@ -385,41 +398,6 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
           );
         })}
 
-        {asc ? (
-          <text
-            x={polarToCartesian(center, center, 168, asc.absoluteDegrees + rotation).x}
-            y={polarToCartesian(center, center, 168, asc.absoluteDegrees + rotation).y}
-            fill="#efc36b"
-            fontSize="18"
-            textAnchor="middle"
-            dominantBaseline="central"
-          >
-            升
-          </text>
-        ) : null}
-
-        {pointMap.get("midheaven") ? (
-          <text
-            x={polarToCartesian(
-              center,
-              center,
-              168,
-              pointMap.get("midheaven")!.absoluteDegrees + rotation
-            ).x}
-            y={polarToCartesian(
-              center,
-              center,
-              168,
-              pointMap.get("midheaven")!.absoluteDegrees + rotation
-            ).y}
-            fill="#efc36b"
-            fontSize="18"
-            textAnchor="middle"
-            dominantBaseline="central"
-          >
-            顶
-          </text>
-        ) : null}
       </svg>
     </div>
   );

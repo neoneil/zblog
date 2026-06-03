@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { NatalWheel } from "./natal-wheel";
 
-import { NatalWheelCN } from "./natal-wheel-cn";
+import { NatalWheelCN } from "./natal-wheel-cn-v3";
 type BirthForm = {
   name: string;
   year: number;
@@ -247,7 +247,6 @@ const CORE_POINT_KEYS = new Set([
   "midheaven",
 ]);
 
-
 export default function AstrologyPage() {
   const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState<BirthForm>(DEFAULT_FORM);
@@ -314,7 +313,8 @@ export default function AstrologyPage() {
           customOrbs: {},
           language: "en",
         });
-
+        console.log("horoscope.Houses:", horoscope.Houses);
+        console.log("full horoscope:", horoscope);
         const chartJson = buildOpenAIJson(submittedForm, horoscope);
 
         if (!cancelled) {
@@ -347,9 +347,9 @@ export default function AstrologyPage() {
   const summaryCards = useMemo(() => {
     if (!chartJson) return [];
     const allPoints = [...chartJson.planets, ...chartJson.angles];
-    return DISPLAY_SUMMARY_KEYS.map((key) => allPoints.find((item) => item.key === key)).filter(
-      Boolean
-    ) as ChartPointJson[];
+    return DISPLAY_SUMMARY_KEYS.map((key) =>
+      allPoints.find((item) => item.key === key),
+    ).filter(Boolean) as ChartPointJson[];
   }, [chartJson]);
 
   async function handleLookupCity() {
@@ -393,7 +393,14 @@ export default function AstrologyPage() {
         data.find(
           (item: any) =>
             item?.category === "place" &&
-            ["city", "town", "village", "administrative", "suburb", "county"].includes(item?.type)
+            [
+              "city",
+              "town",
+              "village",
+              "administrative",
+              "suburb",
+              "county",
+            ].includes(item?.type),
         ) ?? data[0];
 
       const lat = Number(preferred.lat);
@@ -447,7 +454,9 @@ export default function AstrologyPage() {
 
       setReading(data?.reading || "暂时没有生成解读。");
     } catch (error) {
-      setReadingError(error instanceof Error ? error.message : "AI 解读生成失败。");
+      setReadingError(
+        error instanceof Error ? error.message : "AI 解读生成失败。",
+      );
     } finally {
       setReadingLoading(false);
     }
@@ -479,7 +488,9 @@ export default function AstrologyPage() {
         <div className="grid gap-6 xl:grid-cols-[500px_minmax(0,1fr)_500px]">
           <section className="rounded-[28px] border border-[#89662e]/45 bg-[linear-gradient(180deg,rgba(4,18,33,0.96),rgba(2,11,22,0.94))] p-5 shadow-[0_0_0_1px_rgba(255,196,99,0.06),0_18px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,230,163,0.05)] md:p-6">
             <div className="mb-5">
-              <h2 className="text-[32px] font-semibold leading-none text-white">出生信息</h2>
+              <h2 className="text-[32px] font-semibold leading-none text-white">
+                出生信息
+              </h2>
               <p className="mt-3 text-sm text-[#96a6c0]">
                 不知道经纬度的话，可以都填 0，不影响生成。
               </p>
@@ -491,7 +502,9 @@ export default function AstrologyPage() {
                   className={INPUT_CLASS}
                   placeholder="可留空"
                   value={form.name}
-                  onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, name: e.target.value }))
+                  }
                 />
               </Field>
 
@@ -598,8 +611,8 @@ export default function AstrologyPage() {
                 </Field>
 
                 <div className="rounded-2xl border border-[#365c86] bg-[#081b31] px-4 py-3 text-sm leading-7 text-[#7fa9d8]">
-                  可以输入城市名自动填写经纬度。建议写成“城市, 国家”，例如 Melbourne,
-                  Australia，这样结果更稳定。
+                  可以输入城市名自动填写经纬度。建议写成“城市, 国家”，例如
+                  Melbourne, Australia，这样结果更稳定。
                 </div>
 
                 {geoError ? (
@@ -644,8 +657,8 @@ export default function AstrologyPage() {
               </div>
 
               <div className="rounded-2xl border border-[#7e5c2d] bg-[#18120a] px-4 py-3 text-sm leading-7 text-[#d3ab60]">
-                提示：经纬度会影响上升 Ascendant、天顶 Midheaven、宫位 Houses 等结果。
-                如果用户不知道，也可以直接填 0，先生成可用版本。
+                提示：经纬度会影响上升 Ascendant、天顶 Midheaven、宫位 Houses
+                等结果。 如果用户不知道，也可以直接填 0，先生成可用版本。
               </div>
 
               <Field label="宫位系统 House System">
@@ -664,7 +677,9 @@ export default function AstrologyPage() {
                   <option value="campanus">坎帕努斯制 Campanus</option>
                   <option value="whole-sign">整宫制 Whole Sign</option>
                   <option value="equal-house">等宫制 Equal House</option>
-                  <option value="regiomontanus">雷吉蒙塔努斯制 Regiomontanus</option>
+                  <option value="regiomontanus">
+                    雷吉蒙塔努斯制 Regiomontanus
+                  </option>
                   <option value="topocentric">地平制 Topocentric</option>
                 </select>
               </Field>
@@ -703,7 +718,9 @@ export default function AstrologyPage() {
             <div className="rounded-[24px] border border-[#8e6830]/40 bg-[radial-gradient(circle_at_50%_12%,rgba(24,63,120,0.34),rgba(3,10,19,0.94)_46%,rgba(2,7,15,0.98)_100%)] p-4 md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[#d2a75e]">已生成的本命盘 Natal Chart</p>
+                  <p className="text-sm font-medium text-[#d2a75e]">
+                    已生成的本命盘 Natal Chart
+                  </p>
                 </div>
                 <span className="rounded-xl border border-[#8d6a33] bg-[#0c1727] px-3 py-1.5 text-xs font-medium text-[#efc36b]">
                   SVG
@@ -724,7 +741,9 @@ export default function AstrologyPage() {
               </div>
 
               {calcState.isLoading ? (
-                <div className="mt-4 text-center text-sm text-[#9cb0ca]">正在生成星盘...</div>
+                <div className="mt-4 text-center text-sm text-[#9cb0ca]">
+                  正在生成星盘...
+                </div>
               ) : null}
 
               {calcState.error ? (
@@ -740,23 +759,34 @@ export default function AstrologyPage() {
               </div>
 
               <div className="mt-4 rounded-[22px] border border-[#88672f]/35 bg-[#07111d]/85 p-5">
-                <h3 className="mb-3 text-[20px] font-semibold text-white">星盘信息概览</h3>
+                <h3 className="mb-3 text-[20px] font-semibold text-white">
+                  星盘信息概览
+                </h3>
 
                 <div className="space-y-3 text-sm leading-7 text-[#b8c7db]">
                   <InfoRow
                     label="出生时间"
                     value={`${submittedForm.year}-${String(submittedForm.month).padStart(2, "0")}-${String(
-                      submittedForm.day
-                    ).padStart(2, "0")} ${String(submittedForm.hour).padStart(2, "0")}:${String(
-                      submittedForm.minute
+                      submittedForm.day,
+                    ).padStart(
+                      2,
+                      "0",
+                    )} ${String(submittedForm.hour).padStart(2, "0")}:${String(
+                      submittedForm.minute,
                     ).padStart(2, "0")}`}
                   />
                   <InfoRow
                     label="出生地点"
                     value={`纬度 ${submittedForm.latitude}, 经度 ${submittedForm.longitude}`}
                   />
-                  <InfoRow label="黄道类型" value={ZODIAC_ZH[submittedForm.zodiac]} />
-                  <InfoRow label="宫位系统" value={HOUSE_SYSTEM_ZH[submittedForm.houseSystem]} />
+                  <InfoRow
+                    label="黄道类型"
+                    value={ZODIAC_ZH[submittedForm.zodiac]}
+                  />
+                  <InfoRow
+                    label="宫位系统"
+                    value={HOUSE_SYSTEM_ZH[submittedForm.houseSystem]}
+                  />
                   <p className="pt-2 text-[#8fa2be]">
                     经纬度为 0 时，宫位、上升、天顶的精确性可能下降。
                   </p>
@@ -767,38 +797,49 @@ export default function AstrologyPage() {
 
           <section className="space-y-6">
             <div className="rounded-[28px] border border-[#89662e]/45 bg-[linear-gradient(180deg,rgba(4,18,33,0.96),rgba(2,11,22,0.94))] p-5 shadow-[0_0_0_1px_rgba(255,196,99,0.06),0_18px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,230,163,0.05)] md:p-6">
-              <div className="mb-4 flex items-center justify-between gap-3">
+              {/* <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[#d2a75e]">用户星盘核心数据</p>
-                  <h2 className="text-[36px] font-semibold leading-none text-white">AI 输入</h2>
+                  <p className="text-sm font-medium text-[#d2a75e]">
+                    用户星盘核心数据
+                  </p>
+                  <h2 className="text-[36px] font-semibold leading-none text-white">
+                    AI 输入
+                  </h2>
                 </div>
 
                 <button
                   type="button"
                   onClick={async () => {
                     if (!chartJson) return;
-                    await navigator.clipboard.writeText(JSON.stringify(chartJson, null, 2));
+                    await navigator.clipboard.writeText(
+                      JSON.stringify(chartJson, null, 2),
+                    );
                   }}
                   className="rounded-xl border border-[#8d6a33] bg-[#0d1727] px-3 py-2 text-xs font-medium text-[#efc36b] transition hover:bg-[#13243c]"
                 >
                   复制 JSON
                 </button>
-              </div>
+              </div> */}
 
-              <div className="mb-3 rounded-2xl border border-[#2c724b] bg-[#0b2318] px-4 py-3 text-sm leading-7 text-[#76d19a]">
-                当前只保留：核心星体、上升 Ascendant、天顶 Midheaven、12 宫头、主要相位。
-              </div>
+              {/* <div className="mb-3 rounded-2xl border border-[#2c724b] bg-[#0b2318] px-4 py-3 text-sm leading-7 text-[#76d19a]">
+                当前只保留：核心星体、上升 Ascendant、天顶 Midheaven、12
+                宫头、主要相位。
+              </div> */}
 
-              <pre className="max-h-[760px] overflow-auto rounded-2xl border border-[#29415e] bg-[#061120] p-4 text-xs leading-6 text-[#c7d3e3]">
-                {chartJson ? JSON.stringify(chartJson, null, 2) : "等待生成结果..."}
-              </pre>
+              {/* <pre className="max-h-[760px] overflow-auto rounded-2xl border border-[#29415e] bg-[#061120] p-4 text-xs leading-6 text-[#c7d3e3]">
+                {chartJson
+                  ? JSON.stringify(chartJson, null, 2)
+                  : "等待生成结果..."}
+              </pre> */}
             </div>
 
             <div className="rounded-[28px] border border-[#89662e]/45 bg-[linear-gradient(180deg,rgba(4,18,33,0.96),rgba(2,11,22,0.94))] p-5 shadow-[0_0_0_1px_rgba(255,196,99,0.06),0_18px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,230,163,0.05)] md:p-6">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
                   <p className="text-sm font-medium text-[#d2a75e]">AI 解读</p>
-                  <h2 className="text-[34px] font-semibold leading-none text-white">星盘中文分析</h2>
+                  <h2 className="text-[34px] font-semibold leading-none text-white">
+                    星盘中文分析
+                  </h2>
                 </div>
                 <div className="text-2xl text-[#efc36b]">✧</div>
               </div>
@@ -836,7 +877,9 @@ export default function AstrologyPage() {
 
                 <div className="rounded-2xl border border-[#29415e] bg-[#061120] p-4">
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <h3 className="text-sm font-semibold text-white">解读结果</h3>
+                    <h3 className="text-sm font-semibold text-white">
+                      解读结果
+                    </h3>
                     {reading ? (
                       <button
                         type="button"
@@ -877,13 +920,7 @@ export default function AstrologyPage() {
   );
 }
 
-function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
+function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="block">
       <span className="mb-2 block text-[12px] font-semibold uppercase tracking-[0.08em] text-[#d9aa5f]">
@@ -907,8 +944,12 @@ function SummaryCard({ item }: { item: ChartPointJson }) {
         <br />
         <span className="text-[#b8c7db]">{item.label}</span>
       </p>
-      <p className="mt-2 text-[15px] font-medium text-[#efc36b]">{item.signZh}</p>
-      <p className="text-[14px] text-[#efc36b]">{item.signDegrees.toFixed(2)}°</p>
+      <p className="mt-2 text-[15px] font-medium text-[#efc36b]">
+        {item.signZh}
+      </p>
+      <p className="text-[14px] text-[#efc36b]">
+        {item.signDegrees.toFixed(2)}°
+      </p>
     </div>
   );
 }
@@ -1019,11 +1060,19 @@ function getAnglePoint(horoscope: any, key: (typeof ANGLE_KEYS)[number]) {
 
 function buildAstroChartCusps(horoscope: any) {
   const houses = horoscope?.Houses;
+
   if (!Array.isArray(houses) || houses.length < 12) {
     return Array.from({ length: 12 }, (_, i) => i * 30);
   }
 
-  return houses.slice(0, 12).map((house: any) => extractAbsoluteDegrees(house));
+  return houses.slice(0, 12).map((house: any, index: number) => {
+    const degree =
+      house?.ChartPosition?.StartPosition?.Ecliptic?.DecimalDegrees ??
+      house?.ChartPosition?.Ecliptic?.DecimalDegrees ??
+      index * 30;
+
+    return normalizeDegrees(Number(degree) || 0);
+  });
 }
 
 function buildOpenAIJson(form: BirthForm, horoscope: any): OpenAIChartJson {
@@ -1080,13 +1129,13 @@ function buildOpenAIJson(form: BirthForm, horoscope: any): OpenAIChartJson {
     ? aspectsSource
         .map((aspect: any) => {
           const point1Key = normalizePointKey(
-            aspect?.point1Key ?? aspect?.point1 ?? aspect?.pointA
+            aspect?.point1Key ?? aspect?.point1 ?? aspect?.pointA,
           );
           const point2Key = normalizePointKey(
-            aspect?.point2Key ?? aspect?.point2 ?? aspect?.pointB
+            aspect?.point2Key ?? aspect?.point2 ?? aspect?.pointB,
           );
           const label = normalizeAspectKey(
-            aspect?.aspectKey ?? aspect?.label ?? aspect?.type
+            aspect?.aspectKey ?? aspect?.label ?? aspect?.type,
           );
 
           return {
@@ -1100,7 +1149,7 @@ function buildOpenAIJson(form: BirthForm, horoscope: any): OpenAIChartJson {
           (aspect) =>
             CORE_ASPECT_TYPES.has(aspect.label) &&
             CORE_POINT_KEYS.has(aspect.point1Key) &&
-            CORE_POINT_KEYS.has(aspect.point2Key)
+            CORE_POINT_KEYS.has(aspect.point2Key),
         )
         .slice(0, 40)
         .map((aspect) => ({
