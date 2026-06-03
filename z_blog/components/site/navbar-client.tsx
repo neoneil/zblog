@@ -124,6 +124,9 @@ export default function NavbarClient({
             <Link href="/tarot" className={navLinkClass}>
               Tarot AI
             </Link>
+            <Link href="/classroom" className={navLinkClass}>
+              Online Meeting
+            </Link>
 
             {user ? (
               <>
