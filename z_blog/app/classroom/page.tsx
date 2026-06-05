@@ -183,9 +183,9 @@ export default function ClassroomPage() {
 
   if (shouldJoin) {
     return (
-      <main className="relative h-[calc(100dvh-var(--topbar-height)-0.5rem)] w-full overflow-hidden bg-black">
+      <main className="relative h-[calc(100dvh-var(--topbar-height)-0.5rem)] w-full overflow-hidden bg-[var(--bg)]">
         {status ? (
-          <div className="absolute left-1/2 top-6 z-50 -translate-x-1/2 rounded-full bg-white px-5 py-2 text-sm font-medium text-black shadow-lg">
+          <div className="absolute left-1/2 top-6 z-50 -translate-x-1/2 rounded-full bg-[var(--card)] px-5 py-2 text-sm font-medium text-[var(--text)] shadow-[var(--shadow-sm)]">
             {status}
           </div>
         ) : null}
@@ -197,7 +197,7 @@ export default function ClassroomPage() {
 
   return (
     <main className="flex flex-1 items-center justify-center bg-[var(--bg)] px-4 py-8">
-      <form onSubmit={handleSubmit} className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-white p-8 shadow-[var(--shadow-md)]">
+      <form onSubmit={handleSubmit} className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--card)] p-8 shadow-[var(--shadow-md)]">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-[var(--text)]">
             Join Classroom
@@ -218,7 +218,7 @@ export default function ClassroomPage() {
               value={userName}
               onChange={(event) => setUserName(event.target.value)}
               placeholder="Vivi"
-              className="h-12 w-full rounded-2xl border border-[var(--border)] bg-white px-4 text-sm outline-none transition focus:border-[var(--primary)]"
+              className="h-12 w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 text-sm outline-none transition focus:border-[var(--primary)]"
             />
           </div>
 
@@ -231,7 +231,7 @@ export default function ClassroomPage() {
               value={meetingNumber}
               onChange={(event) => setMeetingNumber(event.target.value)}
               placeholder="840 7968 1327"
-              className="h-12 w-full rounded-2xl border border-[var(--border)] bg-white px-4 text-sm outline-none transition focus:border-[var(--primary)]"
+              className="h-12 w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 text-sm outline-none transition focus:border-[var(--primary)]"
             />
           </div>
 
@@ -244,7 +244,7 @@ export default function ClassroomPage() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="No password? Leave it empty"
-              className="h-12 w-full rounded-2xl border border-[var(--border)] bg-white px-4 text-sm outline-none transition focus:border-[var(--primary)]"
+              className="h-12 w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 text-sm outline-none transition focus:border-[var(--primary)]"
             />
           </div>
         </div>
@@ -255,7 +255,7 @@ export default function ClassroomPage() {
           </p>
         ) : null}
 
-        <button type="submit" className="mt-6 h-12 w-full rounded-2xl bg-[var(--primary)] text-sm font-semibold text-white transition hover:bg-[var(--primary-hover)]">
+        <button type="submit" className="mt-6 h-12 w-full rounded-2xl bg-[var(--primary)] text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--primary-hover)]">
           Join Meeting
         </button>
       </form>

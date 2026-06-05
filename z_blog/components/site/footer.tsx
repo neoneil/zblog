@@ -51,15 +51,15 @@ const footerColumns = [
 
 export default function Footer() {
   return (
-    <footer className="mt-20 border-t border-white/10 bg-black/30 shadow-[0_-8px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+    <footer className="mt-20 border-t border-[var(--border)] bg-[var(--card-muted)] shadow-[var(--shadow-md)] backdrop-blur-xl">
       <Container>
         <div className="py-10 sm:py-12">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-1">
-              <h2 className="text-lg font-bold tracking-tight text-white">
+              <h2 className="text-lg font-bold tracking-tight text-[var(--text)]">
                 Cosmic Childhood
               </h2>
-              <p className="mt-3 max-w-xs text-sm leading-7 text-white/60">
+              <p className="mt-3 max-w-xs text-sm leading-7 text-[var(--text-soft)]">
                 A reflective space for childhood, learning, emotion, and
                 imagination.
               </p>
@@ -67,7 +67,7 @@ export default function Footer() {
 
             {footerColumns.map((column) => (
               <div key={column.title}>
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-white/55">
+                <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[var(--text-faint)]">
                   {column.title}
                 </h3>
 
@@ -76,7 +76,7 @@ export default function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/70 transition hover:text-white"
+                        className="text-sm text-[var(--text-soft)] transition hover:text-[var(--text)]"
                       >
                         {link.label}
                       </Link>
@@ -87,10 +87,10 @@ export default function Footer() {
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-10 flex flex-col gap-3 border-t border-[var(--border)] pt-6 text-sm text-[var(--text-faint)] sm:flex-row sm:items-center sm:justify-between">
             <p>© 2026 Z&apos;s Blog. All rights reserved.</p>
             <p>
-              Built by <span className="font-medium text-white/75">Chi</span>
+              Built by <span className="font-medium text-[var(--text-soft)]">Chi</span>
             </p>
           </div>
         </div>

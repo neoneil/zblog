@@ -37,8 +37,8 @@ export default function TarotCard({
       }}
       className="relative w-[170px] sm:w-[180px]"
     >
-      <div className="rounded-3xl border border-white/10 bg-linear-to-b from-[#1b1630] to-[#0d0b18] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
-        <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-purple-200/80">
+      <div className="rounded-3xl border border-[var(--border)] bg-[var(--card-soft)] p-4 shadow-[var(--shadow-md)]">
+        <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-[var(--primary)]">
           <span>{positionLabel[card.position]}</span>
           <span>{revealed ? (card.reversed ? "逆位" : "正位") : "待翻开"}</span>
         </div>
@@ -51,7 +51,7 @@ export default function TarotCard({
         >
           {/* card back */}
           <div
-            className="absolute inset-0 overflow-hidden rounded-[18px] border border-yellow-300/20 bg-black/20"
+            className="absolute inset-0 overflow-hidden rounded-[18px] border border-[var(--border)] bg-[var(--card-muted)]"
             style={{ backfaceVisibility: "hidden" }}
           >
             <Image
@@ -65,7 +65,7 @@ export default function TarotCard({
 
           {/* card face */}
           <div
-            className="absolute inset-0 overflow-hidden rounded-[18px] border border-yellow-300/20 bg-black/20"
+            className="absolute inset-0 overflow-hidden rounded-[18px] border border-[var(--border)] bg-[var(--card-muted)]"
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
@@ -88,10 +88,10 @@ export default function TarotCard({
         </motion.div>
 
         <div className="mt-3 text-center">
-          <div className="text-base font-semibold text-yellow-50">
+          <div className="text-base font-semibold text-[var(--text)]">
             {revealed ? card.nameCn : "已选卡牌"}
           </div>
-          <div className="mt-1 text-xs text-purple-100/75">
+          <div className="mt-1 text-xs text-[var(--text-soft)]">
             {revealed ? card.name : "等待翻开"}
           </div>
         </div>
@@ -128,13 +128,13 @@ export default function TarotCard({
 //       }}
 //       className="relative w-[170px] sm:w-[190px]"
 //     >
-//       <div className="rounded-3xl border border-white/10 bg-linear-to-b from-[#1b1630] to-[#0d0b18] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
-//         <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-purple-200/80">
+//       <div className="rounded-3xl border border-[var(--border)] bg-[var(--card-soft)] p-4 shadow-[var(--shadow-md)]">
+//         <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-[var(--primary)]">
 //           <span>{positionLabel[card.position]}</span>
 //           <span>{card.reversed ? "逆位" : "正位"}</span>
 //         </div>
 
-//         <div className="relative aspect-[2/3] overflow-hidden rounded-[18px] border border-yellow-300/20 bg-black/20">
+//         <div className="relative aspect-[2/3] overflow-hidden rounded-[18px] border border-[var(--border)] bg-[var(--card-muted)]">
 //           <div
 //             className={`relative h-full w-full transition-transform duration-500 ${
 //               card.reversed ? "rotate-180" : ""
@@ -151,10 +151,10 @@ export default function TarotCard({
 //         </div>
 
 //         <div className="mt-3 text-center">
-//           <div className="text-base font-semibold text-yellow-50">
+//           <div className="text-base font-semibold text-[var(--text)]">
 //             {card.nameCn}
 //           </div>
-//           <div className="mt-1 text-xs text-purple-100/75">{card.name}</div>
+//           <div className="mt-1 text-xs text-[var(--text-soft)]">{card.name}</div>
 //         </div>
 //       </div>
 //     </motion.div>

@@ -10,7 +10,7 @@ const buttonVariants = cva(
       variant: {
 
         primary:
-          "bg-[var(--primary)] text-white shadow-[var(--shadow-sm)] hover:bg-[var(--primary-hover)]",
+          "bg-[var(--primary)] text-[var(--text)] shadow-[var(--shadow-sm)] hover:bg-[var(--primary-hover)]",
 
         secondary:
           "border border-[var(--border)] bg-[var(--card)] text-[var(--text)] hover:bg-[var(--bg-soft)]",
@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "bg-transparent text-[var(--text-soft)] hover:bg-[var(--bg-soft)] hover:text-[var(--text)]",
 
         danger:
-          "bg-[var(--danger)] text-white hover:opacity-90",
+          "bg-[var(--danger)] text-[var(--text)] hover:opacity-90",
 
       },
 

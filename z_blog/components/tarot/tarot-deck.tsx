@@ -39,7 +39,7 @@ export default function TarotDeck({
 
   if (stage === "idle") {
     return (
-      <div className="flex min-h-[230px] items-center justify-center rounded-[30px] border border-dashed border-white/10 bg-black/10 text-center text-purple-100/60">
+      <div className="flex min-h-[230px] items-center justify-center rounded-[30px] border border-dashed border-[var(--border)] bg-[var(--card-soft)] text-center text-[var(--text-faint)]">
         输入问题后点击“开始洗牌”
       </div>
     );
@@ -47,7 +47,7 @@ export default function TarotDeck({
 
   if (stage === "shuffling") {
     return (
-      <div className="relative min-h-[250px] overflow-hidden rounded-[30px] border border-white/8 bg-black/10">
+      <div className="relative min-h-[250px] overflow-hidden rounded-[30px] border border-[var(--border)] bg-[var(--card-soft)]">
         <div className="absolute inset-0">
           {cards.map((card, index) => (
             <motion.div
@@ -65,7 +65,7 @@ export default function TarotDeck({
                 ease: "easeInOut",
                 delay: index * 0.025,
               }}
-              className="absolute h-[220px] w-[140px] overflow-hidden rounded-[22px] border border-white/10 shadow-2xl"
+              className="absolute h-[220px] w-[140px] overflow-hidden rounded-[22px] border border-[var(--border)] shadow-[var(--shadow-lg)]"
               style={{
                 left: "70px",
                 top: "50%",
@@ -84,7 +84,7 @@ export default function TarotDeck({
           ))}
         </div>
 
-        <div className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-black/35 px-4 py-2 text-sm text-purple-100/80 backdrop-blur">
+        <div className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full border border-[var(--border)] bg-[var(--card-muted)] px-4 py-2 text-sm text-[var(--text-soft)] backdrop-blur">
           正在洗牌……
         </div>
       </div>
@@ -92,9 +92,9 @@ export default function TarotDeck({
   }
 
   return (
-    <div className="rounded-[30px] border border-white/8 bg-black/10 px-3 py-4 sm:px-5 sm:py-5">
+    <div className="rounded-[30px] border border-[var(--border)] bg-[var(--card-soft)] px-3 py-4 sm:px-5 sm:py-5">
       {cards.length === 0 ? (
-        <div className="flex min-h-[260px] items-center justify-center text-sm text-purple-100/55">
+        <div className="flex min-h-[260px] items-center justify-center text-sm text-[var(--text-faint)]">
           已选完三张牌
         </div>
       ) : (
@@ -134,7 +134,7 @@ export default function TarotDeck({
                     : undefined
                 }
                 whileTap={isSelectable ? { scale: 0.985 } : undefined}
-                className="absolute top-8 h-[190px] w-[122px] overflow-hidden rounded-[20px] border border-white/10 bg-black/10 shadow-xl transition disabled:cursor-default"
+                className="absolute top-8 h-[190px] w-[122px] overflow-hidden rounded-[20px] border border-[var(--border)] bg-[var(--card-soft)] shadow-[var(--shadow-md)] transition disabled:cursor-default"
                 style={{
                   left: "50%",
                   zIndex: spread.zIndex,
@@ -179,7 +179,7 @@ export default function TarotDeck({
 
 //   if (stage === "idle") {
 //     return (
-//       <div className="flex min-h-[320px] items-center justify-center rounded-3xl border border-dashed border-white/10 text-center text-purple-100/60">
+//       <div className="flex min-h-[320px] items-center justify-center rounded-3xl border border-dashed border-[var(--border)] text-center text-[var(--text-faint)]">
 //         输入问题后点击“开始洗牌”
 //       </div>
 //     );
@@ -187,7 +187,7 @@ export default function TarotDeck({
 
 //   if (stage === "shuffling") {
 //     return (
-//       <div className="relative flex min-h-[340px] items-center justify-center overflow-hidden rounded-3xl border border-white/8 bg-black/10">
+//       <div className="relative flex min-h-[340px] items-center justify-center overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card-soft)]">
 //         {visibleCards.map((card, index) => (
 //           <motion.div
 //             key={card.id}
@@ -204,7 +204,7 @@ export default function TarotDeck({
 //               ease: "easeInOut",
 //               delay: index * 0.04,
 //             }}
-//             className="absolute h-[220px] w-[140px] overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+//             className="absolute h-[220px] w-[140px] overflow-hidden rounded-3xl border border-[var(--border)] shadow-[var(--shadow-lg)]"
 //             style={{ zIndex: 50 - index }}
 //           >
 //             <Image
@@ -217,7 +217,7 @@ export default function TarotDeck({
 //           </motion.div>
 //         ))}
 
-//         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-purple-100/80">
+//         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-[var(--border)] bg-[var(--card-muted)] px-4 py-2 text-sm text-[var(--text-soft)]">
 //           正在洗牌……
 //         </div>
 //       </div>
@@ -225,10 +225,10 @@ export default function TarotDeck({
 //   }
 
 //   return (
-//     <div className="rounded-3xl border border-white/8 bg-black/10 p-4">
+//     <div className="rounded-3xl border border-[var(--border)] bg-[var(--card-soft)] p-4">
 //       <div className="flex min-h-[320px] flex-wrap items-center justify-center gap-3">
 //         {visibleCards.length === 0 ? (
-//           <div className="text-sm text-purple-100/55">已选完三张牌</div>
+//           <div className="text-sm text-[var(--text-faint)]">已选完三张牌</div>
 //         ) : (
 //           visibleCards.map((card, index) => (
 //             <motion.button
@@ -246,7 +246,7 @@ export default function TarotDeck({
 //               }}
 //               whileHover={stage === "selecting" ? { y: -6, scale: 1.02 } : undefined}
 //               whileTap={stage === "selecting" ? { scale: 0.98 } : undefined}
-//               className="relative h-[190px] w-[122px] overflow-hidden rounded-2xl border border-white/10 shadow-xl transition disabled:cursor-default"
+//               className="relative h-[190px] w-[122px] overflow-hidden rounded-2xl border border-[var(--border)] shadow-[var(--shadow-md)] transition disabled:cursor-default"
 //             >
 //               <Image
 //                 src={encodeURI(tarotCardBack)}

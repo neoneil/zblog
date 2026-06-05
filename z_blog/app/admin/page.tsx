@@ -53,13 +53,13 @@ export default async function AdminPage() {
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-12 text-(--text-white)">
+    <main className="mx-auto max-w-7xl px-6 py-12 text-[var(--text)]">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <p className="mt-2 text-sm text-(--text-white)">
+        <p className="mt-2 text-sm text-[var(--text)]">
           Welcome, {profile.email}
         </p>
-        <p className="text-sm text-(--text-white)">
+        <p className="text-sm text-[var(--text)]">
           Role: {profile.role}
         </p>
       </div>
@@ -67,19 +67,19 @@ export default async function AdminPage() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {adminCards.map((card) => (
           <Link key={card.href} href={card.href}>
-            <Card className="h-full cursor-pointer transition-all hover:-translate-y-1 hover:border-primary hover:shadow-lg">
+            <Card className="h-full cursor-pointer transition-all hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[var(--shadow-md)]">
               <CardContent className="flex h-full flex-col justify-between p-6">
                 <div>
-                  <CardTitle className="mb-3 text-lg text-(--text-white)">
+                  <CardTitle className="mb-3 text-lg text-[var(--text)]">
                     {card.title}
                   </CardTitle>
 
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-[var(--text-soft)]">
                     {card.description}
                   </p>
                 </div>
 
-                <div className="mt-6 text-sm font-medium text-primary">
+                <div className="mt-6 text-sm font-medium text-[var(--primary)]">
                   Open →
                 </div>
               </CardContent>

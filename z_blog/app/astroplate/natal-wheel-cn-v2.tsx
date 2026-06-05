@@ -171,7 +171,7 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
     <div className="relative mx-auto w-full max-w-[780px]">
       <svg
         viewBox={`0 0 ${size} ${size}`}
-        className="h-auto w-full rounded-[30px] bg-[#f7f3ea]"
+        className="h-auto w-full rounded-[30px] bg-[var(--card-soft)]"
       >
         <defs>
           <radialGradient id="cnWheelBg" cx="50%" cy="45%" r="66%">

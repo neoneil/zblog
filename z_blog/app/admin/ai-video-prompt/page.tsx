@@ -93,31 +93,31 @@ export default function AIVideoPromptPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-6">
       <div className="flex flex-col gap-3">
         <Badge className="w-fit">AI Video Prompt Builder</Badge>
-        <h1 className="text-3xl font-bold tracking-tight text-slate-950">AI 视频分镜 Prompt 生成器</h1>
-        <p className="max-w-3xl text-sm leading-6 text-slate-600">用结构化 JSON 管理分镜关键词，批量生成视频时不容易忘记专业术语。</p>
+        <h1 className="text-3xl font-bold tracking-tight text-[var(--text)]">AI 视频分镜 Prompt 生成器</h1>
+        <p className="max-w-3xl text-sm leading-6 text-[var(--text-soft)]">用结构化 JSON 管理分镜关键词，批量生成视频时不容易忘记专业术语。</p>
       </div>
 
       <Card>
         <CardContent className="p-0">
-          <div className="overflow-hidden rounded-2xl border border-slate-200">
+          <div className="overflow-hidden rounded-2xl border border-[var(--border)]">
             <table className="w-full border-collapse text-sm">
-              <thead className="bg-slate-50">
+              <thead className="bg-[var(--bg-soft)]">
                 <tr>
-                  <th className="w-[260px] border-b border-slate-200 px-4 py-3 text-left font-semibold text-slate-700">Key</th>
-                  <th className="border-b border-slate-200 px-4 py-3 text-left font-semibold text-slate-700">Value</th>
+                  <th className="w-[260px] border-b border-[var(--border)] px-4 py-3 text-left font-semibold text-[var(--text-soft)]">Key</th>
+                  <th className="border-b border-[var(--border)] px-4 py-3 text-left font-semibold text-[var(--text-soft)]">Value</th>
                 </tr>
               </thead>
               <tbody>
                 {promptConfig.map((item) => (
-                  <tr key={item.key} className="border-b border-slate-100 last:border-b-0">
+                  <tr key={item.key} className="border-b border-[var(--border)] last:border-b-0">
                     <td className="px-4 py-4 align-middle">
                       <div className="flex flex-col gap-1">
-                        <span className="font-semibold text-slate-900">{item.label}</span>
-                        <span className="text-xs text-slate-500">{item.key}</span>
+                        <span className="font-semibold text-[var(--text)]">{item.label}</span>
+                        <span className="text-xs text-[var(--text-faint)]">{item.key}</span>
                       </div>
                     </td>
                     <td className="px-4 py-4">
-                      <select value={values[item.key]} onChange={(event) => updateValue(item.key, event.target.value)} className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-100">
+                      <select value={values[item.key]} onChange={(event) => updateValue(item.key, event.target.value)} className="h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text)] outline-none transition focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]">
                         {item.options.map((option) => (
                           <option key={option} value={option}>
                             {option}

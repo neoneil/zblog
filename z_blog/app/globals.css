@@ -1,28 +1,52 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
 :root {
+  --bg: #fffaf4;
+  --bg-soft: #f7efe6;
+  --bg-muted: #efe4d7;
+  --card: #ffffff;
+  --card-soft: #fff6ec;
+  --card-muted: #f8eee2;
 
-  /* 页面 */
-  --bg:#FFF8F2;
-  --text: #111111; 
-  --text-white: #fcfafa; 
-  /* 主色 */
-  --primary: #111111;
-  --primary-hover: #333333;
+  --text: #201a14;
+  --text-soft: #67594b;
+  --text-faint: #9a8978;
+  --text-inverse: #fffaf4;
+  --muted: var(--text-soft);
 
-  /* 边框 */
-  --border: #e5e5e5;
+  --primary: #8a5a2b;
+  --primary-hover: #6f431f;
+  --primary-soft: #f2dfc8;
+  --primary-muted: #c99a67;
+  --accent: #2f7d74;
+  --accent-hover: #22665e;
+  --accent-soft: #dcefeb;
+  --accent-warm: #c8793a;
+  --accent-warm-soft: #f6e1cc;
 
-  /* 次级文字 */
-  --muted: #6b7280;
+  --success: #24785d;
+  --success-soft: #dff2e8;
+  --warning: #a66712;
+  --warning-soft: #f8e7c9;
+  --danger: #b94b4b;
+  --danger-soft: #f7dddd;
 
-  /* navbar */
-  --navbar-bg: #FDEBD2; 
-  --navbar-bg-hover: #f8deba; 
- 
-  /* footer */
-  --footer-bg: #FDEBD2;  
+  --border: #e5d7c8;
+  --border-strong: #cdb9a5;
+  --ring: #ead1b6;
 
+  --navbar-bg: rgba(255, 250, 244, 0.88);
+  --navbar-bg-hover: #f4e8da;
+  --footer-bg: #f4e8da;
+
+  --shadow-sm: 0 8px 24px rgba(83, 57, 34, 0.08);
+  --shadow-md: 0 16px 48px rgba(83, 57, 34, 0.12);
+  --shadow-lg: 0 24px 70px rgba(83, 57, 34, 0.16);
+  --drop-shadow: 0 8px 18px rgba(83, 57, 34, 0.16);
+  --radius-sm: 18px;
+  --radius-md: 22px;
+  --radius-lg: 28px;
 }
 
 
@@ -37,8 +61,9 @@
   /* 主按钮 */
 
   .btn-primary {
-    @apply rounded-full px-5 py-3 text-sm font-medium text-white transition;
+    @apply rounded-full px-5 py-3 text-sm font-medium transition;
     background-color: var(--primary);
+    color: var(--text-inverse);
   }
 
   .btn-primary:hover {
@@ -51,15 +76,15 @@
   }
 
   .btn-secondary:hover {
-    background-color: #f3f4f6;
+    background-color: var(--bg-soft);
   }
 
-
-  @layer components {
   .topic-btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold text-white transition-all duration-200 ease-out;
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold transition-all duration-200 ease-out;
     @apply cursor-pointer shadow-md hover:shadow-xl active:scale-[0.98];
-    @apply border border-white/10 backdrop-blur-sm no-underline;
+    @apply backdrop-blur-sm no-underline;
+    border: 1px solid color-mix(in srgb, var(--text-inverse) 24%, transparent);
+    color: var(--text-inverse);
     min-width: 220px;
   }
 
@@ -68,58 +93,58 @@
   }
 
   .topic-btn-green {
-    background: linear-gradient(180deg, #7f9362 0%, #64794b 100%);
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-hover) 100%);
     box-shadow:
-      0 8px 20px rgba(72, 93, 49, 0.28),
+      0 8px 20px rgba(47, 125, 116, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .topic-btn-green:hover {
-    background: linear-gradient(180deg, #8b9f6d 0%, #6d8352 100%);
+    background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent) 100%);
     box-shadow:
-      0 12px 28px rgba(72, 93, 49, 0.34),
+      0 12px 28px rgba(47, 125, 116, 0.26),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   .topic-btn-gold {
-    background: linear-gradient(180deg, #d79a3a 0%, #bf7d1e 100%);
+    background: linear-gradient(180deg, var(--accent-warm) 0%, var(--primary) 100%);
     box-shadow:
-      0 8px 20px rgba(176, 109, 16, 0.28),
+      0 8px 20px rgba(138, 90, 43, 0.24),
       inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .topic-btn-gold:hover {
-    background: linear-gradient(180deg, #e2a64a 0%, #c98523 100%);
+    background: linear-gradient(180deg, var(--primary-muted) 0%, var(--primary-hover) 100%);
     box-shadow:
-      0 12px 28px rgba(176, 109, 16, 0.34),
+      0 12px 28px rgba(138, 90, 43, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   .topic-btn-blue {
-    background: linear-gradient(180deg, #5d7ea9 0%, #45668f 100%);
+    background: linear-gradient(180deg, var(--accent) 0%, var(--primary) 100%);
     box-shadow:
-      0 8px 20px rgba(48, 77, 120, 0.28),
+      0 8px 20px rgba(47, 125, 116, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .topic-btn-blue:hover {
-    background: linear-gradient(180deg, #6b8bb4 0%, #4d7099 100%);
+    background: linear-gradient(180deg, var(--primary-muted) 0%, var(--accent-hover) 100%);
     box-shadow:
-      0 12px 28px rgba(48, 77, 120, 0.34),
+      0 12px 28px rgba(47, 125, 116, 0.28),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   .topic-btn-rose {
-    background: linear-gradient(180deg, #c97a72 0%, #af5e57 100%);
+    background: linear-gradient(180deg, var(--accent-warm) 0%, var(--danger) 100%);
     box-shadow:
-      0 8px 20px rgba(146, 71, 66, 0.28),
+      0 8px 20px rgba(185, 75, 75, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .topic-btn-rose:hover {
-    background: linear-gradient(180deg, #d4877f 0%, #ba685f 100%);
+    background: linear-gradient(180deg, var(--primary-muted) 0%, var(--danger) 100%);
     box-shadow:
-      0 12px 28px rgba(146, 71, 66, 0.34),
+      0 12px 28px rgba(185, 75, 75, 0.28),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
@@ -130,7 +155,6 @@
   .topic-btn:hover .topic-btn-arrow {
     transform: translateX(2px);
   }
-}
   /* 卡片 */
 
   .card {
@@ -145,7 +169,7 @@
   /* navbar链接 */
 
   .nav-link {
-    @apply rounded-md px-3 py-2 text-sm text-gray-600 cursor-pointer transition;
+    @apply rounded-md px-3 py-2 text-sm cursor-pointer transition;
     color: var(--muted);
   }
 
@@ -154,6 +178,12 @@
     color: var(--text);
   }
 
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
 }
 .hero-fade-image {
   mask-image: radial-gradient(

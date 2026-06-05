@@ -60,7 +60,7 @@ export default async function Teacher() {
         <Container>
           {/* HERO */}
           <section className="mb-10 sm:mb-12">
-            <div className="relative overflow-hidden rounded-[2rem] shadow-2xl">
+            <div className="relative overflow-hidden rounded-[2rem] shadow-[var(--shadow-lg)]">
               <div
                 className="absolute inset-0"
                 style={{
@@ -81,21 +81,21 @@ export default async function Teacher() {
                 />
               </div>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,rgba(255,255,255,0.06),transparent_26%)]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--bg-soft)]/70 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-[var(--bg-soft)]" />
 
               <div className="relative z-10 flex min-h-[440px] items-center px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14">
                 <div className="max-w-2xl">
-                  <p className="mb-3 inline-flex items-center rounded-full border border-white/15 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/75 sm:text-xs">
+                  <p className="mb-3 inline-flex items-center rounded-full border border-[var(--border)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)] sm:text-xs">
                     Teacher Reflection
                   </p>
 
-                  <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl lg:text-6xl lg:leading-tight">
+                  <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text)] sm:text-4xl lg:text-6xl lg:leading-tight">
                     Teacher 
-                    <span className="block text-white/95">Reflection</span>
+                    <span className="block text-[var(--text)]">Reflection</span>
                   </h1>
 
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-white/80 sm:text-base lg:text-lg">
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-soft)] sm:text-base lg:text-lg">
                     A soulful space for early childhood education, creative
                     learning and astrology parenting.
                   </p>
@@ -103,7 +103,7 @@ export default async function Teacher() {
                   <div className="mt-7 flex flex-wrap gap-3">
                     <Link
                       href="/posts"
-                      className="inline-flex items-center rounded-2xl border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card-muted)]"
                     >
                       All Articles
                     </Link>
@@ -111,7 +111,7 @@ export default async function Teacher() {
                     {canManagePosts && (
                       <Link
                         href="/admin/posts/new"
-                        className="inline-flex items-center rounded-2xl border border-white/20 bg-[#f2dfca]/90 px-5 py-3 text-sm font-semibold text-[#5a4236] shadow-lg shadow-black/10 transition hover:scale-[1.02] hover:bg-[#f5e7d6]"
+                        className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-5 py-3 text-sm font-semibold text-[var(--primary)] shadow-[var(--shadow-sm)] shadow-[var(--shadow-sm)] transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
                       >
                         New Post
                       </Link>
@@ -125,24 +125,24 @@ export default async function Teacher() {
           {/* CONTENT: POSTS + READER NOTES */}
           <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
             {/* LEFT: POSTS */}
-            <div className="rounded-3xl border border-white/10 bg-black/25 p-4 shadow-2xl backdrop-blur-md sm:p-5">
+            <div className="rounded-3xl border border-[var(--border)] bg-[color:var(--bg)]/80 p-4 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-5">
               <div className="mb-5 flex items-center justify-between gap-3">
                 <div>
-                  <p className="mb-1 text-sm uppercase tracking-[0.2em] text-white/55">
+                  <p className="mb-1 text-sm uppercase tracking-[0.2em] text-[var(--text-faint)]">
                     Category Archive
                   </p>
-                  <h2 className="text-2xl font-semibold text-white">
+                  <h2 className="text-2xl font-semibold text-[var(--text)]">
            Teacher Reflection
                   </h2>
                 </div>
 
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70">
+                <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1 text-xs font-medium text-[var(--text-soft)]">
                   {posts?.length ?? 0} articles
                 </span>
               </div>
 
               {!posts || posts.length === 0 ? (
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-white/70">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-6 text-[var(--text-soft)]">
                   No published posts in this category yet.
                 </div>
               ) : (
@@ -150,7 +150,7 @@ export default async function Teacher() {
                   {posts.map((post) => (
                     <article
                       key={post.slug}
-                      className="group overflow-hidden rounded-2xl border border-white/10 bg-[rgba(255,255,255,0.08)] p-3 shadow-lg backdrop-blur-sm transition hover:bg-[rgba(255,255,255,0.11)]"
+                      className="group overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-3 shadow-[var(--shadow-sm)] backdrop-blur-sm transition hover:bg-[var(--card-soft)]"
                     >
                       <div className="flex flex-col gap-4 sm:flex-row">
                         <Link
@@ -164,34 +164,34 @@ export default async function Teacher() {
                               className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                             />
                           ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-white/5 text-sm text-white/45">
+                            <div className="flex h-full w-full items-center justify-center bg-[var(--card-soft)] text-sm text-[var(--text-faint)]">
                               No image
                             </div>
                           )}
                         </Link>
 
                         <div className="flex min-w-0 flex-1 flex-col">
-                          <div className="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-white/45">
+                          <div className="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-[var(--text-faint)]">
                             Understanding Children
                           </div>
 
-                          <h3 className="text-lg font-semibold leading-snug text-white sm:text-xl">
+                          <h3 className="text-lg font-semibold leading-snug text-[var(--text)] sm:text-xl">
                             <Link
                               href={`/posts/${post.slug}`}
-                              className="transition hover:text-white/85"
+                              className="transition hover:text-[var(--text)]"
                             >
                               {post.title}
                             </Link>
                           </h3>
 
                           {post.excerpt && (
-                            <p className="mt-3 line-clamp-3 text-sm leading-7 text-white/72 sm:text-[15px]">
+                            <p className="mt-3 line-clamp-3 text-sm leading-7 text-[var(--text-soft)] sm:text-[15px]">
                               {post.excerpt}
                             </p>
                           )}
 
                           <div className="mt-4 flex items-end justify-between gap-3">
-                            <p className="text-sm text-white/50">
+                            <p className="text-sm text-[var(--text-faint)]">
                               {post.published_at
                                 ? new Date(post.published_at).toLocaleDateString()
                                 : ""}
@@ -199,7 +199,7 @@ export default async function Teacher() {
 
                             <Link
                               href={`/posts/${post.slug}`}
-                              className="inline-flex items-center rounded-xl border border-white/12 bg-white/8 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/14"
+                              className="inline-flex items-center rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--card-muted)]"
                             >
                               Read Article
                             </Link>
@@ -213,12 +213,12 @@ export default async function Teacher() {
             </div>
 
             {/* RIGHT: WHAT READERS SAY */}
-            <aside className="rounded-3xl border border-white/10 bg-black/25 p-4 shadow-2xl backdrop-blur-md sm:p-5">
+            <aside className="rounded-3xl border border-[var(--border)] bg-[color:var(--bg)]/80 p-4 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-5">
               <div className="mb-5">
-                <p className="mb-1 text-sm uppercase tracking-[0.2em] text-white/55">
+                <p className="mb-1 text-sm uppercase tracking-[0.2em] text-[var(--text-faint)]">
                   Community
                 </p>
-                <h2 className="text-2xl font-semibold text-white">
+                <h2 className="text-2xl font-semibold text-[var(--text)]">
                   What Readers Say
                 </h2>
               </div>
@@ -227,19 +227,19 @@ export default async function Teacher() {
                 {readerNotes.map((note, index) => (
                   <div
                     key={index}
-                    className="rounded-2xl border border-white/10 bg-[rgba(255,255,255,0.08)] p-4"
+                    className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-4"
                   >
-                    <p className="text-sm leading-7 text-white/78">
+                    <p className="text-sm leading-7 text-[var(--text-soft)]">
                       “{note.quote}”
                     </p>
-                    <p className="mt-3 text-sm font-medium text-white/52">
+                    <p className="mt-3 text-sm font-medium text-[var(--text-faint)]">
                       — {note.author}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-5 rounded-2xl border border-dashed border-white/12 bg-white/[0.04] p-4 text-sm leading-7 text-white/55">
+              <div className="mt-5 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card-soft)] p-4 text-sm leading-7 text-[var(--text-faint)]">
                 Future area for comments, reader reflections, and community notes.
               </div>
             </aside>

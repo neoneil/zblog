@@ -114,7 +114,7 @@ export default function RootLayout({
 // }>) {
 //   return (
 //     <html lang="en">
-//       <body className="min-h-screen text-gray-900 antialiased" style={{
+//       <body className="min-h-screen text-[var(--text)] antialiased" style={{
 //         background: "var(--bg)",
 //         color: "var(--text)"
 //       }}>

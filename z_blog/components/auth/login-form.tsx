@@ -54,7 +54,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleLogin} className="space-y-4 max-w-md">
       <input
-        className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 !text-black placeholder:text-gray-400"
+        className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 !text-[var(--text)] placeholder:text-[var(--text-faint)]"
         type="email"
         placeholder="Email"
         value={email}
@@ -62,7 +62,7 @@ export default function LoginForm() {
       />
 
       <input
-        className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 !text-black placeholder:text-gray-400"
+        className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 !text-[var(--text)] placeholder:text-[var(--text-faint)]"
         type="password"
         placeholder="Password"
         value={password}
@@ -73,7 +73,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-xl border border-gray-300 bg-white px-4 py-2 !text-black transition hover:bg-gray-100"
+          className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 !text-[var(--text)] transition hover:bg-[var(--bg-soft)]"
         >
           {loading ? "Loading..." : "Login"}
         </button>
@@ -82,13 +82,13 @@ export default function LoginForm() {
           type="button"
           disabled={loading}
           onClick={handleGoogleLogin}
-          className="rounded-xl border border-gray-300 bg-white px-4 py-2 !text-black transition hover:bg-gray-100"
+          className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 !text-[var(--text)] transition hover:bg-[var(--bg-soft)]"
         >
           Continue with Google
         </button>
       </div>
 
-      {message && <p className="text-sm text-white">{message}</p>}
+      {message && <p className="text-sm text-[var(--text)]">{message}</p>}
     </form>
   );
 }

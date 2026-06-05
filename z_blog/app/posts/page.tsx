@@ -44,19 +44,19 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
       </div>
 
       {/* 遮罩 */}
-      <div className="fixed inset-0 -z-10 bg-black/60" />
+      <div className="fixed inset-0 -z-10 bg-[color:var(--bg)]/80" />
 
       {/* 渐变 */}
-      <div className="absolute inset-0 bg-linear-to-b from-black/55 via-slate-950/45 to-black/70" />
+      <div className="absolute inset-0 bg-linear-to-b from-[var(--bg-soft)] via-[var(--card-muted)] to-[var(--bg-soft)]" />
 
       {/* 光感 */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[var(--bg-soft)]" />
 
       <div className="relative z-10 py-12 sm:py-16">
         <Container>
           {/* 标题 + 搜索 */}
-          <div className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <h1 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
+          <div className="mb-8 rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur-md">
+            <h1 className="mb-4 text-3xl font-bold text-[var(--text)] sm:text-4xl">
               Posts
             </h1>
 
@@ -66,12 +66,12 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                 name="q"
                 defaultValue={keyword}
                 placeholder="Search posts..."
-                className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-white placeholder:text-white/50 outline-none backdrop-blur-md"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-4 py-3 text-[var(--text)] placeholder:text-[var(--text-faint)] outline-none backdrop-blur-md"
               />
 
               <button
                 type="submit"
-                className="rounded-xl border border-white/15 bg-white/10 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/15"
+                className="rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--card-muted)]"
               >
                 Search
               </button>
@@ -80,25 +80,25 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
           {/* 搜索提示 */}
           {keyword ? (
-            <p className="mb-6 text-sm text-white/60">
+            <p className="mb-6 text-sm text-[var(--text-soft)]">
               Search result for:{" "}
-              <span className="font-medium text-white">{keyword}</span>
+              <span className="font-medium text-[var(--text)]">{keyword}</span>
             </p>
           ) : null}
 
           {/* 内容 */}
           {error ? (
-            <p className="text-white/70">加载失败：{error.message}</p>
+            <p className="text-[var(--text-soft)]">加载失败：{error.message}</p>
           ) : !posts || posts.length === 0 ? (
-            <p className="text-white/70">没有找到文章。</p>
+            <p className="text-[var(--text-soft)]">没有找到文章。</p>
           ) : (
             <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
               {posts.map((post) => (
                 <article
                   key={post.id}
-                  className="rounded-2xl border border-white/10 bg-white/10 p-5 shadow-xl backdrop-blur-sm transition duration-300 hover:bg-white/[0.14] hover:shadow-2xl sm:p-6"
+                  className="rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] p-5 shadow-[var(--shadow-md)] backdrop-blur-sm transition duration-300 hover:bg-[var(--card-soft)] hover:shadow-[var(--shadow-lg)] sm:p-6"
                 >
-                  <h2 className="mb-2 text-xl font-semibold text-white sm:text-2xl">
+                  <h2 className="mb-2 text-xl font-semibold text-[var(--text)] sm:text-2xl">
                     <Link
                       href={`/posts/${post.slug}`}
                       className="transition hover:underline"
@@ -107,7 +107,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                     </Link>
                   </h2>
 
-                  <p className="mb-3 text-sm text-white/60">
+                  <p className="mb-3 text-sm text-[var(--text-soft)]">
                     {post.published_at
                       ? new Date(post.published_at).toLocaleDateString()
                       : new Date(post.created_at).toLocaleDateString()}
@@ -124,12 +124,12 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                   )}
 
                   {post.excerpt && (
-                    <p className="mb-4 text-white/75">{post.excerpt}</p>
+                    <p className="mb-4 text-[var(--text-soft)]">{post.excerpt}</p>
                   )}
 
                   <Link
                     href={`/posts/${post.slug}`}
-                    className="text-sm font-medium text-white hover:underline"
+                    className="text-sm font-medium text-[var(--text)] hover:underline"
                   >
                     Read more →
                   </Link>
@@ -188,17 +188,17 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 //       </div>
 
 //       {/* 遮罩层 */}
-//       <div className="absolute inset-0 -z-10 bg-black/55" />
-//       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/50 via-slate-950/35 to-black/70" />
+//       <div className="absolute inset-0 -z-10 bg-[color:var(--bg)]/80" />
+//       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[var(--bg-soft)] via-[var(--card-muted)] to-[var(--bg-soft)]" />
 
 //       {/* 光感 */}
-//       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14),transparent_34%)]" />
+//       <div className="absolute inset-0 -z-10 bg-[var(--bg-soft)]" />
 
 //       <div className="relative z-10 py-12 sm:py-16">
 //         <Container>
 //           {/* 标题 + 搜索 */}
-//           <div className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-//             <h1 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
+//           <div className="mb-8 rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur-md">
+//             <h1 className="mb-4 text-3xl font-bold text-[var(--text)] sm:text-4xl">
 //               Posts
 //             </h1>
 
@@ -208,12 +208,12 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 //                 name="q"
 //                 defaultValue={keyword}
 //                 placeholder="Search posts..."
-//                 className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-white placeholder:text-white/50 outline-none backdrop-blur-md"
+//                 className="w-full rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-4 py-3 text-[var(--text)] placeholder:text-[var(--text-faint)] outline-none backdrop-blur-md"
 //               />
 
 //               <button
 //                 type="submit"
-//                 className="rounded-xl border border-white/15 bg-white/10 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/15"
+//                 className="rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--card-muted)]"
 //               >
 //                 Search
 //               </button>
@@ -222,25 +222,25 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
 //           {/* 搜索提示 */}
 //           {keyword ? (
-//             <p className="mb-6 text-sm text-white/60">
+//             <p className="mb-6 text-sm text-[var(--text-soft)]">
 //               Search result for:{" "}
-//               <span className="font-medium text-white">{keyword}</span>
+//               <span className="font-medium text-[var(--text)]">{keyword}</span>
 //             </p>
 //           ) : null}
 
 //           {/* 内容 */}
 //           {error ? (
-//             <p className="text-white/70">加载失败：{error.message}</p>
+//             <p className="text-[var(--text-soft)]">加载失败：{error.message}</p>
 //           ) : !posts || posts.length === 0 ? (
-//             <p className="text-white/70">没有找到文章。</p>
+//             <p className="text-[var(--text-soft)]">没有找到文章。</p>
 //           ) : (
 //             <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
 //               {posts.map((post) => (
 //                 <article
 //                   key={post.id}
-//                   className="rounded-2xl border border-white/10 bg-white/10 p-5 shadow-xl backdrop-blur-sm transition duration-300 hover:bg-white/[0.14] hover:shadow-2xl sm:p-6"
+//                   className="rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] p-5 shadow-[var(--shadow-md)] backdrop-blur-sm transition duration-300 hover:bg-[var(--card-soft)] hover:shadow-[var(--shadow-lg)] sm:p-6"
 //                 >
-//                   <h2 className="mb-2 text-xl font-semibold text-white sm:text-2xl">
+//                   <h2 className="mb-2 text-xl font-semibold text-[var(--text)] sm:text-2xl">
 //                     <Link
 //                       href={`/posts/${post.slug}`}
 //                       className="transition hover:underline"
@@ -249,7 +249,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 //                     </Link>
 //                   </h2>
 
-//                   <p className="mb-3 text-sm text-white/60">
+//                   <p className="mb-3 text-sm text-[var(--text-soft)]">
 //                     {post.published_at
 //                       ? new Date(post.published_at).toLocaleDateString()
 //                       : new Date(post.created_at).toLocaleDateString()}
@@ -266,12 +266,12 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 //                   )}
 
 //                   {post.excerpt && (
-//                     <p className="mb-4 text-white/75">{post.excerpt}</p>
+//                     <p className="mb-4 text-[var(--text-soft)]">{post.excerpt}</p>
 //                   )}
 
 //                   <Link
 //                     href={`/posts/${post.slug}`}
-//                     className="text-sm font-medium text-white hover:underline"
+//                     className="text-sm font-medium text-[var(--text)] hover:underline"
 //                   >
 //                     Read more →
 //                   </Link>
@@ -330,7 +330,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 // //             />
 // //             <button
 // //               type="submit"
-// //               className="rounded-xl border px-5 py-3 text-sm font-medium hover:bg-gray-50"
+// //               className="rounded-xl border px-5 py-3 text-sm font-medium hover:bg-[var(--bg-soft)]"
 // //             >
 // //               Search
 // //             </button>
@@ -338,7 +338,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 // //         </div>
 
 // //         {keyword ? (
-// //           <p className="mb-6 text-sm text-gray-500">
+// //           <p className="mb-6 text-sm text-[var(--text-faint)]">
 // //             Search result for: <span className="font-medium">{keyword}</span>
 // //           </p>
 // //         ) : null}
@@ -346,7 +346,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 // //         {error ? (
 // //           <p>加载失败：{error.message}</p>
 // //         ) : !posts || posts.length === 0 ? (
-// //           <p className="text-gray-500">没有找到文章。</p>
+// //           <p className="text-[var(--text-faint)]">没有找到文章。</p>
 // //         ) : (
 // //           <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
 // //             {posts.map((post) => (
@@ -360,7 +360,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 // //                   </Link>
 // //                 </h2>
 
-// //                 <p className="mb-3 text-sm text-gray-500">
+// //                 <p className="mb-3 text-sm text-[var(--text-faint)]">
 // //                   {post.published_at
 // //                     ? new Date(post.published_at).toLocaleDateString()
 // //                     : new Date(post.created_at).toLocaleDateString()}
@@ -375,12 +375,12 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 // //                   </Link>
 // //                 )}
 // //                 {post.excerpt && (
-// //                   <p className="mb-4 text-gray-700">{post.excerpt}</p>
+// //                   <p className="mb-4 text-[var(--text-soft)]">{post.excerpt}</p>
 // //                 )}
 
 // //                 <Link
 // //                   href={`/posts/${post.slug}`}
-// //                   className="text-sm font-medium text-black hover:underline"
+// //                   className="text-sm font-medium text-[var(--text)] hover:underline"
 // //                 >
 // //                   Read more →
 // //                 </Link>
@@ -429,14 +429,14 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 // // //                 </Link>
 // // //               </h2>
 
-// // //               <p className="mb-3 text-sm text-gray-500">
+// // //               <p className="mb-3 text-sm text-[var(--text-faint)]">
 // // //                 {post.published_at
 // // //                   ? new Date(post.published_at).toLocaleDateString()
 // // //                   : "Unpublished"}
 // // //               </p>
 
 // // //               {post.excerpt && (
-// // //                 <p className="mb-4 text-gray-700">{post.excerpt}</p>
+// // //                 <p className="mb-4 text-[var(--text-soft)]">{post.excerpt}</p>
 // // //               )}
 
 // // //               <Link
