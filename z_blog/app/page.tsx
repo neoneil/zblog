@@ -101,7 +101,7 @@ export default async function HomePage() {
 
                     <Link
                       href="/categories"
-                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--primary)] shadow-[var(--shadow-sm)] shadow-[var(--shadow-sm)] transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
+                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--primary)] shadow-(--shadow-sm) transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
                     >
                       Browse Categories
                     </Link>
