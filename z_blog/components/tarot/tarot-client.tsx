@@ -63,7 +63,7 @@ export default function TarotClient() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data?.error || "Failed to generate reading.");
+        throw new Error(data?.error || "生成解读失败。");
       }
 
       setReading(data.reading ?? "");
@@ -151,7 +151,7 @@ export default function TarotClient() {
           </p>
         <div className="mb-8 max-w-3xl">
           <p className="mb-2 text-sm uppercase tracking-[0.35em] text-[var(--primary)]">
-            Tarot Reading
+            塔罗解读
           </p>
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
             三张塔罗牌解读 
@@ -564,4 +564,3 @@ export default function TarotClient() {
 //     </div>
 //   );
 // }
-

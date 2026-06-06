@@ -15,7 +15,7 @@ export default function LogoutButton() {
       onClick={handleLogout}
       className="nav-link"
     >
-      Logout
+      退出登录
     </button>
   );
 }

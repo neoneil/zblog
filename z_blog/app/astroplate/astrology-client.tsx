@@ -356,7 +356,7 @@ export default function AstrologyPage() {
     const query = cityQuery.trim();
 
     if (!query) {
-      setGeoError("请输入城市名，例如：Melbourne 或 Melbourne, Australia");
+      setGeoError("请输入城市名，例如：墨尔本 或 墨尔本, 澳大利亚");
       return;
     }
 
@@ -595,7 +595,7 @@ export default function AstrologyPage() {
                   <div className="flex items-stretch gap-3">
                     <input
                       className={`${INPUT_CLASS} min-w-0 flex-1`}
-                      placeholder="例如：Melbourne, Australia"
+                      placeholder="例如：悉尼, 澳大利亚"
                       value={cityQuery}
                       onChange={(e) => setCityQuery(e.target.value)}
                     />
@@ -672,19 +672,19 @@ export default function AstrologyPage() {
                     }))
                   }
                 >
-                  <option value="placidus">普拉西德制 Placidus</option>
-                  <option value="koch">柯赫制 Koch</option>
-                  <option value="campanus">坎帕努斯制 Campanus</option>
-                  <option value="whole-sign">整宫制 Whole Sign</option>
-                  <option value="equal-house">等宫制 Equal House</option>
+                  <option value="placidus">普拉西德制</option>
+                  <option value="koch">柯赫制</option>
+                  <option value="campanus">坎帕努斯制</option>
+                  <option value="whole-sign">整宫制</option>
+                  <option value="equal-house">等宫制</option>
                   <option value="regiomontanus">
                     雷吉蒙塔努斯制 Regiomontanus
                   </option>
-                  <option value="topocentric">地平制 Topocentric</option>
+                  <option value="topocentric">地平制</option>
                 </select>
               </Field>
 
-              <Field label="黄道类型 Zodiac">
+              <Field label="黄道类型">
                 <select
                   className={INPUT_CLASS}
                   value={form.zodiac}
@@ -695,8 +695,8 @@ export default function AstrologyPage() {
                     }))
                   }
                 >
-                  <option value="tropical">回归黄道 Tropical</option>
-                  <option value="sidereal">恒星黄道 Sidereal</option>
+                  <option value="tropical">回归黄道</option>
+                  <option value="sidereal">恒星黄道</option>
                 </select>
               </Field>
 

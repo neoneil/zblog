@@ -23,8 +23,8 @@ export default async function Image({
     .eq("status", "published")
     .single();
 
-  const title = post?.title ?? "My Blog";
-  const excerpt = post?.excerpt ?? "Read the latest article on My Blog";
+  const title = post?.title ?? "星语童年";
+  const excerpt = post?.excerpt ?? "阅读最新文章";
 
   return new ImageResponse(
     (

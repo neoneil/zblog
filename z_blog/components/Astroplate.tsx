@@ -10,7 +10,7 @@ export default function Astroplate({ imageSrc }: AstroplateProps) {
         <div className="relative h-full min-h-[520px] overflow-hidden rounded-[32px] border border-[var(--border)]">
             <Image
                 src={imageSrc}
-                alt="Astro plate"
+                alt="星盘"
                 fill
                 priority
                 className="object-fill"

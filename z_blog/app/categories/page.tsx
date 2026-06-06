@@ -10,7 +10,7 @@ export default function CategoriesPage() {
       {/* <div className="fixed inset-0 -z-10">
         <Image
           src="/cosmic-bg.webp"
-          alt="Background"
+          alt="背景"
           fill
           priority
           className="object-cover"

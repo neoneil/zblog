@@ -61,10 +61,10 @@ export default function AboutUsCosmicPage() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">Natal Chart</span>
-              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">Tarot Reading</span>
-              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">AI Interpretation</span>
-              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">Cosmic Design</span>
+              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">本命星盘</span>
+              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">塔罗解读</span>
+              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">AI 解读</span>
+              <span className="rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-4 py-2 text-sm text-[var(--primary)]">宇宙设计</span>
             </div>
           </div>
 
@@ -87,7 +87,7 @@ export default function AboutUsCosmicPage() {
                   <div className="absolute inset-0 flex items-center justify-center text-center">
                     <div>
                       <div className="text-5xl text-[var(--primary)]">✦</div>
-                      <div className="mt-3 text-lg font-medium text-[var(--text)]">Cosmic Story</div>
+                      <div className="mt-3 text-lg font-medium text-[var(--text)]">宇宙故事</div>
                       <div className="mt-1 text-sm text-[var(--primary)]">星盘 · 塔罗 · 灵感宇宙</div>
                     </div>
                   </div>
@@ -112,7 +112,7 @@ export default function AboutUsCosmicPage() {
 
         <section className="mt-18 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-[30px] border border-[var(--border)] bg-[var(--bg-soft)] p-8">
-            <p className="text-sm uppercase tracking-[0.25em] text-[var(--primary)]">Our Vision</p>
+            <p className="text-sm uppercase tracking-[0.25em] text-[var(--primary)]">我们的愿景</p>
             <h2 className="mt-4 text-3xl font-semibold text-[var(--text)] md:text-4xl">
               不只是占卜页，
               而是一个让人愿意停留的宇宙角落
@@ -143,7 +143,7 @@ export default function AboutUsCosmicPage() {
         <section className="mt-16">
           <div className="rounded-[34px] border border-[var(--border)] bg-[var(--bg-soft)] px-6 py-10 md:px-10 md:py-14 text-center shadow-[var(--shadow-md)]">
             <div className="mx-auto max-w-3xl">
-              <p className="text-sm uppercase tracking-[0.3em] text-[var(--primary)]">Still Growing</p>
+              <p className="text-sm uppercase tracking-[0.3em] text-[var(--primary)]">仍在生长</p>
               <h2 className="mt-4 text-3xl font-semibold text-[var(--text)] md:text-5xl">
                 这片宇宙还在继续生成中
               </h2>

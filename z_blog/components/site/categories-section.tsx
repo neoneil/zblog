@@ -30,7 +30,7 @@ export default function CategoriesSection() {
             <div className="absolute inset-0">
               <Image
                 src={category.backgroundImage}
-                alt={`${category.title} background`}
+                alt={`${category.title}背景`}
                 fill
                 className="object-cover object-left-top opacity-90"
                 sizes="(max-width: 768px) 100vw, 25vw"

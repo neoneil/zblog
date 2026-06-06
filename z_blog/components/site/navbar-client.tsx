@@ -70,12 +70,12 @@ export default function NavbarClient({
             href="/"
             className="shrink-0 text-lg font-bold tracking-tight text-[var(--text)] transition hover:text-[var(--text)] sm:text-xl"
           >
-            Cosmic Childhood
+            星语童年
           </Link>
 
           <button
             type="button"
-            aria-label="Toggle navigation menu"
+            aria-label="切换导航菜单"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((prev) => !prev)}
             className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card-soft)] text-[var(--text)] transition hover:bg-[var(--card-muted)] lg:hidden"
@@ -106,33 +106,33 @@ export default function NavbarClient({
 
           <nav className="hidden items-center justify-end gap-1.5 sm:gap-2 lg:flex lg:gap-3">
             <Link href="/" className={navLinkClass}>
-              Home
+              首页
             </Link>
 
             <Link href="/categories" className={navLinkClass}>
-              Main categories
+              主要分类
             </Link>
 
             <Link href="/resources" className={navLinkClass}>
-              Resources
+              资源
             </Link>
 
             <Link href="/aboutus" className={navLinkClass}>
-              About us
+              关于我们
             </Link>
 
             <Link href="/tarot" className={navLinkClass}>
-              Tarot AI
+              塔罗 AI
             </Link>
             <Link href="/classroom" className={navLinkClass}>
-              Online Meeting
+              在线课堂
             </Link>
 
             {user ? (
               <>
                 {canManagePosts && (
                   <Link href="/admin" className={navLinkClass}>
-                    Admin
+                    管理后台
                   </Link>
                 )}
 
@@ -161,14 +161,14 @@ export default function NavbarClient({
             ) : (
               <>
                 <Link href="/login" className={navLinkClass}>
-                  Login
+                  登录
                 </Link>
 
                 <Link
                   href="/sign-up"
                   className="rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card)] lg:text-base"
                 >
-                  Sign up
+                  注册
                 </Link>
               </>
             )}
@@ -183,7 +183,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                Home
+                首页
               </Link>
 
               <Link
@@ -191,7 +191,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                Main categories
+                主要分类
               </Link>
 
               <Link
@@ -199,7 +199,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                Resources
+                资源
               </Link>
 
               <Link
@@ -207,7 +207,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                About us
+                关于我们
               </Link>
 
               <Link
@@ -215,7 +215,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                Tarot AI
+                塔罗 AI
               </Link>
 
               {user ? (
@@ -226,7 +226,7 @@ export default function NavbarClient({
                       className={mobileLinkClass}
                       onClick={() => setMobileOpen(false)}
                     >
-                      Admin
+                      管理后台
                     </Link>
                   )}
 
@@ -261,7 +261,7 @@ export default function NavbarClient({
                     className={mobileLinkClass}
                     onClick={() => setMobileOpen(false)}
                   >
-                    Login
+                    登录
                   </Link>
 
                   <Link
@@ -269,7 +269,7 @@ export default function NavbarClient({
                     className="rounded-xl bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card)]"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Sign up
+                    注册
                   </Link>
                 </div>
               )}

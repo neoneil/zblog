@@ -4,8 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import TarotClient from "@/components/tarot/tarot-client";
 
 export const metadata = {
-  title: "Tarot Reading",
-  description: "Draw three tarot cards and get an AI reading.",
+  title: "塔罗解读",
+  description: "抽取三张塔罗牌，获得 AI 解读。",
 };
 
 export default async function TarotPage() {

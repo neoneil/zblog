@@ -46,7 +46,7 @@ export default function CreatePostForm() {
     const slug = slugify(title);
 
     if (!slug) {
-      setMessage("Title cannot generate slug");
+      setMessage("标题无法生成链接标识");
       setLoading(false);
       return;
     }
@@ -105,14 +105,14 @@ export default function CreatePostForm() {
     <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
       <input
         className="w-full rounded border px-3 py-2"
-        placeholder="Title"
+        placeholder="标题"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
 
       <textarea
         className="w-full rounded border px-3 py-2"
-        placeholder="Excerpt"
+        placeholder="摘要"
         value={excerpt}
         onChange={(e) => setExcerpt(e.target.value)}
         rows={3}
@@ -121,16 +121,16 @@ export default function CreatePostForm() {
       <textarea
         className="w-full rounded border px-3 py-2"
         // placeholder="Content"
-        placeholder={`# Title
+        placeholder={`# 标题
 
-        ## Subtitle
+        ## 副标题
 
-        Write your markdown here...
+        在这里编写 Markdown 内容...
 
-        - item 1
-        - item 2
+        - 条目 1
+        - 条目 2
 
-        **bold**
+        **加粗文字**
         `}
         value={content}
         onChange={(e) => setContent(e.target.value)}
@@ -148,10 +148,10 @@ export default function CreatePostForm() {
         onChange={(e) => setCategory(e.target.value as "Understanding Children" | "Teaching Practice" | "Family Education" | "Teacher Reflection")}
         className="border rounded px-3 py-2"
       >
-        <option value="Understanding Children">Understanding Children</option>
-        <option value="Teaching Practice">Teaching Practice</option>
-        <option value="Family Education">Family Education</option>
-        <option value="Teacher Reflection">Teacher Reflection</option>
+        <option value="Understanding Children">理解儿童</option>
+        <option value="Teaching Practice">教学实践</option>
+        <option value="Family Education">家庭教育</option>
+        <option value="Teacher Reflection">教师反思</option>
       </select>
 
       <select
@@ -159,8 +159,8 @@ export default function CreatePostForm() {
         value={status}
         onChange={(e) => setStatus(e.target.value as "draft" | "published")}
       >
-        <option value="draft">Draft</option>
-        <option value="published">Published</option>
+        <option value="draft">草稿</option>
+        <option value="published">已发布</option>
       </select>
 
       <div>
@@ -169,7 +169,7 @@ export default function CreatePostForm() {
           disabled={loading}
           className="rounded border px-4 py-2"
         >
-          {loading ? "Saving..." : "Create Post"}
+          {loading ? "保存中..." : "创建文章"}
         </button>
       </div>
 

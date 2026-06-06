@@ -56,7 +56,7 @@ export default function TarotCard({
           >
             <Image
               src={encodeURI(tarotCardBack)}
-              alt="Tarot card back"
+              alt="塔罗牌背面"
               fill
               sizes="(max-width: 640px) 170px, 180px"
               className="object-cover"

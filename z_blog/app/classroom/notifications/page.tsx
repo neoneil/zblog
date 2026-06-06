@@ -74,8 +74,8 @@ export default function ClassroomNotificationsPage() {
     <main className="min-h-screen bg-[var(--bg)] px-4 py-10">
       <div className="mx-auto w-full max-w-3xl">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[var(--text)]">Zoom Classroom Notifications</h1>
-          <p className="mt-2 text-sm text-[var(--text-soft)]">Copy your Meeting ID or open Zoom directly.</p>
+          <h1 className="text-2xl font-bold text-[var(--text)]">Zoom 课堂通知</h1>
+          <p className="mt-2 text-sm text-[var(--text-soft)]">复制会议 ID，或直接打开 Zoom。</p>
         </div>
 
         <div className="mb-6">
@@ -85,9 +85,9 @@ export default function ClassroomNotificationsPage() {
         </div>
 
         {loading ? (
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 text-sm text-[var(--text-soft)]">Loading...</div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 text-sm text-[var(--text-soft)]">加载中...</div>
         ) : notifications.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 text-sm text-[var(--text-soft)]">No Zoom classroom notifications yet.</div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 text-sm text-[var(--text-soft)]">暂无 Zoom 课堂通知。</div>
         ) : (
           <div className="space-y-4">
             {notifications.map((notification) => {
@@ -103,7 +103,7 @@ export default function ClassroomNotificationsPage() {
                     </div>
 
                     {!notification.is_read ? (
-                      <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">New</span>
+                      <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">新通知</span>
                     ) : null}
                   </div>
 

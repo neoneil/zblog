@@ -57,7 +57,7 @@ export default async function HomePage() {
               >
                 <Image
                   src="/hero.png"
-                  alt="Hero background"
+                  alt="首页背景"
                   fill
                   priority
                   className="object-cover"
@@ -76,19 +76,18 @@ export default async function HomePage() {
               <div className="relative z-10 flex min-h-[440px] items-center px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14">
                 <div className="max-w-2xl">
                   <p className="mb-3 inline-flex items-center rounded-full border border-[color:var(--text-inverse)]/45 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-white)] sm:text-xs">
-                    Cosmic Childhood
+                    星语童年
                   </p>
 
                   <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text-white)] sm:text-4xl lg:text-6xl lg:leading-tight">
-                    Raising Children with
+                    用智慧、自然与星辰
                     <span className="block text-[var(--text-white)]">
-                      Wisdom, Nature and Stars
+                      陪伴孩子成长
                     </span>
                   </h1>
 
                   <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-white)] sm:text-base lg:text-lg">
-                    A soulful space for early childhood education, creative
-                    learning and astrology parenting.
+                    一个关于幼儿教育、创意学习与星象育儿的温柔空间。
                   </p>
 
                   <div className="mt-7 flex flex-wrap gap-3">
@@ -96,14 +95,14 @@ export default async function HomePage() {
                       href="/posts"
                       className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text-white)] shadow-[var(--shadow-sm)] shadow-black/20 transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
                     >
-                      Start Reading
+                      开始阅读
                     </Link>
 
                     <Link
                       href="/categories"
                       className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text-white)] shadow-(--shadow-sm) transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
                     >
-                      Browse Categories
+                      浏览分类
                     </Link>
                   </div>
                 </div>
@@ -135,7 +134,7 @@ export default async function HomePage() {
             </div>
 
             {!posts || posts.length === 0 ? (
-              <p className="text-[var(--text-soft)]">No published posts yet.</p>
+              <p className="text-[var(--text-soft)]">暂无已发布文章。</p>
             ) : (
               <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
                 {posts.map((post) => (
@@ -265,13 +264,13 @@ export default async function HomePage() {
 //                 {/* Left text */}
 //                 <div className="relative z-10 max-w-2xl">
 //                   <p className="mb-3 inline-flex items-center rounded-full border border-[var(--border)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)] sm:text-xs">
-//                     Cosmic Childhood
+//                     星语童年
 //                   </p>
 
 //                   <h1 className="max-w-2xl text-xl font-semibold leading-tight tracking-tight text-[var(--text)] sm:text-2xl lg:text-4xl lg:leading-tight">
 //                     Raising Children with
 //                     <span className="block text-[var(--text)]">
-//                       Wisdom, Nature and Stars
+//                       陪伴孩子成长
 //                     </span>
 //                   </h1>
 
@@ -343,7 +342,7 @@ export default async function HomePage() {
 //             </div>
 
 //             {!posts || posts.length === 0 ? (
-//               <p className="text-[var(--text-soft)]">No published posts yet.</p>
+//               <p className="text-[var(--text-soft)]">暂无已发布文章。</p>
 //             ) : (
 //               <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
 //                 {posts.map((post) => (

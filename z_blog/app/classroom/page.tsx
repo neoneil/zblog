@@ -243,7 +243,7 @@ export default function ClassroomPage() {
             <input
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              placeholder="No password? Leave it empty"
+              placeholder="没有密码可留空"
               className="h-12 w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 text-sm outline-none transition focus:border-[var(--primary)]"
             />
           </div>

@@ -75,7 +75,7 @@ export default function TarotDeck({
             >
               <Image
                 src={encodeURI(tarotCardBack)}
-                alt="Tarot card back"
+                alt="塔罗牌背面"
                 fill
                 sizes="140px"
                 className="object-cover"
@@ -142,7 +142,7 @@ export default function TarotDeck({
               >
                 <Image
                   src={encodeURI(tarotCardBack)}
-                  alt="Tarot card back"
+                  alt="塔罗牌背面"
                   fill
                   sizes="122px"
                   className="object-cover"

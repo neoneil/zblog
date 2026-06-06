@@ -74,7 +74,7 @@ export default async function Teacher() {
               >
                 <Image
                   src="/hero.png"
-                  alt="Hero background"
+                  alt="首页背景"
                   fill
                   priority
                   className="object-cover"
@@ -92,12 +92,11 @@ export default async function Teacher() {
 
                   <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text)] sm:text-4xl lg:text-6xl lg:leading-tight">
                     Teacher 
-                    <span className="block text-[var(--text)]">Reflection</span>
+                    <span className="block text-[var(--text)]">反思</span>
                   </h1>
 
                   <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-soft)] sm:text-base lg:text-lg">
-                    A soulful space for early childhood education, creative
-                    learning and astrology parenting.
+                    一个关于幼儿教育、创意学习与星象育儿的温柔空间。
                   </p>
 
                   <div className="mt-7 flex flex-wrap gap-3">
@@ -201,7 +200,7 @@ export default async function Teacher() {
                               href={`/posts/${post.slug}`}
                               className="inline-flex items-center rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--card-muted)]"
                             >
-                              Read Article
+                              阅读文章
                             </Link>
                           </div>
                         </div>
@@ -212,14 +211,14 @@ export default async function Teacher() {
               )}
             </div>
 
-            {/* RIGHT: WHAT READERS SAY */}
+            {/* RIGHT: READER NOTES */}
             <aside className="rounded-3xl border border-[var(--border)] bg-[color:var(--bg)]/80 p-4 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-5">
               <div className="mb-5">
                 <p className="mb-1 text-sm uppercase tracking-[0.2em] text-[var(--text-faint)]">
-                  Community
+                  读者社区
                 </p>
                 <h2 className="text-2xl font-semibold text-[var(--text)]">
-                  What Readers Say
+                  读者怎么说
                 </h2>
               </div>
 

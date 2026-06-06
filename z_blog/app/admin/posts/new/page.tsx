@@ -25,7 +25,7 @@ export default async function NewPostPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-12 text-[var(--text)]">
-      <h1 className="mb-6 text-3xl font-bold">Create New Post</h1>
+      <h1 className="mb-6 text-3xl font-bold">新建文章</h1>
       <CreatePostForm />
     </main>
   );

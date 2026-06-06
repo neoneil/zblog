@@ -17,7 +17,7 @@ export default function ResourcesPage() {
       {/* <div className="fixed inset-0 -z-10">
         <Image
           src="/cosmic-bg.webp"
-          alt="Background"
+          alt="背景"
           fill
           priority
           className="object-cover"
@@ -140,7 +140,7 @@ export default function ResourcesPage() {
       <div className="relative mx-auto aspect-[3/4] max-w-[340px] overflow-hidden">
         <img
           src="/tarotCover.png"
-          alt="Astrology Book Cover"
+          alt="占星书籍封面"
           className="
             h-full w-full object-cover
             transition-all duration-700

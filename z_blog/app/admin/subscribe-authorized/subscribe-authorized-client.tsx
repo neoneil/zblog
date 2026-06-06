@@ -93,7 +93,7 @@ export default function SubscribeAuthorizedClient() {
           <div className="space-y-5">
             <input
               type="email"
-              placeholder="User email"
+              placeholder="用户邮箱"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="

@@ -56,7 +56,7 @@ export default function LoginForm() {
       <input
         className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 !text-[var(--text)] placeholder:text-[var(--text-faint)]"
         type="email"
-        placeholder="Email"
+        placeholder="邮箱"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -64,7 +64,7 @@ export default function LoginForm() {
       <input
         className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 !text-[var(--text)] placeholder:text-[var(--text-faint)]"
         type="password"
-        placeholder="Password"
+        placeholder="密码"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -75,7 +75,7 @@ export default function LoginForm() {
           disabled={loading}
           className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 !text-[var(--text)] transition hover:bg-[var(--bg-soft)]"
         >
-          {loading ? "Loading..." : "Login"}
+          {loading ? "加载中..." : "登录"}
         </button>
 
         <button
@@ -84,7 +84,7 @@ export default function LoginForm() {
           onClick={handleGoogleLogin}
           className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 !text-[var(--text)] transition hover:bg-[var(--bg-soft)]"
         >
-          Continue with Google
+          使用 Google 继续
         </button>
       </div>
 

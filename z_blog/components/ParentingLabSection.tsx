@@ -104,7 +104,7 @@ export default function ParentingLabSection() {
                                                     <div className="mt-6 space-y-3">
                                                         <input
                                                             type="email"
-                                                            placeholder="Your Email"
+                                                            placeholder="你的邮箱"
                                                             className="w-full rounded-[12px] border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)] outline-none placeholder:text-[var(--primary)] focus:border-[var(--border)]"
                                                         />
 

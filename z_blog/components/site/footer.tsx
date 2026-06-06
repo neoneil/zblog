@@ -3,48 +3,48 @@ import Container from "./container";
 
 const footerColumns = [
   {
-    title: "Main Categories",
+    title: "主要分类",
     links: [
-      { label: "Understanding Children", href: "/" },
-      { label: "Learning and Education", href: "/" },
-      { label: "Emotional Wisdom", href: "/" },
-      { label: "Cosmic Imagination", href: "/" },
+      { label: "理解儿童", href: "/" },
+      { label: "学习与教育", href: "/" },
+      { label: "情绪智慧", href: "/" },
+      { label: "宇宙想象", href: "/" },
     ],
   },
   {
-    title: "Explore",
+    title: "探索",
     links: [
-      { label: "Latest Posts", href: "/" },
-      { label: "Featured Topics", href: "/" },
-      { label: "Resources", href: "/" },
-      { label: "Reading Guide", href: "/" },
+      { label: "最新文章", href: "/" },
+      { label: "精选主题", href: "/" },
+      { label: "资源", href: "/" },
+      { label: "阅读指南", href: "/" },
     ],
   },
   {
-    title: "Community",
+    title: "社区",
     links: [
-      { label: "Partners", href: "/" },
-      { label: "Collaborators", href: "/" },
-      { label: "Guest Writers", href: "/" },
-      { label: "Newsletter", href: "/" },
+      { label: "合作伙伴", href: "/" },
+      { label: "协作者", href: "/" },
+      { label: "特邀作者", href: "/" },
+      { label: "订阅通讯", href: "/" },
     ],
   },
   {
-    title: "About",
+    title: "关于",
     links: [
-      { label: "Our Story", href: "/" },
-      { label: "Mission", href: "/" },
-      { label: "Contact", href: "/" },
-      { label: "Support", href: "/" },
+      { label: "我们的故事", href: "/" },
+      { label: "使命", href: "/" },
+      { label: "联系", href: "/" },
+      { label: "支持", href: "/" },
     ],
   },
   {
-    title: "More",
+    title: "更多",
     links: [
-      { label: "Privacy", href: "/" },
-      { label: "Terms", href: "/" },
-      { label: "FAQ", href: "/" },
-      { label: "Home", href: "/" },
+      { label: "隐私", href: "/" },
+      { label: "条款", href: "/" },
+      { label: "常见问题", href: "/" },
+      { label: "首页", href: "/" },
     ],
   },
 ];
@@ -57,11 +57,10 @@ export default function Footer() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-1">
               <h2 className="text-lg font-bold tracking-tight text-[var(--text)]">
-                Cosmic Childhood
+                星语童年
               </h2>
               <p className="mt-3 max-w-xs text-sm leading-7 text-[var(--text-soft)]">
-                A reflective space for childhood, learning, emotion, and
-                imagination.
+                一个关于童年、学习、情绪与想象力的温柔空间。
               </p>
             </div>
 
@@ -88,9 +87,9 @@ export default function Footer() {
           </div>
 
           <div className="mt-10 flex flex-col gap-3 border-t border-[var(--border)] pt-6 text-sm text-[var(--text-faint)] sm:flex-row sm:items-center sm:justify-between">
-            <p>© 2026 Z&apos;s Blog. All rights reserved.</p>
+            <p>© 2026 星语童年. 保留所有权利。</p>
             <p>
-              Built by <span className="font-medium text-[var(--text-soft)]">Chi</span>
+              制作：<span className="font-medium text-[var(--text-soft)]">Chi</span>
             </p>
           </div>
         </div>

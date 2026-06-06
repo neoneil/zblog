@@ -55,7 +55,7 @@ export default async function AdminPage() {
   return (
     <main className="mx-auto max-w-7xl px-6 py-12 text-[var(--text)]">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold">管理后台</h1>
         <p className="mt-2 text-sm text-[var(--text)]">
           Welcome, {profile.email}
         </p>

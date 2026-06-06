@@ -40,15 +40,15 @@ export async function generateMetadata(
 
   if (!post) {
     return {
-      title: "Post Not Found",
-      description: "The requested post could not be found.",
+      title: "文章未找到",
+      description: "未找到请求的文章。",
     };
   }
 
   const description =
     post.excerpt ||
     post.content.slice(0, 160) ||
-    "Read this article on My Blog.";
+    "阅读这篇文章。";
 
   const url = `${siteUrl}/posts/${post.slug}`;
 
@@ -84,7 +84,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
       {/* <div className="fixed inset-0 -z-10">
         <Image
           src="/cosmic-bg.webp"
-          alt="Background"
+          alt="背景"
           fill
           priority
           className="object-cover"

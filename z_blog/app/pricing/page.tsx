@@ -17,7 +17,7 @@ export default function PricingPage() {
 
         <div className="mt-12 w-full max-w-xl rounded-[32px] border border-[var(--border)] bg-[var(--card-soft)] p-8 backdrop-blur">
           <div className="mb-6">
-            <h2 className="text-3xl font-semibold">Premium Plan</h2>
+            <h2 className="text-3xl font-semibold">高级方案</h2>
 
             <div className="mt-4 flex items-end justify-center gap-2">
               <span className="text-6xl font-bold">AUD $99</span>

@@ -36,7 +36,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
       <div className="fixed inset-0 -z-10">
         <Image
           src="/cosmic-bg.webp"
-          alt="Background"
+          alt="背景"
           fill
           priority
           className="object-cover"
@@ -57,7 +57,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
           {/* 标题 + 搜索 */}
           <div className="mb-8 rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur-md">
             <h1 className="mb-4 text-3xl font-bold text-[var(--text)] sm:text-4xl">
-              Posts
+              文章
             </h1>
 
             <form action="/posts" className="flex flex-col gap-3 sm:flex-row">
@@ -65,7 +65,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                 type="text"
                 name="q"
                 defaultValue={keyword}
-                placeholder="Search posts..."
+                placeholder="搜索文章..."
                 className="w-full rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-4 py-3 text-[var(--text)] placeholder:text-[var(--text-faint)] outline-none backdrop-blur-md"
               />
 
@@ -73,7 +73,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                 type="submit"
                 className="rounded-xl border border-[var(--border)] bg-[var(--card-muted)] px-5 py-3 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--card-muted)]"
               >
-                Search
+                搜索
               </button>
             </form>
           </div>
@@ -81,7 +81,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
           {/* 搜索提示 */}
           {keyword ? (
             <p className="mb-6 text-sm text-[var(--text-soft)]">
-              Search result for:{" "}
+              搜索结果：{" "}
               <span className="font-medium text-[var(--text)]">{keyword}</span>
             </p>
           ) : null}
@@ -131,7 +131,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
                     href={`/posts/${post.slug}`}
                     className="text-sm font-medium text-[var(--text)] hover:underline"
                   >
-                    Read more →
+                    阅读更多 →
                   </Link>
                 </article>
               ))}

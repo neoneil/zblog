@@ -40,7 +40,7 @@ export default async function EditPostPage({ params }: PageProps) {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-12">
-      <h1 className="mb-6 text-3xl font-bold">Edit Post</h1>
+      <h1 className="mb-6 text-3xl font-bold">编辑文章</h1>
 
       <EditPostForm post={post} />
     </main>

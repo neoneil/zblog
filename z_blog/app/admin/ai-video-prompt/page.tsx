@@ -335,8 +335,8 @@ export default function AIVideoPromptPage() {
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-6">
       <div className="flex flex-col gap-3">
-        <Badge className="w-fit">AI Video Prompt Builder</Badge>
-        <h1 className="text-3xl font-bold tracking-tight text-[var(--text)]">AI 视频分镜 Prompt 生成器</h1>
+        <Badge className="w-fit">AI 视频提示词生成器</Badge>
+        <h1 className="text-3xl font-bold tracking-tight text-[var(--text)]">AI 视频分镜提示词生成器</h1>
         <p className="max-w-3xl text-sm leading-6 text-[var(--text-soft)]">用结构化 JSON 管理分镜关键词，批量生成视频时不容易忘记专业术语。</p>
       </div>
 
@@ -346,8 +346,8 @@ export default function AIVideoPromptPage() {
             <table className="w-full border-collapse text-sm">
               <thead className="bg-[var(--bg-soft)]">
                 <tr>
-                  <th className="w-[260px] border-b border-[var(--border)] px-4 py-3 text-left font-semibold text-[var(--text-soft)]">Key</th>
-                  <th className="border-b border-[var(--border)] px-4 py-3 text-left font-semibold text-[var(--text-soft)]">Value</th>
+                  <th className="w-[260px] border-b border-[var(--border)] px-4 py-3 text-left font-semibold text-[var(--text-soft)]">字段</th>
+                  <th className="border-b border-[var(--border)] px-4 py-3 text-left font-semibold text-[var(--text-soft)]">内容</th>
                 </tr>
               </thead>
               <tbody>
@@ -367,13 +367,13 @@ export default function AIVideoPromptPage() {
                               {option.zh} ｜ {option.en}
                             </option>
                           ))}
-                          <option value={CUSTOM_VALUE}>其他 / 自定义输入 ｜ Custom input</option>
+                          <option value={CUSTOM_VALUE}>其他 / 自定义输入 ｜ 自定义输入</option>
                         </select>
 
                         {customMode[item.key] ? (
                           <div className="grid gap-3 md:grid-cols-2">
                             <input value={values[item.key].zh} onChange={(event) => updateCustomValue(item.key, "zh", event.target.value)} placeholder="输入中文，例如：梦幻校园镜头" className="h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--text-faint)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]" />
-                            <input value={values[item.key].en} onChange={(event) => updateCustomValue(item.key, "en", event.target.value)} placeholder="Enter English, e.g. dreamy campus shot" className="h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--text-faint)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]" />
+                            <input value={values[item.key].en} onChange={(event) => updateCustomValue(item.key, "en", event.target.value)} placeholder="输入英文，例如：梦幻校园镜头" className="h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--text-faint)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]" />
                           </div>
                         ) : null}
                       </div>
@@ -390,8 +390,8 @@ export default function AIVideoPromptPage() {
         <Card>
           <CardContent className="flex flex-col gap-4 p-5">
             <div className="flex items-center justify-between gap-3">
-              <CardTitle>生成的中文 Prompt</CardTitle>
-              <Button onClick={copyZhPrompt}>复制中文 Prompt</Button>
+              <CardTitle>生成的中文提示词</CardTitle>
+              <Button onClick={copyZhPrompt}>复制中文提示词</Button>
             </div>
             <Textarea value={zhPromptOutput} readOnly className="min-h-[160px] resize-none text-sm leading-6" />
           </CardContent>
@@ -400,8 +400,8 @@ export default function AIVideoPromptPage() {
         <Card>
           <CardContent className="flex flex-col gap-4 p-5">
             <div className="flex items-center justify-between gap-3">
-              <CardTitle>Generated English Prompt</CardTitle>
-              <Button onClick={copyEnPrompt}>复制英文 Prompt</Button>
+              <CardTitle>生成的英文提示词</CardTitle>
+              <Button onClick={copyEnPrompt}>复制英文提示词</Button>
             </div>
             <Textarea value={enPromptOutput} readOnly className="min-h-[160px] resize-none text-sm leading-6" />
           </CardContent>
@@ -420,7 +420,7 @@ export default function AIVideoPromptPage() {
         <Card>
           <CardContent className="flex flex-col gap-4 p-5">
             <div className="flex items-center justify-between gap-3">
-              <CardTitle>English JSON Data</CardTitle>
+              <CardTitle>英文 JSON 数据</CardTitle>
               <Button onClick={copyEnJson}>复制英文 JSON</Button>
             </div>
             <Textarea value={enJsonOutput} readOnly className="min-h-[160px] resize-none font-mono text-sm leading-6" />

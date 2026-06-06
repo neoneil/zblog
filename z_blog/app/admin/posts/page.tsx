@@ -32,7 +32,7 @@ export default async function AdminPostsPage() {
     return (
         <main className="mx-auto max-w-5xl px-6 py-12">
             <div className="mb-8 flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-[var(--text)]">Manage Posts</h1>
+                <h1 className="text-3xl font-bold text-[var(--text)]">管理文章</h1>
 
                 <Link
                     href="/admin/posts/new"
