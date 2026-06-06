@@ -54,7 +54,7 @@ function PaginationButton({
             variant={active ? "primary" : "secondary"}
             className={`h-11 min-w-11 cursor-pointer rounded-full px-4 text-sm font-semibold transition-all duration-200 ${
                 active
-                    ? "shadow-[0_8px_24px_rgba(59,130,246,0.28)]"
+                    ? "shadow-[var(--shadow-md)]"
                     : "hover:text-[color:var(--theme)]"
             }`}
         >

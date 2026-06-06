@@ -6,15 +6,15 @@ export default function CategoriesSection() {
   return (
     <section className="mb-14 sm:mb-16">
       <div className="mb-6 sm:mb-8">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 sm:text-sm">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)] sm:text-sm">
           Main Categories
         </p>
 
-        <h2 className="text-2xl font-bold text-white sm:text-3xl">
+        <h2 className="text-2xl font-bold text-[var(--text)] sm:text-3xl">
           Explore the core themes
         </h2>
 
-        <p className="mt-3 max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--text-soft)] sm:text-base">
           Discover the four main directions of the site through ideas on
           children, learning, family education, and teacher reflection.
         </p>
@@ -24,13 +24,13 @@ export default function CategoriesSection() {
         {categories.map((category) => (
           <div
             key={category.slug}
-            className="group relative overflow-hidden rounded-[24px] border border-[rgba(120,88,62,0.28)] shadow-[0_12px_30px_rgba(0,0,0,0.18)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
+            className="group relative overflow-hidden rounded-[24px] border border-[var(--border)] shadow-[var(--shadow-md)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-md)]"
           >
             {/* Background image */}
             <div className="absolute inset-0">
               <Image
                 src={category.backgroundImage}
-                alt={`${category.title} background`}
+                alt={`${category.title}背景`}
                 fill
                 className="object-cover object-left-top opacity-90"
                 sizes="(max-width: 768px) 100vw, 25vw"
@@ -38,22 +38,22 @@ export default function CategoriesSection() {
             </div>
 
             {/* Warm paper overlay */}
-            {/* <div className="absolute inset-0 bg-[rgba(255,244,230,0.78)]" /> */}
+            {/* <div className="absolute inset-0 bg-[var(--card-soft)]" /> */}
 
             {/* Soft inner glow */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.22),rgba(255,248,240,0.08))]" />
+            <div className="absolute inset-0 bg-[var(--bg-soft)]" />
 
 
             <div className="relative z-10 flex h-full flex-col p-5 sm:p-6">
               {/* Icon + heading */}
               <div className="mb-4 flex items-start gap-3">
 
-                <h3 className="mb-4 text-center text-[1.55rem] font-bold leading-tight tracking-tight text-[#2f211b] drop-shadow-[0_1px_1px_rgba(255,255,255,0.18)]">
+                <h3 className="mb-4 text-center text-[1.55rem] font-bold leading-tight tracking-tight text-[var(--primary)] drop-shadow-[var(--drop-shadow)]">
                   {category.title}
                 </h3>
               </div>
 
-              <p className="mb-6 text-center text-[16px] leading-8 text-[#23140f]">
+              <p className="mb-6 text-center text-[16px] leading-8 text-[var(--primary)]">
                 {category.description}
               </p>
 

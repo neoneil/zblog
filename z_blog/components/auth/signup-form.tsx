@@ -68,25 +68,25 @@ export default function SignupForm() {
   return (
     <form onSubmit={handleSignup} className="space-y-4 max-w-md">
       <input
-        className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 !text-black placeholder:text-gray-400"
+        className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 !text-[var(--text)] placeholder:text-[var(--text-faint)]"
         type="text"
-        placeholder="Full name"
+        placeholder="姓名"
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
       />
 
       <input
-        className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 !text-black placeholder:text-gray-400"
+        className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 !text-[var(--text)] placeholder:text-[var(--text-faint)]"
         type="email"
-        placeholder="Email"
+        placeholder="邮箱"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
 
       <input
-        className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 !text-black placeholder:text-gray-400"
+        className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 !text-[var(--text)] placeholder:text-[var(--text-faint)]"
         type="password"
-        placeholder="Password"
+        placeholder="密码"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -95,22 +95,22 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-xl border border-gray-300 bg-white px-4 py-2 !text-black transition hover:bg-gray-100"
+          className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 !text-[var(--text)] transition hover:bg-[var(--bg-soft)]"
         >
-          {loading ? "Loading..." : "Sign up"}
+          {loading ? "加载中..." : "注册"}
         </button>
 
         <button
           type="button"
           disabled={loading}
           onClick={handleGoogleSignup}
-          className="rounded-xl border border-gray-300 bg-white px-4 py-2 !text-black transition hover:bg-gray-100"
+          className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 !text-[var(--text)] transition hover:bg-[var(--bg-soft)]"
         >
-          Continue with Google
+          使用 Google 继续
         </button>
       </div>
 
-      {message && <p className="text-sm text-white">{message}</p>}
+      {message && <p className="text-sm text-[var(--text)]">{message}</p>}
     </form>
   );
 }

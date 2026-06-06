@@ -74,9 +74,9 @@ export default function SubscribeAuthorizedClient() {
   }
 
   return (
-    <main className="min-h-screen bg-black px-6 py-20 text-white">
+    <main className="min-h-screen bg-[var(--bg)] px-6 py-20 text-[var(--text)]">
       <div className="mx-auto max-w-3xl">
-        <p className="mb-3 text-sm uppercase tracking-[0.3em] text-white/40">
+        <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[var(--text-faint)]">
           Admin Panel
         </p>
 
@@ -84,24 +84,24 @@ export default function SubscribeAuthorizedClient() {
           Subscribe Authorized
         </h1>
 
-        <p className="mt-4 text-lg text-white/60">
+        <p className="mt-4 text-lg text-[var(--text-soft)]">
           Enter a user email and grant subscribed access.
         </p>
 
         {/* 授权区域 */}
-        <div className="mt-10 rounded-[32px] border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+        <div className="mt-10 rounded-[32px] border border-[var(--border)] bg-[var(--card-soft)] p-8 backdrop-blur-xl">
           <div className="space-y-5">
             <input
               type="email"
-              placeholder="User email"
+              placeholder="用户邮箱"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="
                 w-full rounded-2xl
-                border border-white/10
-                bg-white px-5 py-4
-                !text-black
-                placeholder:text-gray-400
+                border border-[var(--border)]
+                bg-[var(--card)] px-5 py-4
+                !text-[var(--text)]
+                placeholder:text-[var(--text-faint)]
               "
             />
 
@@ -110,9 +110,9 @@ export default function SubscribeAuthorizedClient() {
               disabled={loading}
               className=" cursor-pointer
                 w-full rounded-2xl
-                bg-white px-5 py-4
-                text-lg font-semibold text-black
-                transition hover:bg-gray-200
+                bg-[var(--card)] px-5 py-4
+                text-lg font-semibold text-[var(--text)]
+                transition hover:bg-[var(--bg-muted)]
               "
             >
               {loading
@@ -121,7 +121,7 @@ export default function SubscribeAuthorizedClient() {
             </button>
 
             {message && (
-              <div className="rounded-2xl bg-white/10 p-4 text-white/80">
+              <div className="rounded-2xl bg-[var(--card-muted)] p-4 text-[var(--text-soft)]">
                 {message}
               </div>
             )}
@@ -136,7 +136,7 @@ export default function SubscribeAuthorizedClient() {
 
           <div className="space-y-3">
             {subscribedUsers.length === 0 && (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-white/50">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-5 text-[var(--text-faint)]">
                 No subscribed users yet.
               </div>
             )}
@@ -146,26 +146,26 @@ export default function SubscribeAuthorizedClient() {
                 key={user.id}
                 className="
                   flex items-center justify-between
-                  rounded-2xl border border-white/10
-                  bg-white/5 px-5 py-4
+                  rounded-2xl border border-[var(--border)]
+                  bg-[var(--card-soft)] px-5 py-4
                   backdrop-blur-xl
                 "
               >
                 <div>
-                  <p className="text-lg font-medium text-white">
+                  <p className="text-lg font-medium text-[var(--text)]">
                     {user.email}
                   </p>
 
-                  <p className="mt-1 text-sm text-green-300">
+                  <p className="mt-1 text-sm text-[var(--success)]">
                     subscribed
                   </p>
                 </div>
 
                 <div
                   className="
-                    rounded-full bg-green-400/15
+                    rounded-full bg-[var(--success-soft)]
                     px-3 py-1 text-sm
-                    text-green-300
+                    text-[var(--success)]
                   "
                 >
                   Active

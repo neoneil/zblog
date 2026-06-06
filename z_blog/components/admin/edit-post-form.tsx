@@ -45,7 +45,7 @@ export default function EditPostForm({ post }: { post: Post }) {
             return;
         }
 
-        setMessage("Post updated!");
+        setMessage("文章已更新！");
         setLoading(false);
         router.refresh();
     }
@@ -84,8 +84,8 @@ export default function EditPostForm({ post }: { post: Post }) {
                     setStatus(e.target.value as "draft" | "published")
                 }
             >
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
+                <option value="draft">草稿</option>
+                <option value="published">已发布</option>
             </select>
 
             <button
@@ -93,7 +93,7 @@ export default function EditPostForm({ post }: { post: Post }) {
                 disabled={loading}
                 className="rounded border px-4 py-2"
             >
-                {loading ? "Saving..." : "Update Post"}
+                {loading ? "保存中..." : "更新文章"}
             </button>
 
             {message && <p>{message}</p>}

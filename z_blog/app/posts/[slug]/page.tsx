@@ -40,15 +40,15 @@ export async function generateMetadata(
 
   if (!post) {
     return {
-      title: "Post Not Found",
-      description: "The requested post could not be found.",
+      title: "文章未找到",
+      description: "未找到请求的文章。",
     };
   }
 
   const description =
     post.excerpt ||
     post.content.slice(0, 160) ||
-    "Read this article on My Blog.";
+    "阅读这篇文章。";
 
   const url = `${siteUrl}/posts/${post.slug}`;
 
@@ -84,7 +84,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
       {/* <div className="fixed inset-0 -z-10">
         <Image
           src="/cosmic-bg.webp"
-          alt="Background"
+          alt="背景"
           fill
           priority
           className="object-cover"
@@ -92,25 +92,25 @@ export default async function PostDetailPage({ params }: PostPageProps) {
       </div> */}
 
       {/* 遮罩 */}
-      {/* <div className="fixed inset-0 -z-10 bg-black/60" /> */}
+      {/* <div className="fixed inset-0 -z-10 bg-[color:var(--bg)]/80" /> */}
 
       {/* 渐变 */}
-      <div className="absolute inset-0 bg-linear-to-b from-black/55 via-slate-950/45 to-black/80" />
+      <div className="absolute inset-0 bg-linear-to-b from-[var(--bg-soft)] via-[var(--card-muted)] to-[var(--bg-soft)]" />
 
       {/* 光感 */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_35%)]" />
+      <div className="absolute inset-0 bg-[var(--bg-soft)]" />
 
       <div className="relative z-10 py-12 sm:py-16 lg:py-20">
         <Container>
           <article className="mx-auto max-w-3xl">
             
             {/* 标题区 */}
-            <div className="mb-8 rounded-3xl border border-white/10 bg-white/8 p-6 shadow-2xl backdrop-blur-md sm:p-8">
-              <h1 className="mb-4 text-3xl font-bold text-white sm:text-4xl">
+            <div className="mb-8 rounded-3xl border border-[var(--border)] bg-[var(--card-muted)] p-6 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-8">
+              <h1 className="mb-4 text-3xl font-bold text-[var(--text)] sm:text-4xl">
                 {post.title}
               </h1>
 
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-[var(--text-soft)]">
                 {post.published_at
                   ? new Date(post.published_at).toLocaleDateString()
                   : new Date(post.created_at).toLocaleDateString()}
@@ -119,7 +119,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 
             {/* 封面 */}
             {post.cover_image && (
-              <div className="mb-8 overflow-hidden rounded-2xl border border-white/10">
+              <div className="mb-8 overflow-hidden rounded-2xl border border-[var(--border)]">
                 <img
                   src={post.cover_image}
                   alt={post.title}
@@ -130,13 +130,13 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 
             {/* 摘要 */}
             {post.excerpt && (
-              <div className="mb-8 rounded-2xl border border-white/10 bg-white/8 p-5 backdrop-blur-md">
-                <p className="text-white/80">{post.excerpt}</p>
+              <div className="mb-8 rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] p-5 backdrop-blur-md">
+                <p className="text-[var(--text-soft)]">{post.excerpt}</p>
               </div>
             )}
 
             {/* 正文（关键：反色） */}
-            <div className="prose prose-invert prose-lg max-w-none">
+            <div className="prose  prose-lg max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
@@ -237,7 +237,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 //       <article>
 //         <h1 className="mb-4 text-4xl font-bold">{post.title}</h1>
 
-//         <p className="mb-8 text-sm text-gray-500">
+//         <p className="mb-8 text-sm text-[var(--text-faint)]">
 //           {post.published_at
 //             ? new Date(post.published_at).toLocaleDateString()
 //             : new Date(post.created_at).toLocaleDateString()}
@@ -252,7 +252,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 //                     </Link>
 //                   )}
 //         {post.excerpt && (
-//           <p className="mb-6 text-lg text-gray-700">{post.excerpt}</p>
+//           <p className="mb-6 text-lg text-[var(--text-soft)]">{post.excerpt}</p>
 //         )}
 
 
@@ -342,14 +342,14 @@ export default async function PostDetailPage({ params }: PostPageProps) {
 //       <article>
 //         <h1 className="mb-4 text-4xl font-bold">{post.title}</h1>
 
-//         <p className="mb-8 text-sm text-gray-500">
+//         <p className="mb-8 text-sm text-[var(--text-faint)]">
 //           {post.published_at
 //             ? new Date(post.published_at).toLocaleDateString()
 //             : new Date(post.created_at).toLocaleDateString()}
 //         </p>
 
 //         {post.excerpt && (
-//           <p className="mb-6 text-lg text-gray-700">{post.excerpt}</p>
+//           <p className="mb-6 text-lg text-[var(--text-soft)]">{post.excerpt}</p>
 //         )}
 
 //         <div className="prose max-w-none whitespace-pre-wrap">

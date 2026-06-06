@@ -17,7 +17,7 @@ export default function ResourcesPage() {
       {/* <div className="fixed inset-0 -z-10">
         <Image
           src="/cosmic-bg.webp"
-          alt="Background"
+          alt="背景"
           fill
           priority
           className="object-cover"
@@ -25,28 +25,28 @@ export default function ResourcesPage() {
       </div> */}
 
       {/* 遮罩 */}
-      {/* <div className="fixed inset-0 -z-10 bg-black/60" /> */}
+      {/* <div className="fixed inset-0 -z-10 bg-[color:var(--bg)]/80" /> */}
 
       {/* 渐变 */}
-      <div className="absolute inset-0 bg-linear-to-b from-black/55 via-slate-950/45 to-black/70" />
+      <div className="absolute inset-0 bg-linear-to-b from-[var(--bg-soft)] via-[var(--card-muted)] to-[var(--bg-soft)]" />
 
       {/* 光感 */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.14),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[var(--bg-soft)]" />
 
       <div className="relative z-10 py-12 sm:py-16 lg:py-20">
         <Container>
           {/* Hero */}
           <section className="mb-12 sm:mb-14">
-            <div className="max-w-4xl rounded-3xl border border-white/10 bg-white/8 p-6 shadow-2xl backdrop-blur-md sm:p-8 lg:p-10">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 sm:text-sm">
+            <div className="max-w-4xl rounded-3xl border border-[var(--border)] bg-[var(--card-muted)] p-6 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-8 lg:p-10">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)] sm:text-sm">
                 Resources
               </p>
 
-              <h1 className="mb-5 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <h1 className="mb-5 text-3xl font-bold leading-tight tracking-tight text-[var(--text)] sm:text-4xl lg:text-5xl">
                 Learning resources for reflection, study, and imagination
               </h1>
 
-              <p className="max-w-3xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8">
+              <p className="max-w-3xl text-base leading-7 text-[var(--text-soft)] sm:text-lg sm:leading-8">
                 A curated resource space for useful videos, ideas, and study
                 materials.
               </p>
@@ -57,11 +57,11 @@ export default function ResourcesPage() {
       Premium Astrology Guide
     </p>
 
-    <h2 className="text-4xl font-semibold text-white sm:text-5xl">
+    <h2 className="text-4xl font-semibold text-[var(--text)] sm:text-5xl">
       Download the Astrology Book
     </h2>
 
-    <p className="mt-4 max-w-2xl text-lg leading-8 text-white/65">
+    <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--text)]/65">
       Explore planetary houses, birth charts, zodiac energies and deeper
       spiritual interpretations in our premium astrology guide.
     </p>
@@ -72,8 +72,8 @@ export default function ResourcesPage() {
       className="
         group relative overflow-hidden
         rounded-[36px]
-        border border-white/10
-        bg-white/5
+        border border-[var(--border)]
+        bg-[var(--card-soft)]
         backdrop-blur-xl
         cursor-pointer
       "
@@ -82,7 +82,7 @@ export default function ResourcesPage() {
       <div
         className="
           absolute inset-0
-          bg-[radial-gradient(circle_at_top,rgba(80,140,255,0.28),transparent_55%)]
+          bg-[var(--bg-soft)]
           opacity-70
           transition duration-700
           group-hover:scale-110
@@ -95,7 +95,7 @@ export default function ResourcesPage() {
         className="
           absolute inset-0 z-20
           flex flex-col items-center justify-center
-          bg-black/55
+          bg-[color:var(--bg)]/80
           opacity-0
           transition-all duration-500
           group-hover:opacity-100
@@ -104,8 +104,8 @@ export default function ResourcesPage() {
         <div
           className="
             mb-4 flex h-20 w-20 items-center justify-center
-            rounded-full border border-white/20
-            bg-white/10 backdrop-blur-md
+            rounded-full border border-[var(--border)]
+            bg-[var(--card-muted)] backdrop-blur-md
             transition-all duration-500
             group-hover:scale-110
             group-hover:rotate-6
@@ -113,7 +113,7 @@ export default function ResourcesPage() {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10 text-white"
+            className="h-10 w-10 text-[var(--text)]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -127,11 +127,11 @@ export default function ResourcesPage() {
           </svg>
         </div>
 
-        <h3 className="text-3xl font-semibold text-white">
+        <h3 className="text-3xl font-semibold text-[var(--text)]">
           Download This Book
         </h3>
 
-        <p className="mt-3 text-base text-white/70">
+        <p className="mt-3 text-base text-[var(--text-soft)]">
           12,842 downloads
         </p>
       </div>
@@ -140,7 +140,7 @@ export default function ResourcesPage() {
       <div className="relative mx-auto aspect-[3/4] max-w-[340px] overflow-hidden">
         <img
           src="/tarotCover.png"
-          alt="Astrology Book Cover"
+          alt="占星书籍封面"
           className="
             h-full w-full object-cover
             transition-all duration-700
@@ -156,9 +156,9 @@ export default function ResourcesPage() {
 
           {/* Featured */}
           <section className="mb-12 sm:mb-14">
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/8 shadow-2xl backdrop-blur-md">
+            <div className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card-muted)] shadow-[var(--shadow-lg)] backdrop-blur-md">
               <div className="p-6">
-                <div className="aspect-video w-full overflow-hidden rounded-2xl border border-white/10">
+                <div className="aspect-video w-full overflow-hidden rounded-2xl border border-[var(--border)]">
                   {/* <iframe
                     className="h-full w-full"
                     src="https://www.youtube.com/embed/TbQSHxK2Gjg"
@@ -186,9 +186,9 @@ export default function ResourcesPage() {
               {videos.map((video) => (
                 <article
                   key={video.id}
-                  className="overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-xl backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white/[0.14]"
+                  className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card-muted)] shadow-[var(--shadow-md)] backdrop-blur-sm transition hover:-translate-y-1 hover:bg-[var(--card-soft)]"
                 >
-                  <div className="aspect-video w-full overflow-hidden border-b border-white/10">
+                  <div className="aspect-video w-full overflow-hidden border-b border-[var(--border)]">
                     <iframe
                       className="h-full w-full"
                       src={video.embedUrl}
@@ -198,7 +198,7 @@ export default function ResourcesPage() {
                   </div>
 
                   <div className="p-5">
-                    <h3 className="text-white font-semibold">
+                    <h3 className="text-[var(--text)] font-semibold">
                       {video.title}
                     </h3>
                   </div>

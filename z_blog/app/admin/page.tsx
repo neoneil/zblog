@@ -5,27 +5,27 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 const adminCards = [
   {
-    title: "Posts",
+    title: "文章管理",
     description: "Manage blog posts and content.",
     href: "/admin/posts",
   },
   {
-    title: "Subscribe Authorized",
+    title: "用户订阅管理",
     description: "Manage subscription authorizations.",
     href: "/admin/subscribe-authorized",
   },
   {
-    title: "ai-video-prompt",
+    title: "视频分镜提示词",
     description: "ai-video-prompt.",
     href: "/admin/ai-video-prompt",
   },
   {
-    title: "Reserved 4",
+    title: "待定Reserved 4",
     description: "Coming soon.",
     href: "/admin/reserved-4",
   },
   {
-    title: "Reserved 5",
+    title: "待定Reserved 5",
     description: "Coming soon.",
     href: "/admin/reserved-5",
   },
@@ -53,13 +53,13 @@ export default async function AdminPage() {
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-12 text-(--text-white)">
+    <main className="mx-auto max-w-7xl px-6 py-12 text-[var(--text)]">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <p className="mt-2 text-sm text-(--text-white)">
+        <h1 className="text-3xl font-bold">管理后台</h1>
+        <p className="mt-2 text-sm text-[var(--text)]">
           Welcome, {profile.email}
         </p>
-        <p className="text-sm text-(--text-white)">
+        <p className="text-sm text-[var(--text)]">
           Role: {profile.role}
         </p>
       </div>
@@ -67,19 +67,19 @@ export default async function AdminPage() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {adminCards.map((card) => (
           <Link key={card.href} href={card.href}>
-            <Card className="h-full cursor-pointer transition-all hover:-translate-y-1 hover:border-primary hover:shadow-lg">
+            <Card className="h-full cursor-pointer transition-all hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[var(--shadow-md)]">
               <CardContent className="flex h-full flex-col justify-between p-6">
                 <div>
-                  <CardTitle className="mb-3 text-lg text-(--text-white)">
+                  <CardTitle className="mb-3 text-lg text-[var(--text)]">
                     {card.title}
                   </CardTitle>
 
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-[var(--text-soft)]">
                     {card.description}
                   </p>
                 </div>
 
-                <div className="mt-6 text-sm font-medium text-primary">
+                <div className="mt-6 text-sm font-medium text-[var(--primary)]">
                   Open →
                 </div>
               </CardContent>

@@ -97,7 +97,7 @@ export default function DeletePostButton({
         disabled={loading}
         className="rounded border px-3 py-2 text-sm"
       >
-        {loading ? "Deleting..." : "Delete"}
+        {loading ? "删除中..." : "删除"}
       </button>
 
       {message ? <p className="text-sm text-red-600">{message}</p> : null}

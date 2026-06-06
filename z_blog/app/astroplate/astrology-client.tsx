@@ -117,7 +117,11 @@ const DISPLAY_SUMMARY_KEYS = [
   "mercury",
   "venus",
   "mars",
+  "jupiter",
   "saturn",
+  "uranus",
+  "neptune",
+  "pluto",
   "midheaven",
 ] as const;
 
@@ -222,7 +226,7 @@ const ASPECT_LABEL_ZH: Record<string, string> = {
 };
 
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-[#8a6730]/40 bg-[#071523]/90 px-4 py-3 text-sm text-[#f6e6b4] outline-none transition placeholder:text-[#8b98ac] focus:border-[#f1c36b] focus:ring-2 focus:ring-[#f1c36b]/20";
+  "w-full rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--text-faint)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]";
 
 const CORE_ASPECT_TYPES = new Set([
   "conjunction",
@@ -356,7 +360,7 @@ export default function AstrologyPage() {
     const query = cityQuery.trim();
 
     if (!query) {
-      setGeoError("请输入城市名，例如：Melbourne 或 Melbourne, Australia");
+      setGeoError("请输入城市名，例如：墨尔本 或 墨尔本, 澳大利亚");
       return;
     }
 
@@ -463,35 +467,35 @@ export default function AstrologyPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#020814] px-4 py-5 text-[#f4e7c2] sm:px-5 md:px-6 md:py-8 lg:px-8">
+    <main className="min-h-screen bg-[var(--card-soft)] px-4 py-5 text-[var(--primary)] sm:px-5 md:px-6 md:py-8 lg:px-8">
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(18,57,115,0.32),transparent_36%),radial-gradient(circle_at_20%_30%,rgba(0,153,255,0.08),transparent_26%),radial-gradient(circle_at_80%_35%,rgba(255,181,72,0.10),transparent_20%),linear-gradient(180deg,#020814_0%,#03101f_42%,#020814_100%)]" />
-        <div className="absolute inset-0 opacity-70 [background-image:radial-gradient(rgba(255,221,154,0.8)_0.8px,transparent_0.8px)] [background-size:34px_34px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_62%,rgba(0,0,0,0.38)_100%)]" />
+        <div className="absolute inset-0 bg-[var(--bg-soft)]" />
+        <div className="absolute inset-0 opacity-70 [background-image:radial-gradient(var(--primary-soft)_0.8px,transparent_0.8px)] [background-size:34px_34px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_62%,var(--bg)_100%)]" />
       </div>
 
       <div className="relative mx-auto max-w-[1600px]">
         <div className="mb-6 flex flex-col gap-4 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-3 inline-flex rounded-full border border-[#c6923c]/50 bg-[#0a1626]/80 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-[#ddb46c] shadow-[0_0_0_1px_rgba(255,199,107,0.08),0_0_24px_rgba(255,188,84,0.10)]">
+            <p className="mb-3 inline-flex rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--primary)] shadow-[var(--shadow-md)]">
               星盘 Natal Chart
             </p>
-            <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-5xl">
-              出生星盘解析
+            <h1 className="text-2xl font-semibold tracking-tight text-[var(--text)] sm:text-3xl md:text-5xl">
+              星盘解析
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-[#93a4bf] md:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--primary)] md:text-base">
               先输入出生信息，再点击按钮生成星盘。右侧会生成星盘，并进行AI解读。
             </p>
           </div>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[500px_minmax(0,1fr)_500px]">
-          <section className="rounded-[28px] border border-[#89662e]/45 bg-[linear-gradient(180deg,rgba(4,18,33,0.96),rgba(2,11,22,0.94))] p-5 shadow-[0_0_0_1px_rgba(255,196,99,0.06),0_18px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,230,163,0.05)] md:p-6">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6 xl:col-span-1">
             <div className="mb-5">
-              <h2 className="text-[32px] font-semibold leading-none text-white">
+              <h2 className="text-[32px] font-semibold leading-none text-[var(--text)]">
                 出生信息
               </h2>
-              <p className="mt-3 text-sm text-[#96a6c0]">
+              <p className="mt-3 text-sm text-[var(--primary)]">
                 不知道经纬度的话，可以都填 0，不影响生成。
               </p>
             </div>
@@ -595,7 +599,7 @@ export default function AstrologyPage() {
                   <div className="flex items-stretch gap-3">
                     <input
                       className={`${INPUT_CLASS} min-w-0 flex-1`}
-                      placeholder="例如：Melbourne, Australia"
+                      placeholder="例如：悉尼, 澳大利亚"
                       value={cityQuery}
                       onChange={(e) => setCityQuery(e.target.value)}
                     />
@@ -603,20 +607,20 @@ export default function AstrologyPage() {
                       type="button"
                       onClick={handleLookupCity}
                       disabled={geoLoading}
-                      className="shrink-0 min-w-[116px] rounded-2xl border border-[#8d6a33] bg-[#13243c] px-4 py-3 text-sm font-medium text-[#efc36b] transition hover:border-[#f2c36a] hover:bg-[#182d4b] disabled:cursor-not-allowed disabled:opacity-60"
+                      className="shrink-0 min-w-[116px] rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm font-medium text-[var(--primary)] transition hover:border-[var(--border)] hover:bg-[var(--card-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       {geoLoading ? "查询中..." : "自动查询"}
                     </button>
                   </div>
                 </Field>
 
-                <div className="rounded-2xl border border-[#365c86] bg-[#081b31] px-4 py-3 text-sm leading-7 text-[#7fa9d8]">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">
                   可以输入城市名自动填写经纬度。建议写成“城市, 国家”，例如
                   Melbourne, Australia，这样结果更稳定。
                 </div>
 
                 {geoError ? (
-                  <div className="rounded-2xl border border-[#874152] bg-[#2a1018] px-4 py-3 text-sm leading-7 text-[#ffb8c3]">
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">
                     {geoError}
                   </div>
                 ) : null}
@@ -656,7 +660,7 @@ export default function AstrologyPage() {
                 </Field>
               </div>
 
-              <div className="rounded-2xl border border-[#7e5c2d] bg-[#18120a] px-4 py-3 text-sm leading-7 text-[#d3ab60]">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">
                 提示：经纬度会影响上升 Ascendant、天顶 Midheaven、宫位 Houses
                 等结果。 如果用户不知道，也可以直接填 0，先生成可用版本。
               </div>
@@ -672,19 +676,19 @@ export default function AstrologyPage() {
                     }))
                   }
                 >
-                  <option value="placidus">普拉西德制 Placidus</option>
-                  <option value="koch">柯赫制 Koch</option>
-                  <option value="campanus">坎帕努斯制 Campanus</option>
-                  <option value="whole-sign">整宫制 Whole Sign</option>
-                  <option value="equal-house">等宫制 Equal House</option>
+                  <option value="placidus">普拉西德制</option>
+                  <option value="koch">柯赫制</option>
+                  <option value="campanus">坎帕努斯制</option>
+                  <option value="whole-sign">整宫制</option>
+                  <option value="equal-house">等宫制</option>
                   <option value="regiomontanus">
                     雷吉蒙塔努斯制 Regiomontanus
                   </option>
-                  <option value="topocentric">地平制 Topocentric</option>
+                  <option value="topocentric">地平制</option>
                 </select>
               </Field>
 
-              <Field label="黄道类型 Zodiac">
+              <Field label="黄道类型">
                 <select
                   className={INPUT_CLASS}
                   value={form.zodiac}
@@ -695,8 +699,8 @@ export default function AstrologyPage() {
                     }))
                   }
                 >
-                  <option value="tropical">回归黄道 Tropical</option>
-                  <option value="sidereal">恒星黄道 Sidereal</option>
+                  <option value="tropical">回归黄道</option>
+                  <option value="sidereal">恒星黄道</option>
                 </select>
               </Field>
 
@@ -707,33 +711,30 @@ export default function AstrologyPage() {
                   setReading("");
                   setReadingError(null);
                 }}
-                className="mt-2 w-full rounded-2xl border border-[#f1c36b]/50 bg-[linear-gradient(180deg,#d4a34a_0%,#c7903d_45%,#b57b2d_100%)] px-4 py-4 text-base font-semibold text-[#1b1205] shadow-[0_8px_28px_rgba(220,165,74,0.25),inset_0_1px_0_rgba(255,243,204,0.55)] transition hover:brightness-110"
+                className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-soft)] px-4 py-4 text-base font-semibold text-[var(--primary)] shadow-[var(--shadow-md)] transition hover:brightness-110"
               >
                 {calcState.isLoading ? "生成中..." : "生成星盘 ✦"}
               </button>
             </div>
           </section>
 
-          <section className="rounded-[28px] border border-[#89662e]/45 bg-[linear-gradient(180deg,rgba(4,18,33,0.96),rgba(2,11,22,0.94))] p-4 shadow-[0_0_0_1px_rgba(255,196,99,0.06),0_18px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,230,163,0.05)] md:p-6">
-            <div className="rounded-[24px] border border-[#8e6830]/40 bg-[radial-gradient(circle_at_50%_12%,rgba(24,63,120,0.34),rgba(3,10,19,0.94)_46%,rgba(2,7,15,0.98)_100%)] p-4 md:p-6">
+          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 shadow-[var(--shadow-md)] md:p-6 xl:col-span-2">
+            <div className="rounded-[24px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[#d2a75e]">
-                    已生成的本命盘 Natal Chart
+                  <p className="text-sm font-medium text-[var(--primary)]">
+                    已生成的本命盘
                   </p>
                 </div>
-                <span className="rounded-xl border border-[#8d6a33] bg-[#0c1727] px-3 py-1.5 text-xs font-medium text-[#efc36b]">
-                  SVG
-                </span>
               </div>
 
-              <div className="relative overflow-hidden rounded-[28px] border border-[#8d6a33]/35 bg-[radial-gradient(circle_at_center,rgba(17,49,92,0.48),rgba(4,13,24,0.94)_55%,rgba(2,7,15,1)_100%)] p-3">
+              <div className="relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-3">
                 {chartJson ? (
                   <NatalWheelCN chartJson={chartJson} />
                 ) : (
-                  <div className="flex min-h-[720px] items-center justify-center rounded-[24px] border border-dashed border-[#8d6a33]/35 text-center text-[#7186a5]">
+                  <div className="flex min-h-[720px] items-center justify-center rounded-[24px] border border-dashed border-[var(--border)] text-center text-[var(--primary)]">
                     <div>
-                      <div className="mb-3 text-3xl text-[#dcb367]">✦</div>
+                      <div className="mb-3 text-3xl text-[var(--primary)]">✦</div>
                       <p className="text-sm">生成后会在这里显示星盘</p>
                     </div>
                   </div>
@@ -741,29 +742,29 @@ export default function AstrologyPage() {
               </div>
 
               {calcState.isLoading ? (
-                <div className="mt-4 text-center text-sm text-[#9cb0ca]">
+                <div className="mt-4 text-center text-sm text-[var(--primary)]">
                   正在生成星盘...
                 </div>
               ) : null}
 
               {calcState.error ? (
-                <div className="mt-4 rounded-2xl border border-[#874152] bg-[#2a1018] px-4 py-3 text-sm text-[#ffb8c3]">
+                <div className="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
                   {calcState.error}
                 </div>
               ) : null}
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-5 grid gap-3 sm:grid-cols-4 lg:grid-cols-6">
                 {summaryCards.map((item) => (
                   <SummaryCard key={item.key} item={item} />
                 ))}
               </div>
 
-              <div className="mt-4 rounded-[22px] border border-[#88672f]/35 bg-[#07111d]/85 p-5">
-                <h3 className="mb-3 text-[20px] font-semibold text-white">
+              <div className="mt-4 rounded-[22px] border border-[var(--border)] bg-[var(--card-soft)] p-5">
+                <h3 className="mb-3 text-[20px] font-semibold text-[var(--text)]">
                   星盘信息概览
                 </h3>
 
-                <div className="space-y-3 text-sm leading-7 text-[#b8c7db]">
+                <div className="space-y-3 text-sm leading-7 text-[var(--primary)]">
                   <InfoRow
                     label="出生时间"
                     value={`${submittedForm.year}-${String(submittedForm.month).padStart(2, "0")}-${String(
@@ -787,7 +788,7 @@ export default function AstrologyPage() {
                     label="宫位系统"
                     value={HOUSE_SYSTEM_ZH[submittedForm.houseSystem]}
                   />
-                  <p className="pt-2 text-[#8fa2be]">
+                  <p className="pt-2 text-[var(--primary)]">
                     经纬度为 0 时，宫位、上升、天顶的精确性可能下降。
                   </p>
                 </div>
@@ -795,14 +796,14 @@ export default function AstrologyPage() {
             </div>
           </section>
 
-          <section className="space-y-6">
-            <div className="rounded-[28px] border border-[#89662e]/45 bg-[linear-gradient(180deg,rgba(4,18,33,0.96),rgba(2,11,22,0.94))] p-5 shadow-[0_0_0_1px_rgba(255,196,99,0.06),0_18px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,230,163,0.05)] md:p-6">
+          <section className="space-y-6 xl:col-span-3">
+            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6">
               {/* <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[#d2a75e]">
+                  <p className="text-sm font-medium text-[var(--primary)]">
                     用户星盘核心数据
                   </p>
-                  <h2 className="text-[36px] font-semibold leading-none text-white">
+                  <h2 className="text-[36px] font-semibold leading-none text-[var(--text)]">
                     AI 输入
                   </h2>
                 </div>
@@ -815,33 +816,33 @@ export default function AstrologyPage() {
                       JSON.stringify(chartJson, null, 2),
                     );
                   }}
-                  className="rounded-xl border border-[#8d6a33] bg-[#0d1727] px-3 py-2 text-xs font-medium text-[#efc36b] transition hover:bg-[#13243c]"
+                  className="rounded-xl border border-[var(--border)] bg-[var(--card-soft)] px-3 py-2 text-xs font-medium text-[var(--primary)] transition hover:bg-[var(--card-soft)]"
                 >
                   复制 JSON
                 </button>
               </div> */}
 
-              {/* <div className="mb-3 rounded-2xl border border-[#2c724b] bg-[#0b2318] px-4 py-3 text-sm leading-7 text-[#76d19a]">
+              {/* <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">
                 当前只保留：核心星体、上升 Ascendant、天顶 Midheaven、12
                 宫头、主要相位。
               </div> */}
 
-              {/* <pre className="max-h-[760px] overflow-auto rounded-2xl border border-[#29415e] bg-[#061120] p-4 text-xs leading-6 text-[#c7d3e3]">
+              {/* <pre className="max-h-[760px] overflow-auto rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-4 text-xs leading-6 text-[var(--primary)]">
                 {chartJson
                   ? JSON.stringify(chartJson, null, 2)
                   : "等待生成结果..."}
               </pre> */}
             </div>
 
-            <div className="rounded-[28px] border border-[#89662e]/45 bg-[linear-gradient(180deg,rgba(4,18,33,0.96),rgba(2,11,22,0.94))] p-5 shadow-[0_0_0_1px_rgba(255,196,99,0.06),0_18px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,230,163,0.05)] md:p-6">
+            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[#d2a75e]">AI 解读</p>
-                  <h2 className="text-[34px] font-semibold leading-none text-white">
+                  <p className="text-sm font-medium text-[var(--primary)]">AI 解读</p>
+                  <h2 className="text-[34px] font-semibold leading-none text-[var(--text)]">
                     星盘中文分析
                   </h2>
                 </div>
-                <div className="text-2xl text-[#efc36b]">✧</div>
+                <div className="text-2xl text-[var(--primary)]">✧</div>
               </div>
 
               <div className="space-y-3">
@@ -858,26 +859,26 @@ export default function AstrologyPage() {
                   type="button"
                   disabled={!chartJson || readingLoading || calcState.isLoading}
                   onClick={handleGenerateReading}
-                  className="w-full rounded-2xl border border-[#f1c36b]/50 bg-[linear-gradient(180deg,#d4a34a_0%,#c7903d_45%,#b57b2d_100%)] px-4 py-4 text-base font-semibold text-[#1b1205] shadow-[0_8px_28px_rgba(220,165,74,0.25),inset_0_1px_0_rgba(255,243,204,0.55)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-soft)] px-4 py-4 text-base font-semibold text-[var(--primary)] shadow-[var(--shadow-md)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {readingLoading ? "AI 解读生成中..." : "AI 解读星盘 ✦"}
                 </button>
 
                 {!chartJson ? (
-                  <div className="rounded-2xl border border-[#29415e] bg-[#08131f] px-4 py-3 text-sm text-[#8da0ba]">
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
                     请先生成星盘，然后点击上方按钮进行解读。
                   </div>
                 ) : null}
 
                 {readingError ? (
-                  <div className="rounded-2xl border border-[#874152] bg-[#2a1018] px-4 py-3 text-sm text-[#ffb8c3]">
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
                     {readingError}
                   </div>
                 ) : null}
 
-                <div className="rounded-2xl border border-[#29415e] bg-[#061120] p-4">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-4">
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <h3 className="text-sm font-semibold text-white">
+                    <h3 className="text-sm font-semibold text-[var(--text)]">
                       解读结果
                     </h3>
                     {reading ? (
@@ -886,24 +887,24 @@ export default function AstrologyPage() {
                         onClick={async () => {
                           await navigator.clipboard.writeText(reading);
                         }}
-                        className="rounded-xl border border-[#8d6a33] bg-[#0d1727] px-3 py-2 text-xs font-medium text-[#efc36b] transition hover:bg-[#13243c]"
+                        className="rounded-xl border border-[var(--border)] bg-[var(--card-soft)] px-3 py-2 text-xs font-medium text-[var(--primary)] transition hover:bg-[var(--card-soft)]"
                       >
                         复制解读
                       </button>
                     ) : null}
                   </div>
 
-                  <div className="max-h-[560px] overflow-auto rounded-2xl border border-[#203753] bg-[#07111d] p-4">
+                  <div className="max-h-[560px] overflow-auto rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-4">
                     {readingLoading ? (
-                      <p className="whitespace-pre-wrap text-sm leading-7 text-[#9cb0ca]">
+                      <p className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">
                         正在生成解读，请稍等...
                       </p>
                     ) : reading ? (
-                      <div className="whitespace-pre-wrap text-sm leading-7 text-[#dbe4f2]">
+                      <div className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">
                         {reading}
                       </div>
                     ) : (
-                      <p className="whitespace-pre-wrap text-sm leading-7 text-[#7085a5]">
+                      <p className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">
                         这里会显示 AI 返回的中文解读结果……
                         {"\n"}
                         请先生成星盘，然后点击上方按钮进行解读。
@@ -923,7 +924,7 @@ export default function AstrologyPage() {
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-[12px] font-semibold uppercase tracking-[0.08em] text-[#d9aa5f]">
+      <span className="mb-2 block text-[12px] font-semibold uppercase tracking-[0.08em] text-[var(--primary)]">
         {label}
       </span>
       {children}
@@ -935,19 +936,19 @@ function SummaryCard({ item }: { item: ChartPointJson }) {
   const symbol = POINT_SYMBOLS[item.key] ?? "✦";
 
   return (
-    <div className="rounded-[20px] border border-[#89662e]/35 bg-[linear-gradient(180deg,rgba(8,19,32,0.92),rgba(6,15,26,0.88))] p-4 text-center shadow-[inset_0_1px_0_rgba(255,231,177,0.05)]">
-      <div className="text-[34px] leading-none text-[#efc36b] drop-shadow-[0_0_10px_rgba(239,195,107,0.22)]">
+    <div className="rounded-[20px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 text-center shadow-[var(--shadow-md)]">
+      <div className="text-[34px] leading-none text-[var(--primary)] drop-shadow-[var(--drop-shadow)]">
         {symbol}
       </div>
-      <p className="mt-2 text-[14px] leading-5 text-white">
+      <p className="mt-2 text-[14px] leading-5 text-[var(--text)]">
         {item.labelZh}
         <br />
-        <span className="text-[#b8c7db]">{item.label}</span>
+        <span className="text-[var(--primary)]">{item.label}</span>
       </p>
-      <p className="mt-2 text-[15px] font-medium text-[#efc36b]">
+      <p className="mt-2 text-[15px] font-medium text-[var(--primary)]">
         {item.signZh}
       </p>
-      <p className="text-[14px] text-[#efc36b]">
+      <p className="text-[14px] text-[var(--primary)]">
         {item.signDegrees.toFixed(2)}°
       </p>
     </div>
@@ -957,8 +958,8 @@ function SummaryCard({ item }: { item: ChartPointJson }) {
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex gap-3">
-      <div className="min-w-[76px] text-[#efc36b]">{label}</div>
-      <div className="text-[#b8c7db]">{value}</div>
+      <div className="min-w-[76px] text-[var(--primary)]">{label}</div>
+      <div className="text-[var(--primary)]">{value}</div>
     </div>
   );
 }

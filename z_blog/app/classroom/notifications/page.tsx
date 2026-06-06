@@ -74,27 +74,27 @@ export default function ClassroomNotificationsPage() {
     <main className="min-h-screen bg-[var(--bg)] px-4 py-10">
       <div className="mx-auto w-full max-w-3xl">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[var(--text)]">Zoom Classroom Notifications</h1>
-          <p className="mt-2 text-sm text-[var(--text-soft)]">Copy your Meeting ID or open Zoom directly.</p>
+          <h1 className="text-2xl font-bold text-[var(--text)]">Zoom 课堂通知</h1>
+          <p className="mt-2 text-sm text-[var(--text-soft)]">复制会议 ID，或直接打开 Zoom。</p>
         </div>
 
         <div className="mb-6">
-          <Link href="/classroom" className="inline-flex rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white">
+          <Link href="/classroom" className="inline-flex rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--text)]">
             Go to Web Classroom
           </Link>
         </div>
 
         {loading ? (
-          <div className="rounded-2xl border border-[var(--border)] bg-white p-5 text-sm text-[var(--text-soft)]">Loading...</div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 text-sm text-[var(--text-soft)]">加载中...</div>
         ) : notifications.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--border)] bg-white p-5 text-sm text-[var(--text-soft)]">No Zoom classroom notifications yet.</div>
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 text-sm text-[var(--text-soft)]">暂无 Zoom 课堂通知。</div>
         ) : (
           <div className="space-y-4">
             {notifications.map((notification) => {
               const meetingId = getMeetingId(notification);
 
               return (
-                <div key={notification.id} className="rounded-2xl border border-[var(--border)] bg-white p-5 shadow-sm">
+                <div key={notification.id} className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <h2 className="text-base font-semibold text-[var(--text)]">{notification.title}</h2>
@@ -103,23 +103,23 @@ export default function ClassroomNotificationsPage() {
                     </div>
 
                     {!notification.is_read ? (
-                      <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">New</span>
+                      <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">新通知</span>
                     ) : null}
                   </div>
 
                   {meetingId ? (
                     <div className="mt-4 space-y-3">
                       <div className="flex flex-wrap items-center gap-3">
-                        <div className="rounded-lg bg-gray-50 px-4 py-2 text-sm font-semibold text-gray-900">Meeting ID: {meetingId}</div>
-                        <div className="rounded-lg bg-gray-50 px-4 py-2 text-sm font-semibold text-gray-900">Password: {notification.meeting_password || "No password"}</div>
+                        <div className="rounded-lg bg-[var(--bg-soft)] px-4 py-2 text-sm font-semibold text-[var(--text)]">Meeting ID: {meetingId}</div>
+                        <div className="rounded-lg bg-[var(--bg-soft)] px-4 py-2 text-sm font-semibold text-[var(--text)]">Password: {notification.meeting_password || "No password"}</div>
                       </div>
 
                       <div className="flex flex-wrap items-center gap-3">
-                        <button onClick={() => copyMeetingId(meetingId)} className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-gray-50">
+                        <button onClick={() => copyMeetingId(meetingId)} className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--bg-soft)]">
                           Copy Meeting ID
                         </button>
 
-                        <button onClick={() => openZoomMeeting(meetingId, notification.meeting_password)} className="rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition hover:bg-[var(--primary-hover)]">
+                        <button onClick={() => openZoomMeeting(meetingId, notification.meeting_password)} className="rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:bg-[var(--primary-hover)]">
                           Join Zoom Class
                         </button>
                       </div>

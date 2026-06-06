@@ -37,15 +37,15 @@ export default function MaintenancePage() {
         relative flex min-h-screen
         flex-col items-center justify-center
         overflow-hidden
-        bg-[#050816]
-        px-6 text-white
+        bg-[var(--card-soft)]
+        px-6 text-[var(--text)]
       "
     >
       {/* 深空背景 */}
       <div
         className="
           absolute inset-0
-          bg-[radial-gradient(circle_at_top,rgba(90,120,255,0.22),transparent_45%)]
+          bg-[var(--bg-soft)]
         "
       />
 
@@ -75,7 +75,7 @@ export default function MaintenancePage() {
           Under Construction
         </h1>
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/60">
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[var(--text-soft)]">
           We are currently updating the website and adding
           new cosmic experiences.
           Please check back again soon.
@@ -98,7 +98,7 @@ export default function MaintenancePage() {
           <TimeCard label="Seconds" value={seconds} />
         </div>
 
-        <p className="mt-8 text-sm tracking-wide text-white/35">
+        <p className="mt-8 text-sm tracking-wide text-[var(--text)]/35">
           Estimated maintenance completion countdown
         </p>
       </div>
@@ -118,8 +118,8 @@ function TimeCard({
       className="
         relative overflow-hidden
         rounded-[28px]
-        border border-white/10
-        bg-white/5
+        border border-[var(--border)]
+        bg-[var(--card-soft)]
         px-7 py-6
         backdrop-blur-xl
       "
@@ -128,7 +128,7 @@ function TimeCard({
       <div
         className="
           absolute inset-0
-          bg-[radial-gradient(circle_at_top,rgba(120,160,255,0.22),transparent_70%)]
+          bg-[var(--bg-soft)]
         "
       />
 
@@ -136,8 +136,8 @@ function TimeCard({
         <div
           className="
             text-5xl font-semibold
-            tracking-wider text-white
-            drop-shadow-[0_0_18px_rgba(120,160,255,0.6)]
+            tracking-wider text-[var(--text)]
+            drop-shadow-[var(--drop-shadow)]
           "
         >
           {value}
