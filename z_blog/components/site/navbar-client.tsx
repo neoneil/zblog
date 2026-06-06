@@ -45,9 +45,7 @@ export default function NavbarClient({
   }, [router]);
 
   const name =
-    user?.user_metadata?.full_name ||
-    user?.user_metadata?.name ||
-    "User";
+    user?.user_metadata?.full_name || user?.user_metadata?.name || "User";
 
   const email = user?.email || "";
 
@@ -70,7 +68,7 @@ export default function NavbarClient({
             href="/"
             className="shrink-0 text-lg font-bold tracking-tight text-[var(--text)] transition hover:text-[var(--text)] sm:text-xl"
           >
-            星语童年
+            Cosmic Childhood
           </Link>
 
           <button
@@ -116,18 +114,18 @@ export default function NavbarClient({
             <Link href="/resources" className={navLinkClass}>
               资源
             </Link>
-
-            <Link href="/aboutus" className={navLinkClass}>
-              关于我们
+            <Link href="/astroplate" className={navLinkClass}>
+              星盘解读 AI
             </Link>
-
             <Link href="/tarot" className={navLinkClass}>
               塔罗 AI
             </Link>
             <Link href="/classroom" className={navLinkClass}>
               在线课堂
             </Link>
-
+            <Link href="/aboutus" className={navLinkClass}>
+              关于我们
+            </Link>
             {user ? (
               <>
                 {canManagePosts && (

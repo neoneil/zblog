@@ -5,27 +5,27 @@ import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 const adminCards = [
   {
-    title: "Posts",
+    title: "文章管理",
     description: "Manage blog posts and content.",
     href: "/admin/posts",
   },
   {
-    title: "Subscribe Authorized",
+    title: "用户订阅管理",
     description: "Manage subscription authorizations.",
     href: "/admin/subscribe-authorized",
   },
   {
-    title: "ai-video-prompt",
+    title: "视频分镜提示词",
     description: "ai-video-prompt.",
     href: "/admin/ai-video-prompt",
   },
   {
-    title: "Reserved 4",
+    title: "待定Reserved 4",
     description: "Coming soon.",
     href: "/admin/reserved-4",
   },
   {
-    title: "Reserved 5",
+    title: "待定Reserved 5",
     description: "Coming soon.",
     href: "/admin/reserved-5",
   },

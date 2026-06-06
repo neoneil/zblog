@@ -38,13 +38,7 @@ export default async function AdminPostsPage() {
                     href="/admin/posts/new"
                     className="rounded border px-4 py-2 text-[var(--text)]"
                 >
-                    New Post
-                </Link>
-                <Link
-                    href="/admin/subscribe-authorized"
-                    className="rounded border px-4 py-2 text-[var(--text)]"
-                >
-                    授权订阅
+                    创建新文章
                 </Link>
             </div>
 
