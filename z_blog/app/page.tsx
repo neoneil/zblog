@@ -75,18 +75,18 @@ export default async function HomePage() {
 
               <div className="relative z-10 flex min-h-[440px] items-center px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14">
                 <div className="max-w-2xl">
-                  <p className="mb-3 inline-flex items-center rounded-full border border-[color:var(--text-inverse)]/45 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-inverse)] sm:text-xs">
+                  <p className="mb-3 inline-flex items-center rounded-full border border-[color:var(--text-inverse)]/45 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-white)] sm:text-xs">
                     Cosmic Childhood
                   </p>
 
-                  <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text-inverse)] sm:text-4xl lg:text-6xl lg:leading-tight">
+                  <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text-white)] sm:text-4xl lg:text-6xl lg:leading-tight">
                     Raising Children with
-                    <span className="block text-[var(--text-inverse)]">
+                    <span className="block text-[var(--text-white)]">
                       Wisdom, Nature and Stars
                     </span>
                   </h1>
 
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-inverse)] sm:text-base lg:text-lg">
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-white)] sm:text-base lg:text-lg">
                     A soulful space for early childhood education, creative
                     learning and astrology parenting.
                   </p>
@@ -94,26 +94,17 @@ export default async function HomePage() {
                   <div className="mt-7 flex flex-wrap gap-3">
                     <Link
                       href="/posts"
-                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text)] shadow-[var(--shadow-sm)] shadow-black/20 transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
+                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text-white)] shadow-[var(--shadow-sm)] shadow-black/20 transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
                     >
                       Start Reading
                     </Link>
 
                     <Link
                       href="/categories"
-                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--primary)] shadow-(--shadow-sm) transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
+                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text-white)] shadow-(--shadow-sm) transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
                     >
                       Browse Categories
                     </Link>
-
-                    {canManagePosts && (
-                      <Link
-                        href="/admin/posts/new"
-                        className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] px-6 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card-muted)]"
-                      >
-                        New Post
-                      </Link>
-                    )}
                   </div>
                 </div>
               </div>
