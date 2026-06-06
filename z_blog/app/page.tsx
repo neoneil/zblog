@@ -65,7 +65,7 @@ export default async function HomePage() {
               </div>
 
               {/* Left dark gradient for text readability */}
-              {/* <div className="absolute inset-0 bg-gradient-to-r from-black/88 via-black/58 to-transparent" /> */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[rgba(32,26,20,0.72)] via-[rgba(32,26,20,0.38)] to-transparent" />
 
               {/* Subtle overall bottom shading */}
               <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--bg-soft)]/70 via-transparent to-transparent" />
@@ -75,18 +75,18 @@ export default async function HomePage() {
 
               <div className="relative z-10 flex min-h-[440px] items-center px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14">
                 <div className="max-w-2xl">
-                  <p className="mb-3 inline-flex items-center rounded-full border border-[var(--border)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)] sm:text-xs">
+                  <p className="mb-3 inline-flex items-center rounded-full border border-[color:var(--text-inverse)]/45 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-inverse)] sm:text-xs">
                     Cosmic Childhood
                   </p>
 
-                  <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text)] sm:text-4xl lg:text-6xl lg:leading-tight">
+                  <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text-inverse)] sm:text-4xl lg:text-6xl lg:leading-tight">
                     Raising Children with
-                    <span className="block text-[var(--text)]">
+                    <span className="block text-[var(--text-inverse)]">
                       Wisdom, Nature and Stars
                     </span>
                   </h1>
 
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-soft)] sm:text-base lg:text-lg">
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-inverse)] sm:text-base lg:text-lg">
                     A soulful space for early childhood education, creative
                     learning and astrology parenting.
                   </p>
