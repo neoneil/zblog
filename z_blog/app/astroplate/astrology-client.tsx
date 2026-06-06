@@ -485,8 +485,8 @@ export default function AstrologyPage() {
           </div>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[500px_minmax(0,1fr)_500px]">
-          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6 xl:col-span-1">
             <div className="mb-5">
               <h2 className="text-[32px] font-semibold leading-none text-[var(--text)]">
                 出生信息
@@ -714,7 +714,7 @@ export default function AstrologyPage() {
             </div>
           </section>
 
-          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 shadow-[var(--shadow-md)] md:p-6">
+          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 shadow-[var(--shadow-md)] md:p-6 xl:col-span-2">
             <div className="rounded-[24px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
@@ -795,7 +795,7 @@ export default function AstrologyPage() {
             </div>
           </section>
 
-          <section className="space-y-6">
+          <section className="space-y-6 xl:col-span-3">
             <div className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6">
               {/* <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
