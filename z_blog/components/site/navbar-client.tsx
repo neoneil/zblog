@@ -131,7 +131,7 @@ export default function NavbarClient({
             {user ? (
               <>
                 {canManagePosts && (
-                  <Link href="/admin/posts" className={navLinkClass}>
+                  <Link href="/admin" className={navLinkClass}>
                     Admin
                   </Link>
                 )}

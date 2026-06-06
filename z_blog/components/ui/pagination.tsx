@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui-v2/button";
+import { Button } from "@/components/ui/button";
 
 function getPaginationNumbers(currentPage: number, totalPages: number) {
 
