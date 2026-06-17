@@ -391,7 +391,7 @@ export default function AIVideoPromptPage() {
           <CardContent className="flex flex-col gap-4 p-5">
             <div className="flex items-center justify-between gap-3">
               <CardTitle>生成的中文提示词</CardTitle>
-              <Button variant="secondary" onClick={copyZhPrompt}>复制中文提示词</Button>
+              <Button onClick={copyZhPrompt}>复制中文提示词</Button>
             </div>
             <Textarea value={zhPromptOutput} readOnly className="min-h-[160px] resize-none text-sm leading-6" />
           </CardContent>
@@ -401,7 +401,7 @@ export default function AIVideoPromptPage() {
           <CardContent className="flex flex-col gap-4 p-5">
             <div className="flex items-center justify-between gap-3">
               <CardTitle>生成的英文提示词</CardTitle>
-              <Button variant="secondary" onClick={copyEnPrompt}>复制英文提示词</Button>
+              <Button onClick={copyEnPrompt}>复制英文提示词</Button>
             </div>
             <Textarea value={enPromptOutput} readOnly className="min-h-[160px] resize-none text-sm leading-6" />
           </CardContent>
@@ -411,7 +411,7 @@ export default function AIVideoPromptPage() {
           <CardContent className="flex flex-col gap-4 p-5">
             <div className="flex items-center justify-between gap-3">
               <CardTitle>中文 JSON 数据</CardTitle>
-              <Button variant="secondary" onClick={copyZhJson}>复制中文 JSON</Button>
+              <Button onClick={copyZhJson}>复制中文 JSON</Button>
             </div>
             <Textarea value={zhJsonOutput} readOnly className="min-h-[160px] resize-none font-mono text-sm leading-6" />
           </CardContent>
@@ -421,7 +421,7 @@ export default function AIVideoPromptPage() {
           <CardContent className="flex flex-col gap-4 p-5">
             <div className="flex items-center justify-between gap-3">
               <CardTitle>英文 JSON 数据</CardTitle>
-              <Button variant="secondary" onClick={copyEnJson}>复制英文 JSON</Button>
+              <Button onClick={copyEnJson}>复制英文 JSON</Button>
             </div>
             <Textarea value={enJsonOutput} readOnly className="min-h-[160px] resize-none font-mono text-sm leading-6" />
           </CardContent>

@@ -56,7 +56,7 @@ export default function MaintenancePage() {
           h-[600px] w-[600px]
           -translate-x-1/2 -translate-y-1/2
           rounded-full
-          bg-blue-500/10 blur-3xl
+          bg-[var(--primary-soft)] blur-3xl
         "
       />
 
@@ -67,7 +67,7 @@ export default function MaintenancePage() {
 
       {/* 文案 */}
       <div className="relative z-10 mt-2 text-center">
-        <p className="mb-3 text-sm uppercase tracking-[0.35em] text-blue-200/55">
+        <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[var(--primary-muted)]">
           Maintenance Mode
         </p>
 
@@ -85,13 +85,13 @@ export default function MaintenancePage() {
         <div className="mt-14 flex items-center justify-center gap-4">
           <TimeCard label="Hours" value={hours} />
 
-          <div className="pb-8 text-4xl font-light text-blue-200/50">
+          <div className="pb-8 text-4xl font-light text-[var(--primary-muted)]">
             :
           </div>
 
           <TimeCard label="Minutes" value={minutes} />
 
-          <div className="pb-8 text-4xl font-light text-blue-200/50">
+          <div className="pb-8 text-4xl font-light text-[var(--primary-muted)]">
             :
           </div>
 
@@ -143,7 +143,7 @@ function TimeCard({
           {value}
         </div>
 
-        <div className="mt-3 text-xs uppercase tracking-[0.25em] text-blue-200/50">
+        <div className="mt-3 text-xs uppercase tracking-[0.25em] text-[var(--primary-muted)]">
           {label}
         </div>
       </div>

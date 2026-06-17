@@ -1,28 +1,9 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import DeletePostButton from "@/components/admin/delete-post-button";
+import { requireRole } from "@/lib/auth/require-user";
 // import SubscribeAuthorized from "../subscribe-authorized/subscribe-authorized-client"
 export default async function AdminPostsPage() {
-    const supabase = await createClient();
-
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-        redirect("/login");
-    }
-
-    const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .single();
-
-    if (!profile || (profile.role !== "admin" && profile.role !== "editor")) {
-        redirect("/");
-    }
+    const { supabase } = await requireRole(["admin", "editor"]);
 
     const { data: posts, error } = await supabase
         .from("posts")
@@ -38,7 +19,13 @@ export default async function AdminPostsPage() {
                     href="/admin/posts/new"
                     className="rounded border px-4 py-2 text-[var(--text)]"
                 >
-                    创建新文章
+                    New Post
+                </Link>
+                <Link
+                    href="/admin/subscribe-authorized"
+                    className="rounded border px-4 py-2 text-[var(--text)]"
+                >
+                    授权订阅
                 </Link>
             </div>
 

@@ -53,7 +53,7 @@ export default function ResourcesPage() {
             </div>
             <section className="mx-auto mt-20 max-w-6xl px-6">
   <div className="mb-8">
-    <p className="mb-3 text-sm uppercase tracking-[0.35em] text-blue-200/60">
+    <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[var(--primary-muted)]">
       Premium Astrology Guide
     </p>
 

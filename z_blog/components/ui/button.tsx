@@ -1,8 +1,9 @@
-import { ButtonHTMLAttributes } from "react";
+import Link from "next/link";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   "cursor-pointer inline-flex items-center justify-center rounded-[var(--radius-md)] font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
@@ -10,7 +11,7 @@ const buttonVariants = cva(
       variant: {
 
         primary:
-          "bg-[var(--primary)] text-[var(--text)] shadow-[var(--shadow-sm)] hover:bg-[var(--primary-hover)]",
+          "bg-[var(--primary)] text-[var(--text-inverse)] shadow-[var(--shadow-sm)] hover:bg-[var(--primary-hover)]",
 
         secondary:
           "border border-[var(--border)] bg-[var(--card)] text-[var(--text)] hover:bg-[var(--bg-soft)]",
@@ -19,7 +20,10 @@ const buttonVariants = cva(
           "bg-transparent text-[var(--text-soft)] hover:bg-[var(--bg-soft)] hover:text-[var(--text)]",
 
         danger:
-          "bg-[var(--danger)] text-[var(--text)] hover:opacity-90",
+          "bg-[var(--danger)] text-[var(--text-inverse)] hover:opacity-90",
+
+        hero:
+          "border border-[color:var(--text-white)]/35 bg-[color:var(--card)]/20 text-[var(--text-white)] shadow-[var(--shadow-sm)] backdrop-blur-md hover:bg-[color:var(--card)]/28 hover:scale-[1.02]",
 
       },
 
@@ -73,6 +77,31 @@ export function Button({
 
   return (
     <button
+      className={cn(buttonVariants({ variant, size, fullWidth }), className)}
+      {...props}
+    />
+  );
+
+}
+
+type ButtonLinkProps =
+  AnchorHTMLAttributes<HTMLAnchorElement> &
+  VariantProps<typeof buttonVariants> & {
+    href: string;
+  };
+
+export function ButtonLink({
+  className,
+  variant,
+  size,
+  fullWidth,
+  href,
+  ...props
+}: ButtonLinkProps) {
+
+  return (
+    <Link
+      href={href}
       className={cn(buttonVariants({ variant, size, fullWidth }), className)}
       {...props}
     />

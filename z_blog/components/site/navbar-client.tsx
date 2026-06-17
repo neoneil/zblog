@@ -7,6 +7,9 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 import LogoutButton from "@/components/auth/logout-button";
+import { LanguageToggle, ThemeToggle } from "@/components/site/preference-controls";
+import { usePreferences } from "@/components/site/preferences-provider";
+import { siteCopy } from "@/lib/i18n/copy";
 import Container from "./container";
 
 type NavbarClientProps = {
@@ -27,6 +30,7 @@ export default function NavbarClient({
   canManagePosts,
 }: NavbarClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { t } = usePreferences();
 
   const router = useRouter();
 
@@ -45,7 +49,9 @@ export default function NavbarClient({
   }, [router]);
 
   const name =
-    user?.user_metadata?.full_name || user?.user_metadata?.name || "User";
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    t({ zh: "用户", en: "User" });
 
   const email = user?.email || "";
 
@@ -68,7 +74,7 @@ export default function NavbarClient({
             href="/"
             className="shrink-0 text-lg font-bold tracking-tight text-[var(--text)] transition hover:text-[var(--text)] sm:text-xl"
           >
-            Cosmic Childhood
+            {t(siteCopy.brand)}
           </Link>
 
           <button
@@ -104,33 +110,37 @@ export default function NavbarClient({
 
           <nav className="hidden items-center justify-end gap-1.5 sm:gap-2 lg:flex lg:gap-3">
             <Link href="/" className={navLinkClass}>
-              首页
+              {t(siteCopy.navHome)}
             </Link>
 
             <Link href="/categories" className={navLinkClass}>
-              主要分类
+              {t(siteCopy.navCategories)}
             </Link>
 
             <Link href="/resources" className={navLinkClass}>
-              资源
+              {t(siteCopy.navResources)}
             </Link>
+
+            <Link href="/aboutus" className={navLinkClass}>
+              {t(siteCopy.navAbout)}
+            </Link>
+
             <Link href="/astroplate" className={navLinkClass}>
-              星盘解读 AI
+              {t(siteCopy.navAstroplate)}
             </Link>
+
             <Link href="/tarot" className={navLinkClass}>
-              塔罗 AI
+              {t(siteCopy.navTarot)}
             </Link>
             <Link href="/classroom" className={navLinkClass}>
-              在线课堂
+              {t(siteCopy.navClassroom)}
             </Link>
-            <Link href="/aboutus" className={navLinkClass}>
-              关于我们
-            </Link>
+
             {user ? (
               <>
                 {canManagePosts && (
                   <Link href="/admin" className={navLinkClass}>
-                    管理后台
+                    {t(siteCopy.navAdmin)}
                   </Link>
                 )}
 
@@ -155,19 +165,29 @@ export default function NavbarClient({
                 </div>
 
                 <LogoutButton />
+
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <LanguageToggle />
+                </div>
               </>
             ) : (
               <>
                 <Link href="/login" className={navLinkClass}>
-                  登录
+                  {t(siteCopy.navLogin)}
                 </Link>
 
                 <Link
                   href="/sign-up"
                   className="rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card)] lg:text-base"
                 >
-                  注册
+                  {t(siteCopy.navSignup)}
                 </Link>
+
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <LanguageToggle />
+                </div>
               </>
             )}
           </nav>
@@ -181,7 +201,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                首页
+                {t(siteCopy.navHome)}
               </Link>
 
               <Link
@@ -189,7 +209,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                主要分类
+                {t(siteCopy.navCategories)}
               </Link>
 
               <Link
@@ -197,7 +217,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                资源
+                {t(siteCopy.navResources)}
               </Link>
 
               <Link
@@ -205,7 +225,15 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                关于我们
+                {t(siteCopy.navAbout)}
+              </Link>
+
+              <Link
+                href="/astroplate"
+                className={mobileLinkClass}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(siteCopy.navAstroplate)}
               </Link>
 
               <Link
@@ -213,7 +241,7 @@ export default function NavbarClient({
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
-                塔罗 AI
+                {t(siteCopy.navTarot)}
               </Link>
 
               {user ? (
@@ -224,7 +252,7 @@ export default function NavbarClient({
                       className={mobileLinkClass}
                       onClick={() => setMobileOpen(false)}
                     >
-                      管理后台
+                      {t(siteCopy.navAdmin)}
                     </Link>
                   )}
 
@@ -248,8 +276,12 @@ export default function NavbarClient({
                     </div>
                   </div>
 
-                  <div className="mt-3">
+                  <div className="mt-3 flex items-center justify-end gap-2">
                     <LogoutButton />
+
+                    <ThemeToggle />
+
+                    <LanguageToggle />
                   </div>
                 </>
               ) : (
@@ -259,7 +291,7 @@ export default function NavbarClient({
                     className={mobileLinkClass}
                     onClick={() => setMobileOpen(false)}
                   >
-                    登录
+                    {t(siteCopy.navLogin)}
                   </Link>
 
                   <Link
@@ -267,8 +299,13 @@ export default function NavbarClient({
                     className="rounded-xl bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card)]"
                     onClick={() => setMobileOpen(false)}
                   >
-                    注册
+                    {t(siteCopy.navSignup)}
                   </Link>
+
+                  <div className="flex justify-end gap-2 pt-1">
+                    <ThemeToggle />
+                    <LanguageToggle />
+                  </div>
                 </div>
               )}
             </nav>

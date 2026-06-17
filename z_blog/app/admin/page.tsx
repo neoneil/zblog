@@ -1,56 +1,37 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { requireRole } from "@/lib/auth/require-user";
 
 const adminCards = [
   {
-    title: "文章管理",
+    title: "Posts",
     description: "Manage blog posts and content.",
     href: "/admin/posts",
   },
   {
-    title: "用户订阅管理",
+    title: "Subscribe Authorized",
     description: "Manage subscription authorizations.",
     href: "/admin/subscribe-authorized",
   },
   {
-    title: "视频分镜提示词",
+    title: "ai-video-prompt",
     description: "ai-video-prompt.",
     href: "/admin/ai-video-prompt",
   },
   {
-    title: "待定Reserved 4",
+    title: "Reserved 4",
     description: "Coming soon.",
     href: "/admin/reserved-4",
   },
   {
-    title: "待定Reserved 5",
+    title: "Reserved 5",
     description: "Coming soon.",
     href: "/admin/reserved-5",
   },
 ];
 
 export default async function AdminPage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("email, role")
-    .eq("id", user.id)
-    .single();
-
-  if (!profile || (profile.role !== "admin" && profile.role !== "editor")) {
-    redirect("/");
-  }
+  const { profile } = await requireRole(["admin", "editor"]);
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12 text-[var(--text)]">

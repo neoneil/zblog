@@ -18,3 +18,19 @@ export async function requireUser(nextPath?: string) {
 
   return { supabase, user };
 }
+
+export async function requireRole(roles: string[], redirectPath = "/", nextPath?: string) {
+  const { supabase, user } = await requireUser(nextPath);
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("email, role")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile || !roles.includes(profile.role)) {
+    redirect(redirectPath);
+  }
+
+  return { supabase, user, profile };
+}

@@ -103,7 +103,7 @@ export default function ClassroomNotificationsPage() {
                     </div>
 
                     {!notification.is_read ? (
-                      <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-600">新通知</span>
+                      <span className="rounded-full bg-[var(--danger-soft)] px-3 py-1 text-xs font-medium text-[var(--danger)]">新通知</span>
                     ) : null}
                   </div>
 

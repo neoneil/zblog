@@ -117,11 +117,7 @@ const DISPLAY_SUMMARY_KEYS = [
   "mercury",
   "venus",
   "mars",
-  "jupiter",
   "saturn",
-  "uranus",
-  "neptune",
-  "pluto",
   "midheaven",
 ] as const;
 
@@ -481,7 +477,7 @@ export default function AstrologyPage() {
               星盘 Natal Chart
             </p>
             <h1 className="text-2xl font-semibold tracking-tight text-[var(--text)] sm:text-3xl md:text-5xl">
-              星盘解析
+              出生星盘解析
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--primary)] md:text-base">
               先输入出生信息，再点击按钮生成星盘。右侧会生成星盘，并进行AI解读。
@@ -723,9 +719,12 @@ export default function AstrologyPage() {
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-medium text-[var(--primary)]">
-                    已生成的本命盘
+                    已生成的本命盘 Natal Chart
                   </p>
                 </div>
+                <span className="rounded-xl border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1.5 text-xs font-medium text-[var(--primary)]">
+                  SVG
+                </span>
               </div>
 
               <div className="relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-3">
@@ -753,7 +752,7 @@ export default function AstrologyPage() {
                 </div>
               ) : null}
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-4 lg:grid-cols-6">
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {summaryCards.map((item) => (
                   <SummaryCard key={item.key} item={item} />
                 ))}

@@ -200,18 +200,18 @@ export default function ClassroomPage() {
       <form onSubmit={handleSubmit} className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--card)] p-8 shadow-[var(--shadow-md)]">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-[var(--text)]">
-            加入占星课堂
+            Join Classroom
           </h1>
 
           <p className="mt-2 text-sm text-[var(--text-soft)]">
-            输入老师发送的会议ID号码和密码
+            Enter your Zoom Meeting ID to join the online class.
           </p>
         </div>
 
         <div className="space-y-4">
           <div>
             <label className="mb-2 block text-sm font-medium text-[var(--text)]">
-              你在在线课堂显示的名字
+              Your name
             </label>
 
             <input
@@ -224,7 +224,7 @@ export default function ClassroomPage() {
 
           <div>
             <label className="mb-2 block text-sm font-medium text-[var(--text)]">
-              会议号码（ID）
+              Meeting ID
             </label>
 
             <input
@@ -237,7 +237,7 @@ export default function ClassroomPage() {
 
           <div>
             <label className="mb-2 block text-sm font-medium text-[var(--text)]">
-              密码
+              Password
             </label>
 
             <input
@@ -250,12 +250,12 @@ export default function ClassroomPage() {
         </div>
 
         {status ? (
-          <p className="mt-4 text-center text-sm text-red-500">
+          <p className="mt-4 text-center text-sm text-[var(--danger)]">
             {status}
           </p>
         ) : null}
 
-        <button type="submit" className="cursor-pointer mt-6 h-12 w-full rounded-2xl bg-[var(--primary)] text-sm font-semibold text-[var(--text-white)] transition hover:bg-[var(--primary-hover)]">
+        <button type="submit" className="mt-6 h-12 w-full rounded-2xl bg-[var(--primary)] text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--primary-hover)]">
           Join Meeting
         </button>
       </form>

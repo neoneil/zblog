@@ -1,32 +1,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
 import Circle from "@/components/Circle";
 import Astroplate from "@/components/Astroplate";
 import ParentingLabSection from "@/components/ParentingLabSection";
+import { LocalizedText } from "@/components/site/preferences-provider";
+import { ButtonLink } from "@/components/ui/button";
+import { getCurrentUserWithRole } from "@/lib/auth/current-user";
+import { siteCopy } from "@/lib/i18n/copy";
 export default async function HomePage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  let role: string | null = null;
-
-  if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
-
-    role = profile?.role ?? null;
-  }
-
-  const canManagePosts = role === "admin" || role === "editor";
+  const { supabase } = await getCurrentUserWithRole();
 
   const { data: posts } = await supabase
     .from("posts")
@@ -45,15 +30,7 @@ export default async function HomePage() {
             <div className="relative overflow-hidden rounded-[2rem] shadow-[var(--shadow-lg)]">
               {/* Background image */}
               <div
-                className="absolute inset-0"
-                style={{
-                  WebkitMaskImage:
-                    "linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%)",
-                  WebkitMaskComposite: "source-in",
-                  maskImage:
-                    "linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%)",
-                  maskComposite: "intersect",
-                }}
+                className="hero-edge-mask absolute inset-0"
               >
                 <Image
                   src="/hero.png"
@@ -65,7 +42,7 @@ export default async function HomePage() {
               </div>
 
               {/* Left dark gradient for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[rgba(32,26,20,0.72)] via-[rgba(32,26,20,0.38)] to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[var(--hero-overlay-strong)] via-[var(--hero-overlay-soft)] to-transparent" />
 
               {/* Subtle overall bottom shading */}
               <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--bg-soft)]/70 via-transparent to-transparent" />
@@ -76,34 +53,36 @@ export default async function HomePage() {
               <div className="relative z-10 flex min-h-[440px] items-center px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14">
                 <div className="max-w-2xl">
                   <p className="mb-3 inline-flex items-center rounded-full border border-[color:var(--text-inverse)]/45 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-white)] sm:text-xs">
-                    星语童年
+                    <LocalizedText copy={siteCopy.heroBadge} />
                   </p>
 
                   <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text-white)] sm:text-4xl lg:text-6xl lg:leading-tight">
-                    用智慧、自然与星辰
+                    <LocalizedText copy={siteCopy.heroTitleLineOne} />
                     <span className="block text-[var(--text-white)]">
-                      陪伴孩子成长
+                      <LocalizedText copy={siteCopy.heroTitleLineTwo} />
                     </span>
                   </h1>
 
                   <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-white)] sm:text-base lg:text-lg">
-                    一个关于幼儿教育、创意学习与星象育儿的温柔空间。
+                    <LocalizedText copy={siteCopy.heroDescription} />
                   </p>
 
                   <div className="mt-7 flex flex-wrap gap-3">
-                    <Link
+                    <ButtonLink
                       href="/posts"
-                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text-white)] shadow-[var(--shadow-sm)] shadow-black/20 transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
+                      variant="hero"
+                      size="lg"
                     >
-                      开始阅读
-                    </Link>
+                      <LocalizedText copy={siteCopy.heroPrimaryCta} />
+                    </ButtonLink>
 
-                    <Link
+                    <ButtonLink
                       href="/categories"
-                      className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text-white)] shadow-(--shadow-sm) transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
+                      variant="hero"
+                      size="lg"
                     >
-                      浏览分类
-                    </Link>
+                      <LocalizedText copy={siteCopy.heroSecondaryCta} />
+                    </ButtonLink>
                   </div>
                 </div>
               </div>

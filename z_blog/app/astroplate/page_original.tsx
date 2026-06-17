@@ -217,7 +217,7 @@ const ASPECT_LABEL_ZH: Record<string, string> = {
 };
 
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--text)] outline-none transition placeholder:text-slate-400 focus:border-violet-300 focus:ring-4 focus:ring-[var(--primary-soft)]";
+  "w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--text-faint)] focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary-soft)]";
 
 const CORE_ASPECT_TYPES = new Set([
   "conjunction",
@@ -633,7 +633,7 @@ export default function AstrologyPage() {
                   </div>
                 </Field>
 
-                <div className="rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-xs leading-6 text-sky-800">
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-xs leading-6 text-[var(--text-soft)]">
                   可以输入城市名自动填写经纬度。建议写成“城市, 国家”，例如
                   Melbourne, Australia，这样结果更稳定。
                 </div>
@@ -809,7 +809,7 @@ export default function AstrologyPage() {
                 </button>
               </div>
 
-              <div className="mb-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs leading-6 text-emerald-800">
+              <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-xs leading-6 text-[var(--text-soft)]">
                 当前只保留：核心星体、上升 Ascendant、天顶 Midheaven、12 宫头、主要相位。
               </div>
 

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import EditPostForm from "@/components/admin/edit-post-form";
+import { requireRole } from "@/lib/auth/require-user";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -8,25 +8,7 @@ type PageProps = {
 
 export default async function EditPostPage({ params }: PageProps) {
   const { id } = await params;
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-
-  if (!profile || (profile.role !== "admin" && profile.role !== "editor")) {
-    redirect("/");
-  }
+  const { supabase } = await requireRole(["admin", "editor"]);
 
   const { data: post } = await supabase
     .from("posts")

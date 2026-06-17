@@ -1,7 +1,5 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
-
 import AstrologyClient from "./astrology-client";
+import { requireUser } from "@/lib/auth/require-user";
 
 export const metadata = {
   title: "星盘解读",
@@ -9,17 +7,6 @@ export const metadata = {
 };
 
 export default async function AstrologyPage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // 没登录
-  if (!user) {
-    redirect("/login");
-  }
-
-  // 已登录，放行
+  await requireUser();
   return <AstrologyClient />;
 }

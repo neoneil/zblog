@@ -100,7 +100,7 @@ export default function DeletePostButton({
         {loading ? "删除中..." : "删除"}
       </button>
 
-      {message ? <p className="text-sm text-red-600">{message}</p> : null}
+      {message ? <p className="text-sm text-[var(--danger)]">{message}</p> : null}
     </div>
   );
 }

@@ -2,53 +2,105 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --bg: #fffaf4;
-  --bg-soft: #f7efe6;
-  --bg-muted: #efe4d7;
+  color-scheme: light;
+  --bg: #f6fbff;
+  --bg-soft: #eaf6ff;
+  --bg-muted: #d9ecfb;
   --card: #ffffff;
-  --card-soft: #fff6ec;
-  --card-muted: #f8eee2;
+  --card-soft: #f2f9ff;
+  --card-muted: #e6f3fd;
 
-  --text: #201a14;
-  --text-soft: #67594b;
-  --text-faint: #9a8978;
-  --text-inverse: #fffaf4;
+  --text: #112235;
+  --text-soft: #426075;
+  --text-faint: #7892a5;
+  --text-inverse: #ffffff;
+  --text-white: #ffffff;
   --muted: var(--text-soft);
 
-  --primary: #8a5a2b;
-  --primary-hover: #6f431f;
-  --primary-soft: #f2dfc8;
-  --primary-muted: #c99a67;
-  --accent: #2f7d74;
-  --accent-hover: #22665e;
-  --accent-soft: #dcefeb;
-  --accent-warm: #c8793a;
-  --accent-warm-soft: #f6e1cc;
+  --primary: #2b80c5;
+  --primary-hover: #176ba8;
+  --primary-soft: #cfeaff;
+  --primary-muted: #72b5e8;
+  --accent: #2aa6b8;
+  --accent-hover: #16899a;
+  --accent-soft: #d8f6fa;
+  --accent-warm: #f0a447;
+  --accent-warm-soft: #fff0d6;
 
-  --success: #24785d;
-  --success-soft: #dff2e8;
-  --warning: #a66712;
-  --warning-soft: #f8e7c9;
-  --danger: #b94b4b;
-  --danger-soft: #f7dddd;
+  --success: #217a67;
+  --success-soft: #dff6ef;
+  --warning: #a76b16;
+  --warning-soft: #fff0d2;
+  --danger: #bd4b5b;
+  --danger-soft: #ffe1e6;
 
-  --border: #e5d7c8;
-  --border-strong: #cdb9a5;
-  --ring: #ead1b6;
+  --border: #c9dfef;
+  --border-strong: #9fc3dc;
+  --ring: #b9dfff;
 
-  --navbar-bg: rgba(255, 250, 244, 0.88);
-  --navbar-bg-hover: #f4e8da;
-  --footer-bg: #f4e8da;
+  --navbar-bg: rgba(246, 251, 255, 0.88);
+  --navbar-bg-hover: #e5f3ff;
+  --footer-bg: #eaf6ff;
 
-  --shadow-sm: 0 8px 24px rgba(83, 57, 34, 0.08);
-  --shadow-md: 0 16px 48px rgba(83, 57, 34, 0.12);
-  --shadow-lg: 0 24px 70px rgba(83, 57, 34, 0.16);
-  --drop-shadow: 0 8px 18px rgba(83, 57, 34, 0.16);
-  --radius-sm: 18px;
-  --radius-md: 22px;
-  --radius-lg: 28px;
+  --shadow-sm: 0 8px 24px rgba(43, 128, 197, 0.08);
+  --shadow-md: 0 16px 48px rgba(43, 128, 197, 0.12);
+  --shadow-lg: 0 24px 70px rgba(17, 34, 53, 0.16);
+  --drop-shadow: 0 8px 18px rgba(43, 128, 197, 0.18);
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --hero-overlay-strong: rgba(17, 34, 53, 0.72);
+  --hero-overlay-soft: rgba(17, 34, 53, 0.38);
 }
 
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #08131f;
+  --bg-soft: #0f2030;
+  --bg-muted: #172b3d;
+  --card: #102233;
+  --card-soft: #13283b;
+  --card-muted: #193248;
+
+  --text: #eef7ff;
+  --text-soft: #b8cad9;
+  --text-faint: #8299ab;
+  --text-inverse: #06111d;
+  --text-white: #ffffff;
+  --muted: var(--text-soft);
+
+  --primary: #7cc6ff;
+  --primary-hover: #a8d9ff;
+  --primary-soft: #1f4464;
+  --primary-muted: #4da3df;
+  --accent: #65d7e6;
+  --accent-hover: #8de6f0;
+  --accent-soft: #1d4b55;
+  --accent-warm: #ffc46f;
+  --accent-warm-soft: #4b3520;
+
+  --success: #76d6bd;
+  --success-soft: #173f35;
+  --warning: #ffd083;
+  --warning-soft: #42321b;
+  --danger: #ff8fa0;
+  --danger-soft: #4b2028;
+
+  --border: #274158;
+  --border-strong: #3c5d78;
+  --ring: #2d6fa4;
+
+  --navbar-bg: rgba(8, 19, 31, 0.88);
+  --navbar-bg-hover: #183247;
+  --footer-bg: #0f2030;
+
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 16px 48px rgba(0, 0, 0, 0.34);
+  --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.42);
+  --drop-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  --hero-overlay-strong: rgba(4, 10, 18, 0.78);
+  --hero-overlay-soft: rgba(4, 10, 18, 0.42);
+}
 
 @layer components {
 
@@ -184,6 +236,7 @@ html,
 body {
   background: var(--bg);
   color: var(--text);
+  min-height: 100%;
 }
 .hero-fade-image {
   mask-image: radial-gradient(
@@ -203,6 +256,17 @@ body {
     rgba(0, 0, 0, 0.18) 96%,
     rgba(0, 0, 0, 0) 100%
   );
+}
+
+.hero-edge-mask {
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
 }
 
 @keyframes twinkleSmall {
@@ -366,7 +430,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-  -webkit-text-fill-color: black !important;
+  -webkit-text-fill-color: var(--text) !important;
   transition: background-color 9999s ease-in-out 0s;
-  box-shadow: 0 0 0px 1000px white inset !important;
+  box-shadow: 0 0 0px 1000px var(--card) inset !important;
 }
