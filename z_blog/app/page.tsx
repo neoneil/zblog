@@ -29,9 +29,7 @@ export default async function HomePage() {
           <section className="mb-14 sm:mb-16">
             <div className="relative overflow-hidden rounded-[2rem] shadow-[var(--shadow-lg)]">
               {/* Background image */}
-              <div
-                className="hero-edge-mask absolute inset-0"
-              >
+              <div className="absolute inset-0">
                 <Image
                   src="/hero.png"
                   alt="首页背景"
@@ -43,9 +41,6 @@ export default async function HomePage() {
 
               {/* Left dark gradient for text readability */}
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--hero-overlay-strong)] via-[var(--hero-overlay-soft)] to-transparent" />
-
-              {/* Subtle overall bottom shading */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--bg-soft)]/70 via-transparent to-transparent" />
 
               {/* Optional soft glow */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,var(--primary-soft),transparent_32%)] opacity-35" />
@@ -91,8 +86,8 @@ export default async function HomePage() {
 
           <CategoriesSection />
 
-          <section className="w-full py-12">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <section className="w-full py-6 sm:py-8">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <Circle />
               <Astroplate imageSrc="/astroplate3.png" />
             </div>

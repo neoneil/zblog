@@ -61,7 +61,7 @@ export default function NavbarClient({
     "/default-avatar.png";
 
   const navLinkClass =
-    "rounded-full px-3 py-2 text-sm font-medium text-[var(--text-soft)] transition hover:bg-[var(--card-muted)] hover:text-[var(--text)] lg:text-base";
+    "inline-flex min-w-max items-center justify-center whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-[var(--text-soft)] transition hover:bg-[var(--card-muted)] hover:text-[var(--text)]";
 
   const mobileLinkClass =
     "rounded-xl px-3 py-2 text-sm font-medium text-[var(--text-soft)] transition hover:bg-[var(--card-muted)] hover:text-[var(--text)]";
@@ -82,7 +82,7 @@ export default function NavbarClient({
             aria-label="切换导航菜单"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card-soft)] text-[var(--text)] transition hover:bg-[var(--card-muted)] lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card-soft)] text-[var(--text)] transition hover:bg-[var(--card-muted)] 2xl:hidden"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +108,7 @@ export default function NavbarClient({
             </svg>
           </button>
 
-          <nav className="hidden items-center justify-end gap-1.5 sm:gap-2 lg:flex lg:gap-3">
+          <nav className="hidden min-w-0 flex-1 items-center justify-end gap-1.5 2xl:flex">
             <Link href="/" className={navLinkClass}>
               {t(siteCopy.navHome)}
             </Link>
@@ -129,9 +129,14 @@ export default function NavbarClient({
               {t(siteCopy.navAstroplate)}
             </Link>
 
-            <Link href="/tarot" className={navLinkClass}>
+            <Link href="/tarot-ai" className={navLinkClass}>
               {t(siteCopy.navTarot)}
             </Link>
+
+            <Link href="/tarot" className={navLinkClass}>
+              {t(siteCopy.navTarotLibrary)}
+            </Link>
+
             <Link href="/classroom" className={navLinkClass}>
               {t(siteCopy.navClassroom)}
             </Link>
@@ -144,7 +149,7 @@ export default function NavbarClient({
                   </Link>
                 )}
 
-                <div className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-2 py-1 shadow-sm backdrop-blur-md">
+                <div className="flex min-w-0 max-w-[220px] items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-2 py-1 shadow-sm backdrop-blur-md">
                   <Image
                     src={avatar}
                     alt={name}
@@ -153,8 +158,8 @@ export default function NavbarClient({
                     className="h-9 w-9 rounded-full object-cover ring-1 ring-[var(--border)]"
                   />
 
-                  <div className="hidden xl:flex flex-col leading-tight">
-                    <span className="text-sm font-medium text-[var(--text)]">
+                  <div className="hidden min-w-0 2xl:flex flex-col leading-tight">
+                    <span className="max-w-36 truncate text-sm font-medium text-[var(--text)]">
                       {name}
                     </span>
 
@@ -166,7 +171,7 @@ export default function NavbarClient({
 
                 <LogoutButton />
 
-                <div className="flex items-center gap-2">
+                <div className="flex shrink-0 items-center gap-2">
                   <ThemeToggle />
                   <LanguageToggle />
                 </div>
@@ -179,12 +184,12 @@ export default function NavbarClient({
 
                 <Link
                   href="/sign-up"
-                  className="rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card)] lg:text-base"
+                  className="inline-flex min-w-max items-center justify-center whitespace-nowrap rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card)]"
                 >
                   {t(siteCopy.navSignup)}
                 </Link>
 
-                <div className="flex items-center gap-2">
+                <div className="flex shrink-0 items-center gap-2">
                   <ThemeToggle />
                   <LanguageToggle />
                 </div>
@@ -194,7 +199,7 @@ export default function NavbarClient({
         </div>
 
         {mobileOpen && (
-          <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[color:var(--bg)]/80 p-3 backdrop-blur-md lg:hidden">
+          <div className="mb-3 rounded-2xl border border-[var(--border)] bg-[color:var(--bg)]/80 p-3 backdrop-blur-md 2xl:hidden">
             <nav className="flex flex-col gap-1">
               <Link
                 href="/"
@@ -237,11 +242,19 @@ export default function NavbarClient({
               </Link>
 
               <Link
-                href="/tarot"
+                href="/tarot-ai"
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
                 {t(siteCopy.navTarot)}
+              </Link>
+
+              <Link
+                href="/tarot"
+                className={mobileLinkClass}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(siteCopy.navTarotLibrary)}
               </Link>
 
               {user ? (

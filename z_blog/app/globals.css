@@ -33,6 +33,34 @@
   --warning-soft: #fff0d2;
   --danger: #bd4b5b;
   --danger-soft: #ffe1e6;
+  --topic-btn-text: var(--text-inverse);
+  --topic-btn-border: rgba(255, 255, 255, 0.28);
+  --topic-btn-highlight: rgba(255, 255, 255, 0.18);
+  --topic-btn-highlight-hover: rgba(255, 255, 255, 0.22);
+  --topic-green-start: #2aa58f;
+  --topic-green-end: #1b756d;
+  --topic-green-hover-start: #23917f;
+  --topic-green-hover-end: #17665f;
+  --topic-green-shadow: rgba(24, 106, 95, 0.22);
+  --topic-green-shadow-hover: rgba(24, 106, 95, 0.3);
+  --topic-gold-start: #f0a447;
+  --topic-gold-end: #c7771f;
+  --topic-gold-hover-start: #e49332;
+  --topic-gold-hover-end: #ad6315;
+  --topic-gold-shadow: rgba(171, 103, 23, 0.24);
+  --topic-gold-shadow-hover: rgba(171, 103, 23, 0.32);
+  --topic-blue-start: #4ba2df;
+  --topic-blue-end: #276faf;
+  --topic-blue-hover-start: #388fce;
+  --topic-blue-hover-end: #1f5f98;
+  --topic-blue-shadow: rgba(38, 111, 175, 0.22);
+  --topic-blue-shadow-hover: rgba(38, 111, 175, 0.3);
+  --topic-rose-start: #d86f86;
+  --topic-rose-end: #ae4659;
+  --topic-rose-hover-start: #c95d76;
+  --topic-rose-hover-end: #973849;
+  --topic-rose-shadow: rgba(174, 70, 89, 0.22);
+  --topic-rose-shadow-hover: rgba(174, 70, 89, 0.3);
 
   --border: #c9dfef;
   --border-strong: #9fc3dc;
@@ -85,6 +113,34 @@ html[data-theme="dark"] {
   --warning-soft: #42321b;
   --danger: #ff8fa0;
   --danger-soft: #4b2028;
+  --topic-btn-text: #06111d;
+  --topic-btn-border: rgba(255, 255, 255, 0.22);
+  --topic-btn-highlight: rgba(255, 255, 255, 0.28);
+  --topic-btn-highlight-hover: rgba(255, 255, 255, 0.34);
+  --topic-green-start: #7be0c8;
+  --topic-green-end: #35b6a2;
+  --topic-green-hover-start: #93ead8;
+  --topic-green-hover-end: #52c8b6;
+  --topic-green-shadow: rgba(53, 182, 162, 0.24);
+  --topic-green-shadow-hover: rgba(53, 182, 162, 0.32);
+  --topic-gold-start: #ffd083;
+  --topic-gold-end: #e7a947;
+  --topic-gold-hover-start: #ffdda0;
+  --topic-gold-hover-end: #f1ba62;
+  --topic-gold-shadow: rgba(231, 169, 71, 0.24);
+  --topic-gold-shadow-hover: rgba(231, 169, 71, 0.32);
+  --topic-blue-start: #9bd7ff;
+  --topic-blue-end: #62b7f1;
+  --topic-blue-hover-start: #b8e4ff;
+  --topic-blue-hover-end: #7cc6ff;
+  --topic-blue-shadow: rgba(98, 183, 241, 0.24);
+  --topic-blue-shadow-hover: rgba(98, 183, 241, 0.32);
+  --topic-rose-start: #ffb1c0;
+  --topic-rose-end: #ff8199;
+  --topic-rose-hover-start: #ffc5d0;
+  --topic-rose-hover-end: #ff97aa;
+  --topic-rose-shadow: rgba(255, 129, 153, 0.24);
+  --topic-rose-shadow-hover: rgba(255, 129, 153, 0.32);
 
   --border: #274158;
   --border-strong: #3c5d78;
@@ -135,8 +191,8 @@ html[data-theme="dark"] {
     @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 text-base font-semibold transition-all duration-200 ease-out;
     @apply cursor-pointer shadow-md hover:shadow-xl active:scale-[0.98];
     @apply backdrop-blur-sm no-underline;
-    border: 1px solid color-mix(in srgb, var(--text-inverse) 24%, transparent);
-    color: var(--text-inverse);
+    border: 1px solid var(--topic-btn-border);
+    color: var(--topic-btn-text);
     min-width: 220px;
   }
 
@@ -145,59 +201,59 @@ html[data-theme="dark"] {
   }
 
   .topic-btn-green {
-    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-hover) 100%);
+    background: linear-gradient(180deg, var(--topic-green-start) 0%, var(--topic-green-end) 100%);
     box-shadow:
-      0 8px 20px rgba(47, 125, 116, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      0 8px 20px var(--topic-green-shadow),
+      inset 0 1px 0 var(--topic-btn-highlight);
   }
 
   .topic-btn-green:hover {
-    background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent) 100%);
+    background: linear-gradient(180deg, var(--topic-green-hover-start) 0%, var(--topic-green-hover-end) 100%);
     box-shadow:
-      0 12px 28px rgba(47, 125, 116, 0.26),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 12px 28px var(--topic-green-shadow-hover),
+      inset 0 1px 0 var(--topic-btn-highlight-hover);
   }
 
   .topic-btn-gold {
-    background: linear-gradient(180deg, var(--accent-warm) 0%, var(--primary) 100%);
+    background: linear-gradient(180deg, var(--topic-gold-start) 0%, var(--topic-gold-end) 100%);
     box-shadow:
-      0 8px 20px rgba(138, 90, 43, 0.24),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      0 8px 20px var(--topic-gold-shadow),
+      inset 0 1px 0 var(--topic-btn-highlight);
   }
 
   .topic-btn-gold:hover {
-    background: linear-gradient(180deg, var(--primary-muted) 0%, var(--primary-hover) 100%);
+    background: linear-gradient(180deg, var(--topic-gold-hover-start) 0%, var(--topic-gold-hover-end) 100%);
     box-shadow:
-      0 12px 28px rgba(138, 90, 43, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 12px 28px var(--topic-gold-shadow-hover),
+      inset 0 1px 0 var(--topic-btn-highlight-hover);
   }
 
   .topic-btn-blue {
-    background: linear-gradient(180deg, var(--accent) 0%, var(--primary) 100%);
+    background: linear-gradient(180deg, var(--topic-blue-start) 0%, var(--topic-blue-end) 100%);
     box-shadow:
-      0 8px 20px rgba(47, 125, 116, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      0 8px 20px var(--topic-blue-shadow),
+      inset 0 1px 0 var(--topic-btn-highlight);
   }
 
   .topic-btn-blue:hover {
-    background: linear-gradient(180deg, var(--primary-muted) 0%, var(--accent-hover) 100%);
+    background: linear-gradient(180deg, var(--topic-blue-hover-start) 0%, var(--topic-blue-hover-end) 100%);
     box-shadow:
-      0 12px 28px rgba(47, 125, 116, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 12px 28px var(--topic-blue-shadow-hover),
+      inset 0 1px 0 var(--topic-btn-highlight-hover);
   }
 
   .topic-btn-rose {
-    background: linear-gradient(180deg, var(--accent-warm) 0%, var(--danger) 100%);
+    background: linear-gradient(180deg, var(--topic-rose-start) 0%, var(--topic-rose-end) 100%);
     box-shadow:
-      0 8px 20px rgba(185, 75, 75, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      0 8px 20px var(--topic-rose-shadow),
+      inset 0 1px 0 var(--topic-btn-highlight);
   }
 
   .topic-btn-rose:hover {
-    background: linear-gradient(180deg, var(--primary-muted) 0%, var(--danger) 100%);
+    background: linear-gradient(180deg, var(--topic-rose-hover-start) 0%, var(--topic-rose-hover-end) 100%);
     box-shadow:
-      0 12px 28px rgba(185, 75, 75, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 12px 28px var(--topic-rose-shadow-hover),
+      inset 0 1px 0 var(--topic-btn-highlight-hover);
   }
 
   .topic-btn-arrow {

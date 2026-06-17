@@ -8,6 +8,7 @@ export const siteCopy = {
   navAbout: { zh: "关于我们", en: "About" },
   navAstroplate: { zh: "星盘解析", en: "Natal Chart" },
   navTarot: { zh: "塔罗 AI", en: "Tarot AI" },
+  navTarotLibrary: { zh: "塔罗牌库", en: "Tarot Library" },
   navClassroom: { zh: "在线课堂", en: "Online Class" },
   navAdmin: { zh: "管理后台", en: "Admin" },
   navLogin: { zh: "登录", en: "Log in" },
