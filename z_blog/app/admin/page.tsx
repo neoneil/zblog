@@ -19,9 +19,9 @@ const adminCards = [
     href: "/admin/ai-video-prompt",
   },
   {
-    title: "Reserved 4",
-    description: "Coming soon.",
-    href: "/admin/reserved-4",
+    title: "Video Manager",
+    description: "Manage Healing Daily videos.",
+    href: "/admin/videos",
   },
   {
     title: "Reserved 5",
