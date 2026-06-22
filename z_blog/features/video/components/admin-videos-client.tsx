@@ -26,11 +26,26 @@ type AdminVideosClientProps = {
   videos: AdminVideoItem[];
 };
 
+const MAX_VIDEO_BYTES = 50 * 1000 * 1000;
+
 function getFileMeta(file: File) {
   return {
     fileSize: String(file.size),
     mimeType: file.type || "video/mp4",
   };
+}
+
+function getMetadataFormData(form: HTMLFormElement) {
+  const rawFormData = new FormData(form);
+  const formData = new FormData();
+
+  for (const [key, value] of rawFormData.entries()) {
+    if (typeof value === "string") {
+      formData.set(key, value);
+    }
+  }
+
+  return formData;
 }
 
 export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
@@ -43,11 +58,16 @@ export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
     setMessage(null);
 
     const form = event.currentTarget;
-    const formData = new FormData(form);
+    const formData = getMetadataFormData(form);
     const file = fileInputRef.current?.files?.[0];
 
     if (!file) {
       setMessage("Please choose a video file.");
+      return;
+    }
+
+    if (file.size > MAX_VIDEO_BYTES) {
+      setMessage("Video must be 50 MB or smaller.");
       return;
     }
 
@@ -66,6 +86,7 @@ export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
           targetResult.target.path,
           targetResult.target.token,
           file,
+          { contentType: file.type || "video/mp4" },
         );
 
       if (uploadError) {
