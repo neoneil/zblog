@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 
 type VideoPlayerProps = {
@@ -30,6 +32,10 @@ export default function VideoPlayer({
           poster={posterUrl ?? undefined}
           title={title}
           controls
+          controlsList="nodownload"
+          disablePictureInPicture
+          disableRemotePlayback
+          onContextMenu={(event) => event.preventDefault()}
           preload="metadata"
         >
           <track kind="captions" />

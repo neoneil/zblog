@@ -26,7 +26,7 @@ export default async function AdminVideosPage() {
               Video Manager
             </CardTitle>
             <CardDescription>
-              Manage Healing Daily videos stored in the private zblog bucket.
+              Manage Healing Daily videos stored in Cloudflare R2.
             </CardDescription>
           </CardHeader>
         </Card>

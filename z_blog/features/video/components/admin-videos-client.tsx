@@ -13,7 +13,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import VideoPlayer from "@/components/video/video-player";
-import { createClient } from "@/lib/supabase/client";
 import {
   createVideoRecord,
   createVideoUploadTarget,
@@ -26,14 +25,10 @@ type AdminVideosClientProps = {
   videos: AdminVideoItem[];
 };
 
-const MAX_VIDEO_BYTES = 50 * 1000 * 1000;
-
-function getFileMeta(file: File) {
-  return {
-    fileSize: String(file.size),
-    mimeType: file.type || "video/mp4",
-  };
-}
+type UploadMessage = {
+  type: "info" | "success" | "error";
+  text: string;
+};
 
 function getMetadataFormData(form: HTMLFormElement) {
   const rawFormData = new FormData(form);
@@ -48,65 +43,145 @@ function getMetadataFormData(form: HTMLFormElement) {
   return formData;
 }
 
+function uploadFileToR2(
+  uploadUrl: string,
+  file: File,
+  onProgress: (progress: number) => void,
+) {
+  return new Promise<void>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("PUT", uploadUrl);
+    xhr.setRequestHeader("Content-Type", file.type || "application/octet-stream");
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        onProgress(Math.round((event.loaded / event.total) * 100));
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        onProgress(100);
+        resolve();
+        return;
+      }
+
+      reject(new Error(`R2 返回 ${xhr.status} ${xhr.statusText || "上传失败"}`));
+    };
+
+    xhr.onerror = () => {
+      reject(
+        new Error(
+          "浏览器无法连接 R2。通常是 R2 bucket CORS 没有允许当前域名的 PUT/OPTIONS，或 R2 endpoint/bucket 配置不正确。",
+        ),
+      );
+    };
+
+    xhr.send(file);
+  });
+}
+
 export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [message, setMessage] = useState<string | null>(null);
+  const thumbnailInputRef = useRef<HTMLInputElement>(null);
+  const [message, setMessage] = useState<UploadMessage | null>(null);
+  const [progress, setProgress] = useState(0);
   const [isPending, startTransition] = useTransition();
 
   async function handleCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setMessage(null);
+    setProgress(0);
 
     const form = event.currentTarget;
     const formData = getMetadataFormData(form);
     const file = fileInputRef.current?.files?.[0];
+    const thumbnail = thumbnailInputRef.current?.files?.[0];
 
     if (!file) {
-      setMessage("Please choose a video file.");
-      return;
-    }
-
-    if (file.size > MAX_VIDEO_BYTES) {
-      setMessage("Video must be 50 MB or smaller.");
+      setMessage({ type: "error", text: "请选择要上传的视频文件。" });
       return;
     }
 
     startTransition(async () => {
-      const targetResult = await createVideoUploadTarget(file.name);
+      setMessage({ type: "info", text: "正在准备 R2 上传地址..." });
+      const targetResult = await createVideoUploadTarget(file.name, file.type, "video");
 
       if (!targetResult.ok || !targetResult.target) {
-        setMessage(targetResult.error ?? "Failed to prepare upload.");
+        setMessage({
+          type: "error",
+          text: `上传准备失败：${targetResult.error ?? "无法生成 R2 上传地址。"}`,
+        });
         return;
       }
 
-      const supabase = createClient();
-      const { error: uploadError } = await supabase.storage
-        .from("zblog")
-        .uploadToSignedUrl(
-          targetResult.target.path,
-          targetResult.target.token,
-          file,
-          { contentType: file.type || "video/mp4" },
+      try {
+        setMessage({ type: "info", text: "正在上传视频..." });
+        await uploadFileToR2(targetResult.target.uploadUrl, file, (value) => {
+          setProgress(thumbnail ? Math.round(value * 0.75) : value);
+        });
+      } catch (error) {
+        setMessage({
+          type: "error",
+          text: `视频上传失败：${error instanceof Error ? error.message : "未知错误。"}`,
+        });
+        return;
+      }
+
+      formData.set("videoPath", targetResult.target.key);
+      formData.set("videoUrl", targetResult.target.r2Url);
+
+      if (thumbnail) {
+        setMessage({ type: "info", text: "正在上传封面图..." });
+        const thumbnailTarget = await createVideoUploadTarget(
+          thumbnail.name,
+          thumbnail.type,
+          "thumbnail",
         );
 
-      if (uploadError) {
-        setMessage(uploadError.message);
-        return;
+        if (!thumbnailTarget.ok || !thumbnailTarget.target) {
+          setMessage({
+            type: "error",
+            text: `封面上传准备失败：${thumbnailTarget.error ?? "无法生成 R2 上传地址。"}`,
+          });
+          return;
+        }
+
+        try {
+          await uploadFileToR2(thumbnailTarget.target.uploadUrl, thumbnail, (value) => {
+            setProgress(75 + Math.round(value * 0.25));
+          });
+        } catch (error) {
+          setMessage({
+            type: "error",
+            text: `封面上传失败：${error instanceof Error ? error.message : "未知错误。"}`,
+          });
+          return;
+        }
+
+        formData.set("thumbnailPath", thumbnailTarget.target.key);
+        formData.set("thumbnailUrl", thumbnailTarget.target.r2Url);
       }
 
-      const meta = getFileMeta(file);
-      formData.set("storagePath", targetResult.target.path);
-      formData.set("fileSize", meta.fileSize);
-      formData.set("mimeType", meta.mimeType);
       formData.set("isPublished", formData.get("isPublished") ? "true" : "false");
 
+      setMessage({ type: "info", text: "正在写入数据库..." });
       const result = await createVideoRecord(formData);
-      setMessage(result.ok ? "Video uploaded." : result.error ?? "Upload failed.");
+      setMessage(
+        result.ok
+          ? { type: "success", text: "上传成功，视频已保存。" }
+          : { type: "error", text: `保存失败：${result.error ?? "数据库写入失败。"}` },
+      );
 
       if (result.ok) {
+        setProgress(100);
         form.reset();
         if (fileInputRef.current) {
           fileInputRef.current.value = "";
+        }
+        if (thumbnailInputRef.current) {
+          thumbnailInputRef.current.value = "";
         }
       }
     });
@@ -117,7 +192,11 @@ export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
     startTransition(async () => {
       formData.set("isPublished", formData.get("isPublished") ? "true" : "false");
       const result = await updateVideoMetadata(formData);
-      setMessage(result.ok ? "Video updated." : result.error ?? "Update failed.");
+      setMessage(
+        result.ok
+          ? { type: "success", text: "视频信息已更新。" }
+          : { type: "error", text: `更新失败：${result.error ?? "未知错误。"}` },
+      );
     });
   }
 
@@ -125,7 +204,11 @@ export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
     setMessage(null);
     startTransition(async () => {
       const result = await deleteVideo(videoId);
-      setMessage(result.ok ? "Video deleted." : result.error ?? "Delete failed.");
+      setMessage(
+        result.ok
+          ? { type: "success", text: "视频已删除。" }
+          : { type: "error", text: `删除失败：${result.error ?? "未知错误。"}` },
+      );
     });
   }
 
@@ -135,37 +218,90 @@ export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
         <CardHeader>
           <div>
             <Badge variant="secondary">Upload</Badge>
-            <CardTitle className="mt-3">New Video</CardTitle>
+            <CardTitle className="mt-3">上传视频</CardTitle>
             <CardDescription>
-              Upload private videos to zblog/video and save metadata.
+              填写基础信息后上传素材。视频文件用于播放，封面图用于前台展示预览。
             </CardDescription>
           </div>
         </CardHeader>
 
         <CardContent>
           {message && (
-            <p className="mb-4 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--bg-soft)] px-3 py-2 text-sm text-[var(--text-soft)]">
-              {message}
+            <p
+              className={[
+                "mb-4 rounded-[var(--radius-md)] border px-3 py-2 text-sm",
+                message.type === "success"
+                  ? "border-[var(--success)] bg-[var(--success-soft)] text-[var(--success)]"
+                  : message.type === "error"
+                    ? "border-[var(--danger)] bg-[var(--danger-soft)] text-[var(--danger)]"
+                    : "border-[var(--border)] bg-[var(--bg-soft)] text-[var(--text-soft)]",
+              ].join(" ")}
+            >
+              {message.text}
             </p>
           )}
 
-          <form onSubmit={handleCreate} className="grid gap-4 lg:grid-cols-2">
+          {isPending && (
+            <div className="mb-4 overflow-hidden rounded-full bg-[var(--bg-soft)]">
+              <div
+                className="h-2 rounded-full bg-[var(--primary)] transition-all"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          )}
+
+          <form onSubmit={handleCreate} className="grid gap-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
             <div className="space-y-3">
-              <Input name="title" placeholder="Title" required />
-              <Input name="category" placeholder="Category" defaultValue="general" required />
-              <Textarea name="description" placeholder="Description" />
+              <div>
+                <label className="mb-2 block text-sm font-medium text-[var(--text)]">
+                  视频标题
+                </label>
+                <Input name="title" placeholder="例如：每日疗愈练习 01" required />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-[var(--text)]">
+                  分类
+                </label>
+                <Input name="category" placeholder="general" defaultValue="general" required />
+              </div>
+
+              <label className="flex items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-soft)] px-3 py-2 text-sm text-[var(--text-soft)]">
+                <input name="isPublished" type="checkbox" className="h-4 w-4" />
+                上传后立即发布到前台
+              </label>
             </div>
 
-            <div className="space-y-3">
-              <Input name="sortOrder" type="number" placeholder="Sort order" defaultValue={0} />
-              <Input ref={fileInputRef} type="file" accept="video/*" required />
-              <label className="flex items-center gap-2 text-sm text-[var(--text-soft)]">
-                <input name="isPublished" type="checkbox" className="h-4 w-4" />
-                Published
-              </label>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card-soft)] p-4">
+                <div className="mb-3">
+                  <p className="text-sm font-semibold text-[var(--text)]">
+                    1. 视频文件
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-[var(--text-soft)]">
+                    必填。选择要播放的 MP4、MOV 或其他视频文件。
+                  </p>
+                </div>
+                <Input ref={fileInputRef} type="file" accept="video/*" required />
+              </div>
+
+              <div className="rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card-soft)] p-4">
+                <div className="mb-3">
+                  <p className="text-sm font-semibold text-[var(--text)]">
+                    2. 封面图 Thumbnail
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-[var(--text-soft)]">
+                    可选。用于视频列表和播放器加载前的预览图。
+                  </p>
+                </div>
+                <Input ref={thumbnailInputRef} type="file" accept="image/*" />
+              </div>
+
+              <div className="sm:col-span-2">
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Saving..." : "Upload Video"}
+                {isPending ? `上传中 ${progress}%` : "上传视频"}
               </Button>
+              </div>
             </div>
           </form>
         </CardContent>
@@ -184,7 +320,7 @@ export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
                     <Badge variant="outline">{video.category}</Badge>
                   </div>
                   <CardTitle className="mt-3">{video.title}</CardTitle>
-                  <CardDescription>{video.storage_path}</CardDescription>
+                  <CardDescription>{video.video_path}</CardDescription>
                 </div>
                 <Button
                   type="button"
@@ -202,8 +338,14 @@ export default function AdminVideosClient({ videos }: AdminVideosClientProps) {
               <form action={handleUpdate} className="space-y-3">
                 <input type="hidden" name="id" value={video.id} />
                 <Input name="title" defaultValue={video.title} required />
+                <Input name="slug" defaultValue={video.slug} required />
                 <Input name="category" defaultValue={video.category} required />
                 <Input name="sortOrder" type="number" defaultValue={video.sort_order} />
+                <Input
+                  name="durationSeconds"
+                  type="number"
+                  defaultValue={video.duration_seconds ?? ""}
+                />
                 <Textarea name="description" defaultValue={video.description ?? ""} />
                 <label className="flex items-center gap-2 text-sm text-[var(--text-soft)]">
                   <input
