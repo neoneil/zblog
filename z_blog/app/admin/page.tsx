@@ -24,9 +24,9 @@ const adminCards = [
     href: "/admin/videos",
   },
   {
-    title: "Reserved 5",
-    description: "Coming soon.",
-    href: "/admin/reserved-5",
+    title: "飞书文档",
+    description: "Review tarot Markdown knowledge files.",
+    href: "/tarot-demo",
   },
 ];
 
