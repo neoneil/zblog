@@ -1,5 +1,3 @@
-
-import Link from "next/link";
 import Image from "next/image";
 import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
@@ -11,14 +9,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { getCurrentUserWithRole } from "@/lib/auth/current-user";
 import { siteCopy } from "@/lib/i18n/copy";
 export default async function HomePage() {
-  const { supabase } = await getCurrentUserWithRole();
-
-  const { data: posts } = await supabase
-    .from("posts")
-    .select("title, slug, excerpt, published_at, cover_image")
-    .eq("status", "published")
-    .order("published_at", { ascending: false })
-    .limit(6);
+  const { role } = await getCurrentUserWithRole();
 
   return (
     <main className="relative min-h-screen overflow-hidden">
@@ -158,7 +149,7 @@ export default async function HomePage() {
               </div>
             )}
           </section> */}
-          <ParentingLabSection />
+          <ParentingLabSection isAdmin={role === "admin"} />
         </Container>
       </div>
     </main>
