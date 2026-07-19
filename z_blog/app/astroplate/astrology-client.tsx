@@ -113,11 +113,15 @@ const CORE_PLANET_KEYS = [
 const DISPLAY_SUMMARY_KEYS = [
   "sun",
   "moon",
-  "ascendant",
   "mercury",
   "venus",
   "mars",
+  "jupiter",
   "saturn",
+  "uranus",
+  "neptune",
+  "pluto",
+  "ascendant",
   "midheaven",
 ] as const;
 
@@ -752,7 +756,7 @@ export default function AstrologyPage() {
                 </div>
               ) : null}
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
                 {summaryCards.map((item) => (
                   <SummaryCard key={item.key} item={item} />
                 ))}
