@@ -157,6 +157,7 @@ export default async function Teaching() {
                           className="relative block h-[170px] w-full shrink-0 overflow-hidden rounded-xl sm:h-[140px] sm:w-[220px]"
                         >
                           {post.cover_image ? (
+                            /* eslint-disable-next-line @next/next/no-img-element -- Post covers can be user-provided remote URLs outside the configured Next image hosts. */
                             <img
                               src={post.cover_image}
                               alt={post.title}

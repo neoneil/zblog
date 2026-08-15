@@ -240,17 +240,24 @@ ${aspectsText}
       completion.choices[0]?.message?.content ?? "暂时没有生成占星解读。";
 
     return NextResponse.json({ reading });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorRecord =
+      typeof error === "object" && error !== null
+        ? (error as Record<string, unknown>)
+        : {};
+    const message =
+      error instanceof Error ? error.message : "Failed to generate astrology reading.";
+
     console.error("astrology-reading full error:", error);
-    console.error("message:", error?.message);
-    console.error("status:", error?.status);
-    console.error("code:", error?.code);
-    console.error("type:", error?.type);
-    console.error("response data:", error?.response?.data);
+    console.error("message:", message);
+    console.error("status:", errorRecord.status);
+    console.error("code:", errorRecord.code);
+    console.error("type:", errorRecord.type);
+    console.error("response data:", errorRecord.response);
 
     return NextResponse.json(
       {
-        error: error?.message || "Failed to generate astrology reading.",
+        error: message,
       },
       { status: 500 }
     );

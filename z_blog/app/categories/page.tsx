@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
 

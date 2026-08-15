@@ -4,9 +4,20 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
-    ZoomMtgEmbedded: any;
+    ZoomMtgEmbedded?: ZoomMtgEmbeddedSdk;
   }
 }
+
+type ZoomMeetingClient = {
+  init: (options: Record<string, unknown>) => Promise<void>;
+  join: (options: Record<string, unknown>) => Promise<void>;
+  leaveMeeting?: () => void;
+  destroyClient?: () => void;
+};
+
+type ZoomMtgEmbeddedSdk = {
+  createClient: () => ZoomMeetingClient;
+};
 
 function waitForLayout() {
   return new Promise<void>((resolve) => {
@@ -17,7 +28,7 @@ function waitForLayout() {
 }
 
 export default function ClassroomPage() {
-  const clientRef = useRef<any>(null);
+  const clientRef = useRef<ZoomMeetingClient | null>(null);
   const joinedRef = useRef(false);
 
   const [meetingNumber, setMeetingNumber] = useState("");

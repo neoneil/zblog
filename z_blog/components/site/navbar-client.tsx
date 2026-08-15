@@ -141,6 +141,10 @@ export default function NavbarClient({
               {t(siteCopy.navClassroom)}
             </Link>
 
+            <Link href="/feishu-docs" className={navLinkClass}>
+              {t(siteCopy.navFeishuDocs)}
+            </Link>
+
             {user ? (
               <>
                 {canManagePosts && (
@@ -255,6 +259,22 @@ export default function NavbarClient({
                 onClick={() => setMobileOpen(false)}
               >
                 {t(siteCopy.navTarotLibrary)}
+              </Link>
+
+              <Link
+                href="/classroom"
+                className={mobileLinkClass}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(siteCopy.navClassroom)}
+              </Link>
+
+              <Link
+                href="/feishu-docs"
+                className={mobileLinkClass}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(siteCopy.navFeishuDocs)}
               </Link>
 
               {user ? (

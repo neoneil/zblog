@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Container from "@/components/site/container";
 import DownloadPdfButton from "@/components/download-pdf-button";
 
@@ -138,6 +137,7 @@ export default function ResourcesPage() {
 
       {/* 图片 */}
       <div className="relative mx-auto aspect-[3/4] max-w-[340px] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element -- This static cover is intentionally kept in the existing simple resource card markup. */}
         <img
           src="/tarotCover.png"
           alt="占星书籍封面"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 type Profile = {
@@ -10,7 +10,7 @@ type Profile = {
 };
 
 export default function SubscribeAuthorizedClient() {
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ export default function SubscribeAuthorizedClient() {
 
   const [subscribedUsers, setSubscribedUsers] = useState<Profile[]>([]);
 
-  async function loadSubscribedUsers() {
+  const loadSubscribedUsers = useCallback(async () => {
     const { data } = await supabase
       .from("profiles")
       .select("id, email, role")
@@ -26,11 +26,15 @@ export default function SubscribeAuthorizedClient() {
       .order("created_at", { ascending: false });
 
     setSubscribedUsers(data || []);
-  }
+  }, [supabase]);
 
   useEffect(() => {
-    void loadSubscribedUsers();
-  }, []);
+    const timeoutId = window.setTimeout(() => {
+      void loadSubscribedUsers();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [loadSubscribedUsers]);
 
   async function handleAuthorize() {
     setLoading(true);

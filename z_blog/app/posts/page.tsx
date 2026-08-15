@@ -115,6 +115,7 @@ export default async function PostsPage({ searchParams }: PostsPageProps) {
 
                   {post.cover_image && (
                     <Link href={`/posts/${post.slug}`}>
+                      {/* eslint-disable-next-line @next/next/no-img-element -- Post covers can be user-provided remote URLs outside the configured Next image hosts. */}
                       <img
                         src={post.cover_image}
                         alt={post.title}

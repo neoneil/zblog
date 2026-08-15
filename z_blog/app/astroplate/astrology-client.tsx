@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
-import { NatalWheel } from "./natal-wheel";
-
 import { NatalWheelCN } from "./natal-wheel-cn-v3";
 type BirthForm = {
   name: string;
@@ -82,6 +80,22 @@ type CalculationState = {
   chartJson: OpenAIChartJson | null;
   error: string | null;
   isLoading: boolean;
+};
+
+type LooseRecord = Record<string, unknown>;
+
+type HoroscopeConstructor = new (options: LooseRecord) => unknown;
+
+type HoroscopeModule = {
+  Origin?: HoroscopeConstructor;
+  Horoscope?: HoroscopeConstructor;
+};
+
+type NominatimPlace = {
+  category?: string;
+  type?: string;
+  lat?: string | number;
+  lon?: string | number;
 };
 
 const DEFAULT_FORM: BirthForm = {
@@ -271,7 +285,9 @@ export default function AstrologyPage() {
   const [readingError, setReadingError] = useState<string | null>(null);
 
   useEffect(() => {
-    setMounted(true);
+    const timeoutId = window.setTimeout(() => setMounted(true), 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
@@ -287,7 +303,9 @@ export default function AstrologyPage() {
       }));
 
       try {
-        const horoscopeLib: any = await import("circular-natal-horoscope-js");
+        const horoscopeLib = (await import(
+          "circular-natal-horoscope-js"
+        )) as HoroscopeModule;
         if (cancelled) return;
 
         const OriginCtor = horoscopeLib?.Origin;
@@ -317,8 +335,7 @@ export default function AstrologyPage() {
           customOrbs: {},
           language: "en",
         });
-        console.log("horoscope.Houses:", horoscope.Houses);
-        console.log("full horoscope:", horoscope);
+
         const chartJson = buildOpenAIJson(submittedForm, horoscope);
 
         if (!cancelled) {
@@ -387,16 +404,21 @@ export default function AstrologyPage() {
         throw new Error("城市查询失败，请稍后再试。");
       }
 
-      const data = await res.json();
+      const data: unknown = await res.json();
 
-      if (!Array.isArray(data) || data.length === 0) {
+      const places = Array.isArray(data)
+        ? data.filter((item): item is NominatimPlace => isRecord(item))
+        : [];
+
+      if (places.length === 0) {
         throw new Error("没有找到匹配的城市，请换一个更完整的写法。");
       }
 
       const preferred =
-        data.find(
-          (item: any) =>
+        places.find(
+          (item) =>
             item?.category === "place" &&
+            typeof item.type === "string" &&
             [
               "city",
               "town",
@@ -405,7 +427,7 @@ export default function AstrologyPage() {
               "suburb",
               "county",
             ].includes(item?.type),
-        ) ?? data[0];
+        ) ?? places[0];
 
       const lat = Number(preferred.lat);
       const lon = Number(preferred.lon);
@@ -983,20 +1005,38 @@ function signFromDegrees(deg: number) {
   };
 }
 
-function extractAbsoluteDegrees(point: any): number {
+function isRecord(value: unknown): value is LooseRecord {
+  return typeof value === "object" && value !== null;
+}
+
+function getRecord(value: unknown): LooseRecord {
+  return isRecord(value) ? value : {};
+}
+
+function getPathValue(value: unknown, pathSegments: string[]) {
+  return pathSegments.reduce<unknown>((current, segment) => {
+    if (!isRecord(current)) return undefined;
+
+    return current[segment];
+  }, value);
+}
+
+function extractAbsoluteDegrees(point: unknown): number {
   const candidate =
-    point?.ChartPosition?.Ecliptic?.DecimalDegrees ??
-    point?.ChartPosition?.Horizon?.DecimalDegrees ??
-    point?.ChartPosition?.Ecliptic?.ArcDegrees?.degrees ??
-    point?.DecimalDegrees ??
-    point?.position ??
+    getPathValue(point, ["ChartPosition", "Ecliptic", "DecimalDegrees"]) ??
+    getPathValue(point, ["ChartPosition", "Horizon", "DecimalDegrees"]) ??
+    getPathValue(point, ["ChartPosition", "Ecliptic", "ArcDegrees", "degrees"]) ??
+    getRecord(point).DecimalDegrees ??
+    getRecord(point).position ??
     0;
 
   return normalizeDegrees(Number(candidate) || 0);
 }
 
-function isRetrograde(point: any): boolean {
-  return Boolean(point?.isRetrograde || point?.retrograde || point?.Retrograde);
+function isRetrograde(point: unknown): boolean {
+  const pointRecord = getRecord(point);
+
+  return Boolean(pointRecord.isRetrograde || pointRecord.retrograde || pointRecord.Retrograde);
 }
 
 function findHouseForDegree(houses: number[], degree: number) {
@@ -1052,38 +1092,42 @@ function normalizePointKey(value: unknown) {
   return aliasMap[raw] ?? raw;
 }
 
-function getAnglePoint(horoscope: any, key: (typeof ANGLE_KEYS)[number]) {
-  const angles = horoscope?.Angles ?? {};
+function getAnglePoint(horoscope: unknown, key: (typeof ANGLE_KEYS)[number]) {
+  const horoscopeRecord = getRecord(horoscope);
+  const angles = getRecord(horoscopeRecord.Angles);
+
   return (
-    angles?.[key] ??
-    angles?.[key === "ascendant" ? "Ascendant" : "Midheaven"] ??
-    horoscope?.[key] ??
+    angles[key] ??
+    angles[key === "ascendant" ? "Ascendant" : "Midheaven"] ??
+    horoscopeRecord[key] ??
     null
   );
 }
 
-function buildAstroChartCusps(horoscope: any) {
-  const houses = horoscope?.Houses;
+function buildAstroChartCusps(horoscope: unknown) {
+  const houses = getRecord(horoscope).Houses;
 
   if (!Array.isArray(houses) || houses.length < 12) {
     return Array.from({ length: 12 }, (_, i) => i * 30);
   }
 
-  return houses.slice(0, 12).map((house: any, index: number) => {
+  return houses.slice(0, 12).map((house: unknown, index: number) => {
     const degree =
-      house?.ChartPosition?.StartPosition?.Ecliptic?.DecimalDegrees ??
-      house?.ChartPosition?.Ecliptic?.DecimalDegrees ??
+      getPathValue(house, ["ChartPosition", "StartPosition", "Ecliptic", "DecimalDegrees"]) ??
+      getPathValue(house, ["ChartPosition", "Ecliptic", "DecimalDegrees"]) ??
       index * 30;
 
     return normalizeDegrees(Number(degree) || 0);
   });
 }
 
-function buildOpenAIJson(form: BirthForm, horoscope: any): OpenAIChartJson {
+function buildOpenAIJson(form: BirthForm, horoscope: unknown): OpenAIChartJson {
   const houseCusps = buildAstroChartCusps(horoscope);
+  const horoscopeRecord = getRecord(horoscope);
+  const celestialBodies = getRecord(horoscopeRecord.CelestialBodies);
 
   const planets = CORE_PLANET_KEYS.map((key) => {
-    const point = horoscope?.CelestialBodies?.[key];
+    const point = celestialBodies[key];
     const absoluteDegrees = extractAbsoluteDegrees(point);
     const mapped = signFromDegrees(absoluteDegrees);
 
@@ -1128,25 +1172,28 @@ function buildOpenAIJson(form: BirthForm, horoscope: any): OpenAIChartJson {
     };
   });
 
-  const aspectsSource = horoscope?.Aspects?.all ?? horoscope?.Aspects ?? [];
+  const rawAspects = horoscopeRecord.Aspects;
+  const aspectsRecord = getRecord(rawAspects);
+  const aspectsSource = aspectsRecord.all ?? rawAspects ?? [];
   const aspects = Array.isArray(aspectsSource)
     ? aspectsSource
-        .map((aspect: any) => {
+        .map((aspect) => {
+          const aspectRecord = getRecord(aspect);
           const point1Key = normalizePointKey(
-            aspect?.point1Key ?? aspect?.point1 ?? aspect?.pointA,
+            aspectRecord.point1Key ?? aspectRecord.point1 ?? aspectRecord.pointA,
           );
           const point2Key = normalizePointKey(
-            aspect?.point2Key ?? aspect?.point2 ?? aspect?.pointB,
+            aspectRecord.point2Key ?? aspectRecord.point2 ?? aspectRecord.pointB,
           );
           const label = normalizeAspectKey(
-            aspect?.aspectKey ?? aspect?.label ?? aspect?.type,
+            aspectRecord.aspectKey ?? aspectRecord.label ?? aspectRecord.type,
           );
 
           return {
             point1Key,
             point2Key,
             label,
-            orb: Number(aspect?.orb ?? aspect?.Orb ?? 0),
+            orb: Number(aspectRecord.orb ?? aspectRecord.Orb ?? 0),
           };
         })
         .filter(

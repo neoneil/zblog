@@ -157,7 +157,6 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
   const aspectRadius = 220;
   const signLabelRadius = 327;
   const houseLabelRadius = 255;
-  const pointBaseRadius = 260;
   
 
   const visiblePoints = useMemo(() => {

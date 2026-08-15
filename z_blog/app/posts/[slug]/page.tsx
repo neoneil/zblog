@@ -4,8 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import Link from "next/link";
-import Image from "next/image";
 import Container from "@/components/site/container";
 
 type PostPageProps = {
@@ -120,6 +118,7 @@ export default async function PostDetailPage({ params }: PostPageProps) {
             {/* 封面 */}
             {post.cover_image && (
               <div className="mb-8 overflow-hidden rounded-2xl border border-[var(--border)]">
+                {/* eslint-disable-next-line @next/next/no-img-element -- Post covers can be user-provided remote URLs outside the configured Next image hosts. */}
                 <img
                   src={post.cover_image}
                   alt={post.title}

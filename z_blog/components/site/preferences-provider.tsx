@@ -42,11 +42,15 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<ThemeMode>("light");
 
   useEffect(() => {
-    const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    const timeoutId = window.setTimeout(() => {
+      const storedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
 
-    setLanguageState(storedLanguage === "en" || storedLanguage === "zh" ? storedLanguage : getBrowserLanguage());
-    setTheme(storedTheme === "dark" || storedTheme === "light" ? storedTheme : getSystemTheme());
+      setLanguageState(storedLanguage === "en" || storedLanguage === "zh" ? storedLanguage : getBrowserLanguage());
+      setTheme(storedTheme === "dark" || storedTheme === "light" ? storedTheme : getSystemTheme());
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {

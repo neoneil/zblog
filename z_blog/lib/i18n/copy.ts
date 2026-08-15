@@ -10,6 +10,7 @@ export const siteCopy = {
   navTarot: { zh: "塔罗 AI", en: "Tarot AI" },
   navTarotLibrary: { zh: "塔罗牌库", en: "Tarot Library" },
   navClassroom: { zh: "在线课堂", en: "Online Class" },
+  navFeishuDocs: { zh: "飞书文档", en: "Feishu Docs" },
   navAdmin: { zh: "管理后台", en: "Admin" },
   navLogin: { zh: "登录", en: "Log in" },
   navSignup: { zh: "注册", en: "Sign up" },
