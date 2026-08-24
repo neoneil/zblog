@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import { consumeAiAccess } from "@/features/billing/lib/ai-access";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -60,7 +61,18 @@ type AstrologyChartJson = {
 
 export async function POST(req: Request) {
   try {
-    console.log("OPENAI_API_KEY exists:", !!process.env.OPENAI_API_KEY);
+    const access = await consumeAiAccess("astroplate");
+
+    if (!access.allowed) {
+      return NextResponse.json(
+        {
+          error: access.message,
+          code: access.code,
+          upgradeUrl: "/pricing?scope=astroplate",
+        },
+        { status: access.httpStatus },
+      );
+    }
 
     const body = await req.json();
     const question: string = body.question ?? "";

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import { consumeAiAccess } from "@/features/billing/lib/ai-access";
 import type { DrawnTarotCard } from "@/types/tarot";
 
 const openai = new OpenAI({
@@ -8,7 +9,18 @@ const openai = new OpenAI({
 
 export async function POST(req: Request) {
   try {
-    console.log("OPENAI_API_KEY exists:", !!process.env.OPENAI_API_KEY);
+    const access = await consumeAiAccess("tarot");
+
+    if (!access.allowed) {
+      return NextResponse.json(
+        {
+          error: access.message,
+          code: access.code,
+          upgradeUrl: "/pricing?scope=tarot",
+        },
+        { status: access.httpStatus },
+      );
+    }
 
     const body = await req.json();
     const question: string = body.question ?? "";

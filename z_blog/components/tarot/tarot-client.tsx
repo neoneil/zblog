@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import TarotCard from "@/components/tarot/tarot-card";
 import TarotDeck from "@/components/tarot/tarot-deck";
 import TarotReadingPanel from "@/components/tarot/tarot-reading-panel";
+import type { AiAccessStatus } from "@/features/billing/lib/types";
 import { tarotDeck as fullTarotDeck } from "@/lib/tarot/full-deck";
 import type { DrawnTarotCard, TarotCard as TarotCardType } from "@/types/tarot";
 
@@ -24,6 +25,10 @@ const positionLabel: Record<DrawnTarotCard["position"], string> = {
   future: "未来",
 };
 
+type TarotClientProps = {
+  accessStatus: AiAccessStatus;
+};
+
 function shuffleCards<T>(items: T[]): T[] {
   const next = [...items];
   for (let i = next.length - 1; i > 0; i -= 1) {
@@ -33,8 +38,11 @@ function shuffleCards<T>(items: T[]): T[] {
   return next;
 }
 
-export default function TarotClient() {
+export default function TarotClient({ accessStatus }: TarotClientProps) {
   const cardsSource = useMemo(() => fullTarotDeck, []);
+  const [dailyLimitReached, setDailyLimitReached] = useState(
+    !accessStatus.isAdmin && !accessStatus.isPaid && accessStatus.remainingToday <= 0,
+  );
   const [question, setQuestion] = useState("");
   const [stage, setStage] = useState<TarotStage>("idle");
   const [tableCards, setTableCards] = useState<TarotCardType[]>([]);
@@ -63,6 +71,10 @@ export default function TarotClient() {
       const data = await res.json();
 
       if (!res.ok) {
+        if (data?.code === "daily_limit_reached") {
+          setDailyLimitReached(true);
+        }
+
         throw new Error(data?.error || "生成解读失败。");
       }
 
@@ -82,6 +94,8 @@ export default function TarotClient() {
   }
 
   function handleStartShuffle() {
+    if (dailyLimitReached) return;
+
     const nextTableCards = shuffleCards(cardsSource).slice(0, 50);
     setTableCards(nextTableCards);
     setSelectedCards([]);
@@ -141,14 +155,25 @@ export default function TarotClient() {
               : "再次抽牌";
 
   const actionDisabled =
-    stage === "selecting" || stage === "revealing" || stage === "reading";
+    dailyLimitReached ||
+    stage === "selecting" ||
+    stage === "revealing" ||
+    stage === "reading";
+
+  const accessLabel = accessStatus.isAdmin
+    ? "Admin 无限制使用"
+    : accessStatus.isPaid
+      ? "已开通付费权限，无限制使用"
+      : dailyLimitReached
+        ? "今日免费次数已用完"
+        : "普通用户每日可免费使用 1 次";
 
   return (
     <div className="min-h-screen bg-[var(--bg-soft)] text-[var(--text)]">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <p className="mb-6 text-sm uppercase tracking-[0.35em] text-[var(--success)]">
-            此功能为订阅用户特许功能
-          </p>
+          {accessLabel}
+        </p>
         <div className="mb-8 max-w-3xl">
           <p className="mb-2 text-sm uppercase tracking-[0.35em] text-[var(--primary)]">
             塔罗解读
@@ -201,6 +226,7 @@ export default function TarotClient() {
 
             <div className="mt-4 text-sm text-[var(--text-soft)]">
               {stage === "idle" && "输入问题后，点击“开始洗牌”。"}
+              {dailyLimitReached && "今日免费 AI 使用次数已用完。购买 Tarot AI 时间包后可无限使用。"}
               {stage === "shuffling" && "正在洗牌中……准备好时点击“停止洗牌”。"}
               {stage === "selecting" &&
                 `请从上方牌阵中依次选出三张牌。当前已选择 ${selectedCards.length} 张。`}

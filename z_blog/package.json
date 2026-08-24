@@ -29,6 +29,7 @@
     "react-rnd": "^10.5.3",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
+    "stripe": "^22.5.0",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {

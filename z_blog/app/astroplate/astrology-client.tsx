@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
+import type { AiAccessStatus } from "@/features/billing/lib/types";
 import { NatalWheelCN } from "./natal-wheel-cn-v3";
 type BirthForm = {
   name: string;
@@ -80,6 +81,10 @@ type CalculationState = {
   chartJson: OpenAIChartJson | null;
   error: string | null;
   isLoading: boolean;
+};
+
+type AstrologyClientProps = {
+  accessStatus: AiAccessStatus;
 };
 
 type LooseRecord = Record<string, unknown>;
@@ -265,7 +270,7 @@ const CORE_POINT_KEYS = new Set([
   "midheaven",
 ]);
 
-export default function AstrologyPage() {
+export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
   const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState<BirthForm>(DEFAULT_FORM);
   const [submittedForm, setSubmittedForm] = useState<BirthForm>(DEFAULT_FORM);
@@ -283,6 +288,9 @@ export default function AstrologyPage() {
   const [reading, setReading] = useState("");
   const [readingLoading, setReadingLoading] = useState(false);
   const [readingError, setReadingError] = useState<string | null>(null);
+  const [dailyLimitReached, setDailyLimitReached] = useState(
+    !accessStatus.isAdmin && !accessStatus.isPaid && accessStatus.remainingToday <= 0,
+  );
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => setMounted(true), 0);
@@ -475,10 +483,17 @@ export default function AstrologyPage() {
       const data = await res.json();
 
       if (!res.ok) {
+        if (data?.code === "daily_limit_reached") {
+          setDailyLimitReached(true);
+        }
+
         throw new Error(data?.error || "AI 解读生成失败。");
       }
 
       setReading(data?.reading || "暂时没有生成解读。");
+      if (!accessStatus.isAdmin && !accessStatus.isPaid) {
+        setDailyLimitReached(true);
+      }
     } catch (error) {
       setReadingError(
         error instanceof Error ? error.message : "AI 解读生成失败。",
@@ -487,6 +502,14 @@ export default function AstrologyPage() {
       setReadingLoading(false);
     }
   }
+
+  const accessLabel = accessStatus.isAdmin
+    ? "Admin 无限制使用"
+    : accessStatus.isPaid
+      ? "已开通付费权限，无限制使用"
+      : dailyLimitReached
+        ? "今日免费 AI 解读次数已用完"
+        : "普通用户每日可免费 AI 解读 1 次";
 
   return (
     <main className="min-h-screen bg-[var(--card-soft)] px-4 py-5 text-[var(--primary)] sm:px-5 md:px-6 md:py-8 lg:px-8">
@@ -507,6 +530,9 @@ export default function AstrologyPage() {
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--primary)] md:text-base">
               先输入出生信息，再点击按钮生成星盘。右侧会生成星盘，并进行AI解读。
+            </p>
+            <p className="mt-3 inline-flex rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1.5 text-xs font-medium text-[var(--primary)] shadow-[var(--shadow-sm)]">
+              {accessLabel}
             </p>
           </div>
         </div>
@@ -882,7 +908,7 @@ export default function AstrologyPage() {
 
                 <button
                   type="button"
-                  disabled={!chartJson || readingLoading || calcState.isLoading}
+                  disabled={!chartJson || readingLoading || calcState.isLoading || dailyLimitReached}
                   onClick={handleGenerateReading}
                   className="w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-soft)] px-4 py-4 text-base font-semibold text-[var(--primary)] shadow-[var(--shadow-md)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                 >
@@ -892,6 +918,12 @@ export default function AstrologyPage() {
                 {!chartJson ? (
                   <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
                     请先生成星盘，然后点击上方按钮进行解读。
+                  </div>
+                ) : null}
+
+                {dailyLimitReached ? (
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
+                    今日免费 AI 解读次数已用完。购买 Astroplate AI 时间包后可无限使用。
                   </div>
                 ) : null}
 

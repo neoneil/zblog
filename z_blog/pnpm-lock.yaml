@@ -43,7 +43,7 @@ importers:
         version: 9.0.3
       lottie-react:
         specifier: ^2.4.1
-        version: 2.4.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 2.4.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.29.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -68,6 +68,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      stripe:
+        specifier: ^22.5.0
+        version: 22.5.0(@types/node@20.19.41)
       tailwind-merge:
         specifier: ^3.6.0
         version: 3.6.0
@@ -89,7 +92,7 @@ importers:
         version: 19.2.16
       '@types/react-dom':
         specifier: ^19
-        version: 19.2.3(@types/react@19.2.16)
+        version: 19.2.4(@types/react@19.2.16)
       eslint:
         specifier: ^9
         version: 9.39.4(jiti@2.7.0)
@@ -816,8 +819,8 @@ packages:
   '@types/node@20.19.41':
     resolution: {integrity: sha512-ECymXOukMnOoVkC2bb1Vc/w/836DXncOg5m8Xj1RH7xSHZJWNYY6Zh7EH477vcnD5egKNNfy2RpNOmuChhFPgQ==}
 
-  '@types/react-dom@19.2.3':
-    resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
+  '@types/react-dom@19.2.4':
+    resolution: {integrity: sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw==}
     peerDependencies:
       '@types/react': ^19.2.0
 
@@ -1937,8 +1940,8 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
 
-  lottie-react@2.4.1:
-    resolution: {integrity: sha512-LQrH7jlkigIIv++wIyrOYFLHSKQpEY4zehPicL9bQsrt1rnoKRYCYgpCUe5maqylNtacy58/sQDZTkwMcTRxZw==}
+  lottie-react@2.4.2:
+    resolution: {integrity: sha512-YkEEKN4E2Y2cFpPEwcvAXTAiRGy/P+0mJKYp9aDP1+r42xZgeXTZCf6No1csWRGmh4YQc3kbYtTq/b4c3IRCYg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -2531,6 +2534,15 @@ packages:
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+
+  stripe@22.5.0:
+    resolution: {integrity: sha512-QVwMwriC0bbySx6R4dpsvJ0W//GojC1kwWVS6rPSoVqDUIZX4Hy3TaUrd2AZeXEAaKbfWIjQjvo3vKAReHZ0vQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@types/node': '>=18'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
 
   style-to-js@1.0.0:
     resolution: {integrity: sha512-OiaJVLD+ybcul+6oAdwTOKLFewvYapPLG4H3JiYBYUS0yoi29Ag1IiqprbVARaxiAXvkk+4B8aNcG7lyEDKebg==}
@@ -3539,7 +3551,7 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/react-dom@19.2.3(@types/react@19.2.16)':
+  '@types/react-dom@19.2.4(@types/react@19.2.16)':
     dependencies:
       '@types/react': 19.2.16
 
@@ -4842,7 +4854,7 @@ snapshots:
     dependencies:
       js-tokens: 3.0.0
 
-  lottie-react@2.4.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  lottie-react@2.4.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       lottie-web: 5.13.0
       react: 19.2.3
@@ -5766,6 +5778,10 @@ snapshots:
   strip-bom@3.0.0: {}
 
   strip-json-comments@3.1.1: {}
+
+  stripe@22.5.0(@types/node@20.19.41):
+    optionalDependencies:
+      '@types/node': 20.19.41
 
   style-to-js@1.0.0:
     dependencies:

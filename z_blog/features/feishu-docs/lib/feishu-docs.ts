@@ -33,6 +33,11 @@ export type FeishuDocImage = {
   missing: false;
 };
 
+export type FeishuDocSection = {
+  id: string;
+  title: string;
+};
+
 export type FeishuDoc = {
   id: string;
   title: string;
@@ -40,6 +45,7 @@ export type FeishuDoc = {
   category: string;
   sourcePath: string;
   markdown: string;
+  sections: FeishuDocSection[];
   imageCount: number;
   missingImageCount: number;
   images: FeishuDocImage[];
@@ -252,6 +258,48 @@ function createImageFigure(image: R2ImageObject, altText: string, cardName: stri
   ].join("\n");
 }
 
+function normalizeSectionTitle(title: string) {
+  return title
+    .replace(/^[一二三四五六七八九十]+[、.．]\s*/u, "")
+    .trim();
+}
+
+function getSectionId(title: string) {
+  const normalizedTitle = normalizeSectionTitle(title);
+
+  if (normalizedTitle.includes("画面讲解")) return "image-explanation";
+  if (normalizedTitle.includes("符号拆解")) return "symbol-analysis";
+  if (normalizedTitle.includes("案例解读")) return "case-reading";
+  if (normalizedTitle.includes("实战应用") || normalizedTitle.includes("实战运用")) {
+    return "practical-use";
+  }
+
+  return null;
+}
+
+function injectSectionIds(markdown: string) {
+  const sections: FeishuDocSection[] = [];
+  const nextMarkdown = markdown.replace(/^##\s+(.+)$/gm, (match, rawTitle: string) => {
+    const sectionId = getSectionId(rawTitle);
+
+    if (!sectionId) return match;
+
+    const title = normalizeSectionTitle(rawTitle);
+
+    sections.push({
+      id: sectionId,
+      title,
+    });
+
+    return `<h2 id="${sectionId}" class="scroll-mt-28">${title}</h2>`;
+  });
+
+  return {
+    markdown: nextMarkdown,
+    sections,
+  };
+}
+
 function matchImagesForCard(cardName: string, images: R2ImageObject[]) {
   const majorFolder = getMajorFolder(cardName);
   const patterns = majorFolder
@@ -300,6 +348,9 @@ export async function getFeishuDocsData(): Promise<FeishuDocsData> {
       const imageReferences = markdown.match(/!\[[^\]]*\]\([^)]+\)/g) ?? [];
       const missingImageCount = Math.max(0, imageReferences.length - matchedImages.length);
       const relativePath = path.relative(DOCS_ROOT, filePath).split(path.sep).join("/");
+      const renderedMarkdown = injectSectionIds(
+        replaceMarkdownImages(markdown, matchedImages, cardName),
+      );
 
       return {
         id: slugify(relativePath),
@@ -307,7 +358,8 @@ export async function getFeishuDocsData(): Promise<FeishuDocsData> {
         cardName,
         category: getCategory(filePath),
         sourcePath: relativePath,
-        markdown: replaceMarkdownImages(markdown, matchedImages, cardName),
+        markdown: renderedMarkdown.markdown,
+        sections: renderedMarkdown.sections,
         imageCount: Math.min(imageReferences.length, matchedImages.length),
         missingImageCount,
         images: matchedImages.slice(0, imageReferences.length).map((image) => ({

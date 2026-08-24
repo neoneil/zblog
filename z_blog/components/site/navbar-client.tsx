@@ -145,6 +145,13 @@ export default function NavbarClient({
               {t(siteCopy.navFeishuDocs)}
             </Link>
 
+            <Link
+              href="/pricing"
+              className="inline-flex min-w-max items-center justify-center whitespace-nowrap rounded-full border border-[var(--border)] bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--text-inverse)] shadow-[var(--shadow-sm)] transition hover:bg-[var(--primary-hover)]"
+            >
+              {t(siteCopy.navMembership)}
+            </Link>
+
             {user ? (
               <>
                 {canManagePosts && (
@@ -275,6 +282,14 @@ export default function NavbarClient({
                 onClick={() => setMobileOpen(false)}
               >
                 {t(siteCopy.navFeishuDocs)}
+              </Link>
+
+              <Link
+                href="/pricing"
+                className="rounded-xl border border-[var(--border)] bg-[var(--primary)] px-3 py-2 text-sm font-semibold text-[var(--text-inverse)] transition hover:bg-[var(--primary-hover)]"
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(siteCopy.navMembership)}
               </Link>
 
               {user ? (
