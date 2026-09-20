@@ -16,7 +16,7 @@ export const categories: CategoryItem[] = [
     slug: "understanding-children",
     title: {
       zh: "理解儿童",
-      en: "Understanding Children",
+      en: "Words & Symbols",
     },
     description: {
       zh: "理解游戏为什么对幼儿发展至关重要，也更细腻地看见儿童的情绪需要。",
@@ -29,7 +29,7 @@ export const categories: CategoryItem[] = [
     slug: "teaching-practice",
     title: {
       zh: "教学实践",
-      en: "Teaching Practice",
+      en: "The Language of Self",
     },
     description: {
       zh: "记录以游戏为本的学习、课堂策略，以及如何设计更有意义的学习经验。",
@@ -42,7 +42,7 @@ export const categories: CategoryItem[] = [
     slug: "family-education",
     title: {
       zh: "家庭教育",
-      en: "Family Education",
+      en: "Stories in the Stars",
     },
     description: {
       zh: "分享父母如何在家庭中支持学习，并建立积极的家园合作关系。",
@@ -54,8 +54,8 @@ export const categories: CategoryItem[] = [
   {
     slug: "teacher-reflection",
     title: {
-      zh: "教师反思",
-      en: "Teacher Reflection",
+      zh: "书写你的内心世界",
+      en: "Write Your inner World",
     },
     description: {
       zh: "留给反思性实践、身心照顾，以及在幼教工作中培养耐心与成长的空间。",

@@ -1,50 +1,43 @@
-import Container from "@/components/site/container";
-import CategoriesSection from "@/components/site/categories-section";
+import { FeatureCard } from "@/components/site/feature-card";
+import { PageHero, PageSection, PageShell } from "@/components/site/page-shell";
 
-export default function CategoriesPage() {
+const circleCards = [
+  {
+    title: "亲子议题",
+    description: "用于沉淀家庭教育、情绪陪伴和日常沟通中的长期问题。",
+    href: "/categories/family-education",
+    badge: "Family",
+  },
+  {
+    title: "教学实践",
+    description: "整理课堂观察、活动设计和教育者反思，方便后续扩展文章内容。",
+    href: "/categories/teaching-practice",
+    badge: "Practice",
+  },
+  {
+    title: "教师反思",
+    description: "保留给专业成长、自我照顾和工作复盘的内容方向。",
+    href: "/categories/teacher-reflection",
+    badge: "Reflection",
+  },
+];
+
+export default function CirclePage() {
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <PageShell>
+      <PageHero
+        eyebrow="Community"
+        title="早期教育智慧圈"
+        description="这里作为社区与内容主题的中转入口，先把讨论方向整理清楚，后续可以继续接论坛、问答或会员社群。"
+      />
 
-      {/* ✅ 核心：改成 fixed */}
-      {/* <div className="fixed inset-0 -z-10">
-        <Image
-          src="/cosmic-bg.webp"
-          alt="背景"
-          fill
-          priority
-          className="object-cover"
-        />
-      </div> */}
-
-      {/* 遮罩（也要 fixed） */}
-      {/* <div className="fixed inset-0 -z-10 bg-[color:var(--bg)]/80" /> */}
-
-      {/* 渐变 */}
-      <div className="absolute inset-0 bg-linear-to-b from-[var(--bg-soft)] via-[var(--card-muted)] to-[var(--bg-soft)]" />
-
-      {/* 光感 */}
-      <div className="absolute inset-0 bg-[var(--bg-soft)]" />
-
-      <div className="relative z-10 py-12 sm:py-16 lg:py-20">
-        <Container>
-          <div className="mb-10 max-w-3xl rounded-3xl border border-[var(--border)] bg-[var(--card-muted)] p-6 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-8 lg:p-10">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)] sm:text-sm">
-              circle
-            </p>
-
-            <h1 className="mb-5 text-3xl font-bold leading-tight tracking-tight text-[var(--text)] sm:text-4xl lg:text-5xl">
-              circle
-            </h1>
-
-            <p className="max-w-2xl text-base leading-7 text-[var(--text-soft)] sm:text-lg sm:leading-8">
-              Browse the four main themes of Cosmic Childhood and explore the ideas
-              that shape this space.
-            </p>
-          </div>
-
-          <CategoriesSection />
-        </Container>
-      </div>
-    </main>
+      <PageSection className="pt-0">
+        <div className="grid gap-5 md:grid-cols-3">
+          {circleCards.map((card) => (
+            <FeatureCard key={card.href} {...card} />
+          ))}
+        </div>
+      </PageSection>
+    </PageShell>
   );
 }

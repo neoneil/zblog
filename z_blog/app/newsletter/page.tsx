@@ -1,12 +1,27 @@
+import { PageHero, PageSection, PageShell } from "@/components/site/page-shell";
+import { ButtonLink } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
 export default function NewsletterPage() {
   return (
-    <main className="min-h-screen bg-[var(--card-soft)] px-6 py-16 text-[var(--primary)]">
-      <div className="mx-auto max-w-5xl rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-10">
-        <h1 className="text-4xl font-medium">订阅通讯</h1>
-        <p className="mt-4 max-w-2xl text-base leading-8 text-[var(--primary)]">
-          This page is reserved for your newsletter content and subscription flow.
-        </p>
-      </div>
-    </main>
+    <PageShell>
+      <PageHero
+        eyebrow="Newsletter"
+        title="订阅通讯"
+        description="这里先作为后续邮件订阅和会员内容通知的入口，前端保持简洁，等订阅服务确定后再接入提交逻辑。"
+      />
+
+      <PageSection className="pt-0">
+        <Card className="mx-auto max-w-2xl bg-[var(--card)]">
+          <CardContent className="space-y-4 p-6 sm:p-8">
+            <Input type="email" placeholder="你的邮箱" />
+            <ButtonLink href="/pricing" variant="primary" fullWidth>
+              先查看会员权益
+            </ButtonLink>
+          </CardContent>
+        </Card>
+      </PageSection>
+    </PageShell>
   );
 }

@@ -1,16 +1,16 @@
 import { ButtonLink } from "@/components/ui/button";
 
 const items = [
-  "Astrology Parenting Discussions",
-  "Teaching Practice Sharing",
-  "Creative Learning Ideas",
-  "Q&A with the Community",
+  "亲子议题讨论",
+  "教学实践分享",
+  "创意学习灵感",
+  "社区问答沉淀",
 ];
 
 export default function Circle() {
   return (
     <section className="relative min-h-[230px] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--shadow-md)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] sm:p-6">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--card-soft),var(--bg-soft))]" />
+      <div className="absolute inset-0 bg-[var(--section-gradient)]" />
 
       <div className="relative z-10 flex h-full flex-col justify-between gap-5">
         <div>
@@ -19,11 +19,11 @@ export default function Circle() {
           </p>
 
           <h2 className="text-xl font-semibold leading-snug text-[var(--text)] sm:text-2xl">
-            The Wisdom Circle for Early Childhood
+            早期教育智慧圈
           </h2>
 
           <p className="mt-3 max-w-xl text-sm leading-6 text-[var(--text-soft)]">
-            A warm circle of educators and parents exploring childhood wisdom together.
+            为家长与教育者保留一个更安静的讨论空间，用于整理经验、问题与可执行的陪伴方法。
           </p>
         </div>
 
@@ -41,7 +41,7 @@ export default function Circle() {
 
         <div>
           <ButtonLink href="/circle" variant="secondary" size="sm">
-            Join the Circle
+            进入社区
           </ButtonLink>
         </div>
       </div>

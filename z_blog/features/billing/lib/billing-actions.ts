@@ -81,7 +81,7 @@ export async function createAiCheckoutSession(
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
-    payment_method_types: ["card", "alipay", "wechat_pay"],
+    payment_method_types: ["card", "alipay"],
     client_reference_id: user.id,
     customer_email: user.email ?? undefined,
     line_items: [

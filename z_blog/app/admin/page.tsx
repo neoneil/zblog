@@ -1,37 +1,45 @@
-import Link from "next/link";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { FeatureCard } from "@/components/site/feature-card";
+import { PageHero, PageSection, PageShell } from "@/components/site/page-shell";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { requireRole } from "@/lib/auth/require-user";
 
 const adminCards = [
   {
-    title: "上传博客文章",
-    description: "上传blog文章后你的博客文章页才能脱胎换骨.",
+    title: "文章管理",
+    description: "上传、编辑和发布站内博客文章，统一维护内容库。",
     href: "/admin/posts",
+    badge: "Content",
   },
   {
-    title: "手动用户订阅特权",
-    description: "权宜之计， 以后可能删除这个功能.",
+    title: "用户权限",
+    description: "临时为指定用户配置访问权益，用于内部测试与运营处理。",
     href: "/admin/subscribe-authorized",
+    badge: "Access",
   },
   {
-    title: "AI 提示词自动化",
-    description: "估计你现在没玩明白，还需要打磨",
+    title: "AI 提示词",
+    description: "维护视频脚本与 AI 生成流程中使用的提示词模板。",
     href: "/admin/ai-video-prompt",
+    badge: "AI",
   },
   {
-    title: "你的上传视频页面",
-    description: "这个页面上传的视频都存在你的 cloudflare 的R2存储中",
+    title: "视频管理",
+    description: "上传 R2 视频与封面，管理发布状态，并同步写入 Supabase videos 表。",
     href: "/admin/videos",
+    badge: "Video",
   },
   {
-    title: "飞书文档 第一版只有文字，图片都是不可用链接，所以我暂时不知道有什么用，现在有所有图片的zip了",
-    description: "Review tarot Markdown knowledge files.",
-    href: "/tarot-demo",
+    title: "飞书文档",
+    description: "查看已整理的 Markdown 文档版本，并与 R2 图片素材进行对应展示。",
+    href: "/feishu-docs",
+    badge: "Docs",
   },
   {
-    title: "塔罗图片知识库",
-    description: "图片知识库所有塔罗图片，我分组整理了，也是存在R2里面（我自己的R2）",
+    title: "图片知识库",
+    description: "按目录层级浏览 R2 中的原始图片素材，支持大图预览。",
     href: "/admin/tarot-gallery",
+    badge: "Gallery",
   },
 ];
 
@@ -39,40 +47,33 @@ export default async function AdminPage() {
   const { profile } = await requireRole(["admin", "editor"]);
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-12 text-[var(--text)]">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">管理后台</h1>
-        <p className="mt-2 text-sm text-[var(--text)]">
-          Welcome, {profile.email}
-        </p>
-        <p className="text-sm text-[var(--text)]">
-          Role: {profile.role}
-        </p>
-      </div>
+    <PageShell>
+      <PageHero
+        eyebrow="Admin Console"
+        title="管理后台"
+        description="集中管理内容、视频、素材和测试权限。页面只做本地结构整理，不会修改远程数据库。"
+        aside={
+          <Card className="bg-[var(--card-soft)]">
+            <CardContent className="p-5">
+              <Badge variant="outline">当前身份</Badge>
+              <p className="mt-4 truncate text-sm font-medium text-[var(--text)]">
+                {profile.email}
+              </p>
+              <p className="mt-2 text-sm text-[var(--text-soft)]">
+                Role: {profile.role}
+              </p>
+            </CardContent>
+          </Card>
+        }
+      />
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {adminCards.map((card) => (
-          <Link key={card.href} href={card.href}>
-            <Card className="h-full cursor-pointer transition-all hover:-translate-y-1 hover:border-[var(--primary)] hover:shadow-[var(--shadow-md)]">
-              <CardContent className="flex h-full flex-col justify-between p-6">
-                <div>
-                  <CardTitle className="mb-3 text-lg text-[var(--text)]">
-                    {card.title}
-                  </CardTitle>
-
-                  <p className="text-sm text-[var(--text-soft)]">
-                    {card.description}
-                  </p>
-                </div>
-
-                <div className="mt-6 text-sm font-medium text-[var(--primary)]">
-                  Open →
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
-    </main>
+      <PageSection className="pt-0">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {adminCards.map((card) => (
+            <FeatureCard key={card.href} {...card} meta="管理" />
+          ))}
+        </div>
+      </PageSection>
+    </PageShell>
   );
 }

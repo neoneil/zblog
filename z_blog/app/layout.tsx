@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     default: "星语童年",
     template: "%s | 星语童年",
   },
-  description: "一个关于童年、学习、情绪与想象力的温柔空间。",
+  description: "星语童年提供亲子成长、星盘解析、塔罗 AI、视频与知识库内容体验。",
 };
 
 export default function RootLayout({
@@ -34,38 +34,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-// import type { Metadata } from "next";  // 原版
-// import "./globals.css";
-// import Navbar from "@/components/site/navbar";
-// import Footer from "@/components/site/footer";
-// import { Analytics } from "@vercel/analytics/next";
-// export const metadata: Metadata = {
-//   title: {
-//     default: "My Blog",
-//     template: "%s | My Blog",
-//   },
-//   description: "A blog built with Next.js and Supabase.",
-// };
-
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   return (
-//     <html lang="en">
-//       <body className="min-h-screen text-[var(--text)] antialiased" style={{
-//         background: "var(--bg)",
-//         color: "var(--text)"
-//       }}>
-//         <div className="flex min-h-screen flex-col">
-//           <Navbar />
-//           <div className="flex-1">{children}</div>
-//           <Footer />
-//         </div>
-//         <Analytics />
-//       </body>
-//     </html>
-//   );
-// }

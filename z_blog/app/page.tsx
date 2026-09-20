@@ -1,77 +1,118 @@
 import Image from "next/image";
+import Astroplate from "@/components/Astroplate";
+import Circle from "@/components/Circle";
+import ParentingLabSection from "@/components/ParentingLabSection";
+import { FeatureCard } from "@/components/site/feature-card";
 import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
-import Circle from "@/components/Circle";
-import Astroplate from "@/components/Astroplate";
-import ParentingLabSection from "@/components/ParentingLabSection";
-import { LocalizedText } from "@/components/site/preferences-provider";
+import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { getCurrentUserWithRole } from "@/lib/auth/current-user";
-import { siteCopy } from "@/lib/i18n/copy";
+
+const productCards = [
+  {
+    title: "塔罗 AI",
+    description: "围绕问题、情绪与家庭关系生成结构化解读，适合快速获得温柔但清晰的参考。",
+    href: "/tarot-ai",
+    badge: "AI",
+  },
+  {
+    title: "星盘解析",
+    description: "从日月升、宫位与核心能量切入，用更易读的方式理解亲子互动节奏。",
+    href: "/astroplate",
+    badge: "Astro",
+  },
+  {
+    title: "塔罗牌库",
+    description: "78 张塔罗牌知识入口，沉淀画面讲解、符号拆解、案例与实战使用。",
+    href: "/tarot",
+    badge: "Library",
+  },
+];
+
 export default async function HomePage() {
   const { role } = await getCurrentUserWithRole();
+  const isAdmin = role === "admin";
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* Content */}
-      <div className="relative z-10 pt-4 pb-10 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-14">
+    <main className="min-h-screen bg-[var(--bg)] bg-[image:var(--app-gradient)] text-[var(--text)]">
+      <div className="pt-4 pb-10 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-14">
         <Container>
-          {/* HERO */}
           <section className="mb-14 sm:mb-16">
-            <div className="relative overflow-hidden rounded-[2rem] shadow-[var(--shadow-lg)]">
-              {/* Background image */}
+            <div className="relative overflow-hidden rounded-[var(--radius-lg)] border border-[color:var(--text-white)]/10 bg-[var(--surface-raised)] shadow-[var(--shadow-lg)]">
               <div className="absolute inset-0">
                 <Image
                   src="/hero.png"
-                  alt="首页背景"
+                  alt="星语童年首页背景"
                   fill
                   priority
                   className="object-cover"
                 />
               </div>
 
-              {/* Left dark gradient for text readability */}
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--hero-overlay-strong)] via-[var(--hero-overlay-soft)] to-transparent" />
-
-              {/* Optional soft glow */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,var(--primary-soft),transparent_32%)] opacity-35" />
 
-              <div className="relative z-10 flex min-h-[440px] items-center px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14">
+              <div className="relative z-10 flex min-h-[440px] items-end px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14">
                 <div className="max-w-2xl">
                   <p className="mb-3 inline-flex items-center rounded-full border border-[color:var(--text-inverse)]/45 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-white)] sm:text-xs">
-                    <LocalizedText copy={siteCopy.heroBadge} />
+                    星语童年
                   </p>
 
                   <h1 className="max-w-2xl text-3xl font-semibold leading-tight tracking-tight text-[var(--text-white)] sm:text-4xl lg:text-6xl lg:leading-tight">
-                    <LocalizedText copy={siteCopy.heroTitleLineOne} />
-                    <span className="block text-[var(--text-white)]">
-                      <LocalizedText copy={siteCopy.heroTitleLineTwo} />
-                    </span>
+                    占位文字1
+                    <span className="block">占位文字2</span>
                   </h1>
 
                   <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-white)] sm:text-base lg:text-lg">
-                    <LocalizedText copy={siteCopy.heroDescription} />
+                    占位文字3
                   </p>
 
                   <div className="mt-7 flex flex-wrap gap-3">
-                    <ButtonLink
-                      href="/posts"
-                      variant="hero"
-                      size="lg"
-                    >
-                      <LocalizedText copy={siteCopy.heroPrimaryCta} />
+                    <ButtonLink href="/pricing" variant="hero" size="lg">
+                      成为会员
                     </ButtonLink>
-
-                    <ButtonLink
-                      href="/categories"
-                      variant="hero"
-                      size="lg"
-                    >
-                      <LocalizedText copy={siteCopy.heroSecondaryCta} />
+                    <ButtonLink href="/tarot-ai" variant="hero" size="lg">
+                      体验塔罗 AI
                     </ButtonLink>
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          <section className="mb-12 grid gap-4 sm:grid-cols-3">
+            {[
+              ["AI 工具", "塔罗与星盘分开计时，付费后解锁对应产品。"],
+              ["内容知识库", "塔罗文档、牌库与图片素材按入口集中管理。"],
+              ["运营后台", "视频、文章、素材和权限入口只对管理员开放。"],
+            ].map(([title, text]) => (
+              <Card key={title} className="bg-[color:var(--card)]/92">
+                <CardContent className="p-5">
+                  <Badge variant="secondary">{title}</Badge>
+                  <p className="mt-4 text-sm leading-6 text-[var(--text-soft)]">
+                    {text}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
+
+          <section className="mb-14">
+            <div className="mb-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)]">
+                Product Console
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold text-[var(--text)] sm:text-3xl">
+                核心功能入口
+              </h2>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3">
+              {productCards.map((card) => (
+                <FeatureCard key={card.href} {...card} />
+              ))}
             </div>
           </section>
 
@@ -84,292 +125,9 @@ export default async function HomePage() {
             </div>
           </section>
 
-          {/* <section className="rounded-3xl border border-[var(--border)] bg-[color:var(--bg)]/80 p-5 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-7">
-            <div className="mb-6 flex items-center justify-between sm:mb-8">
-              <h2 className="text-xl font-semibold text-[var(--text)] sm:text-2xl">
-                Latest Posts
-              </h2>
-
-              <Link
-                href="/posts"
-                className="text-sm text-[var(--text-soft)] transition hover:text-[var(--text)]"
-              >
-                View all →
-              </Link>
-            </div>
-
-            {!posts || posts.length === 0 ? (
-              <p className="text-[var(--text-soft)]">暂无已发布文章。</p>
-            ) : (
-              <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
-                {posts.map((post) => (
-                  <article
-                    key={post.slug}
-                    className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] p-5 shadow-[var(--shadow-md)] backdrop-blur-sm transition duration-300 hover:bg-[var(--card-soft)] hover:shadow-[var(--shadow-lg)]"
-                  >
-                    {post.cover_image && (
-                      <Link href={`/posts/${post.slug}`}>
-                        <img
-                          src={post.cover_image}
-                          alt={post.title}
-                          className="mb-4 aspect-video w-full rounded-xl object-cover"
-                        />
-                      </Link>
-                    )}
-
-                    <p className="mb-3 text-sm text-[var(--text-soft)]">
-                      {post.published_at
-                        ? new Date(post.published_at).toLocaleDateString()
-                        : ""}
-                    </p>
-
-                    <h3 className="mb-3 text-xl font-semibold leading-tight text-[var(--text)] sm:text-2xl">
-                      <Link
-                        href={`/posts/${post.slug}`}
-                        className="transition hover:underline"
-                      >
-                        {post.title}
-                      </Link>
-                    </h3>
-
-                    {post.excerpt && (
-                      <p className="mb-5 text-sm leading-7 text-[var(--text-soft)] sm:text-base">
-                        {post.excerpt}
-                      </p>
-                    )}
-
-                    <Link
-                      href={`/posts/${post.slug}`}
-                      className="text-sm font-medium text-[var(--text)] hover:underline"
-                    >
-                      Read article →
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            )}
-          </section> */}
-          <ParentingLabSection isAdmin={role === "admin"} />
+          <ParentingLabSection isAdmin={isAdmin} />
         </Container>
       </div>
     </main>
   );
 }
-
-// import Link from "next/link";  // 原版
-// import Image from "next/image";
-// import { createClient } from "@/lib/supabase/server";
-// import Container from "@/components/site/container";
-// import CategoriesSection from "@/components/site/categories-section";
-// import Circle from "@/components/Circle";
-// import Astroplate from "@/components/Astroplate";
-// export default async function HomePage() {
-//   const supabase = await createClient();
-
-//   const {
-//     data: { user },
-//   } = await supabase.auth.getUser();
-
-//   let role: string | null = null;
-
-//   if (user) {
-//     const { data: profile } = await supabase
-//       .from("profiles")
-//       .select("role")
-//       .eq("id", user.id)
-//       .single();
-
-//     role = profile?.role ?? null;
-//   }
-
-//   const canManagePosts = role === "admin" || role === "editor";
-
-//   const { data: posts } = await supabase
-//     .from("posts")
-//     .select("title, slug, excerpt, published_at, cover_image")
-//     .eq("status", "published")
-//     .order("published_at", { ascending: false })
-//     .limit(6);
-
-//   return (
-//     <main className="relative min-h-screen overflow-hidden">
-//       {/* Background image */}
-//       {/* <div className="fixed inset-0 -z-10">
-//         <Image
-//           src="/cosmic-bg.webp"
-//           alt="Cosmic background"
-//           fill
-//           priority
-//           className="object-cover"
-//         />
-//       </div> */}
-
-//       {/* Background darkening */}
-//       {/* <div className="fixed inset-0 -z-10 bg-[color:var(--bg)]/80" /> */}
-
-//       {/* Extra depth */}
-//       <div className="absolute inset-0 bg-linear-to-b from-black/35 via-slate-950/20 to-black/65" />
-
-//       {/* Top spotlight */}
-//       <div className="absolute inset-0 bg-[var(--bg-soft)]" />
-
-//       {/* Side glow */}
-//       <div className="absolute inset-0 bg-[var(--bg-soft)]" />
-
-//       {/* Subtle grid / texture */}
-//       <div className="absolute inset-0 opacity-[0.04] bg-[var(--bg-soft)] bg-size-[48px_48px]" />
-
-//       {/* Content */}
-//       <div className="relative z-10 pt-4 pb-10 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-14">
-//         <Container>
-//           {/* HERO */}
-//           <section className="mb-14 sm:mb-16">
-//             <div className="relative overflow-hidden rounded-[2rem]">
-//               <div className="relative grid items-center gap-8 px-2 py-4 sm:px-2 sm:py-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-4 lg:py-8">
-//                 {/* Left text */}
-//                 <div className="relative z-10 max-w-2xl">
-//                   <p className="mb-3 inline-flex items-center rounded-full border border-[var(--border)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--text-soft)] sm:text-xs">
-//                     星语童年
-//                   </p>
-
-//                   <h1 className="max-w-2xl text-xl font-semibold leading-tight tracking-tight text-[var(--text)] sm:text-2xl lg:text-4xl lg:leading-tight">
-//                     Raising Children with
-//                     <span className="block text-[var(--text)]">
-//                       陪伴孩子成长
-//                     </span>
-//                   </h1>
-
-//                   <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--text-soft)] sm:text-base">
-//                     A soulful space for early childhood education, creative
-//                     learning and astrology parenting.
-//                   </p>
-
-//                   <div className="mt-7 flex flex-wrap gap-3">
-//                     <Link
-//                       href="/posts"
-//                       className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--text)] shadow-[var(--shadow-sm)] shadow-black/20 transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
-//                     >
-//                       Start Reading
-//                     </Link>
-
-//                     <Link
-//                       href="/categories"
-//                       className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-6 py-3 text-sm font-semibold text-[var(--primary)] shadow-[var(--shadow-sm)] shadow-[var(--shadow-sm)] transition hover:scale-[1.02] hover:bg-[var(--card-soft)]"
-//                     >
-//                       Browse Categories
-//                     </Link>
-//                   </div>
-//                 </div>
-
-//                 {/* Right image */}
-//                 <div className="relative z-10 -ml-8 lg:-ml-40">
-//                   <div className="relative mx-auto aspect-[3/2] w-full max-w-[500px] overflow-hidden">
-//                     <Image
-//                       src="/heromom.png"
-//                       alt="family"
-//                       width={620}
-//                       height={900}
-//                       className="hero-fade-image h-auto w-full object-contain drop-shadow-[var(--shadow-lg)]"
-//                     />
-//                     {/* <Image
-//                       src="/heromom.png"
-//                       alt="Mother and two children learning together"
-//                       fill
-//                       priority
-//                       className="object-contain object-bottom"
-//                     /> */}
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </section>
-
-//           <CategoriesSection />
-//           <section className="w-full py-12">
-//             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-//               <Circle />
-//               <Astroplate imageSrc="/astroplate.png" />
-//             </div>
-//           </section>
-
-//           <section className="rounded-3xl border border-[var(--border)] bg-[color:var(--bg)]/80 p-5 shadow-[var(--shadow-lg)] backdrop-blur-md sm:p-7">
-//             <div className="mb-6 flex items-center justify-between sm:mb-8">
-//               <h2 className="text-xl font-semibold text-[var(--text)] sm:text-2xl">
-//                 Latest Posts
-//               </h2>
-
-//               <Link
-//                 href="/posts"
-//                 className="text-sm text-[var(--text-soft)] transition hover:text-[var(--text)]"
-//               >
-//                 View all →
-//               </Link>
-//             </div>
-
-//             {!posts || posts.length === 0 ? (
-//               <p className="text-[var(--text-soft)]">暂无已发布文章。</p>
-//             ) : (
-//               <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
-//                 {posts.map((post) => (
-//                   <article
-//                     key={post.slug}
-//                     className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] p-5 shadow-[var(--shadow-md)] backdrop-blur-sm transition duration-300 hover:bg-[var(--card-soft)] hover:shadow-[var(--shadow-lg)]"
-//                   >
-//                     {post.cover_image && (
-//                       <Link href={`/posts/${post.slug}`}>
-//                         <img
-//                           src={post.cover_image}
-//                           alt={post.title}
-//                           className="mb-4 aspect-video w-full rounded-xl object-cover"
-//                         />
-//                       </Link>
-//                     )}
-
-//                     <p className="mb-3 text-sm text-[var(--text-soft)]">
-//                       {post.published_at
-//                         ? new Date(post.published_at).toLocaleDateString()
-//                         : ""}
-//                     </p>
-
-//                     <h3 className="mb-3 text-xl font-semibold leading-tight text-[var(--text)] sm:text-2xl">
-//                       <Link
-//                         href={`/posts/${post.slug}`}
-//                         className="transition hover:underline"
-//                       >
-//                         {post.title}
-//                       </Link>
-//                     </h3>
-
-//                     {post.excerpt && (
-//                       <p className="mb-5 text-sm leading-7 text-[var(--text-soft)] sm:text-base">
-//                         {post.excerpt}
-//                       </p>
-//                     )}
-
-//                     <Link
-//                       href={`/posts/${post.slug}`}
-//                       className="text-sm font-medium text-[var(--text)] hover:underline"
-//                     >
-//                       Read article →
-//                     </Link>
-//                   </article>
-//                 ))}
-//               </div>
-//             )}
-//           </section>
-//         </Container>
-//       </div>
-//     </main>
-//   );
-// }
-
-
-
-// {/* {canManagePosts && (
-//                       <Link
-//                         href="/admin/posts/new"
-//                         className="inline-flex items-center rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] px-6 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card-muted)]"
-//                       >
-//                         Write Post
-//                       </Link>
-//                     )} */}

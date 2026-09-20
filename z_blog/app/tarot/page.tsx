@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { PageShell } from "@/components/site/page-shell";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -55,8 +56,8 @@ export default async function TarotIndexPage() {
   const canEdit = role === "admin" || role === "editor";
 
   return (
-    <main className="min-h-screen bg-[var(--bg)]">
-      <div className="bg-[linear-gradient(180deg,var(--bg-soft),var(--bg))] px-4 py-8 sm:px-6 lg:px-8">
+    <PageShell>
+      <div className="px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl space-y-6">
           <Card className="overflow-hidden">
             <CardHeader className="border-b border-[var(--border)] bg-[var(--card-soft)] px-5 py-6 sm:px-6">
@@ -153,6 +154,6 @@ export default async function TarotIndexPage() {
           </section>
         </div>
       </div>
-    </main>
+    </PageShell>
   );
 }

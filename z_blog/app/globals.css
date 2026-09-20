@@ -3,29 +3,32 @@
 
 :root {
   color-scheme: light;
-  --bg: #f6fbff;
-  --bg-soft: #eaf6ff;
-  --bg-muted: #d9ecfb;
+  --bg: #f5f7fb;
+  --bg-soft: #eef3f8;
+  --bg-muted: #dfe8f1;
   --card: #ffffff;
-  --card-soft: #f2f9ff;
-  --card-muted: #e6f3fd;
+  --card-soft: #f8fafc;
+  --card-muted: #eef4fa;
+  --surface: #f9fbfd;
+  --surface-raised: #ffffff;
+  --surface-accent: #e8f1f8;
 
-  --text: #112235;
-  --text-soft: #426075;
-  --text-faint: #7892a5;
+  --text: #111827;
+  --text-soft: #4b5f73;
+  --text-faint: #7b8da0;
   --text-inverse: #ffffff;
   --text-white: #ffffff;
   --muted: var(--text-soft);
 
-  --primary: #2b80c5;
-  --primary-hover: #176ba8;
-  --primary-soft: #cfeaff;
-  --primary-muted: #72b5e8;
-  --accent: #2aa6b8;
-  --accent-hover: #16899a;
-  --accent-soft: #d8f6fa;
-  --accent-warm: #f0a447;
-  --accent-warm-soft: #fff0d6;
+  --primary: #22577a;
+  --primary-hover: #174462;
+  --primary-soft: #d8e8f3;
+  --primary-muted: #6f9dbf;
+  --accent: #2f7d71;
+  --accent-hover: #22645b;
+  --accent-soft: #dcefeb;
+  --accent-warm: #b7791f;
+  --accent-warm-soft: #f4ead8;
 
   --success: #217a67;
   --success-soft: #dff6ef;
@@ -62,33 +65,42 @@
   --topic-rose-shadow: rgba(174, 70, 89, 0.22);
   --topic-rose-shadow-hover: rgba(174, 70, 89, 0.3);
 
-  --border: #c9dfef;
-  --border-strong: #9fc3dc;
-  --ring: #b9dfff;
+  --border: #d3dde7;
+  --border-strong: #aebdca;
+  --ring: #8eb9d6;
 
-  --navbar-bg: rgba(246, 251, 255, 0.88);
-  --navbar-bg-hover: #e5f3ff;
-  --footer-bg: #eaf6ff;
+  --navbar-bg: rgba(245, 247, 251, 0.88);
+  --navbar-bg-hover: #e7eef5;
+  --footer-bg: #eef3f8;
 
-  --shadow-sm: 0 8px 24px rgba(43, 128, 197, 0.08);
-  --shadow-md: 0 16px 48px rgba(43, 128, 197, 0.12);
-  --shadow-lg: 0 24px 70px rgba(17, 34, 53, 0.16);
-  --drop-shadow: 0 8px 18px rgba(43, 128, 197, 0.18);
+  --shadow-sm: 0 8px 24px rgba(17, 24, 39, 0.06);
+  --shadow-md: 0 18px 50px rgba(17, 24, 39, 0.1);
+  --shadow-lg: 0 28px 80px rgba(17, 24, 39, 0.16);
+  --drop-shadow: 0 8px 18px rgba(34, 87, 122, 0.18);
   --radius-sm: 8px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --hero-overlay-strong: rgba(17, 34, 53, 0.72);
   --hero-overlay-soft: rgba(17, 34, 53, 0.38);
+  --app-gradient:
+    radial-gradient(circle at top left, rgba(47, 125, 113, 0.13), transparent 30rem),
+    radial-gradient(circle at 85% 10%, rgba(34, 87, 122, 0.13), transparent 28rem),
+    linear-gradient(180deg, var(--bg), var(--bg-soft));
+  --section-gradient: linear-gradient(135deg, var(--surface-raised), var(--card-soft));
+  --focus-outline: 0 0 0 3px color-mix(in srgb, var(--ring) 42%, transparent);
 }
 
 html[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #08131f;
-  --bg-soft: #0f2030;
-  --bg-muted: #172b3d;
-  --card: #102233;
-  --card-soft: #13283b;
-  --card-muted: #193248;
+  --bg: #071018;
+  --bg-soft: #0e1a25;
+  --bg-muted: #172636;
+  --card: #101b26;
+  --card-soft: #142331;
+  --card-muted: #1a2d3e;
+  --surface: #0d1823;
+  --surface-raised: #121f2c;
+  --surface-accent: #183246;
 
   --text: #eef7ff;
   --text-soft: #b8cad9;
@@ -97,15 +109,15 @@ html[data-theme="dark"] {
   --text-white: #ffffff;
   --muted: var(--text-soft);
 
-  --primary: #7cc6ff;
-  --primary-hover: #a8d9ff;
-  --primary-soft: #1f4464;
-  --primary-muted: #4da3df;
-  --accent: #65d7e6;
-  --accent-hover: #8de6f0;
-  --accent-soft: #1d4b55;
-  --accent-warm: #ffc46f;
-  --accent-warm-soft: #4b3520;
+  --primary: #8bc7ef;
+  --primary-hover: #a9d9f7;
+  --primary-soft: #1d3a50;
+  --primary-muted: #6aafd9;
+  --accent: #80d3c6;
+  --accent-hover: #9ee1d8;
+  --accent-soft: #183f3a;
+  --accent-warm: #f4c36e;
+  --accent-warm-soft: #3f3322;
 
   --success: #76d6bd;
   --success-soft: #173f35;
@@ -156,6 +168,12 @@ html[data-theme="dark"] {
   --drop-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
   --hero-overlay-strong: rgba(4, 10, 18, 0.78);
   --hero-overlay-soft: rgba(4, 10, 18, 0.42);
+  --app-gradient:
+    radial-gradient(circle at top left, rgba(128, 211, 198, 0.14), transparent 30rem),
+    radial-gradient(circle at 85% 8%, rgba(139, 199, 239, 0.12), transparent 28rem),
+    linear-gradient(180deg, var(--bg), var(--bg-soft));
+  --section-gradient: linear-gradient(135deg, var(--surface-raised), var(--card-soft));
+  --focus-outline: 0 0 0 3px color-mix(in srgb, var(--ring) 48%, transparent);
 }
 
 @layer components {
@@ -293,6 +311,15 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100%;
+}
+
+* {
+  border-color: var(--border);
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-outline);
 }
 .hero-fade-image {
   mask-image: radial-gradient(

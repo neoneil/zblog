@@ -67,7 +67,7 @@ export default function NavbarClient({
     "rounded-xl px-3 py-2 text-sm font-medium text-[var(--text-soft)] transition hover:bg-[var(--card-muted)] hover:text-[var(--text)]";
 
   return (
-    <header className="top-0 z-50 bg-transparent">
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--navbar-bg)] backdrop-blur-xl">
       <Container>
         <div className="flex min-h-16 items-center justify-between gap-4 py-3">
           <Link
@@ -296,7 +296,7 @@ export default function NavbarClient({
                 <>
                   {canManagePosts && (
                     <Link
-                      href="/admin/posts"
+                      href="/admin"
                       className={mobileLinkClass}
                       onClick={() => setMobileOpen(false)}
                     >
