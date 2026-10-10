@@ -76,6 +76,9 @@ export default async function HomePage() {
                     <ButtonLink href="/tarot-ai" variant="hero" size="lg">
                       体验塔罗 AI
                     </ButtonLink>
+                    <ButtonLink href="/tarot-novel" variant="hero" size="lg">
+                      占星塔罗小说
+                    </ButtonLink>
                   </div>
                 </div>
               </div>
