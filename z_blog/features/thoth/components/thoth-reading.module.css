@@ -1,0 +1,70 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows), auto);
+  gap: 1rem;
+  align-items: start;
+}
+.slot {
+  grid-column: var(--column);
+  grid-row: var(--row);
+  min-width: 0;
+}
+.fan {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  min-height: 12rem;
+}
+.fanCard {
+  position: relative;
+  width: 4rem;
+  height: 7rem;
+  flex-shrink: 0;
+  margin-left: -2.2rem;
+  transform-origin: center 160%;
+  transform: rotate(var(--angle));
+  transition: transform 180ms ease;
+}
+.fanCard:first-child { margin-left: 0; }
+.fanCard:hover:not(:disabled), .fanCard:focus-visible {
+  transform: rotate(var(--angle)) translateY(-0.75rem);
+  z-index: 2;
+}
+.shuffling { animation: shuffle 400ms ease-in-out infinite alternate; }
+@keyframes shuffle {
+  from { transform: translateX(-1rem) rotate(-6deg); }
+  to { transform: translateX(1rem) rotate(6deg); }
+}
+@media (min-width: 640px) {
+  .fan { min-height: 17rem; padding-block: 3rem; }
+  .fanCard { width: 5.5rem; height: 9rem; margin-left: -2.9rem; }
+}
+@media (max-width: 1023px) {
+  .fan {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+    min-height: 0;
+    max-width: 32rem;
+    margin-inline: auto;
+    padding: 1.5rem 0;
+  }
+  .fanCard {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 5;
+    margin-left: 0;
+    transform: none;
+  }
+  .fanCard:hover:not(:disabled), .fanCard:focus-visible { transform: translateY(-0.25rem); }
+}
+@media (max-width: 639px) {
+  .board { gap: 0.6rem; }
+  .wideBoard { grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: none; }
+  .wideBoard .slot { grid-column: auto; grid-row: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shuffling { animation: none; }
+  .fanCard { transition: none; }
+}

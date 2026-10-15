@@ -32,14 +32,10 @@ function getBrowserLanguage(): Language {
   return navigator.language.toLowerCase().startsWith("zh") ? "zh" : "en";
 }
 
-function getSystemTheme(): ThemeMode {
-  if (typeof window === "undefined") return "light";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
 export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>("zh");
-  const [theme, setTheme] = useState<ThemeMode>("light");
+  const [theme, setTheme] = useState<ThemeMode>("dark");
+  const [preferencesLoaded, setPreferencesLoaded] = useState(false);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -47,23 +43,26 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
       const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
 
       setLanguageState(storedLanguage === "en" || storedLanguage === "zh" ? storedLanguage : getBrowserLanguage());
-      setTheme(storedTheme === "dark" || storedTheme === "light" ? storedTheme : getSystemTheme());
+      setTheme(storedTheme === "dark" || storedTheme === "light" ? storedTheme : "dark");
+      setPreferencesLoaded(true);
     }, 0);
 
     return () => window.clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
+    if (!preferencesLoaded) return;
     document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
     document.documentElement.dataset.language = language;
     window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
-  }, [language]);
+  }, [language, preferencesLoaded]);
 
   useEffect(() => {
+    if (!preferencesLoaded) return;
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme]);
+  }, [theme, preferencesLoaded]);
 
   const value = useMemo<PreferencesContextValue>(
     () => ({

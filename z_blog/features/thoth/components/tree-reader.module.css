@@ -1,0 +1,37 @@
+.reader {
+  --accent-warm: var(--primary);
+  --bg-card: var(--card);
+  --bg-deep: var(--bg);
+  --text-main: var(--text);
+  --font-serif: Georgia, serif;
+  --color-fire: var(--danger);
+  --color-water: var(--primary);
+  --color-air: var(--accent-warm);
+  --color-earth: var(--accent);
+  --color-maroon: var(--danger);
+  --color-rosewater: var(--text-soft);
+  --ctp-blue: var(--primary);
+  --ctp-red: var(--danger);
+  --ctp-yellow: var(--warning);
+  --ctp-green: var(--accent);
+  --ctp-peach: var(--warning);
+  --ctp-mauve: var(--primary);
+  --ctp-pink: var(--danger);
+  --ctp-lavender: var(--primary);
+  --ctp-surface1: var(--border);
+  --ctp-text: var(--text);
+  --ctp-subtext0: var(--text-soft);
+  --accent-lavender: var(--primary);
+  --text-muted: var(--text-soft);
+  --ctp-flamingo: var(--accent);
+  --ctp-crust: var(--card-soft);
+  --ctp-overlay0: var(--text-faint);
+  --ctp-overlay2: var(--text-soft);
+  --ctp-surface2: var(--border-strong);
+  --seph-kether: var(--text);
+  --seph-binah: var(--text-soft);
+}
+
+.reader svg:not(svg svg) { width: 100%; height: auto; }
+.reader svg text { letter-spacing: 0; }
+.reader svg g[role='button']:focus-visible { outline: none; filter: drop-shadow(0 0 3px var(--primary)); }

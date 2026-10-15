@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { KnowledgeEntries } from '@/features/thoth/components/knowledge-entries';
 import Astroplate from "@/components/Astroplate";
 import Circle from "@/components/Circle";
 import ParentingLabSection from "@/components/ParentingLabSection";
@@ -118,6 +119,8 @@ export default async function HomePage() {
               ))}
             </div>
           </section>
+
+          <KnowledgeEntries />
 
           <CategoriesSection />
 

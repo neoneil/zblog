@@ -7,6 +7,7 @@ import TarotDeck from "@/components/tarot/tarot-deck";
 import TarotReadingPanel from "@/components/tarot/tarot-reading-panel";
 import type { AiAccessStatus } from "@/features/billing/lib/types";
 import { tarotDeck as fullTarotDeck } from "@/lib/tarot/full-deck";
+import { shuffleCards } from "@/lib/tarot/shuffle";
 import type { DrawnTarotCard, TarotCard as TarotCardType } from "@/types/tarot";
 
 type TarotStage =
@@ -28,15 +29,6 @@ const positionLabel: Record<DrawnTarotCard["position"], string> = {
 type TarotClientProps = {
   accessStatus: AiAccessStatus;
 };
-
-function shuffleCards<T>(items: T[]): T[] {
-  const next = [...items];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [next[i], next[j]] = [next[j], next[i]];
-  }
-  return next;
-}
 
 export default function TarotClient({ accessStatus }: TarotClientProps) {
   const cardsSource = useMemo(() => fullTarotDeck, []);

@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" data-theme="light" suppressHydrationWarning>
+    <html lang="zh-CN" data-theme="dark" suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <PreferencesProvider>
           <div className="flex min-h-screen flex-col">

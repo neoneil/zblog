@@ -87,7 +87,7 @@ const STAR_POINTS = Array.from({ length: 55 }, (_, i) => {
 });
 
 export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
-  const [theme, setTheme] = useState<WheelTheme>("light");
+  const [theme, setTheme] = useState<WheelTheme>("dark");
   const isDark = theme === "dark";
 
   const c = getThemeColors(theme);

@@ -30,7 +30,7 @@ export default function NavbarClient({
   canManagePosts,
 }: NavbarClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { t } = usePreferences();
+  const { t, language } = usePreferences();
 
   const router = useRouter();
 
@@ -108,7 +108,7 @@ export default function NavbarClient({
             </svg>
           </button>
 
-          <nav className="hidden min-w-0 flex-1 items-center justify-end gap-1.5 2xl:flex">
+          <nav className="hidden min-w-0 flex-1 items-center justify-end gap-1.5 2xl:flex 2xl:flex-wrap">
             <Link href="/" className={navLinkClass}>
               {t(siteCopy.navHome)}
             </Link>
@@ -135,6 +135,10 @@ export default function NavbarClient({
 
             <Link href="/tarot" className={navLinkClass}>
               {t(siteCopy.navTarotLibrary)}
+            </Link>
+
+            <Link href={`/thoth-tarot?lang=${language}`} className={navLinkClass}>
+              Thoth tarot
             </Link>
 
             <Link href="/classroom" className={navLinkClass}>
@@ -266,6 +270,14 @@ export default function NavbarClient({
                 onClick={() => setMobileOpen(false)}
               >
                 {t(siteCopy.navTarotLibrary)}
+              </Link>
+
+              <Link
+                href={`/thoth-tarot?lang=${language}`}
+                className={mobileLinkClass}
+                onClick={() => setMobileOpen(false)}
+              >
+                Thoth tarot
               </Link>
 
               <Link
