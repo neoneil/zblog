@@ -1,6 +1,8 @@
 export type TarotArcana = "major" | "minor";
 export type TarotSuit = "cups" | "wands" | "swords" | "pentacles";
-export type TarotPosition = "past" | "present" | "future";
+export type TarotPosition = "past" | "present" | "future"
+  | "contribution" | "challenge" | "influence" | "growth" | "selfLove"
+  | "insight" | "signal" | "context";
 
 export type TarotCard = {
   id: string;

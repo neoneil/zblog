@@ -14,7 +14,7 @@ const cards = [
   {
     title: "Ask Tarot",
     href: "/parentinglab/asktarotmom",
-    adminHref: "/tarot-ai",
+    adminHref: "/parentinglab/asktarotmom",
     badge: "塔罗",
     description: "用塔罗式提问整理情绪、关系与选择，适合作为亲子沟通前的思考工具。",
   },

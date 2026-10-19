@@ -1,10 +1,12 @@
 import type { CSSProperties } from "react";
 import styles from "./tarot-experience.module.css";
 
-export default function TarotAtmosphere() {
+export default function TarotAtmosphere({ showLights = true }: { showLights?: boolean }) {
   return <div className={styles.atmosphere} aria-hidden="true">
-    <div className={styles.lightA} />
-    <div className={styles.lightB} />
+    {showLights && <>
+      <div className={styles.lightA} />
+      <div className={styles.lightB} />
+    </>}
     <div className={styles.orbit} />
     {Array.from({ length: 48 }, (_, index) => <i key={index}
       className={styles.spark}

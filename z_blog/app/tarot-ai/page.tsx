@@ -1,6 +1,4 @@
-import TarotClient from "@/components/tarot/tarot-client";
-import { getAiAccessStatus } from "@/features/billing/lib/ai-access";
-import { requireUser } from "@/lib/auth/require-user";
+import TarotExperiencePage from "@/components/tarot/tarot-page";
 
 export const metadata = {
   title: "塔罗解读",
@@ -8,9 +6,5 @@ export const metadata = {
 };
 
 export default async function TarotAiPage() {
-  await requireUser("/tarot-ai");
-
-  const accessStatus = await getAiAccessStatus("tarot");
-
-  return <TarotClient accessStatus={accessStatus} />;
+  return <TarotExperiencePage mode="three-cards" />;
 }

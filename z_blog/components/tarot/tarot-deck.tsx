@@ -33,7 +33,7 @@ export default function TarotDeck({ cards, stage, selectedIds, onSelectCard }: T
 
   return <div ref={viewport} className={styles.deckViewport} aria-hidden={finished}
     data-idle={idle} data-finished={finished}
-    aria-label={idle ? "塔罗牌阵" : "选择三张塔罗牌"}>
+    aria-label={idle ? "塔罗牌阵" : "选择塔罗牌 / Select tarot cards"}>
     <motion.div className={styles.wheel}
       animate={{ rotate: shuffling && !reducedMotion ? [0, -360, -720] : 0, opacity: finished ? 0 : 1 }}
       transition={{ rotate: { duration: shuffling ? 12 : 0, times: [0, 0.5, 1], ease: [0.3, 0, 0.14, 1] }, opacity: { duration: 0.6 } }}>

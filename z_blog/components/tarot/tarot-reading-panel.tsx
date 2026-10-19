@@ -1,40 +1,83 @@
 "use client";
 
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import type { DrawnTarotCard } from "@/types/tarot";
+import type { BilingualReadingText, TarotReadingResult } from "@/lib/tarot/reading-result";
+import styles from "./tarot-reading.module.css";
+import { tarotModes, type TarotReadingMode } from "@/lib/tarot/reading-modes";
 
 type TarotReadingPanelProps = {
   reading: string;
+  cards: DrawnTarotCard[];
+  sections: TarotReadingResult | null;
   loading?: boolean;
+  mode?: TarotReadingMode;
 };
 
-export default function TarotReadingPanel({
-  reading,
-  loading,
-}: TarotReadingPanelProps) {
-  return (
-    <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-[var(--text)]">AI 解读</h2>
-        {loading ? (
-          <span className="text-sm text-[var(--primary)]">正在生成中...</span>
-        ) : null}
-      </div>
+function BilingualText({ text }: { text: BilingualReadingText }) {
+  return <div className={styles.bilingual}>
+    <div lang="zh-CN"><ReactMarkdown remarkPlugins={[remarkGfm]}>{text.zh}</ReactMarkdown></div>
+    <div lang="en"><ReactMarkdown remarkPlugins={[remarkGfm]}>{text.en}</ReactMarkdown></div>
+  </div>;
+}
 
-      {loading && !reading ? (
-        <div className="space-y-3">
-          <div className="h-4 w-2/3 animate-pulse rounded bg-[var(--card-muted)]" />
-          <div className="h-4 w-full animate-pulse rounded bg-[var(--card-muted)]" />
-          <div className="h-4 w-5/6 animate-pulse rounded bg-[var(--card-muted)]" />
-          <div className="h-4 w-3/4 animate-pulse rounded bg-[var(--card-muted)]" />
-        </div>
-      ) : (
-        <div className="prose  max-w-none prose-headings:text-[var(--text)] prose-p:text-[var(--text)] prose-strong:text-[var(--text)] prose-li:text-[var(--text)]">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {reading || "抽出三张牌后，这里会显示 AI 解读结果。"}
-          </ReactMarkdown>
-        </div>
-      )}
-    </div>
-  );
+function ReadingSkeleton() {
+  return <div className={styles.skeleton} aria-hidden="true">
+    <span /><span /><span /><span />
+  </div>;
+}
+
+export default function TarotReadingPanel({ reading, cards, sections, loading, mode = "three-cards" }: TarotReadingPanelProps) {
+  const positions = tarotModes[mode].positions;
+  return <div className={styles.panel} aria-busy={loading}>
+    {loading && <header className={styles.header}>
+      <span role="status">正在解读 / Reading your cards…</span>
+    </header>}
+
+    {sections || loading ? <>
+      <section className={styles.summary} aria-labelledby="tarot-overview">
+        <h3 id="tarot-overview">总览 / Overview</h3>
+        {sections ? <BilingualText text={sections.overview} /> : <ReadingSkeleton />}
+      </section>
+
+      {positions.map(({ key, label }) => {
+        const card = cards.find(item => item.position === key);
+        return <section key={key} className={styles.cardRow} aria-labelledby={`reading-${key}`}>
+          <figure className={styles.cardFigure}>
+            {card && <>
+              <div className={styles.cardImage}>
+                <Image src={encodeURI(card.imageSrc)} alt={`${card.nameCn} / ${card.name}`} fill
+                  sizes="(min-width: 640px) 176px, 150px" className={card.reversed ? styles.reversed : undefined} />
+              </div>
+              <figcaption>
+                <span lang="zh-CN">{card.nameCn}</span>
+                <span lang="en">{card.name}</span>
+                <small>{card.reversed ? "逆位 / Reversed" : "正位 / Upright"}</small>
+              </figcaption>
+            </>}
+          </figure>
+          <div className={styles.explanation}>
+            <h3 id={`reading-${key}`}>{label.zh} / {label.en}</h3>
+            {sections?.[key] ? <BilingualText text={sections[key]} /> : <ReadingSkeleton />}
+          </div>
+        </section>;
+      })}
+
+      <section className={styles.summary} aria-labelledby="tarot-synthesis">
+        <h3 id="tarot-synthesis">综合分析 / Synthesis</h3>
+        {sections ? <BilingualText text={sections.synthesis} /> : <ReadingSkeleton />}
+      </section>
+      <section className={styles.summary} aria-labelledby="tarot-advice">
+        <h3 id="tarot-advice">建议 / Advice</h3>
+        {sections ? <ol className={styles.advice}>{sections.advice.map((text, index) =>
+          <li key={index}><BilingualText text={text} /></li>)}</ol> : <ReadingSkeleton />}
+      </section>
+    </> : <div className={styles.fallback} role={reading ? "status" : undefined}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {reading || "翻开所有牌后显示解读。 / Your reading appears after all cards are revealed."}
+      </ReactMarkdown>
+    </div>}
+  </div>;
 }

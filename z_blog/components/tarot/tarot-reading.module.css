@@ -1,0 +1,37 @@
+.panel { color: var(--text-soft); min-width: 0; }
+.header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.header h2 { font-size: 24px; font-weight: 500; line-height: 1.4; }
+.header > span { color: var(--primary); font-size: 13px; }
+.summary { padding: 24px 0; }
+.summary h3, .explanation h3 { color: var(--heading); font-size: 20px; line-height: 1.5; font-weight: 400; margin-bottom: 16px; }
+.cardRow { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 24px; padding: 32px 0; border-block: 1px solid var(--border); }
+.cardRow + .cardRow { border-top: 0; }
+.cardFigure { width: 150px; margin: 0 auto; }
+.cardImage { position: relative; width: 100%; aspect-ratio: 625 / 1024; }
+.cardImage img { object-fit: contain; border-radius: 6px; }
+.reversed { transform: rotate(180deg); }
+.cardFigure figcaption { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 14px; text-align: center; overflow-wrap: anywhere; }
+.cardFigure figcaption span { font-size: 15px; line-height: 1.5; }
+.cardFigure figcaption span[lang="en"], .cardFigure small { color: var(--text-soft); font-size: 12px; }
+.explanation { min-width: 0; }
+.bilingual { display: grid; gap: 18px; font-size: 15px; line-height: 1.9; overflow-wrap: anywhere; }
+.bilingual [lang="en"] { color: var(--text-soft); }
+.bilingual p + p { margin-top: 12px; }
+.bilingual ul, .bilingual ol { padding-left: 22px; }
+.bilingual ul { list-style: disc; }
+.bilingual ol { list-style: decimal; }
+.bilingual a, .fallback a { color: var(--primary); text-decoration: underline; }
+.advice { display: grid; gap: 22px; padding-left: 22px; list-style: decimal; }
+.advice > li { padding-left: 6px; }
+.fallback { padding: 24px 0; line-height: 1.9; overflow-wrap: anywhere; }
+.skeleton { display: grid; gap: 12px; width: 100%; padding-top: 4px; }
+.skeleton span { display: block; height: 12px; border-radius: 4px; background: var(--card-muted); animation: readingPulse 1.5s ease-in-out infinite; }
+.skeleton span:nth-child(2) { width: 94%; }
+.skeleton span:nth-child(3) { width: 86%; }
+.skeleton span:last-child { width: 65%; }
+@keyframes readingPulse { 50% { opacity: .4; } }
+@media (min-width: 640px) {
+  .cardRow { grid-template-columns: 176px minmax(0, 1fr); gap: 36px; padding: 36px 0; }
+  .cardFigure { width: 176px; margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .skeleton span { animation: none; } }

@@ -14,13 +14,12 @@ import { catalogCards, cardImagePath, cardMeaning, cardSlug } from '../lib/card-
 import { prepareThothDeck, readingDignities, type DrawnThothCard } from '../lib/reading-engine';
 import { useHandbookLanguage } from './handbook-shell';
 import styles from './thoth-reading.module.css';
-import { SpreadCardCarousel } from './spread-card-carousel';
 
 type Session = {stage:'idle'|'shuffling'|'selecting'|'results';deck:DrawnThothCard[];picked:number[];complete:boolean};
 const emptySession:Session = {stage:'idle',deck:[],picked:[],complete:false};
 const thothCardBack = '/Thoth_Tarot/thoth_back.png';
 
-export function ThothReadings({spreadId,previewCards={}}:{spreadId?:string;previewCards?:Record<string,string[]>}) {
+export function ThothReadings({spreadId}:{spreadId?:string}) {
   const {language,zh,text} = useHandbookLanguage();
   const {setLanguage} = usePreferences();
   const router=useRouter();
@@ -78,7 +77,6 @@ export function ThothReadings({spreadId,previewCards={}}:{spreadId?:string;previ
       {!spread ? <>
         <div className="grid gap-5 md:grid-cols-2">
           {readingSpreads.map(item=><Card key={item.id} className="flex min-w-0 flex-col overflow-hidden">
-            <SpreadCardCarousel cardIds={previewCards[item.id]??[]} language={language} label={`${item.name[language]} · ${item.positions.length} ${text('张牌预览','card preview')}`} />
             <CardContent className="flex flex-1 flex-col">
               <div className="mb-3"><Badge variant="secondary">{item.positions.length} {text('张牌','cards')}</Badge></div>
               <h2 className="text-xl font-semibold">{item.name[language]}</h2>

@@ -4,17 +4,17 @@ import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "cursor-pointer inline-flex items-center justify-center rounded-[var(--radius-md)] font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50",
+  "cursor-pointer inline-flex items-center justify-center rounded-[var(--radius-md)] font-bold transition-all duration-200 disabled:pointer-events-none disabled:opacity-45",
   {
     variants: {
 
       variant: {
 
         primary:
-          "bg-[var(--primary)] text-[var(--text-inverse)] shadow-[var(--shadow-sm)] hover:bg-[var(--primary-hover)]",
+          "bg-[var(--primary)] text-[var(--text-inverse)] hover:opacity-[.88] hover:shadow-[0_0_18px_var(--button-glow)]",
 
         secondary:
-          "border border-[var(--border)] bg-[var(--card)] text-[var(--text)] hover:bg-[var(--bg-soft)]",
+          "border border-[var(--primary)] bg-transparent text-[var(--primary)] hover:bg-[var(--primary-soft)] hover:shadow-[0_0_12px_var(--button-glow)]",
 
         ghost:
           "bg-transparent text-[var(--text-soft)] hover:bg-[var(--bg-soft)] hover:text-[var(--text)]",
@@ -23,7 +23,7 @@ export const buttonVariants = cva(
           "bg-[var(--danger)] text-[var(--text-inverse)] hover:opacity-90",
 
         hero:
-          "border border-[color:var(--text-white)]/35 bg-[color:var(--card)]/20 text-[var(--text-white)] shadow-[var(--shadow-sm)] backdrop-blur-md hover:bg-[color:var(--card)]/28 hover:scale-[1.02]",
+          "border border-[var(--primary)] bg-[var(--primary)] text-[var(--text-inverse)] hover:opacity-[.88] hover:shadow-[0_0_18px_var(--button-glow)]",
 
       },
 

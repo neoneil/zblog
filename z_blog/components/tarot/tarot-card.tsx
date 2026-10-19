@@ -7,6 +7,7 @@ import type { DrawnTarotCard } from "@/types/tarot";
 import { experienceCardBack } from "./tarot-deck";
 import TarotSparkBurst from "./tarot-spark-burst";
 import styles from "./tarot-experience.module.css";
+import { getTarotPositionLabel } from "@/lib/tarot/reading-modes";
 
 type TarotCardProps = {
   card: DrawnTarotCard;
@@ -18,8 +19,6 @@ type TarotCardProps = {
   onFlipped: (id: string) => void;
   layoutId?: string;
 };
-
-const positionLabels = { past: "过去", present: "现在", future: "未来" };
 
 export default function TarotCard({ card, index, revealed, gathering, canFlip, onFlip, onFlipped, layoutId }: TarotCardProps) {
   const reducedMotion = useReducedMotion();
@@ -34,7 +33,7 @@ export default function TarotCard({ card, index, revealed, gathering, canFlip, o
     {revealed && <TarotSparkBurst key="flip" seed={index + 200} />}
     <motion.button type="button" className={styles.flipper}
       disabled={!canFlip || revealed}
-      aria-label={faceVisible ? card.nameCn : `翻开${positionLabels[card.position]}的牌`}
+      aria-label={faceVisible ? card.nameCn : `翻开${getTarotPositionLabel(card.position)}的牌`}
       onClick={() => onFlip(card.id)}
       animate={{ rotateY: revealed ? 180 : 0, rotateX: revealed ? [0, -12, 0] : 0, z: revealed ? [0, 45, 0] : 0 }}
       transition={{ duration: reducedMotion ? 0 : 2.5, ease: [0.45, 0, 0.25, 1] }}
