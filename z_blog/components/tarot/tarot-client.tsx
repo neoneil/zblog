@@ -1,7 +1,10 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import TarotAtmosphere from "./tarot-atmosphere";
+import styles from "./tarot-experience.module.css";
 import TarotCard from "@/components/tarot/tarot-card";
 import TarotDeck from "@/components/tarot/tarot-deck";
 import TarotReadingPanel from "@/components/tarot/tarot-reading-panel";
@@ -10,13 +13,7 @@ import { tarotDeck as fullTarotDeck } from "@/lib/tarot/full-deck";
 import { shuffleCards } from "@/lib/tarot/shuffle";
 import type { DrawnTarotCard, TarotCard as TarotCardType } from "@/types/tarot";
 
-type TarotStage =
-  | "idle"
-  | "shuffling"
-  | "selecting"
-  | "revealing"
-  | "reading"
-  | "done";
+import type { TarotStage } from "./tarot-stage";
 
 const positionOrder: DrawnTarotCard["position"][] = ["past", "present", "future"];
 
@@ -31,6 +28,11 @@ type TarotClientProps = {
 };
 
 export default function TarotClient({ accessStatus }: TarotClientProps) {
+  const reducedMotion = useReducedMotion();
+  const requestedFlips = useRef(new Set<string>());
+  const completedFlips = useRef(new Set<string>());
+  const readingRequested = useRef(false);
+  const [revealedIds, setRevealedIds] = useState<string[]>([]);
   const cardsSource = useMemo(() => fullTarotDeck, []);
   const [dailyLimitReached, setDailyLimitReached] = useState(
     !accessStatus.isAdmin && !accessStatus.isPaid && accessStatus.remainingToday <= 0,
@@ -89,6 +91,10 @@ export default function TarotClient({ accessStatus }: TarotClientProps) {
     if (dailyLimitReached) return;
 
     const nextTableCards = shuffleCards(cardsSource).slice(0, 50);
+    requestedFlips.current.clear();
+    completedFlips.current.clear();
+    readingRequested.current = false;
+    setRevealedIds([]);
     setTableCards(nextTableCards);
     setSelectedCards([]);
     setReading("");
@@ -102,6 +108,10 @@ export default function TarotClient({ accessStatus }: TarotClientProps) {
   }
 
   function handleReset() {
+    requestedFlips.current.clear();
+    completedFlips.current.clear();
+    readingRequested.current = false;
+    setRevealedIds([]);
     setQuestion("");
     setTableCards([]);
     setSelectedCards([]);
@@ -125,11 +135,26 @@ export default function TarotClient({ accessStatus }: TarotClientProps) {
     setSelectedCards(nextSelected);
 
     if (nextSelected.length === 3) {
-      setStage("revealing");
+      setStage("gathering");
+    }
+  }
 
-      window.setTimeout(() => {
-        void generateReading(nextSelected);
-      }, 900);
+  function handleFlipCard(id: string) {
+    if (stage !== "ready" && stage !== "revealing") return;
+    if (!selectedIds.includes(id) || requestedFlips.current.has(id)) return;
+    requestedFlips.current.add(id);
+    setRevealedIds([...requestedFlips.current]);
+    setStage("revealing");
+  }
+
+  function handleFlipComplete(id: string) {
+    if (stage !== "ready" && stage !== "revealing") return;
+    if (!requestedFlips.current.has(id) || !selectedIds.includes(id)) return;
+    completedFlips.current.add(id);
+    // Start the request only after every card's actual 3D animation finishes.
+    if (completedFlips.current.size === 3 && !readingRequested.current) {
+      readingRequested.current = true;
+      void generateReading(selectedCards);
     }
   }
 
@@ -140,8 +165,10 @@ export default function TarotClient({ accessStatus }: TarotClientProps) {
         ? "停止洗牌"
         : stage === "selecting"
           ? `请选择三张牌（${selectedCards.length}/3）`
-          : stage === "revealing"
-            ? "正在翻牌..."
+          : stage === "gathering"
+            ? "三张牌正在归位…"
+          : stage === "ready" || stage === "revealing"
+            ? "点击卡牌翻面"
             : stage === "reading"
               ? "正在解读..."
               : "再次抽牌";
@@ -149,6 +176,8 @@ export default function TarotClient({ accessStatus }: TarotClientProps) {
   const actionDisabled =
     dailyLimitReached ||
     stage === "selecting" ||
+    stage === "gathering" ||
+    stage === "ready" ||
     stage === "revealing" ||
     stage === "reading";
 
@@ -160,425 +189,85 @@ export default function TarotClient({ accessStatus }: TarotClientProps) {
         ? "今日免费次数已用完"
         : "普通用户每日可免费使用 1 次";
 
+  const collected = stage === "gathering" || stage === "ready" || stage === "revealing" || stage === "reading" || stage === "done";
+  const canFlip = stage === "ready" || stage === "revealing";
+
   return (
-    <div className="min-h-screen bg-[var(--bg-soft)] text-[var(--text)]">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <p className="mb-6 text-sm uppercase tracking-[0.35em] text-[var(--success)]">
-          {accessLabel}
-        </p>
-        <div className="mb-8 max-w-3xl">
-          <p className="mb-2 text-sm uppercase tracking-[0.35em] text-[var(--primary)]">
-            塔罗解读
-          </p>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            三张塔罗牌解读 
-          </h1>
-          <p className="mt-4 text-base leading-7 text-[var(--text-soft)]">
-            先输入你的问题，洗牌、停止、选出三张牌，再由 AI 为你生成一份温和而清晰的中文解读。
-          </p>
-        </div>
+    <main className={styles.experience} data-stage={stage}>
+      <TarotAtmosphere />
+      <LayoutGroup id="tarot-experience">
+        <div className={styles.content}>
+          <header className={styles.heading}>
+            <p className={styles.eyebrow}>三张牌 · 过去 / 现在 / 未来</p>
+            <div className={styles.sigil} aria-hidden="true">☽ ✧ ☾</div>
+            <h1>{stage === "idle" ? <>向塔罗<br />轻声提问</> : collected ? "你的三张牌" : "想着你的问题"}</h1>
+            <p className={styles.access}>{accessLabel}</p>
+          </header>
 
-        <div className="space-y-6">
-          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur">
-            <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-end">
-              <div>
-                <label className="mb-3 block text-sm font-medium text-[var(--text)]">
-                  你的问题
-                </label>
-
-                <textarea
-                  value={question}
+          <section className={styles.table} aria-label="塔罗抽牌">
+            {stage === "idle" ? (
+              <div className={styles.questionForm}>
+                <div className={styles.moons} aria-hidden="true">☽ ☽ ● ☾ ☾</div>
+                <label className={styles.srOnly} htmlFor="tarot-question">你的问题</label>
+                <textarea id="tarot-question" value={question}
                   onChange={(e) => setQuestion(e.target.value)}
-                  placeholder="例如：我接下来三个月的感情发展会怎样？"
-                  className="min-h-30 w-full rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] px-4 py-3 text-[var(--text)] outline-none placeholder:text-[var(--text-faint)] focus:border-[var(--primary)]"
-                />
+                  placeholder="在这里写下你的问题……" className={styles.question} />
               </div>
-
-              <div className="flex flex-wrap gap-3 xl:justify-end">
-                <button
-                  onClick={
-                    stage === "idle" || stage === "done"
-                      ? handleStartShuffle
-                      : handleStopShuffle
-                  }
-                  disabled={actionDisabled}
-                  className="rounded-full bg-[var(--card)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:scale-[1.02] hover:bg-[var(--primary-soft)] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {actionLabel}
-                </button>
-
-                <button
-                  onClick={handleReset}
-                  className="rounded-full border border-[var(--border)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card-muted)]"
-                >
-                  重置
-                </button>
+            ) : (
+              <div className={styles.counter} aria-live="polite">
+                <p>{question || "静心，感受此刻的直觉"}</p>
+                {!collected && <div className={styles.counterLine}>
+                  <span>还需选择</span><strong>{3 - selectedCards.length}</strong><span>张牌</span>
+                </div>}
               </div>
+            )}
+
+            <div className={styles.actions}>
+              <button type="button"
+                onClick={stage === "idle" || stage === "done" ? handleStartShuffle : handleStopShuffle}
+                disabled={actionDisabled} className={styles.action}>
+                <span>{actionLabel}</span>
+              </button>
+              {stage !== "idle" && <button type="button" onClick={handleReset} disabled={loading}
+                className={styles.reset} aria-label="重置抽牌" title="重置抽牌">↺</button>}
             </div>
+            {dailyLimitReached && <p className={styles.notice}>今日免费次数已用完，开通 Tarot AI 时间包后可继续使用。</p>}
+            <p className={styles.stageStatus} role="status">
+              {stage === "shuffling" && "静心片刻，准备好时停止洗牌"}
+              {stage === "selecting" && "凭直觉，依次选择属于你的三张牌"}
+              {stage === "gathering" && "三张牌正在汇聚"}
+              {stage === "ready" && "翻开一张牌"}
+              {stage === "revealing" && "点击尚未翻开的牌，三张牌全部揭晓后开始解读"}
+              {stage === "reading" && "正在为你解读牌中的讯息"}
+              {stage === "done" && "你的解读已生成"}
+            </p>
 
-            <div className="mt-4 text-sm text-[var(--text-soft)]">
-              {stage === "idle" && "输入问题后，点击“开始洗牌”。"}
-              {dailyLimitReached && "今日免费 AI 使用次数已用完。购买 Tarot AI 时间包后可无限使用。"}
-              {stage === "shuffling" && "正在洗牌中……准备好时点击“停止洗牌”。"}
-              {stage === "selecting" &&
-                `请从上方牌阵中依次选出三张牌。当前已选择 ${selectedCards.length} 张。`}
-              {stage === "revealing" && "三张牌已就位，正在翻牌……"}
-              {stage === "reading" && "AI 正在根据你抽到的牌生成解读……"}
-              {stage === "done" && "解读已生成，你也可以再次抽牌。"}
+            <div className={styles.cardScene} data-collected={collected} data-idle={stage === "idle"}>
+              <TarotDeck cards={tableCards} stage={stage} selectedIds={selectedIds} onSelectCard={handleSelectCard} />
+            {selectedCards.length > 0 && <motion.div layout className={styles.selected} aria-label="已选塔罗牌"
+              animate={stage === "gathering" && !reducedMotion
+                ? { rotate: [0, -18, 342, 360], scale: [0.76, 0.65, 0.76, 1] }
+                : { rotate: collected ? 360 : 0, scale: 1 }}
+              transition={{ duration: reducedMotion ? 0 : stage === "gathering" ? 3.6 : 0.7, ease: "easeInOut", layout: { duration: reducedMotion ? 0 : 1 } }}
+              onAnimationComplete={() => { if (stage === "gathering") setStage("ready"); }}>
+              {positionOrder.map((position, index) => {
+                const card = selectedCards.find((item) => item.position === position);
+                return <div key={position} className={styles.selectedSlot}>
+                  <p className={styles.position}>{positionLabel[position]}</p>
+                  {card ? <TarotCard key={card.id} card={card} index={index} revealed={revealedIds.includes(card.id)}
+                    gathering={stage === "gathering"} canFlip={canFlip}
+                    onFlip={handleFlipCard} onFlipped={handleFlipComplete}
+                    layoutId={`tarot-card-${card.id}`} /> : null}
+                </div>;
+              })}
+            </motion.div>}
             </div>
           </section>
-
-          <section className="rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-4 backdrop-blur sm:p-6">
-            <div className="mb-4 flex items-center justify-between gap-3">
-              <h2 className="text-xl font-semibold">抽牌区</h2>
-              <span className="text-sm text-[var(--text-soft)]">
-                {stage === "shuffling"
-                  ? "正在洗牌"
-                  : stage === "selecting"
-                    ? "点击选择三张牌"
-                    : stage === "revealing" || stage === "reading" || stage === "done"
-                      ? "已完成选牌"
-                      : "等待开始"}
-              </span>
-            </div>
-
-            <TarotDeck
-              cards={tableCards}
-              stage={stage}
-              selectedIds={selectedIds}
-              onSelectCard={handleSelectCard}
-            />
-          </section>
-
-          <section className="grid grid-cols-1 gap-6 2xl:grid-cols-[minmax(0,1fr)_380px]">
-            <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur">
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="text-xl font-semibold">你的三张牌</h2>
-                <span className="text-sm text-[var(--text-soft)]">过去 / 现在 / 未来</span>
-              </div>
-
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                {positionOrder.map((position, index) => {
-                  const card = selectedCards.find((item) => item.position === position);
-                  const revealed =
-                    stage === "revealing" ||
-                    stage === "reading" ||
-                    stage === "done";
-
-                  return (
-                    <div
-                      key={position}
-                      className="rounded-3xl border border-[var(--border)] bg-[var(--card-muted)] p-4"
-                    >
-                      <div className="mb-3 text-center text-sm font-medium text-[var(--text-soft)]">
-                        {positionLabel[position]}
-                      </div>
-
-                      <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card-soft)]">
-                        {card ? (
-                          <TarotCard
-                            card={card}
-                            index={index}
-                            revealed={revealed}
-                            layoutId={`tarot-card-${card.id}`}
-                          />
-                        ) : (
-                          <div className="text-center text-sm text-[var(--text-faint)]">
-                            等待放入卡牌
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
+          {(loading || reading) && <section className={styles.reading} aria-label="塔罗解读结果" aria-live="polite">
             <TarotReadingPanel reading={reading} loading={loading} />
-          </section>
+          </section>}
         </div>
-      </div>
-    </div>
+      </LayoutGroup>
+    </main>
   );
 }
-
-
-// "use client"; 原版
-
-// import { useMemo, useState } from "react";
-// import TarotCard from "@/components/tarot/tarot-card";
-// import TarotDeck from "@/components/tarot/tarot-deck";
-// import TarotReadingPanel from "@/components/tarot/tarot-reading-panel";
-// import { tarotDeck as fullTarotDeck } from "@/lib/tarot/full-deck";
-// import type { DrawnTarotCard, TarotCard as TarotCardType } from "@/types/tarot";
-
-// type TarotStage =
-//   | "idle"
-//   | "shuffling"
-//   | "selecting"
-//   | "revealing"
-//   | "reading"
-//   | "done";
-
-// const positionOrder: DrawnTarotCard["position"][] = ["past", "present", "future"];
-
-// const positionLabel: Record<DrawnTarotCard["position"], string> = {
-//   past: "过去",
-//   present: "现在",
-//   future: "未来",
-// };
-
-// function shuffleCards<T>(items: T[]): T[] {
-//   const next = [...items];
-//   for (let i = next.length - 1; i > 0; i -= 1) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     [next[i], next[j]] = [next[j], next[i]];
-//   }
-//   return next;
-// }
-
-// export default function TarotClient() {
-//   const cardsSource = useMemo(() => fullTarotDeck, []);
-//   const [question, setQuestion] = useState("");
-//   const [stage, setStage] = useState<TarotStage>("idle");
-//   const [tableCards, setTableCards] = useState<TarotCardType[]>([]);
-//   const [selectedCards, setSelectedCards] = useState<DrawnTarotCard[]>([]);
-//   const [reading, setReading] = useState("");
-//   const [loading, setLoading] = useState(false);
-
-//   const selectedIds = selectedCards.map((card) => card.id);
-
-//   async function generateReading(cards: DrawnTarotCard[]) {
-//     setLoading(true);
-//     setStage("reading");
-
-//     try {
-//       const res = await fetch("/api/tarot-reading", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           question,
-//           cards,
-//         }),
-//       });
-
-//       const data = await res.json();
-
-//       if (!res.ok) {
-//         throw new Error(data?.error || "Failed to generate reading.");
-//       }
-
-//       setReading(data.reading ?? "");
-//       setStage("done");
-//     } catch (error) {
-//       console.error(error);
-//       setReading(
-//         error instanceof Error
-//           ? `解读生成失败：${error.message}`
-//           : "解读生成失败，请稍后再试。"
-//       );
-//       setStage("done");
-//     } finally {
-//       setLoading(false);
-//     }
-//   }
-
-//   function handleStartShuffle() {
-//     const nextTableCards = shuffleCards(cardsSource).slice(0, 12);
-//     setTableCards(nextTableCards);
-//     setSelectedCards([]);
-//     setReading("");
-//     setLoading(false);
-//     setStage("shuffling");
-//   }
-
-//   function handleStopShuffle() {
-//     if (stage !== "shuffling") return;
-//     setStage("selecting");
-//   }
-
-//   function handleReset() {
-//     setQuestion("");
-//     setTableCards([]);
-//     setSelectedCards([]);
-//     setReading("");
-//     setLoading(false);
-//     setStage("idle");
-//   }
-
-//   function handleSelectCard(card: TarotCardType) {
-//     if (stage !== "selecting") return;
-//     if (selectedIds.includes(card.id)) return;
-//     if (selectedCards.length >= 3) return;
-
-//     const nextCard: DrawnTarotCard = {
-//       ...card,
-//       position: positionOrder[selectedCards.length],
-//       reversed: Math.random() < 0.5,
-//     };
-
-//     const nextSelected = [...selectedCards, nextCard];
-//     setSelectedCards(nextSelected);
-
-//     if (nextSelected.length === 3) {
-//       setStage("revealing");
-
-//       window.setTimeout(() => {
-//         void generateReading(nextSelected);
-//       }, 900);
-//     }
-//   }
-
-//   const actionLabel =
-//     stage === "idle"
-//       ? "开始洗牌"
-//       : stage === "shuffling"
-//         ? "停止洗牌"
-//         : stage === "selecting"
-//           ? `请选择三张牌（${selectedCards.length}/3）`
-//           : stage === "revealing"
-//             ? "正在翻牌..."
-//             : stage === "reading"
-//               ? "正在解读..."
-//               : "再次抽牌";
-
-//   const actionDisabled =
-//     stage === "selecting" || stage === "revealing" || stage === "reading";
-
-//   return (
-//     <div className="min-h-screen bg-[var(--bg-soft)] text-[var(--text)]">
-//       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-//         <div className="mb-8 max-w-3xl">
-//           <p className="mb-2 text-sm uppercase tracking-[0.35em] text-[var(--primary)]">
-//             Tarot Reading
-//           </p>
-//           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-//             三张塔罗牌解读
-//           </h1>
-//           <p className="mt-4 text-base leading-7 text-[var(--text-soft)]">
-//             先输入你的问题，洗牌、停止、选出三张牌，再由 AI 为你生成一份温和而清晰的中文解读。
-//           </p>
-//         </div>
-
-//         <div className="grid grid-cols-1 gap-8 xl:grid-cols-[1.05fr_1.2fr]">
-//           <section className="space-y-6">
-//             <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur">
-//               <label className="mb-3 block text-sm font-medium text-[var(--text)]">
-//                 你的问题
-//               </label>
-
-//               <textarea
-//                 value={question}
-//                 onChange={(e) => setQuestion(e.target.value)}
-//                 placeholder="例如：我接下来三个月的感情发展会怎样？"
-//                 className="min-h-30 w-full rounded-2xl border border-[var(--border)] bg-[var(--card-muted)] px-4 py-3 text-[var(--text)] outline-none placeholder:text-[var(--text-faint)] focus:border-[var(--primary)]"
-//               />
-
-//               <div className="mt-4 flex flex-wrap gap-3">
-//                 <button
-//                   onClick={
-//                     stage === "idle" || stage === "done"
-//                       ? handleStartShuffle
-//                       : handleStopShuffle
-//                   }
-//                   disabled={actionDisabled}
-//                   className="rounded-full bg-[var(--card)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:scale-[1.02] hover:bg-[var(--primary-soft)] disabled:cursor-not-allowed disabled:opacity-60"
-//                 >
-//                   {actionLabel}
-//                 </button>
-
-//                 <button
-//                   onClick={handleReset}
-//                   className="rounded-full border border-[var(--border)] px-5 py-3 text-sm font-semibold text-[var(--text)] transition hover:bg-[var(--card-muted)]"
-//                 >
-//                   重置
-//                 </button>
-//               </div>
-
-//               <div className="mt-4 text-sm text-[var(--text-soft)]">
-//                 {stage === "idle" && "输入问题后，点击“开始洗牌”。"}
-//                 {stage === "shuffling" && "正在洗牌中……准备好时点击“停止洗牌”。"}
-//                 {stage === "selecting" &&
-//                   `请从上方牌阵中依次选出三张牌。当前已选择 ${selectedCards.length} 张。`}
-//                 {stage === "revealing" && "三张牌已就位，正在翻牌……"}
-//                 {stage === "reading" && "AI 正在根据你抽到的牌生成解读……"}
-//                 {stage === "done" && "解读已生成，你也可以再次抽牌。"}
-//               </div>
-//             </div>
-
-//             <TarotReadingPanel reading={reading} loading={loading} />
-//           </section>
-
-//           <section className="space-y-6">
-//             <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur">
-//               <div className="mb-4 flex items-center justify-between gap-3">
-//                 <h2 className="text-xl font-semibold">抽牌区</h2>
-//                 <span className="text-sm text-[var(--text-soft)]">
-//                   {stage === "shuffling"
-//                     ? "正在洗牌"
-//                     : stage === "selecting"
-//                       ? "点击选择三张牌"
-//                       : stage === "revealing" || stage === "reading" || stage === "done"
-//                         ? "已完成选牌"
-//                         : "等待开始"}
-//                 </span>
-//               </div>
-
-//               <TarotDeck
-//                 cards={tableCards}
-//                 stage={stage}
-//                 selectedIds={selectedIds}
-//                 onSelectCard={handleSelectCard}
-//               />
-//             </div>
-
-//             <div className="rounded-[28px] border border-[var(--border)] bg-[var(--card-soft)] p-6 backdrop-blur">
-//               <div className="mb-4 flex items-center justify-between">
-//                 <h2 className="text-xl font-semibold">你的三张牌</h2>
-//                 <span className="text-sm text-[var(--text-soft)]">过去 / 现在 / 未来</span>
-//               </div>
-
-//               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-//                 {positionOrder.map((position, index) => {
-//                   const card = selectedCards.find((item) => item.position === position);
-//                   const revealed =
-//                     stage === "revealing" ||
-//                     stage === "reading" ||
-//                     stage === "done";
-
-//                   return (
-//                     <div
-//                       key={position}
-//                       className="rounded-3xl border border-[var(--border)] bg-[var(--card-muted)] p-4"
-//                     >
-//                       <div className="mb-3 text-center text-sm font-medium text-[var(--text-soft)]">
-//                         {positionLabel[position]}
-//                       </div>
-
-//                       <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card-soft)]">
-//                         {card ? (
-//                           <TarotCard
-//                             card={card}
-//                             index={index}
-//                             revealed={revealed}
-//                             layoutId={`tarot-card-${card.id}`}
-//                           />
-//                         ) : (
-//                           <div className="text-center text-sm text-[var(--text-faint)]">
-//                             等待放入卡牌
-//                           </div>
-//                         )}
-//                       </div>
-//                     </div>
-//                   );
-//                 })}
-//               </div>
-//             </div>
-//           </section>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

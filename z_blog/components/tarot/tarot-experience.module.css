@@ -1,0 +1,139 @@
+.experience {
+  --tarot-bg: #1e1131;
+  --tarot-ink: #e6f3e8;
+  --tarot-muted: #b8a8c8;
+  --tarot-gold: #d2a17d;
+  --tarot-line: #a689d24d;
+  --tarot-panel: #180d28b8;
+  --tarot-shine: #e6f3e855;
+  --tarot-shadow: #10091c99;
+  --tarot-glow: #7b47c9;
+  --tarot-particle: #ffe69a;
+  --tarot-particle-halo: #ffc340;
+  --tarot-particle-core: #fffdeb;
+  --bg: var(--tarot-bg);
+  --text: var(--tarot-ink);
+  --text-soft: var(--tarot-muted);
+  --primary: var(--tarot-gold);
+  --border: var(--tarot-line);
+  --card-soft: var(--tarot-panel);
+  --card-muted: var(--tarot-line);
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: clip;
+  background: var(--tarot-bg);
+  color: var(--tarot-ink);
+  letter-spacing: 0;
+}
+.content { position: relative; z-index: 1; max-width: 1440px; margin: auto; padding: 52px 0 64px; }
+.heading { position: relative; z-index: 2; text-align: center; padding: 0 20px; }
+.eyebrow { color: var(--tarot-muted); font-size: 12px; }
+.sigil { color: var(--tarot-gold); margin: 22px 0 14px; font: 28px Georgia, serif; }
+.heading h1 { margin: 0; font-family: "Noto Serif SC", "Songti SC", SimSun, Georgia, serif; font-size: 42px; line-height: 1.4; font-weight: 400; }
+.access { font-size: 12px; color: var(--tarot-muted); margin-top: 18px; }
+.experience:not([data-stage="idle"]) .heading h1 { font-size: 20px; color: var(--tarot-muted); }
+.experience:not([data-stage="idle"]) .sigil { margin: 12px 0; }
+.experience:not([data-stage="idle"]) .content { padding-top: 18px; }
+.experience:not([data-stage="idle"]) .eyebrow,
+.experience:not([data-stage="idle"]) .sigil { display: none; }
+.experience:not([data-stage="idle"]) .access { margin-top: 6px; font-size: 11px; }
+.experience:not([data-stage="idle"]) .table { padding-top: 8px; min-height: 0; }
+.experience:not([data-stage="idle"]) .counter > p { margin-bottom: 8px; font-size: 12px; line-height: 1.5; }
+.experience:not([data-stage="idle"]) .counterLine strong { width: 48px; height: 48px; font-size: 28px; }
+.experience:not([data-stage="idle"]) .actions { min-height: 52px; margin-top: 12px; }
+.experience:not([data-stage="idle"]) .stageStatus { min-height: 18px; margin: 8px 16px; font-size: 12px; }
+.experience:not([data-stage="idle"]) .wheel { margin-top: 12px; }
+.table { position: relative; padding-top: 18px; min-height: 580px; }
+.questionForm { position: relative; z-index: 3; width: min(760px, calc(100% - 32px)); margin: 0 auto; }
+.moons { color: var(--tarot-gold); text-align: center; font: 18px Georgia, serif; margin: 16px 0; }
+.question { display: block; width: 100%; min-height: 96px; resize: vertical; border: 1px solid var(--tarot-line); border-radius: 8px; outline: 8px solid var(--tarot-panel); background: var(--tarot-panel); color: var(--tarot-ink); padding: 26px 24px; text-align: center; font-family: "Songti SC", SimSun, Georgia, serif; font-size: 20px; line-height: 1.5; transition: border-color .3s, box-shadow .3s; }
+.question::placeholder { color: var(--tarot-muted); }
+.question:focus { border-color: var(--tarot-gold); box-shadow: 0 0 26px var(--tarot-line); }
+.actions { position: relative; z-index: 3; display: flex; gap: 16px; align-items: center; justify-content: center; min-height: 72px; margin-top: 28px; padding: 0 16px; }
+.action { position: relative; min-width: 190px; min-height: 48px; max-width: 100%; padding: 12px 24px; border: 1px solid var(--tarot-ink); border-radius: 28px; color: var(--tarot-ink); background: transparent; cursor: pointer; transition: box-shadow .3s, background .3s; }
+.action::after { content: ""; position: absolute; inset: -5px 3px; border: 1px solid var(--tarot-line); border-radius: 8px; pointer-events: none; }
+.action:hover:not(:disabled) { box-shadow: 0 0 24px var(--tarot-line); background: var(--tarot-line); }
+.action:disabled { opacity: .6; cursor: default; }
+.reset { width: 44px; height: 44px; border: 1px solid var(--tarot-line); border-radius: 50%; color: var(--tarot-ink); font-size: 26px; background: transparent; cursor: pointer; }
+.action:focus-visible, .reset:focus-visible, .deckCard:focus-visible { outline: 2px solid var(--tarot-gold); outline-offset: 5px; }
+.stageStatus, .notice { position: relative; z-index: 2; min-height: 24px; margin: 14px 20px; text-align: center; font-size: 13px; color: var(--tarot-muted); }
+.notice { color: var(--tarot-gold); }
+.counter { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
+.counter > p { max-width: 700px; margin: 0 auto 18px; color: var(--tarot-muted); overflow-wrap: anywhere; font-size: 14px; line-height: 1.8; }
+.counterLine { display: flex; align-items: center; justify-content: center; gap: 20px; font-family: "Songti SC", SimSun, Georgia, serif; font-size: 22px; }
+.counterLine strong { display: grid; place-items: center; width: 64px; height: 64px; border: 1px solid var(--tarot-gold); border-radius: 50%; font-size: 32px; font-weight: 400; }
+.deckViewport { position: relative; z-index: 1; width: 100%; height: 390px; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--tarot-line) transparent; }
+.wheel { position: relative; width: 960px; height: 960px; margin: 36px auto 0; transform-origin: center; }
+.axis { position: absolute; top: 0; left: 50%; width: 112px; height: 480px; margin-left: -56px; transform-origin: center bottom; pointer-events: none; }
+.deckCard { position: relative; display: block; width: 100%; aspect-ratio: 625 / 1024; border: 1px solid var(--tarot-line); border-radius: 7px; overflow: hidden; box-shadow: 0 0 6px var(--tarot-shadow), 0 8px 25px var(--tarot-shadow); pointer-events: auto; cursor: pointer; background: var(--tarot-bg); }
+.deckCard:disabled { cursor: default; }
+.cardImage { object-fit: cover; }
+.cardGlare { position: absolute; inset: 0; opacity: 0; background: var(--tarot-shine); transition: opacity .3s; pointer-events: none; }
+.deckCard:hover:not(:disabled) .cardGlare { opacity: .3; }
+.deckViewport[data-idle="true"] { margin-top: -60px; opacity: .5; filter: blur(3px); pointer-events: none; }
+.deckViewport[data-finished="true"] { height: 0; transition: height .8s; }
+.cardScene { position: relative; min-height: 440px; }
+.cardScene[data-idle="true"] { min-height: 390px; }
+.selected { position: absolute; top: 190px; left: 0; right: 0; z-index: 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; width: min(680px, calc(100% - 40px)); margin: 0 auto; pointer-events: none; }
+.cardScene[data-collected="true"] .selected { top: 45px; }
+.cardScene[data-collected="true"] .selectedSlot:first-child { transform: rotate(-9deg); }
+.cardScene[data-collected="true"] .selectedSlot:last-child { transform: rotate(9deg); }
+.cardScene[data-collected="true"] .selectedSlot:nth-child(2) { padding-top: 24px; }
+.cardScene[data-collected="false"] .position,
+.cardScene[data-collected="false"] .cardCaption { visibility: hidden; }
+.selectedSlot { transition: transform 1s ease; }
+.selectedSlot { min-width: 0; text-align: center; }
+.position { color: var(--tarot-gold); font-size: 14px; margin: 0 0 18px; }
+.selectedCard { position: relative; width: min(100%, 180px); margin: auto; perspective: 850px; }
+.flipper { position: relative; display: block; width: 100%; aspect-ratio: 625 / 1024; transform-style: preserve-3d; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; pointer-events: auto; }
+.flipper:disabled { cursor: default; pointer-events: none; }
+.flipper:focus-visible { outline: 2px solid var(--tarot-particle); outline-offset: 8px; border-radius: 6px; }
+.cardBack, .cardFace { position: absolute; inset: 0; overflow: hidden; border: 1px solid var(--tarot-line); border-radius: 6px; backface-visibility: hidden; box-shadow: 0 8px 28px var(--tarot-shadow); }
+.cardFace { transform: rotateY(180deg); }
+.cardCaption { margin-top: 16px; }
+.cardCaption h3 { font-family: "Songti SC", SimSun, Georgia, serif; font-size: 17px; font-weight: 400; overflow-wrap: anywhere; }
+.cardCaption p { color: var(--tarot-muted); font-size: 12px; margin-top: 6px; }
+.emptySlot { width: min(100%, 180px); aspect-ratio: 625 / 1024; margin: auto; display: grid; place-items: center; border: 1px solid var(--tarot-line); border-radius: 6px; color: var(--tarot-gold); font-size: 24px; }
+.reading { position: relative; z-index: 2; max-width: 880px; margin: 32px auto 0; padding: 0 16px; }
+.reading > div { border-radius: 8px; }
+.atmosphere { position: absolute; inset: 0; overflow: hidden; pointer-events: none; background: radial-gradient(ellipse 110% 850px at 50% 360px, var(--tarot-glow), var(--tarot-bg) 75%); }
+.atmosphere::after { content: ""; position: absolute; inset: 0; background: url("/tarot-experience/grain.png") repeat; opacity: .16; }
+.lightA, .lightB { position: absolute; top: -690px; left: 50%; width: 1100px; height: 1400px; transform: translateX(-50%); background-repeat: no-repeat; background-size: 100% auto; }
+.lightA { background-image: url("/tarot-experience/lights-1.webp"); animation: breathe 3.6s ease-in-out infinite; }
+.lightB { background-image: url("/tarot-experience/lights-2.webp"); animation: breathe 3s ease-in-out infinite reverse; }
+.orbit { position: absolute; top: 420px; left: 50%; width: 1200px; height: 1200px; border: 1px solid var(--tarot-line); border-radius: 50%; transform: translateX(-50%); opacity: .5; }
+.spark { position: absolute; left: var(--left); top: var(--top); width: var(--size); height: var(--size); background: var(--tarot-ink); border-radius: 50%; box-shadow: 0 0 8px var(--tarot-gold); opacity: 0; animation: drift var(--duration) var(--delay) ease-in-out infinite; }
+.spark:nth-child(7n)::after { content: ""; position: absolute; inset: -3px; border: 1px solid var(--tarot-gold); transform: rotate(45deg); }
+.sparkBurst { position: absolute; z-index: 80; top: -42px; left: -36px; width: calc(100% + 72px); aspect-ratio: 625 / 1024; overflow: hidden; border-radius: 24px; pointer-events: none; }
+.orbitBurst { position: absolute; z-index: 80; inset: -32px; pointer-events: none; }
+.goldMote, .goldStar { position: absolute; left: var(--origin-x); top: var(--origin-y); width: var(--mote-size); height: var(--mote-size); border-radius: 50%; background: var(--tarot-particle); box-shadow: 0 0 4px 1px var(--tarot-particle-core), 0 0 12px 3px var(--tarot-particle-halo), 0 0 26px var(--tarot-particle-halo); opacity: 0; animation: goldBurst var(--burst-duration) var(--burst-delay) cubic-bezier(.2,.55,.4,1) both; }
+.goldMote::after, .goldStar::after { content: ""; position: absolute; inset: 25%; border-radius: inherit; background: var(--tarot-particle-core); animation: goldTwinkle var(--twinkle-duration) var(--burst-delay) ease-in-out infinite alternate; }
+.goldStar { width: var(--star-size); height: var(--star-size); border-radius: 0; clip-path: polygon(50% 0%, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0% 50%, 39% 38%); filter: drop-shadow(0 0 5px var(--tarot-particle-halo)); }
+@keyframes goldTwinkle { from { opacity: .5; transform: scale(.6); } to { opacity: 1; transform: scale(1.25); } }
+@keyframes goldBurst {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(.35) rotate(0); }
+  12% { opacity: var(--peak-opacity); }
+  48% { opacity: var(--peak-opacity); transform: translate3d(var(--mid-x), var(--mid-y), 0) scale(1) rotate(var(--spin)); }
+  75% { opacity: .45; }
+  100% { opacity: 0; transform: translate3d(var(--dx), var(--dy), 0) scale(.25) rotate(var(--spin)); }
+}
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@keyframes breathe { 0%, 100% { opacity: .35; } 50% { opacity: .85; } }
+@keyframes drift { 0% { opacity: 0; transform: translate3d(0, 35px, 0) scale(.5); } 30% { opacity: .65; } 70% { opacity: .3; } 100% { opacity: 0; transform: translate3d(24px, -100px, 0) scale(1); } }
+@media (min-width: 768px) {
+  .content { padding-top: 64px; }
+  .heading h1 { font-size: 54px; }
+  .question { font-size: 26px; }
+  .wheel { width: 1100px; height: 1100px; }
+  .axis { width: 136px; height: 550px; margin-left: -68px; }
+  .deckViewport { height: 430px; }
+  .selected { gap: 42px; }
+  .cardScene { min-height: 560px; }
+  .cardCaption h3 { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience *, .experience *::before, .experience *::after { animation: none !important; transition-duration: .01ms !important; }
+  .spark { opacity: .35; }
+  .sparkBurst, .orbitBurst { display: none; }
+}

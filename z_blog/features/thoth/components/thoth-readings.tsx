@@ -18,6 +18,7 @@ import { SpreadCardCarousel } from './spread-card-carousel';
 
 type Session = {stage:'idle'|'shuffling'|'selecting'|'results';deck:DrawnThothCard[];picked:number[];complete:boolean};
 const emptySession:Session = {stage:'idle',deck:[],picked:[],complete:false};
+const thothCardBack = '/Thoth_Tarot/thoth_back.png';
 
 export function ThothReadings({spreadId,previewCards={}}:{spreadId?:string;previewCards?:Record<string,string[]>}) {
   const {language,zh,text} = useHandbookLanguage();
@@ -94,12 +95,12 @@ export function ThothReadings({spreadId,previewCards={}}:{spreadId?:string;previ
           <fieldset disabled={session.stage!=='idle'} className="flex flex-wrap gap-x-6 gap-y-2 text-sm"><legend className="mb-2 font-medium">{text('抽牌模式','Reading mode')}</legend><label className="flex items-center gap-2"><input type="radio" name="reading-mode" checked={!allowReversals} onChange={()=>setAllowReversals(false)} className="accent-[var(--primary)]" />{text('仅正位','Upright Only')}</label><label className="flex items-center gap-2"><input type="radio" name="reading-mode" checked={allowReversals} onChange={()=>setAllowReversals(true)} className="accent-[var(--primary)]" />{text('允许逆位','Allow Reversals')}</label></fieldset>
         </section>
         {(session.stage==='idle' || session.stage==='shuffling') && <section className="flex flex-col items-center gap-6 py-10">
-          <div className={`relative h-44 w-28 ${session.stage==='shuffling'?styles.shuffling:''}`}><Image src="/tarot-cards/card-back.jpg" alt={text('牌背','Card back')} fill sizes="112px" className="rounded-[var(--radius-sm)] object-cover shadow-[var(--shadow-md)]" /></div>
+          <div className={`relative h-44 w-28 ${session.stage==='shuffling'?styles.shuffling:''}`}><Image src={thothCardBack} alt={text('牌背','Card back')} fill sizes="112px" className="rounded-[var(--radius-sm)] object-cover shadow-[var(--shadow-md)]" /></div>
           <Button onClick={shuffle} disabled={session.stage==='shuffling'}>{session.stage==='shuffling'?text('正在洗牌…','Shuffling…'):text('洗牌','Shuffle the Deck')}</Button>
         </section>}
         {session.stage==='selecting' && <section className="overflow-hidden py-6" aria-label={text('选择塔罗牌','Select cards')}>
           <p role="status" aria-live="polite" className="text-center text-sm font-medium">{text('请选择牌背','Choose a card')} · {session.picked.length} / {spread.positions.length}</p>
-          <div className={styles.fan}>{session.deck.slice(0,15).map((_,index)=><button key={index} type="button" disabled={session.picked.includes(index)} onClick={()=>pick(index)} aria-label={`${text('选择第','Choose card ')}${index+1}${text('张牌','')}`} className={`${styles.fanCard} cursor-pointer rounded-[var(--radius-sm)] border border-[var(--border-strong)] shadow-[var(--shadow-md)] outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--ring)] disabled:cursor-default disabled:opacity-20`} style={{'--angle':`${-24+index*(48/14)}deg`} as CSSProperties}><Image src="/tarot-cards/card-back.jpg" alt="" fill sizes="88px" className="rounded-[var(--radius-sm)] object-cover" /></button>)}</div>
+          <div className={styles.fan}>{session.deck.slice(0,15).map((_,index)=><button key={index} type="button" disabled={session.picked.includes(index)} onClick={()=>pick(index)} aria-label={`${text('选择第','Choose card ')}${index+1}${text('张牌','')}`} className={`${styles.fanCard} cursor-pointer rounded-[var(--radius-sm)] border border-[var(--border-strong)] shadow-[var(--shadow-md)] outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--ring)] disabled:cursor-default disabled:opacity-20`} style={{'--angle':`${-24+index*(48/14)}deg`} as CSSProperties}><Image src={thothCardBack} alt="" fill sizes="88px" className="rounded-[var(--radius-sm)] object-cover" /></button>)}</div>
           <div className="text-center"><Button variant="secondary" onClick={()=>{const next=session.deck.findIndex((_,index)=>!session.picked.includes(index));pick(next);}}>{text('抽取下一张','Draw Next Card')}</Button></div>
         </section>}
 

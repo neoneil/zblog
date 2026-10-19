@@ -1,162 +1,62 @@
-
 "use client";
 
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { DrawnTarotCard } from "@/types/tarot";
-import { tarotCardBack } from "@/lib/tarot/full-deck";
+import { experienceCardBack } from "./tarot-deck";
+import TarotSparkBurst from "./tarot-spark-burst";
+import styles from "./tarot-experience.module.css";
 
 type TarotCardProps = {
   card: DrawnTarotCard;
   index: number;
   revealed: boolean;
+  gathering: boolean;
+  canFlip: boolean;
+  onFlip: (id: string) => void;
+  onFlipped: (id: string) => void;
   layoutId?: string;
 };
 
-const positionLabel = {
-  past: "过去",
-  present: "现在",
-  future: "未来",
-};
+const positionLabels = { past: "过去", present: "现在", future: "未来" };
 
-export default function TarotCard({
-  card,
-  index,
-  revealed,
-  layoutId,
-}: TarotCardProps) {
-  return (
-    <motion.div
-      layoutId={layoutId}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.45,
-        delay: index * 0.08,
-        ease: "easeOut",
-      }}
-      className="relative w-[170px] sm:w-[180px]"
-    >
-      <div className="rounded-3xl border border-[var(--border)] bg-[var(--card-soft)] p-4 shadow-[var(--shadow-md)]">
-        <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-[var(--primary)]">
-          <span>{positionLabel[card.position]}</span>
-          <span>{revealed ? (card.reversed ? "逆位" : "正位") : "待翻开"}</span>
-        </div>
+export default function TarotCard({ card, index, revealed, gathering, canFlip, onFlip, onFlipped, layoutId }: TarotCardProps) {
+  const reducedMotion = useReducedMotion();
+  const completed = useRef(false);
+  const [faceVisible, setFaceVisible] = useState(false);
 
-        <motion.div
-          animate={{ rotateY: revealed ? 180 : 0 }}
-          transition={{ duration: 0.7, ease: "easeInOut" }}
-          style={{ transformStyle: "preserve-3d" }}
-          className="relative aspect-[2/3] w-full"
-        >
-          {/* card back */}
-          <div
-            className="absolute inset-0 overflow-hidden rounded-[18px] border border-[var(--border)] bg-[var(--card-muted)]"
-            style={{ backfaceVisibility: "hidden" }}
-          >
-            <Image
-              src={encodeURI(tarotCardBack)}
-              alt="塔罗牌背面"
-              fill
-              sizes="(max-width: 640px) 170px, 180px"
-              className="object-cover"
-            />
-          </div>
-
-          {/* card face */}
-          <div
-            className="absolute inset-0 overflow-hidden rounded-[18px] border border-[var(--border)] bg-[var(--card-muted)]"
-            style={{
-              backfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-            }}
-          >
-            <div
-              className={`relative h-full w-full ${
-                card.reversed ? "rotate-180" : ""
-              }`}
-            >
-              <Image
-                src={encodeURI(card.imageSrc)}
-                alt={card.nameCn}
-                fill
-                sizes="(max-width: 640px) 170px, 180px"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="mt-3 text-center">
-          <div className="text-base font-semibold text-[var(--text)]">
-            {revealed ? card.nameCn : "已选卡牌"}
-          </div>
-          <div className="mt-1 text-xs text-[var(--text-soft)]">
-            {revealed ? card.name : "等待翻开"}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
+  return <motion.div layoutId={layoutId} className={styles.selectedCard}
+    initial={{ opacity: 0, y: -30, scale: 0.9 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    transition={{ duration: reducedMotion ? 0 : 0.95, delay: index * 0.04, ease: [0.23, 1, 0.32, 1] }}>
+    {gathering && <TarotSparkBurst orbit seed={index + 100} />}
+    {revealed && <TarotSparkBurst key="flip" seed={index + 200} />}
+    <motion.button type="button" className={styles.flipper}
+      disabled={!canFlip || revealed}
+      aria-label={faceVisible ? card.nameCn : `翻开${positionLabels[card.position]}的牌`}
+      onClick={() => onFlip(card.id)}
+      animate={{ rotateY: revealed ? 180 : 0, rotateX: revealed ? [0, -12, 0] : 0, z: revealed ? [0, 45, 0] : 0 }}
+      transition={{ duration: reducedMotion ? 0 : 2.5, ease: [0.45, 0, 0.25, 1] }}
+      onAnimationComplete={() => {
+        if (!revealed || completed.current) return;
+        completed.current = true;
+        setFaceVisible(true);
+        onFlipped(card.id);
+      }}>
+      <span className={styles.cardBack} aria-hidden={faceVisible}>
+        <Image src={experienceCardBack} alt="塔罗牌背面" fill
+          sizes="(max-width: 640px) 26vw, 180px" className={styles.cardImage} />
+      </span>
+      <span className={styles.cardFace} aria-hidden={!faceVisible}>
+        <Image src={encodeURI(card.imageSrc)} alt={faceVisible ? card.nameCn : "塔罗牌正面"} fill
+          sizes="(max-width: 640px) 26vw, 180px"
+          className={styles.cardImage} style={{ transform: card.reversed ? "rotate(180deg)" : undefined }} />
+      </span>
+    </motion.button>
+    <div className={styles.cardCaption} aria-live="polite">
+      <h3>{faceVisible ? card.nameCn : canFlip ? "点击翻牌" : "已选卡牌"}</h3>
+      <p>{faceVisible ? (card.reversed ? "逆位" : "正位") : "等待揭晓"}</p>
+    </div>
+  </motion.div>;
 }
-// "use client";
-
-// import Image from "next/image";
-// import { motion } from "framer-motion";
-// import type { DrawnTarotCard } from "@/types/tarot";
-
-// type TarotCardProps = {
-//   card: DrawnTarotCard;
-//   index: number;
-// };
-
-// const positionLabel = {
-//   past: "过去",
-//   present: "现在",
-//   future: "未来",
-// };
-
-// export default function TarotCard({ card, index }: TarotCardProps) {
-//   return (
-//     <motion.div
-//       initial={{ opacity: 0, y: 50, rotate: -4 }}
-//       animate={{ opacity: 1, y: 0, rotate: 0 }}
-//       transition={{
-//         duration: 0.55,
-//         delay: index * 0.18,
-//         ease: "easeOut",
-//       }}
-//       className="relative w-[170px] sm:w-[190px]"
-//     >
-//       <div className="rounded-3xl border border-[var(--border)] bg-[var(--card-soft)] p-4 shadow-[var(--shadow-md)]">
-//         <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-[var(--primary)]">
-//           <span>{positionLabel[card.position]}</span>
-//           <span>{card.reversed ? "逆位" : "正位"}</span>
-//         </div>
-
-//         <div className="relative aspect-[2/3] overflow-hidden rounded-[18px] border border-[var(--border)] bg-[var(--card-muted)]">
-//           <div
-//             className={`relative h-full w-full transition-transform duration-500 ${
-//               card.reversed ? "rotate-180" : ""
-//             }`}
-//           >
-//             <Image
-//               src={encodeURI(card.imageSrc)}
-//               alt={card.nameCn}
-//               fill
-//               sizes="(max-width: 640px) 170px, 190px"
-//               className="object-cover"
-//             />
-//           </div>
-//         </div>
-
-//         <div className="mt-3 text-center">
-//           <div className="text-base font-semibold text-[var(--text)]">
-//             {card.nameCn}
-//           </div>
-//           <div className="mt-1 text-xs text-[var(--text-soft)]">{card.name}</div>
-//         </div>
-//       </div>
-//     </motion.div>
-//   );
-// }
