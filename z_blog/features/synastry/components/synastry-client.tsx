@@ -57,7 +57,7 @@ export default function SynastryClient({ accessStatus }: { accessStatus: AiAcces
         <h1 className="text-3xl sm:text-4xl">{t({ zh: "双人合盘", en: "Synastry" })}</h1>
         <p className="mt-3 max-w-3xl text-sm leading-7">{t({ zh: "比较两人的本命盘、跨盘相位与双向宫位叠加，探索关系中的互动模式。", en: "Compare natal charts, cross-chart aspects and mutual house overlays to explore patterns in a relationship." })}</p>
       </header>
-      <form onSubmit={e => { e.preventDefault(); void request("calculate"); }}>
+      <form onSubmit={e => { e.preventDefault(); }}>
         <fieldset disabled={!!pending} className="min-w-0 disabled:opacity-60">
           <div className="grid gap-8 md:grid-cols-2">
             <BirthPersonForm label="Person A" value={a} onChange={value => { setA(value); invalidate(); }} />
@@ -68,7 +68,7 @@ export default function SynastryClient({ accessStatus }: { accessStatus: AiAcces
             <select id="synastry-zodiac" value={a.zodiac} className="h-11 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text)]" onChange={e => { const zodiac = e.target.value as PersonInput["zodiac"]; setA({ ...a, zodiac }); setB({ ...b, zodiac }); invalidate(); }}><option value="tropical">{t({ zh: "回归黄道", en: "Tropical" })}</option><option value="sidereal">{t({ zh: "恒星黄道", en: "Sidereal" })}</option></select>
             <fieldset className="mt-6"><legend className="mb-3 text-lg text-[var(--heading)]">{t({ zh: "你们的关系", en: "Your relationship" })}</legend><div className="flex flex-wrap gap-x-6 gap-y-2">{relationships.map(item => <label key={item.key} className="flex min-h-11 items-center gap-2 text-sm"><input type="radio" name="relationship" value={item.key} checked={relationship === item.key} onChange={() => { setRelationship(item.key); invalidate(); }} className="accent-[var(--primary)]" />{item[language]}</label>)}</div></fieldset>
             {relationship === "other" && <div className="mt-3 max-w-xl"><label htmlFor="other-relationship" className="mb-2 block text-sm">{t({ zh: "描述你们的关系", en: "Describe your relationship" })}</label><Textarea id="other-relationship" required maxLength={300} value={other} onChange={e => { setOther(e.target.value); invalidate(); }} /></div>}
-            <Button type="submit" disabled={!!pending} className="mt-5 gap-2">{pending === "calculate" && <LoaderCircle size={16} className="animate-spin" />}{t({ zh: "生成双人合盘", en: "Calculate Synastry" })}</Button>
+            <Button type="submit" disabled className="mt-5 gap-2">{pending === "calculate" && <LoaderCircle size={16} className="animate-spin" />}{t({ zh: "生成双人合盘", en: "Calculate Synastry" })}</Button>
           </section>
         </fieldset>
       </form>
