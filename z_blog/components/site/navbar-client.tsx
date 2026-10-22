@@ -129,12 +129,12 @@ export default function NavbarClient({
               {t(siteCopy.navAstroplate)}
             </Link>
 
-            <Link href="/tarot-ai" className={navLinkClass}>
-              {t(siteCopy.navTarot)}
+            <Link href="/synastry" className={navLinkClass}>
+              {t(siteCopy.navSynastry)}
             </Link>
 
-            <Link href="/tarot" className={navLinkClass}>
-              {t(siteCopy.navTarotLibrary)}
+            <Link href="/tarot-ai" className={navLinkClass}>
+              {t(siteCopy.navTarot)}
             </Link>
 
             <Link href={`/thoth-tarot?lang=${language}`} className={navLinkClass}>
@@ -257,19 +257,19 @@ export default function NavbarClient({
               </Link>
 
               <Link
+                href="/synastry"
+                className={mobileLinkClass}
+                onClick={() => setMobileOpen(false)}
+              >
+                {t(siteCopy.navSynastry)}
+              </Link>
+
+              <Link
                 href="/tarot-ai"
                 className={mobileLinkClass}
                 onClick={() => setMobileOpen(false)}
               >
                 {t(siteCopy.navTarot)}
-              </Link>
-
-              <Link
-                href="/tarot"
-                className={mobileLinkClass}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t(siteCopy.navTarotLibrary)}
               </Link>
 
               <Link

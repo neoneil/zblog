@@ -7,6 +7,7 @@ export const siteCopy = {
   navResources: { zh: "资源", en: "Resources" },
   navAbout: { zh: "关于我们", en: "About" },
   navAstroplate: { zh: "星盘解析", en: "Natal Chart" },
+  navSynastry: { zh: "双人合盘", en: "Synastry" },
   navTarot: { zh: "塔罗 AI", en: "Tarot AI" },
   navTarotLibrary: { zh: "塔罗牌库", en: "Tarot Library" },
   navClassroom: { zh: "在线课堂", en: "Online Class" },

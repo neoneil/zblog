@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 
 type ChartPointJson = {
   key: string;
@@ -87,6 +87,7 @@ const STAR_POINTS = Array.from({ length: 55 }, (_, i) => {
 });
 
 export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
+  const instanceId = useId();
   const [theme, setTheme] = useState<WheelTheme>("dark");
   const isDark = theme === "dark";
 
@@ -136,24 +137,24 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
 
       <svg viewBox={`0 0 ${size} ${size}`} className="h-auto w-full rounded-[30px]" style={{ background: c.svgBg }}>
         <defs>
-          <radialGradient id={`cnWheelBg-${theme}`} cx="50%" cy="45%" r="66%">
+          <radialGradient id={`cnWheelBg-${instanceId}-${theme}`} cx="50%" cy="45%" r="66%">
             <stop offset="0%" stopColor={c.bgStart} stopOpacity="1" />
             <stop offset="58%" stopColor={c.bgMiddle} stopOpacity="1" />
             <stop offset="100%" stopColor={c.bgEnd} stopOpacity="1" />
           </radialGradient>
 
-          <filter id={`softShadow-${theme}`} x="-50%" y="-50%" width="200%" height="200%">
+          <filter id={`softShadow-${instanceId}-${theme}`} x="-50%" y="-50%" width="200%" height="200%">
             <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor={c.shadowColor} floodOpacity={isDark ? "0.32" : "0.13"} />
           </filter>
         </defs>
 
-        <rect x="0" y="0" width={size} height={size} rx="30" fill={`url(#cnWheelBg-${theme})`} />
+        <rect x="0" y="0" width={size} height={size} rx="30" fill={`url(#cnWheelBg-${instanceId}-${theme})`} />
 
         {STAR_POINTS.map((star, i) => (
           <circle key={i} cx={(star.x / 100) * size} cy={(star.y / 100) * size} r={star.r} fill={c.star} opacity={star.o} />
         ))}
 
-        <circle cx={center} cy={center} r={zodiacOuter} fill={c.zodiacOuterFill} stroke={c.zodiacOuterStroke} strokeWidth="2" filter={`url(#softShadow-${theme})`} />
+        <circle cx={center} cy={center} r={zodiacOuter} fill={c.zodiacOuterFill} stroke={c.zodiacOuterStroke} strokeWidth="2" filter={`url(#softShadow-${instanceId}-${theme})`} />
         <circle cx={center} cy={center} r={zodiacInner} fill={c.zodiacInnerFill} stroke={c.zodiacInnerStroke} strokeWidth="2" />
         <circle cx={center} cy={center} r={houseOuter} fill="none" stroke={c.softRing} strokeWidth="1.5" />
         <circle cx={center} cy={center} r={houseInner} fill={c.houseFill} stroke={c.houseStroke} strokeWidth="1.5" />
