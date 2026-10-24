@@ -42,6 +42,21 @@ export type SynastryResult = {
   aspects: CrossAspect[]; aInB: Overlay[]; bInA: Overlay[];
 };
 export type SynastryReading = { overview: string; sections: Record<Topic, string> };
+export type BilingualSynastryReading = Record<"zh" | "en", SynastryReading>;
+
+export function isBilingualSynastryReading(value: unknown): value is BilingualSynastryReading {
+  if (!value || typeof value !== "object") return false;
+  const reading = value as Record<string, unknown>;
+  return ["zh", "en"].every(language => {
+    const localized = reading[language];
+    if (!localized || typeof localized !== "object") return false;
+    const { overview, sections } = localized as Record<string, unknown>;
+    return typeof overview === "string" && !!overview.trim() &&
+      !!sections && typeof sections === "object" &&
+      topics.every(topic => typeof (sections as Record<string, unknown>)[topic.key] === "string" &&
+        !!((sections as Record<string, unknown>)[topic.key] as string).trim());
+  });
+}
 
 function record(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("出生信息格式不正确 / Invalid birth details.");

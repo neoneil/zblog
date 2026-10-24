@@ -104,7 +104,7 @@ export function TreeReader() {
               {path && <div className="my-5 space-y-4 text-sm"><p>{path.hebrewLetter} · {term(path.letterMeaning)}</p><p>{term(path.astrology)}</p><div className="flex flex-wrap items-center gap-2">{[path.from,path.to].map(n => <Button key={n} size="sm" variant="secondary" onClick={() => select('sephirah',n)}>{term(sephiroth.find(s=>s.number===n)!.name)}</Button>)}</div><ButtonLink variant="secondary" size="sm" href={`/thoth/tarot?card=${path.cardId}&lang=${locale}`}>{text('阅读完整牌义','Read card details')}</ButtonLink></div>}
               {world && <p className="my-4 text-sm">{term(world.meaning)} · {term(world.element)} {world.elementSymbol}</p>}
               {description && <div className="prose prose-sm max-w-none text-[var(--text-soft)] prose-headings:text-[var(--text)] prose-strong:text-[var(--text)]"><Markdown>{zh ? descriptionsZh[title] ?? description : description}</Markdown></div>}
-              {zh && description && <details className="mt-5 border-t border-[var(--border)] pt-4"><summary className="cursor-pointer text-sm text-[var(--primary)]">英文原文 · English source</summary><div className="prose prose-sm mt-4 max-w-none text-[var(--text-soft)] prose-strong:text-[var(--text)]"><Markdown>{description}</Markdown></div></details>}
+              {zh && description && <details className="mt-5 border-t border-[var(--border)] pt-4"><summary className="cursor-pointer text-sm text-[var(--primary)]">英文版本 · English text</summary><div className="prose prose-sm mt-4 max-w-none text-[var(--text-soft)] prose-strong:text-[var(--text)]"><Markdown>{description}</Markdown></div></details>}
               {!!related.length && <section className="mt-6 border-t border-[var(--border)] pt-4"><h3 className="mb-3 font-semibold">{text('相连路径','Connected paths')}</h3><div className="flex flex-wrap gap-2">{related.map(p => <Button key={p.number} variant="secondary" size="sm" onClick={() => select('path',p.number)}>{p.romanNumeral} · {term(p.cardName)}</Button>)}</div></section>}
               {seph && <section className="mt-6"><h3 className="mb-3 font-semibold">{text('对应数字牌','Cards on this Sephirah')}</h3><div className="grid grid-cols-2 gap-2">{seph.pipCards.map((card,index) => <Link key={card} href={`/thoth/tarot?card=${card}&lang=${locale}`} className="rounded-[var(--radius-sm)] border border-[var(--border)] px-3 py-2 text-sm text-[var(--primary)]">{term(['Wands','Cups','Swords','Disks'][index])} · {seph.number}</Link>)}</div></section>}
               {!!members.length && <section className="mt-6"><h3 className="mb-3 font-semibold">{text('所属质点','Sephiroth')}</h3><div className="flex flex-wrap gap-2">{members.map(n => <Button key={n} size="sm" variant="secondary" onClick={() => select('sephirah',n)}>{n} · {term(sephiroth.find(s=>s.number===n)!.name)}</Button>)}</div></section>}
@@ -112,7 +112,6 @@ export function TreeReader() {
           </CardContent>
         </Card>
       </div>
-      <footer className="mt-8 border-t border-[var(--border)] pt-4 text-xs leading-6 text-[var(--text-faint)]"><a href="https://github.com/ctrlaltjakub/Toth-Tarot-Handbook" target="_blank" rel="noopener noreferrer" className="underline">Thoth Tarot Handbook</a> · © 2026 Jakub Fleites-Jonczyk · <Link href="/thoth/license" className="underline">MIT License</Link></footer>
     </div>
   </main>;
 }

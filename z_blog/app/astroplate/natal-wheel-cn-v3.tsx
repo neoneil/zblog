@@ -56,12 +56,19 @@ type OpenAIChartJson = {
 };
 
 type WheelTheme = "light" | "dark";
+type WheelLanguage = "zh" | "en";
 
 const DISPLAY_POINT_KEYS = ["sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto", "ascendant", "midheaven"] as const;
 
 const HOUSE_LABELS = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
 
 const SIGN_SYMBOLS = ["白羊", "金牛", "双子", "巨蟹", "狮子", "处女", "天秤", "天蝎", "射手", "摩羯", "水瓶", "双鱼"];
+const SIGN_LABELS_EN = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"];
+const POINT_LABELS_EN: Record<string, string> = {
+  sun: "Sun", moon: "Moon", mercury: "Mer", venus: "Ven", mars: "Mars",
+  jupiter: "Jup", saturn: "Sat", uranus: "Ura", neptune: "Nep", pluto: "Plu",
+  ascendant: "ASC", midheaven: "MC",
+};
 
 const POINT_SYMBOLS: Record<string, string> = {
   sun: "日",
@@ -86,7 +93,7 @@ const STAR_POINTS = Array.from({ length: 55 }, (_, i) => {
   return { x, y, r, o };
 });
 
-export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
+export function NatalWheelCN({ chartJson, language = "zh" }: { chartJson: OpenAIChartJson; language?: WheelLanguage }) {
   const instanceId = useId();
   const [theme, setTheme] = useState<WheelTheme>("dark");
   const isDark = theme === "dark";
@@ -132,10 +139,10 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
           color: c.buttonText,
         }}
       >
-        {isDark ? "浅色盘" : "深色盘"}
+        {language === "zh" ? (isDark ? "浅色盘" : "深色盘") : (isDark ? "Light Chart" : "Dark Chart")}
       </button>
 
-      <svg viewBox={`0 0 ${size} ${size}`} className="h-auto w-full rounded-[30px]" style={{ background: c.svgBg }}>
+      <svg viewBox={`0 0 ${size} ${size}`} role="img" aria-label={language === "zh" ? "本命盘" : "Natal chart"} lang={language === "zh" ? "zh-CN" : "en"} className="h-auto w-full rounded-[30px]" style={{ background: c.svgBg }}>
         <defs>
           <radialGradient id={`cnWheelBg-${instanceId}-${theme}`} cx="50%" cy="45%" r="66%">
             <stop offset="0%" stopColor={c.bgStart} stopOpacity="1" />
@@ -179,8 +186,8 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
           const midDeg = i * 30 + 15 + rotation;
           const pos = polarToCartesian(center, center, signLabelRadius, midDeg);
           return (
-            <text key={`sign-label-${i}`} x={pos.x} y={pos.y} fill={c.signText} fontSize="18" fontWeight="700" textAnchor="middle" dominantBaseline="central">
-              {SIGN_SYMBOLS[i]}
+            <text key={`sign-label-${i}`} x={pos.x} y={pos.y} fill={c.signText} fontSize={language === "zh" ? 18 : 14} fontWeight="700" textAnchor="middle" dominantBaseline="central">
+              {language === "zh" ? SIGN_SYMBOLS[i] : SIGN_LABELS_EN[i]}
             </text>
           );
         })}
@@ -204,7 +211,7 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
           const pos = polarToCartesian(center, center, houseLabelRadius, mid);
           return (
             <text key={`house-label-${index}`} x={pos.x} y={pos.y} fill={c.houseText} fontSize="15" fontWeight="600" textAnchor="middle" dominantBaseline="central">
-              {HOUSE_LABELS[index]}
+              {language === "zh" ? HOUSE_LABELS[index] : house.house}
             </text>
           );
         })}
@@ -238,10 +245,11 @@ export function NatalWheelCN({ chartJson }: { chartJson: OpenAIChartJson }) {
 
           return (
             <g key={point.key}>
+              <title>{language === "zh" ? point.labelZh : point.label}</title>
               <line x1={lineStart.x} y1={lineStart.y} x2={lineEnd.x} y2={lineEnd.y} stroke={isAngle ? c.pointLineStrong : c.pointLineSoft} strokeWidth={isAngle ? 1.8 : 1} opacity="0.9" />
               <circle cx={labelPos.x} cy={labelPos.y} r={isAngle ? 16 : 14} fill={c.pointCircleFill} stroke={isAngle ? c.pointCircleStrong : c.pointCircleSoft} strokeWidth={isAngle ? 2 : 1.5} />
-              <text x={labelPos.x} y={labelPos.y} fill={getPointColor(point.key, theme)} fontSize={isAngle ? "17" : "18"} fontWeight="700" textAnchor="middle" dominantBaseline="central">
-                {POINT_SYMBOLS[point.key] ?? "✦"}
+              <text x={labelPos.x} y={labelPos.y} fill={getPointColor(point.key, theme)} fontSize={language === "zh" ? (isAngle ? 17 : 18) : 10} fontWeight="700" textAnchor="middle" dominantBaseline="central">
+                {language === "zh" ? (POINT_SYMBOLS[point.key] ?? "✦") : (POINT_LABELS_EN[point.key] ?? point.label)}
               </text>
             </g>
           );

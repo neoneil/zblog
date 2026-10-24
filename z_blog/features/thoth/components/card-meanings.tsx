@@ -103,7 +103,6 @@ export function CardMeanings({cardId}:{cardId?:string}) {
           <div className="mt-8 flex flex-wrap gap-3 border-t border-[var(--border)] pt-6"><ButtonLink href={`/thoth-tarot/readings?lang=${language}`}>{text('抽牌解读','Draw a Reading')}</ButtonLink><ButtonLink href={href()} variant="secondary">{text('全部牌义','All Cards')}</ButtonLink></div>
         </article>
       </div>}
-      <footer className="mt-8 border-t border-[var(--border)] py-6 text-xs leading-6 text-[var(--text-faint)]">{text('牌义原文：Crowley Thoth Tarot（据项目方提供的授权使用）；中文为原文译文。牌面：Aleister Crowley / Lady Frieda Harris。','Card text: Crowley Thoth Tarot (used under authorization supplied by the project owner). Chinese text is a translation of the source. Artwork: Aleister Crowley / Lady Frieda Harris.')} <a href={meaning?.source ?? 'https://www.crowleythoth.org/tarot/thoth/'} target="_blank" rel="noopener noreferrer" className="text-[var(--primary)] underline">{text('原文来源','Source')}</a> · <Link href="/thoth/license" className="text-[var(--primary)] underline">MIT License</Link></footer>
     </div>
   </main>;
 }

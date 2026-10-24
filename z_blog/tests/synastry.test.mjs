@@ -17,7 +17,7 @@ function loader(overrides = {}) {
     const compiled = { exports: {} };
     cache.set(file, compiled);
     const source = ts.transpileModule(fs.readFileSync(file, "utf8"), {
-      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true },
+      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true, jsx: ts.JsxEmit.ReactJSX },
     }).outputText;
     const localRequire = (id) => {
       if (Object.hasOwn(overrides, id)) return overrides[id];
@@ -32,9 +32,23 @@ function loader(overrides = {}) {
 }
 const load = loader();
 const { DEFAULT_FORM, calculateNatalChart } = load("lib/astrology/natal-chart.ts");
-const { parseSynastryInput, compareCharts, calculateSynastry, relationships, topics } = load("lib/astrology/synastry.ts");
+const { parseSynastryInput, compareCharts, calculateSynastry, isBilingualSynastryReading, relationships, topics } = load("lib/astrology/synastry.ts");
 const person = { ...DEFAULT_FORM, latitude: -33.8688, longitude: 151.2093, timeKnown: true };
 const input = { personA: person, personB: { ...person, year: 2000, month: 1, day: 1 }, relationship: "friends", otherRelationship: "", language: "zh" };
+
+test("natal wheels localize labels without changing chart geometry", async () => {
+  const React = nodeRequire("react");
+  const { renderToStaticMarkup } = nodeRequire("react-dom/server");
+  const { NatalWheelCN } = load("app/astroplate/natal-wheel-cn-v3.tsx");
+  const chartJson = await calculateNatalChart(person);
+  const render = language => renderToStaticMarkup(React.createElement(NatalWheelCN, { chartJson, language }));
+  const zh = render("zh"), en = render("en");
+  assert.match(zh, /白羊/); assert.match(zh, /浅色盘/); assert.match(zh, /太阳/);
+  for (const text of ["Aries", "Sagittarius", "Sun", "Moon", "Mercury", "ASC", "MC", "Light Chart"]) assert.ok(en.includes(text), text);
+  assert.doesNotMatch(en, /[\u4e00-\u9fff]/);
+  assert.deepEqual(en.match(/<(?:line|circle)\b[^>]*>/g), zh.match(/<(?:line|circle)\b[^>]*>/g));
+  assert.match(render(undefined), /白羊/);
+});
 
 test("validates dates, coordinates, relationship and shared zodiac", () => {
   assert.equal(relationships.length, 6);
@@ -92,7 +106,14 @@ test("unknown times omit houses/angles and flag Moon data", async () => {
 
 test("API validates before charging, protects access and uses canonical chart data", async () => {
   let consumed = 0, calls = 0, authenticated = true, allowed = true, prompt;
-  const reading = { overview: "Overview", sections: Object.fromEntries(topics.map(t => [t.key, "Example"])) };
+  const reading = {
+    zh: { overview: "关系总览", sections: Object.fromEntries(topics.map(t => [t.key, "中文解读"])) },
+    en: { overview: "Relationship overview", sections: Object.fromEntries(topics.map(t => [t.key, "English reading"])) },
+  };
+  assert.ok(isBilingualSynastryReading(reading));
+  assert.ok(!isBilingualSynastryReading({ zh: reading.zh }));
+  assert.ok(!isBilingualSynastryReading({ zh: reading.zh, en: { overview: "", sections: {} } }));
+  assert.ok(!isBilingualSynastryReading({ zh: reading.zh, en: { ...reading.en, sections: { ...reading.en.sections, emotional: "" } } }));
   class FakeOpenAI {
     chat = { completions: { create: async (params) => { calls++; prompt = params; return { choices: [{ message: { content: JSON.stringify(reading) } }] }; } } };
   }
@@ -116,11 +137,18 @@ test("API validates before charging, protects access and uses canonical chart da
     assert.equal(consumed, 0); assert.equal(calls, 0);
     const response = await post({ ...input, action: "read", result: { aspects: ["forged"] } });
     assert.equal(response.status, 200);
-    assert.deepEqual((await response.json()).reading, reading);
+    const returnedReading = (await response.json()).reading;
+    assert.deepEqual(returnedReading, reading);
+    for (const language of ["en", "zh", "en"]) {
+      assert.equal(returnedReading[language].sections.communication, language === "en" ? "English reading" : "中文解读");
+    }
     assert.equal(consumed, 1); assert.equal(calls, 1);
     const payload = JSON.parse(prompt.messages[1].content);
     assert.ok(payload.crossAspects.every(a => typeof a.orb === "number"));
-    assert.equal(prompt.response_format.json_schema.schema.properties.sections.required.length, 6);
+    assert.deepEqual(prompt.response_format.json_schema.schema.required, ["zh", "en"]);
+    for (const language of ["zh", "en"]) {
+      assert.equal(prompt.response_format.json_schema.schema.properties[language].properties.sections.required.length, 6);
+    }
     allowed = false;
     assert.equal((await post({ ...input, action: "read" })).status, 403);
     assert.equal(calls, 1);

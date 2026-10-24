@@ -86,7 +86,7 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
             </CardContent>
           </Card>)}
         </div>
-        <section className="mt-10 border-t border-[var(--border)] py-6"><h2 className="text-lg font-semibold">{text('关于元素状态','About Elemental Dignity')}</h2><p className="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-soft)]">{text('相邻牌的元素可能互相支持、抵消或保持中性。此处按参考站的上下左右相邻关系判断；大阿尔卡那不参与元素加权。','Neighbouring elements may support, weaken or remain neutral to one another. Like the reference, this reading uses cardinal grid adjacency; Major Arcana neither receive nor contribute elemental weight.')}</p></section>
+        <section className="mt-10 border-t border-[var(--border)] py-6"><h2 className="text-lg font-semibold">{text('关于元素状态','About Elemental Dignity')}</h2><p className="mt-3 max-w-3xl text-sm leading-7 text-[var(--text-soft)]">{text('相邻牌的元素可能互相支持、抵消或保持中性。此处按上下左右相邻关系判断；大阿尔卡那不参与元素加权。','Neighbouring elements may support, weaken or remain neutral to one another. This reading uses cardinal grid adjacency; Major Arcana neither receive nor contribute elemental weight.')}</p></section>
       </> : <>
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3"><ButtonLink href={href()} size="sm" variant="ghost">← {text('其他牌阵','Other Spreads')}</ButtonLink><Badge variant="secondary">{text('本地牌义解读','Local card interpretation')}</Badge></div>
         <section className="border-y border-[var(--border)] py-6" aria-label={text('抽牌设置','Reading settings')}>
@@ -120,7 +120,7 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
 
         {session.stage==='results' && <section className="border-t border-[var(--border)] py-8" aria-labelledby="reading-results">
           <h2 id="reading-results" className="text-2xl font-semibold">{text('你的解读','Your Reading')}</h2>
-          {allowReversals && <p className="mt-4 text-sm leading-6 text-[var(--text-faint)]">{text('牌义来源没有独立逆位文案；逆位牌保留其基础牌义，供你从阻力、内化或延迟的角度反思。','The source has no separate reversed text. Reversed cards retain their base meaning for reflection on resistance, internalisation or delay.')}</p>}
+          {allowReversals && <p className="mt-4 text-sm leading-6 text-[var(--text-faint)]">{text('逆位牌保留其基础牌义，供你从阻力、内化或延迟的角度反思。','Reversed cards retain their base meaning for reflection on resistance, internalisation or delay.')}</p>}
           <div className="mt-6 space-y-5">{drawn.map(({card,reversed},index)=>{
             const position=spread.positions[spread.successive?0:index];
             const meaning=cardMeaning(card,language);
@@ -142,7 +142,6 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
           <div className="mt-8 flex flex-wrap gap-3 border-t border-[var(--border)] pt-6"><Button onClick={()=>setSession(emptySession)}>{text('重新开始','Start Again')}</Button><ButtonLink href={href()} variant="secondary">{text('其他牌阵','Other Spreads')}</ButtonLink></div>
         </section>}
       </>}
-      <footer className="mt-8 border-t border-[var(--border)] py-5 text-xs leading-6 text-[var(--text-faint)]">{text('仅供学习与自我反思。抽牌结果不代表确定的未来。','For study and self-reflection. A reading is not a prediction of a certain future.')} <a href="https://www.crowleythoth.org/tarot/thoth/readings/" target="_blank" rel="noopener noreferrer" className="underline">Crowley Thoth Tarot</a></footer>
     </div>
   </main>;
 }

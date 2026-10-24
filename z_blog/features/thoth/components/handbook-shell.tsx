@@ -47,7 +47,6 @@ export function HandbookShell({module,children}:{module:string;children:ReactNod
         {knowledgeEntries.map(item=><ButtonLink key={item.slug} size="sm" variant={module===item.slug?'primary':'secondary'} href={`/thoth/${item.slug}?lang=${language}`} aria-current={module===item.slug?'page':undefined}>{text(item.zh,item.en)}</ButtonLink>)}
       </nav>
       {children}
-      <footer className="mt-8 border-t border-[var(--border)] pt-4 text-xs text-[var(--text-faint)]"><a href="https://github.com/ctrlaltjakub/Toth-Tarot-Handbook" target="_blank" rel="noopener noreferrer" className="underline">Thoth Tarot Handbook</a> · © 2026 Jakub Fleites-Jonczyk · <ButtonLink href="/thoth/license" size="sm" variant="ghost">MIT License</ButtonLink></footer>
     </div>
   </main>;
 }

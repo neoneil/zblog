@@ -46,7 +46,7 @@ export function LibraryReader() {
           <div className="prose prose-sm max-w-none text-[var(--text-soft)] prose-headings:text-[var(--text)] prose-strong:text-[var(--text)] prose-a:text-[var(--primary)]">
             <Markdown remarkPlugins={[remarkGfm]} components={{h1:({children,node})=><h3 id={`article-line-${node?.position?.start.line}`}>{children}</h3>,h2:({children,node})=><h3 id={`article-line-${node?.position?.start.line}`}>{children}</h3>,h3:({children,node})=><h3 id={`article-line-${node?.position?.start.line}`}>{children}</h3>,h4:({children,node})=><h4 id={`article-line-${node?.position?.start.line}`}>{children}</h4>,h5:({children,node})=><h5 id={`article-line-${node?.position?.start.line}`}>{children}</h5>,h6:({children,node})=><h6 id={`article-line-${node?.position?.start.line}`}>{children}</h6>}}>{source}</Markdown>
           </div>
-          {zh&&<details className="mt-8 border-t border-[var(--border)] pt-4"><summary className="cursor-pointer text-sm text-[var(--primary)]">完整英文原文 · Full English source</summary><div className="prose prose-sm mt-4 max-w-none text-[var(--text-soft)] prose-headings:text-[var(--text)] prose-strong:text-[var(--text)]"><Markdown remarkPlugins={[remarkGfm]}>{article.content}</Markdown></div></details>}
+          {zh&&<details className="mt-8 border-t border-[var(--border)] pt-4"><summary className="cursor-pointer text-sm text-[var(--primary)]">完整英文版本 · Full English text</summary><div className="prose prose-sm mt-4 max-w-none text-[var(--text-soft)] prose-headings:text-[var(--text)] prose-strong:text-[var(--text)]"><Markdown remarkPlugins={[remarkGfm]}>{article.content}</Markdown></div></details>}
         </>}
       </div></CardContent></Card>
     </div>
