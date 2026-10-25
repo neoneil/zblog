@@ -157,3 +157,23 @@ test("API validates before charging, protects access and uses canonical chart da
     else process.env.OPENAI_API_KEY = previousKey;
   }
 });
+
+test("Stella can request English through the shared natal API without changing its default language", async () => {
+  const prompts = [];
+  class FakeOpenAI {
+    chat = { completions: { create: async params => { prompts.push(params); return { choices: [{ message: { content: "Example reading" } }] }; } } };
+  }
+  const route = loader({
+    openai: FakeOpenAI,
+    "@/features/billing/lib/ai-access": { consumeAiAccess: async () => ({ allowed: true }) },
+  })("app/api/astroplate/route.ts");
+  const chartJson = await calculateNatalChart(person);
+  for (const language of ["en", undefined]) {
+    const response = await route.POST(new Request("http://localhost/api/astroplate", {
+      method: "POST", body: JSON.stringify({ chartJson, question: "My chart", language }),
+    }));
+    assert.equal(response.status, 200);
+  }
+  assert.match(prompts[0].messages[0].content, /respond entirely in English/);
+  assert.doesNotMatch(prompts[1].messages[0].content, /respond entirely in English/);
+});

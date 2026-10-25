@@ -1,0 +1,143 @@
+@font-face {
+  font-family: "Stella Cinzel";
+  src: url("/stella/fonts/Cinzel.ttf") format("truetype");
+  font-weight: 400 900;
+  font-display: swap;
+}
+.experience {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: calc(100svh - var(--stella-navbar-height, 80px));
+  min-height: 600px;
+  overflow: hidden;
+  background: var(--stella-bg);
+  color: var(--stella-text);
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+.experience :is(h1,h2,h3,h4) { color: var(--stella-heading); font-family: "Stella Cinzel", "Songti SC", Georgia, serif; font-weight: 400; letter-spacing: 0; }
+.experience :is(button,input,select,textarea) { font: inherit; }
+.experience button { cursor: pointer; }
+.experience button:disabled { cursor: not-allowed; opacity: .4; }
+.experience :is(button,a,input,select,textarea):focus-visible { outline: 2px solid var(--stella-accent); outline-offset: 3px; }
+.scene { position: absolute; inset: 0; z-index: 0; }
+.scene canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.labels { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.skyLabel { position: absolute; top: 0; left: 0; font: 10px monospace; color: var(--stella-star-label); white-space: nowrap; text-shadow: 0 0 8px var(--stella-bg); }
+.brand { position: absolute; top: 15px; left: 50%; z-index: 2; transform: translateX(-50%); margin: 0; font-size: 24px; text-align: center; pointer-events: none; }
+.panel { position: absolute; z-index: 3; border: 1px solid var(--stella-border); border-radius: 7px; background: var(--stella-panel); backdrop-filter: blur(12px); }
+.readingsPanel { top: 18px; left: 20px; bottom: 86px; width: min(37.5%, 480px); display: flex; flex-direction: column; overflow: hidden; }
+.tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 5px; padding: 5px; flex: none; }
+.tab { border: 0; border-radius: 5px; padding: 8px 5px; color: var(--stella-muted); background: transparent; font-family: "Stella Cinzel", "Songti SC", Georgia, serif !important; font-size: 14px !important; }
+.tab[aria-selected="true"] { color: var(--stella-text); background: var(--stella-accent-dim); box-shadow: 0 0 12px var(--stella-purple-glow); }
+.readingsBody { min-height: 0; flex: 1; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--stella-border) transparent; padding: 15px 16px 20px; }
+.periods { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--stella-control); border-radius: 6px; padding: 3px; margin-bottom: 18px; }
+.periods button { padding: 6px; border: 0; border-radius: 5px; background: transparent; color: var(--stella-muted); font-size: 12px; }
+.periods button[aria-pressed="true"] { background: var(--stella-accent); color: var(--stella-white); box-shadow: 0 0 10px var(--stella-purple-glow); }
+.section { padding: 18px 0; border-bottom: 1px solid var(--stella-divider); }
+.section:first-child { padding-top: 2px; }
+.section:last-child { border-bottom: 0; }
+.section h2 { margin: 0 0 12px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.section h3 { margin: 0 0 10px; font-size: 13px; }
+.section p { margin: 0 0 12px; color: var(--stella-muted); line-height: 1.75; }
+.signRow { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 15px; }
+.signName { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.signGlyph { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--stella-border); border-radius: 7px; background: var(--stella-accent-dim); color: var(--stella-lilac); font-size: 28px; }
+.signName select { background: var(--stella-control); border: 1px solid var(--stella-border); border-radius: 4px; color: var(--stella-text); padding: 3px 7px; max-width: 150px; }
+.dateCaption { display: block; font-size: 10px; color: var(--stella-muted); margin-top: 5px; }
+.readingCopy { background: var(--stella-reading); border: 1px solid var(--stella-border); border-radius: 7px; padding: 18px; font-size: 15px; line-height: 1.7; }
+.readingCopy p { color: var(--stella-text); margin: 0; }
+.tag { display: inline-block; font-size: 10px; color: var(--stella-lilac); border: 1px solid var(--stella-border); border-radius: 3px; padding: 2px 6px; }
+.textButton { background: transparent; border: 0; padding: 0; color: var(--stella-lilac); font-size: 12px !important; text-align: left; }
+.primary { display: inline-flex; justify-content: center; align-items: center; gap: 7px; min-height: 38px; border: 1px solid var(--stella-button-border); border-radius: 4px; padding: 8px 14px; background: var(--stella-button); color: var(--stella-white); transition: background .2s; text-decoration: none; }
+.primary:hover { background: var(--stella-button-hover); }
+.secondary { display: inline-flex; justify-content: center; align-items: center; gap: 7px; min-height: 34px; border: 1px solid var(--stella-border); border-radius: 5px; padding: 6px 10px; background: var(--stella-control); color: var(--stella-text); text-decoration: none; }
+.secondary:hover { border-color: var(--stella-lilac); }
+.birthPanel { top: 18px; right: 20px; width: min(37.5%,480px); max-height: calc(100% - 106px); display: flex; flex-direction: column; overflow: hidden; }
+.panelHeading { flex: none; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 14px 16px; border: 0; border-bottom: 1px solid var(--stella-border); background: transparent; color: var(--stella-heading); font: 16px "Stella Cinzel",Georgia,serif !important; text-align: left; }
+.birthBody { min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--stella-border) transparent; padding: 14px 16px 18px; }
+.birthBody label { display: block; color: var(--stella-muted); font-size: 11px; margin-bottom: 5px; }
+.field { margin-bottom: 12px; min-width: 0; }
+.input { display: block; min-width: 0; width: 100%; height: 30px; border: 1px solid var(--stella-input-border); border-radius: 3px; padding: 4px 8px; background: var(--stella-input); color: var(--stella-text); color-scheme: dark; outline: none; }
+.input:focus { border-color: var(--stella-lilac); }
+.input::placeholder { color: var(--stella-faint); }
+.twoColumns { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.cityRow { display: flex; gap: 5px; }
+.cityRow button { flex: none; width: 36px; height: 30px; display: grid; place-items: center; padding: 0; }
+.cityResults { margin: 4px 0; padding: 0; list-style: none; border: 1px solid var(--stella-border); }
+.cityResults button { display: block; width: 100%; border: 0; border-bottom: 1px solid var(--stella-divider); color: var(--stella-text); background: var(--stella-control); text-align: left; padding: 7px; font-size: 11px; }
+.calculate { width: 100%; margin-top: 0; }
+.chartResult { border-top: 1px solid var(--stella-border); margin-top: 24px; padding-top: 18px; }
+.chartTitle { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.chartTitle h2 { font-size: 17px; margin: 0; }
+.bigThree { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; padding: 20px 0; }
+.bigThree span { display: block; color: var(--stella-muted); font-size: 11px; }
+.bigThree strong { color: var(--stella-lilac); font-size: 16px; font-weight: 400; }
+.positionList { padding: 0; margin: 0; list-style: none; }
+.positionList li { display: grid; grid-template-columns: 25px minmax(0,1fr) auto; gap: 6px; align-items: center; border-bottom: 1px solid var(--stella-divider); padding: 8px 0; color: var(--stella-muted); font-size: 12px; }
+.positionList button { border: 0; color: inherit; background: none; text-align: left; }
+.settingsTrigger { position: absolute; z-index: 5; top: 10px; right: 10px; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--stella-border); border-radius: 50%; background: var(--stella-settings); color: var(--stella-lilac); box-shadow: 0 0 20px var(--stella-purple-glow); }
+.settings { position: absolute; z-index: 6; top: 55px; right: 10px; width: 280px; max-height: calc(100% - 145px); overflow-y: auto; background: var(--stella-settings); border: 1px solid var(--stella-border); border-radius: 8px; padding: 14px; }
+.settings h2 { font-size: 14px; margin: 5px 0 14px; }
+.settings label { display: flex; align-items: center; justify-content: space-between; min-height: 40px; gap: 10px; }
+.settings input[type="checkbox"] { appearance: none; flex: none; position: relative; width: 34px; height: 19px; border-radius: 12px; background: var(--stella-input-border); transition: background .2s; cursor: pointer; }
+.settings input[type="checkbox"]::after { content: ""; position: absolute; left: 3px; top: 3px; width: 13px; height: 13px; border-radius: 50%; background: var(--stella-white); transition: transform .2s; }
+.settings input:checked { background: var(--stella-accent); }
+.settings input:checked::after { transform: translateX(15px); }
+.viewModes { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 14px; }
+.viewModes button[aria-pressed="true"] { background: var(--stella-accent-dim); border-color: var(--stella-lilac); }
+.timeDock { position: absolute; z-index: 4; left: 50%; bottom: 14px; transform: translateX(-50%); padding: 7px 10px 9px; max-width: calc(100% - 24px); background: var(--stella-dock); border: 1px solid var(--stella-dock-border); border-radius: 7px; backdrop-filter: blur(10px); }
+.timestamp { color: var(--stella-star-label); font: 11px monospace; text-align: center; margin-bottom: 7px; white-space: nowrap; }
+.timeButtons { display: flex; align-items: center; gap: 5px; }
+.timeButtons button { display: grid; place-items: center; flex: none; height: 30px; min-width: 30px; padding: 0 7px; border: 1px solid var(--stella-dock-border); border-radius: 4px; background: var(--stella-dock-button); color: var(--stella-star-label); font-size: 12px; }
+.timeButtons button[aria-pressed="true"] { border-color: var(--stella-lilac); color: var(--stella-lilac); }
+.timeButtons input { width: 118px; min-width: 0; height: 30px; border: 1px solid var(--stella-dock-border); border-radius: 4px; padding: 3px 5px; background: var(--stella-dock-button); color: var(--stella-star-label); color-scheme: dark; font-size: 11px; }
+.skyRows { display: flex; flex-direction: column; gap: 5px; }
+.skyRow { display: grid; grid-template-columns: 24px minmax(0,1fr) auto; gap: 7px; padding: 6px 0; border-bottom: 1px solid var(--stella-divider); align-items: center; }
+.skyRow small { color: var(--stella-muted); }
+.skyRow button { border: 0; padding: 0; background: transparent; color: var(--stella-text); text-align: left; }
+.moon { font-size: 30px; color: var(--stella-heading); }
+.progress { height: 3px; background: var(--stella-border); border-radius: 3px; margin: 10px 0; overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--stella-lilac); }
+.askForm textarea { min-height: 90px; height: auto; resize: vertical; }
+.askForm button { margin-top: 10px; }
+.answer { line-height: 1.8; overflow-wrap: anywhere; color: var(--stella-text); }
+.answer h2 { font-size: 17px; margin-top: 20px; }
+.answer h3 { font-size: 15px; margin-top: 16px; }
+.answer ul { padding-left: 18px; list-style: disc; }
+.answer p { margin-bottom: 12px; }
+.error { color: var(--stella-error); font-size: 12px; line-height: 1.6; margin: 10px 0; }
+.status { color: var(--stella-muted); font-size: 11px; margin: 8px 0; }
+.sceneNotice { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; pointer-events: none; color: var(--stella-muted); font-size: 13px; }
+.sceneNotice[data-error="true"] { pointer-events: auto; background: var(--stella-bg); padding: 24px; text-align: center; }
+.smallActions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.displayOnly { display: none; }
+@media (max-width: 1050px) {
+  .readingsPanel { width: 32%; }
+  .birthPanel { width: 34%; }
+  .brand { font-size: 20px; }
+  .readingsBody { padding: 12px; }
+}
+@media (max-width: 700px) {
+  .experience { min-height: 560px; }
+  .brand { top: 13px; left: 16px; transform: none; font-size: 21px; }
+  .birthPanel { top: 58px; right: 12px; width: calc(100% - 24px); max-height: calc(100% - 205px); }
+  .birthPanel[data-open="false"] { width: 170px; top: 9px; right: 58px; }
+  .panelHeading { padding: 11px 12px; font-size: 14px !important; }
+  .readingsPanel { top: auto; left: 12px; right: 12px; bottom: 95px; width: auto; max-height: 46%; }
+  .readingsPanel[data-mobile-open="false"] .readingsBody { display: none; }
+  .readingsPanel[data-mobile-open="true"] { height: 46%; }
+  .tabs { min-height: 43px; }
+  .tab { padding: 7px; font-size: 14px !important; }
+  .timeDock { bottom: 14px; padding: 7px; }
+  .timeButtons { gap: 4px; }
+  .timeButtons button { min-width: 28px; padding: 0 5px; height: 32px; }
+  .timeButtons input { width: 106px; height: 32px; }
+  .settings { width: min(280px,calc(100% - 24px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience *, .experience *::after { transition: none !important; }
+}

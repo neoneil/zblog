@@ -239,7 +239,9 @@ ${aspectsText}
       messages: [
         {
           role: "system",
-          content: systemPrompt,
+          content: body.language === "en"
+            ? systemPrompt + "\nFor this request, respond entirely in English, including all Markdown headings. Translate the requested section structure into English. Use English planet and sign names. This language instruction overrides the Chinese output instructions above."
+            : systemPrompt,
         },
         {
           role: "user",

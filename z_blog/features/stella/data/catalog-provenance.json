@@ -1,0 +1,23 @@
+{
+  "stars": 5190,
+  "magnitudeLimit": 6,
+  "magnitudeLimitedStars": 5070,
+  "namedStars": 464,
+  "fainterLineEndpoints": 3,
+  "supplementalD3HipIds": [
+    55203
+  ],
+  "constellations": 88,
+  "lineSegments": 743,
+  "endpointStars": 757,
+  "unresolvedEndpoints": 0,
+  "sourceSha256": {
+    "https://raw.githubusercontent.com/astronexus/HYG-Database/3bf37f4b2d5460e1278286320d1d62fab9b493c1/hyg/CURRENT/hygdata_v41.csv": "d9f69fd86bbf90a4e4d52b4c5c53eacfa6dfc0bfdef85bfd94f095e0bebe4ebd",
+    "https://raw.githubusercontent.com/ofrohn/d3-celestial/7e720a3de062059d4c5400a379146a601d9010e0/data/stars.8.json": "e3ec6cde89bae0dde064d91c1edb9ec53c3c40d5c12fdf5d30f9a4de5dbc2143",
+    "https://raw.githubusercontent.com/ofrohn/d3-celestial/7e720a3de062059d4c5400a379146a601d9010e0/data/constellations.lines.json": "294f66bef5d5cf50b1e17f16d2efa1d97a15131612c68dd935adef6e7373e13c",
+    "https://raw.githubusercontent.com/ofrohn/d3-celestial/7e720a3de062059d4c5400a379146a601d9010e0/data/constellations.json": "ab4ae692027cbc042c0d6791a84456a65eb7c55656107fd00c58ff6e55d4d8b2",
+    "https://raw.githubusercontent.com/ofrohn/d3-celestial/7e720a3de062059d4c5400a379146a601d9010e0/LICENSE": "a8c79239001ad4bea243d1796b85084e1fc39309c5c5a663930a1b46320254c6",
+    "https://raw.githubusercontent.com/astronexus/HYG-Database/3bf37f4b2d5460e1278286320d1d62fab9b493c1/LICENSE": "f404190403d31e0ce7223f4cb7af954485ad88077358330754dc5c892a856627",
+    "https://raw.githubusercontent.com/creativecommons/creativecommons.org/main/docroot/legalcode/by-sa_4.0.html": "d48546c6161cd2698445d184a859363a2436a6a3bcda655564730e3861e74a9e"
+  }
+}

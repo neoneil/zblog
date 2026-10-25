@@ -11,6 +11,7 @@ import { LanguageToggle, ThemeToggle } from "@/components/site/preference-contro
 import { usePreferences } from "@/components/site/preferences-provider";
 import { siteCopy } from "@/lib/i18n/copy";
 import Container from "./container";
+import StellaDropdown from "./stella-dropdown";
 
 type NavbarClientProps = {
   user: {
@@ -148,6 +149,8 @@ export default function NavbarClient({
             <Link href="/feishu-docs" className={navLinkClass}>
               {t(siteCopy.navFeishuDocs)}
             </Link>
+
+            <StellaDropdown />
 
             <Link
               href="/pricing"
@@ -295,6 +298,8 @@ export default function NavbarClient({
               >
                 {t(siteCopy.navFeishuDocs)}
               </Link>
+
+              <StellaDropdown mobile onNavigate={() => setMobileOpen(false)} />
 
               <Link
                 href="/pricing"

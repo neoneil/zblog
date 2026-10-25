@@ -2,6 +2,35 @@
 @plugin "@tailwindcss/typography";
 
 :root {
+  --stella-bg: #020205;
+  --stella-panel: rgba(3, 3, 7, .88);
+  --stella-text: #d6d2df;
+  --stella-heading: #d7cdb9;
+  --stella-muted: #8d879c;
+  --stella-faint: #696374;
+  --stella-white: #ffffff;
+  --stella-border: #2b2636;
+  --stella-divider: #1a1722;
+  --stella-control: #111014;
+  --stella-input: #1b1b1e;
+  --stella-input-border: #3b393e;
+  --stella-accent: #6530ac;
+  --stella-accent-dim: #21132e;
+  --stella-lilac: #b291dc;
+  --stella-purple-glow: rgba(121, 66, 183, .22);
+  --stella-reading: rgba(29, 19, 55, .55);
+  --stella-button: #493521;
+  --stella-button-hover: #604a2d;
+  --stella-button-border: #796143;
+  --stella-settings: rgba(24, 22, 34, .97);
+  --stella-star-label: #9eb9cd;
+  --stella-dock: rgba(5, 9, 15, .9);
+  --stella-dock-border: #283b4c;
+  --stella-dock-button: #121d29;
+  --stella-error: #f49c9e;
+}
+
+:root {
   color-scheme: light;
   --bg: #f7f6fa;
   --bg-soft: #eeebf3;
