@@ -2,6 +2,27 @@
 @plugin "@tailwindcss/typography";
 
 :root {
+  --explore-bg: #0f0c29;
+  --explore-surface: #19153b;
+  --explore-calendar: #19162f;
+  --explore-input: #15112c;
+  --explore-hover: #282043;
+  --explore-text: #e0e0e0;
+  --explore-muted: #9995aa;
+  --explore-title: #c5b5f5;
+  --explore-border: #30294f;
+  --explore-accent: #8065df;
+  --explore-white: #ffffff;
+  --explore-success: #4ade80;
+  --explore-success-border: #245642;
+  --explore-banner: #141e30;
+  --explore-warning: #f5b96a;
+  --explore-moon-light: #f6d86a;
+  --explore-moon-dark: #514064;
+  --explore-moon-shadow: #080c17;
+  --explore-moon-halo: rgba(231, 238, 255, .75);
+  --explore-moon-aura: rgba(171, 195, 255, .38);
+  --explore-color-scheme: dark;
   --stella-bg: #020205;
   --stella-panel: rgba(3, 3, 7, .88);
   --stella-text: #d6d2df;
@@ -28,6 +49,24 @@
   --stella-dock-border: #283b4c;
   --stella-dock-button: #121d29;
   --stella-error: #f49c9e;
+}
+
+html[data-theme="light"] {
+  --explore-bg: #f3f7fd;
+  --explore-surface: #ffffff;
+  --explore-calendar: #eaf1fb;
+  --explore-input: #ffffff;
+  --explore-hover: #e1ebfa;
+  --explore-text: #233349;
+  --explore-muted: #52647b;
+  --explore-title: #315a97;
+  --explore-border: #cfdaea;
+  --explore-accent: #426ab0;
+  --explore-success: #13704a;
+  --explore-success-border: #a7cbbd;
+  --explore-banner: #edf7f2;
+  --explore-warning: #955717;
+  --explore-color-scheme: light;
 }
 
 :root {

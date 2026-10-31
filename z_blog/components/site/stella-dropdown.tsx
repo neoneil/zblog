@@ -7,20 +7,10 @@ import {
   Moon, Orbit, RotateCcw, Sparkles, Sun, Telescope,
 } from "lucide-react";
 import { usePreferences } from "./preferences-provider";
+import { stellaTools, stellaHref } from "@/features/stella/lib/explore-config";
 
-const entries = [
-  { en: "Birth Chart Calculator", zh: "本命星盘计算器", icon: Orbit },
-  { en: "Compatibility", zh: "星盘配对", icon: Heart },
-  { en: "Birth Chart Guide", zh: "本命星盘指南", icon: BookOpen },
-  { en: "Today's Sky", zh: "今日星象", icon: Telescope },
-  { en: "Moon Calendar", zh: "月相日历", icon: CalendarDays },
-  { en: "Retrograde Tracker", zh: "逆行追踪", icon: RotateCcw },
-  { en: "Void of Course Moon", zh: "月亮空亡", icon: Moon },
-  { en: "Planets in Signs", zh: "行星落座", icon: Circle },
-  { en: "Numerology", zh: "数字命理", icon: Hash },
-  { en: "Birthday Horoscope", zh: "生日运势", icon: Sun },
-  { en: "Eclipses", zh: "日月食", icon: Eclipse },
-];
+const icons = [Orbit, Heart, BookOpen, Telescope, CalendarDays, RotateCcw, Moon, Circle, Hash, Sun, Eclipse];
+const entries = stellaTools.map((tool,index) => ({ ...tool, icon: icons[index] }));
 
 type StellaDropdownProps = {
   mobile?: boolean;
@@ -104,18 +94,12 @@ export default function StellaDropdown({ mobile = false, onNavigate }: StellaDro
             const content = <><Icon aria-hidden="true" className="h-4 w-4 shrink-0" /><span className="min-w-0 break-words">{t(entry)}</span></>;
             return (
               <li key={entry.en}>
-                {index === 0 ? (
                   <Link
-                    ref={linkRef}
-                    href="/stella"
+                    ref={index === 0 ? linkRef : undefined}
+                    href={stellaHref(entry.slug)}
                     className={`${itemClass} text-[var(--text)] transition hover:bg-[var(--card-muted)] focus-visible:outline-2 focus-visible:outline-[var(--primary)]`}
                     onClick={() => { setOpen(false); onNavigate?.(); }}
                   >{content}</Link>
-                ) : (
-                  <button type="button" disabled className={`${itemClass} cursor-not-allowed text-[var(--text-soft)] opacity-75`}>
-                    {content}
-                  </button>
-                )}
               </li>
             );
           })}

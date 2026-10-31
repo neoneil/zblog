@@ -45,7 +45,7 @@ const BODIES = [
   ["pluto", Body.Pluto, "Pluto", "\u51a5\u738b\u661f"],
 ] as const;
 
-// Display conventions, not physical quantities: major aspects with a uniform 6-degree orb.
+// Legacy scene defaults to 6 degrees; Explore supplies per-aspect calendar limits.
 const ASPECTS = [
   ["conjunction", 0], ["sextile", 60], ["square", 90],
   ["trine", 120], ["opposition", 180],
@@ -81,9 +81,21 @@ export function getStarDirection(raDegrees: number, decDegrees: number, date: Da
  * wraparound. It is approximate at stations. No observer/horizon corrections.
  * API reference: https://github.com/cosinekitty/astronomy/blob/master/source/js/README.md
  */
-export function getSkySnapshot(date: Date): SkySnapshot {
+export const EXPLORE_ASPECT_ORBS: Record<string, number> = {
+  conjunction: 8, sextile: 4, square: 7, trine: 7, opposition: 8,
+};
+
+export function getExploreSkySnapshot(date: Date): SkySnapshot {
+  const snapshot = getSkySnapshot(date, EXPLORE_ASPECT_ORBS);
+  snapshot.moon.illumination = (1 - Math.cos(snapshot.moon.phase * Math.PI / 180)) / 2;
+  return snapshot;
+}
+
+export function getSkySnapshot(date: Date, aspectOrb: number | Record<string, number> = 6): SkySnapshot {
   const time = date.getTime();
   if (!Number.isFinite(time)) throw new RangeError("getSkySnapshot requires a valid Date");
+  const orbs = typeof aspectOrb === "number" ? [aspectOrb] : Object.values(aspectOrb);
+  if (orbs.some(orb => !Number.isFinite(orb) || orb < 0 || orb > 15)) throw new RangeError("Invalid aspect orb");
   const before = new Date(time - 30 * 60 * 1000);
   const after = new Date(time + 30 * 60 * 1000);
   const planets = BODIES.map(([key, body, label, labelZh]): SkyPlanet => {
@@ -107,7 +119,8 @@ export function getSkySnapshot(date: Date): SkySnapshot {
       const separation = Math.abs(signedAngle(a.longitude - b.longitude));
       for (const [type, angle] of ASPECTS) {
         const orb = Math.abs(separation - angle);
-        if (orb <= 6) aspects.push({ a: a.key, b: b.key, type, orb });
+        const limit = typeof aspectOrb === "number" ? aspectOrb : aspectOrb[type] ?? 6;
+        if (orb <= limit) aspects.push({ a: a.key, b: b.key, type, orb });
       }
     }
   }

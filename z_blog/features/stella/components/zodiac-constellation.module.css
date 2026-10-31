@@ -1,0 +1,53 @@
+.figure {
+  display: inline-block;
+  width: 56px;
+  height: 38px;
+  object-fit: contain;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.compact {
+  width: 40px;
+  height: 28px;
+}
+.tiny {
+  width: 28px;
+  height: 20px;
+}
+.table {
+  width: 64px;
+  height: 44px;
+}
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  vertical-align: middle;
+}
+.text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .label {
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+  .figure {
+    width: 48px;
+    height: 32px;
+  }
+  .compact {
+    width: 36px;
+    height: 24px;
+  }
+  .tiny {
+    width: 28px;
+    height: 20px;
+  }
+  .table {
+    width: 64px;
+    height: 44px;
+  }
+}

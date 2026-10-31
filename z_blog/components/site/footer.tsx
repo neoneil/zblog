@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "./container";
 import { LocalizedText } from "./preferences-provider";
 import { footerColumns, siteCopy } from "@/lib/i18n/copy";
+import { stellaTools, stellaHref } from "@/features/stella/lib/explore-config";
 
 export default function Footer() {
   return (
@@ -40,6 +41,12 @@ export default function Footer() {
             ))}
           </div>
 
+          <nav aria-label="Stella Explore" className="mt-10 border-t border-[var(--border)] pt-6">
+            <h3 className="mb-4 text-sm font-semibold text-[var(--text-faint)]"><LocalizedText copy={{ zh: "Stella · 探索星象", en: "Stella · Explore" }} /></h3>
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3 lg:grid-cols-4">
+              {stellaTools.map(tool => <li key={tool.slug}><Link href={stellaHref(tool.slug)} className="text-[var(--text-soft)] transition hover:text-[var(--text)]"><LocalizedText copy={tool} /></Link></li>)}
+            </ul>
+          </nav>
           <div className="mt-10 flex flex-col gap-3 border-t border-[var(--border)] pt-6 text-sm text-[var(--text-faint)] sm:flex-row sm:items-center sm:justify-between">
             <p>
               © 2026 <LocalizedText copy={siteCopy.brand} />.{" "}
