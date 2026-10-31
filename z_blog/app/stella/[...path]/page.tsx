@@ -9,6 +9,10 @@ import PlanetsExplorer from "@/features/stella/components/planets-explorer";
 import NumerologyExplorer from "@/features/stella/components/numerology-explorer";
 import BirthdayExplorer from "@/features/stella/components/birthday-explorer";
 import EclipseExplorer from "@/features/stella/components/eclipse-explorer";
+import ZodiacExplorer from "@/features/stella/components/zodiac-explorer";
+import HoroscopeExplorer from "@/features/stella/components/horoscope-explorer";
+import { getHoroscopeForecast } from "@/features/stella/lib/horoscope-calculations";
+import { signSlugs } from "@/features/stella/lib/explore-config";
 import {
   stellaTools,
   parsePair,
@@ -33,6 +37,12 @@ type Props = {
 };
 export async function generateMetadata({ params }: Props) {
   const { path } = await params;
+  if (path[0] === "zodiac" || path[0] === "horoscope") {
+    const sign = signSlugs.indexOf(path.at(-1) ?? "");
+    return {
+      title: `Stella · ${sign >= 0 ? `${signSlugs[sign]} · ` : ""}${path[0] === "zodiac" ? "Zodiac Signs" : "Horoscopes"}`,
+    };
+  }
   const tool = stellaTools.find((t) => t.slug === path[0]);
   return { title: tool ? `Stella · ${tool.en}` : "Stella" };
 }
@@ -43,6 +53,33 @@ export default async function StellaExplorePage({
   const { path } = await params,
     query = await searchParams;
   const [slug, detail] = path;
+  if (slug === "zodiac") {
+    const sign = detail ? signSlugs.indexOf(detail) : undefined;
+    if (path.length > 2 || sign === -1) notFound();
+    return <ZodiacExplorer sign={sign} />;
+  }
+  if (slug === "horoscope") {
+    const period =
+      detail === "monthly" || detail === "yearly" ? detail : "daily";
+    const signSlug = period === "daily" ? detail : path[2];
+    const sign = signSlug ? signSlugs.indexOf(signSlug) : undefined;
+    if (path.length > (period === "daily" ? 2 : 3) || sign === -1) notFound();
+    const date = new Date();
+    return (
+      <HoroscopeExplorer
+        period={period}
+        sign={sign}
+        time={date.toISOString()}
+        forecasts={
+          sign === undefined
+            ? signSlugs.map((_, index) =>
+                getHoroscopeForecast(index, period, date),
+              )
+            : [getHoroscopeForecast(sign, period, date)]
+        }
+      />
+    );
+  }
   if (path.length > 2) notFound();
   if (slug === "compatibility") {
     if (detail && !parsePair(detail)) notFound();

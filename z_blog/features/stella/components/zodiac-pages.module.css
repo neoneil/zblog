@@ -1,0 +1,437 @@
+@font-face {
+  font-family: "Stella Cinzel";
+  src: url("/stella/fonts/Cinzel.ttf") format("truetype");
+  font-weight: 400 900;
+  font-display: swap;
+}
+.root {
+  background: var(--explore-bg);
+  color: var(--explore-text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  min-height: 70svh;
+  padding: 32px 20px 64px;
+}
+.inner {
+  max-width: 1152px;
+  margin: auto;
+  min-width: 0;
+}
+.root h1,
+.root h2,
+.root h3 {
+  font-family: "Stella Cinzel", Georgia, serif;
+  letter-spacing: 0;
+  color: var(--explore-text);
+  line-height: 1.45;
+}
+.root h1 {
+  font-size: 28px;
+  margin: 12px 0;
+}
+.root h2 {
+  font-size: 20px;
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--explore-border);
+}
+.root h3 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.root p {
+  font-size: 14.4px;
+  color: var(--explore-muted);
+  line-height: 1.8;
+  margin: 12px 0;
+}
+.root a {
+  color: var(--explore-title);
+  text-decoration: none;
+}
+.root a:focus-visible {
+  outline: 2px solid var(--explore-accent);
+  outline-offset: 4px;
+}
+.root a:hover {
+  color: var(--explore-text);
+}
+.intro {
+  text-align: center;
+  margin: 0 auto 40px;
+}
+.intro p {
+  max-width: 760px;
+  margin: 16px auto;
+}
+.profileHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.symbol {
+  display: block;
+  color: var(--explore-title);
+  font-size: 64px;
+  line-height: 1.5;
+}
+.profileHeader > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--explore-muted);
+  font-size: 14px;
+  margin: 16px 0;
+}
+.meta > span + span {
+  border-left: 1px solid var(--explore-border);
+  padding-left: 10px;
+}
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 12px 0;
+  list-style: none;
+}
+.profileHeader .tags {
+  justify-content: center;
+}
+.tags li {
+  padding: 6px 12px;
+  border: 1px solid var(--explore-border);
+  border-radius: 6px;
+  background: var(--explore-surface);
+  color: var(--explore-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.section {
+  margin: 0 0 32px;
+  min-width: 0;
+}
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+.callout {
+  border-left: 3px solid var(--explore-accent);
+  padding-left: 20px;
+  margin: 32px 0;
+}
+.zodiacGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.signCard {
+  text-align: center;
+  border: 1px solid var(--explore-border);
+  border-radius: 8px;
+  background: var(--explore-surface);
+  padding: 20px 12px;
+  min-width: 0;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+.signCard:hover,
+.forecastCard:hover {
+  border-color: var(--explore-accent);
+  background: var(--explore-hover);
+}
+.signCard .symbol {
+  font-size: 40px;
+}
+.signCard strong {
+  display: block;
+  color: var(--explore-text);
+  font-size: 18px;
+  margin: 8px 0;
+}
+.signCard small {
+  display: block;
+  color: var(--explore-muted);
+  font-size: 12px;
+}
+.figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin: 6px 0;
+}
+.forecastGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+.forecastCard {
+  border: 1px solid var(--explore-border);
+  border-radius: 8px;
+  background: var(--explore-surface);
+  padding: 20px;
+  min-width: 0;
+}
+.forecastCard > div {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.forecastCard .symbol {
+  font-size: 36px;
+}
+.forecastCard h2 {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+.forecastCard small {
+  display: block;
+  margin: 4px 0;
+  color: var(--explore-muted);
+}
+.forecastCard p {
+  margin-bottom: 0;
+}
+.forecastCard .preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.detailHeader {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px 20px;
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--explore-accent);
+  flex-wrap: wrap;
+}
+.detailHeader > .symbol {
+  grid-column: 1;
+  grid-row: 1;
+}
+.detailHeader > div:not(.figure) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-width: 0;
+}
+.detailHeader > .figure {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+}
+.detailHeader p {
+  margin: 0;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+.aside {
+  background: var(--explore-surface);
+  border: 1px solid var(--explore-border);
+  border-radius: 8px;
+  padding: 20px;
+  min-width: 0;
+}
+.aside h3 {
+  color: var(--explore-title);
+  font-size: 14px;
+  margin: 24px 0 12px;
+}
+.aside h3:first-child {
+  margin-top: 0;
+}
+.aside p,
+.aside li {
+  font-size: 14px;
+}
+.aside ul {
+  padding-left: 18px;
+  color: var(--explore-muted);
+  line-height: 2.3;
+}
+.aside li::marker {
+  color: var(--explore-title);
+}
+.asideLinks {
+  display: grid;
+  gap: 12px;
+  font-size: 14px;
+}
+.reading {
+  min-width: 0;
+}
+.energy {
+  background: var(--explore-surface);
+  border: 1px solid var(--explore-border);
+  border-radius: 8px;
+  padding: 20px;
+}
+.energy p:first-child {
+  margin-top: 0;
+}
+.energy p:last-child {
+  margin-bottom: 0;
+}
+.pairs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.pairs a,
+.otherSigns a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  border: 1px solid var(--explore-border);
+  background: var(--explore-surface);
+  color: var(--explore-text);
+  border-radius: 6px;
+  min-height: 52px;
+  padding: 12px;
+  font-size: 13px;
+  text-align: center;
+}
+.cta {
+  text-align: center;
+  margin: 32px 0;
+  padding: 32px 20px;
+  border: 1px solid var(--explore-border);
+  background: var(--explore-surface);
+  border-radius: 8px;
+}
+.cta h2 {
+  border: 0;
+}
+.root .primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  background: var(--explore-accent);
+  color: var(--explore-white);
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+.root .primary:hover {
+  background: var(--explore-title);
+  color: var(--explore-bg);
+}
+.otherSigns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.periods {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 0 32px;
+}
+.periods a {
+  padding: 8px 16px;
+  border-bottom: 2px solid transparent;
+  font-size: 14px;
+}
+.periods a[aria-current="page"] {
+  border-color: var(--explore-accent);
+  color: var(--explore-text);
+}
+.tableWrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--explore-border);
+  color: var(--explore-muted);
+  vertical-align: top;
+}
+.table th {
+  color: var(--explore-text);
+}
+.table td:first-child {
+  white-space: nowrap;
+}
+.note {
+  border-top: 1px solid var(--explore-border);
+  padding-top: 20px;
+  font-size: 12px;
+  color: var(--explore-muted);
+}
+@media (min-width: 640px) {
+  .detailHeader {
+    display: flex;
+    gap: 24px;
+  }
+  .root {
+    padding: 32px 24px 64px;
+  }
+  .root h1 {
+    font-size: 32px;
+  }
+  .zodiacGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .forecastGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pairs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .otherSigns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .zodiacGrid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .forecastGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+  .pairs {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .otherSigns {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}

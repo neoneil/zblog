@@ -22,8 +22,8 @@ export default function CategoriesSection() {
 
         <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--text-soft)] sm:text-base">
           {t({
-            zh: "从儿童理解、教学实践、家庭教育与教师反思四个方向，统一承接文章与后续课程内容。",
-            en: "Discover the four main directions of the site through ideas on children, learning, family education, and teacher reflection.",
+            zh: "从占星工具、十二星座、星座运势与内心书写，发现值得停留的主题。",
+            en: "Explore astrology tools, zodiac signs, horoscopes, and your inner world.",
           })}
         </p>
       </div>
@@ -60,7 +60,7 @@ export default function CategoriesSection() {
 
               <div className="mt-auto flex justify-center">
                 <Link
-                  href={`/categories/${category.slug}`}
+                  href={category.href ?? `/categories/${category.slug}`}
                   className={`topic-btn topic-btn-${category.buttonVariant}`}
                 >
                   {t({ zh: "探索主题", en: "Explore Topics" })}

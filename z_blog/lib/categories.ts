@@ -9,44 +9,47 @@ export type CategoryItem = {
   description: LocalizedCategoryCopy;
   backgroundImage: string;
   buttonVariant: "green" | "gold" | "blue" | "rose";
+  href?: string;
 };
 
 export const categories: CategoryItem[] = [
   {
     slug: "understanding-children",
     title: {
-      zh: "理解儿童",
-      en: "Words & Symbols",
+      zh: " Stella 独家占星工具",
+      en: "Stella Astrology Tools",
     },
     description: {
-      zh: "理解游戏为什么对幼儿发展至关重要，也更细腻地看见儿童的情绪需要。",
-      en: "Why play is essential for early childhood development and how to better understand children’s emotional needs.",
+      zh: "从出生星盘、星座配对到月亮日历与日月食，探索十一种认识星象的方式。",
+      en: "Explore eleven astrology tools, from birth charts and compatibility to moon calendars and eclipses.",
     },
     backgroundImage: "/category-cards/understanding-bg.png",
     buttonVariant: "green",
   },
   {
     slug: "teaching-practice",
+    href: "/stella/zodiac",
     title: {
-      zh: "教学实践",
-      en: "The Language of Self",
+      zh: "十二星座",
+      en: "Zodiac Signs",
     },
     description: {
-      zh: "记录以游戏为本的学习、课堂策略，以及如何设计更有意义的学习经验。",
-      en: "Reflections on play-based learning, classroom strategies, and designing meaningful learning experiences.",
+      zh: "认识十二星座的性格、优势与成长课题，探索太阳、月亮、上升星座及星座配对。",
+      en: "Discover all twelve zodiac signs, their personalities, strengths and growth themes, with Sun, Moon, Rising and compatibility insights.",
     },
     backgroundImage: "/category-cards/teaching-bg.png",
     buttonVariant: "gold",
   },
   {
     slug: "family-education",
+    href: "/stella/horoscope",
     title: {
-      zh: "家庭教育",
-      en: "Stories in the Stars",
+      zh: "星座运势",
+      en: "Horoscopes",
     },
     description: {
-      zh: "分享父母如何在家庭中支持学习，并建立积极的家园合作关系。",
-      en: "Ideas on how parents can support learning at home and build positive parent-teacher partnerships.",
+      zh: "阅读十二星座的每日、每月与年度运势，关注关系、事业、个人成长与重要星象日期。",
+      en: "Read daily, monthly and yearly horoscopes for all twelve signs, exploring relationships, career, personal growth and key astrological dates.",
     },
     backgroundImage: "/category-cards/family-bg.png",
     buttonVariant: "blue",
