@@ -12,6 +12,7 @@ import { usePreferences } from "@/components/site/preferences-provider";
 import { siteCopy } from "@/lib/i18n/copy";
 import Container from "./container";
 import StellaDropdown from "./stella-dropdown";
+import { CartLink } from "@/features/services/components/shop-shared";
 
 type NavbarClientProps = {
   user: {
@@ -78,6 +79,8 @@ export default function NavbarClient({
             {t(siteCopy.brand)}
           </Link>
 
+          <div className="ml-auto 2xl:hidden"><CartLink /></div>
+
           <button
             type="button"
             aria-label="切换导航菜单"
@@ -126,6 +129,10 @@ export default function NavbarClient({
               {t(siteCopy.navAbout)}
             </Link>
 
+            <Link href="/services" className={navLinkClass}>
+              {t({ en: "Services", zh: "课程与服务" })}
+            </Link>
+
             <Link href="/astroplate" className={navLinkClass}>
               {t(siteCopy.navAstroplate)}
             </Link>
@@ -151,6 +158,8 @@ export default function NavbarClient({
             </Link>
 
             <StellaDropdown />
+
+            <CartLink />
 
             <Link
               href="/pricing"
@@ -249,6 +258,10 @@ export default function NavbarClient({
                 onClick={() => setMobileOpen(false)}
               >
                 {t(siteCopy.navAbout)}
+              </Link>
+
+              <Link href="/services" className={mobileLinkClass} onClick={() => setMobileOpen(false)}>
+                {t({ en: "Services", zh: "课程与服务" })}
               </Link>
 
               <Link

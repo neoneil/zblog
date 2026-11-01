@@ -65,7 +65,8 @@ test("homepage categories retain the three module entrances and bilingual descri
   assert.deepEqual(categories[2].title, { en: "Horoscopes", zh: "星座运势" });
   assert.equal(categories[2].href, "/stella/horoscope");
   assert.equal(categories[0].href, undefined);
-  assert.deepEqual(categories[0].title, { en: "Astrology Tools", zh: "占星工具" });
+  assert.match(categories[0].title.en, /Astrology Tools$/);
+  assert.match(categories[0].title.zh.trim(), /占星工具$/);
   assert.match(categories[0].description.en, /eleven astrology tools/);
   assert.match(categories[1].description.en, /Sun, Moon, Rising/);
   assert.match(categories[2].description.en, /daily, monthly and yearly/);

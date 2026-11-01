@@ -1,0 +1,102 @@
+.about,
+.contact,
+.newsletter {
+  max-width: 952px;
+  padding: 48px 24px;
+  margin: 0 auto;
+}
+.about {
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.about h1 {
+  font-size: 32px;
+  margin: 12px 0 24px;
+  color: var(--primary);
+}
+.about p,
+.newsletter p {
+  color: var(--text-soft);
+  line-height: 1.9;
+  margin: 16px auto;
+  max-width: 760px;
+}
+.about .eyebrow {
+  font-size: 14px;
+  color: var(--text-faint);
+}
+.contact h2,
+.newsletter h2 {
+  text-align: center;
+  font-size: 28px;
+  color: var(--primary);
+  margin-bottom: 40px;
+}
+.form {
+  display: grid;
+  gap: 24px;
+}
+.form label {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-soft);
+  min-width: 0;
+}
+.row {
+  display: grid;
+  gap: 16px;
+}
+.message {
+  min-height: 210px;
+  resize: vertical;
+}
+.form > button {
+  justify-self: start;
+  gap: 10px;
+  min-width: 112px;
+}
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.success {
+  color: var(--success);
+}
+.error {
+  color: var(--danger);
+}
+.newsletter {
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.newsletter h2 {
+  margin-bottom: 12px;
+}
+.subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+  margin: 24px auto 0;
+}
+.subscribe button {
+  flex-shrink: 0;
+}
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .subscribe {
+    flex-direction: row;
+  }
+  .about,
+  .contact,
+  .newsletter {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}

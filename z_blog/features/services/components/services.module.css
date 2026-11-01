@@ -1,0 +1,457 @@
+.root {
+  min-height: 65svh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 48px 24px 64px;
+}
+.inner {
+  max-width: 1120px;
+  margin: auto;
+  min-width: 0;
+}
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.root h1 {
+  font-size: 30px;
+  line-height: 1.4;
+  color: var(--primary);
+  margin-bottom: 16px;
+  overflow-wrap: anywhere;
+}
+.root h2 {
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--primary);
+  margin: 24px 0 12px;
+}
+.root p,
+.root li {
+  color: var(--text-soft);
+  line-height: 1.85;
+}
+.root p {
+  margin: 12px 0;
+}
+.root a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: end;
+  padding: 20px 0;
+  border-block: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.toolbar label {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 200px;
+  max-width: 280px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+.toolbar p {
+  margin: 0 0 10px auto;
+  font-size: 14px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+}
+.productCard {
+  overflow: hidden;
+  border-radius: 8px;
+  height: 100%;
+}
+.productLink {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.cardImage {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--card-soft);
+  overflow: hidden;
+}
+.cardImage img {
+  object-fit: cover;
+  transition: transform 0.25s;
+}
+.productLink:hover img {
+  transform: scale(1.025);
+}
+.cardContent {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.cardContent h2 {
+  font-size: 19px;
+  margin: 0 0 16px;
+  color: var(--text);
+}
+.cardContent p {
+  margin: auto 0 0;
+  color: var(--primary);
+  font-weight: 600;
+}
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+.mainImage {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--card-soft);
+  margin: 0;
+}
+.mainImage img {
+  object-fit: contain;
+}
+.productInfo {
+  min-width: 0;
+}
+.productInfo h1 {
+  font-size: 28px;
+}
+.price {
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--primary) !important;
+}
+.minor {
+  font-size: 13px;
+  color: var(--text-faint) !important;
+}
+.buy {
+  display: grid;
+  gap: 16px;
+  padding: 16px 0 24px;
+  border-bottom: 1px solid var(--border);
+}
+.buy label {
+  display: grid;
+  gap: 8px;
+  width: max-content;
+  font-size: 14px;
+}
+.buy > button {
+  width: 100%;
+  gap: 10px;
+}
+.quantity {
+  display: inline-grid;
+  grid-template-columns: 40px 54px 40px;
+  align-items: center;
+  width: 134px;
+}
+.quantity button {
+  width: 40px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+}
+.quantity input {
+  border-radius: 0;
+  padding: 0 4px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+.quantity input::-webkit-inner-spin-button,
+.quantity input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.copy section {
+  margin: 32px 0;
+}
+.copy ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+.copy li {
+  margin: 10px 0;
+}
+.social {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  margin-top: 32px;
+}
+.social a {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+.back {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 32px;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+.recommend {
+  margin-top: 64px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.cartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.cartHeader a {
+  color: var(--primary);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.table tr {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.table td {
+  min-width: 0;
+}
+.table td:first-child {
+  grid-column: 1 / -1;
+}
+.table td:nth-child(3) {
+  justify-self: end;
+}
+.table td:last-child {
+  grid-column: 1 / -1;
+  text-align: right;
+}
+.table td[data-label]::before {
+  content: attr(data-label);
+  display: block;
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+.lineProduct {
+  display: flex;
+  align-items: start;
+  gap: 20px;
+}
+.lineProduct img {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.lineProduct a {
+  color: var(--text);
+  font-weight: 500;
+}
+.lineProduct button {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 0;
+  font-size: 13px;
+  color: var(--text-soft);
+  height: 28px;
+}
+.summary {
+  margin: 32px 0 0 auto;
+  max-width: 420px;
+  text-align: right;
+}
+.summary strong {
+  font-size: 22px;
+  color: var(--primary);
+}
+.summary button {
+  margin-top: 20px;
+  width: 100%;
+}
+.empty {
+  text-align: center;
+  padding: 60px 0;
+}
+.empty svg {
+  margin: 0 auto 24px;
+  color: var(--text-faint);
+}
+.empty a {
+  margin-top: 24px;
+}
+.cartLink {
+  position: relative;
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-soft);
+}
+.cartLink:hover {
+  color: var(--primary);
+  background: var(--card-muted);
+}
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 4px;
+  background: var(--primary);
+  color: var(--text-inverse);
+  border-radius: 50%;
+  font-size: 11px;
+  text-align: center;
+  font-weight: 700;
+}
+.popup {
+  position: fixed;
+  inset: 88px 16px auto auto;
+  margin: 0;
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100dvh - 112px);
+  overflow-y: auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+}
+.popup::backdrop {
+  background: color-mix(in srgb, var(--bg) 40%, transparent);
+}
+.popup header {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+.popup h2 {
+  font-size: 18px;
+  color: var(--primary);
+  margin: 0;
+  flex: 1;
+}
+.popup header > button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+}
+.popupProduct {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+.popupProduct img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+.popupProduct p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.popupActions {
+  display: grid;
+  gap: 12px;
+}
+.popupActions button,
+.popupActions a {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .root {
+    padding-top: 64px;
+  }
+}
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .detail {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 56px;
+  }
+  .table thead {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+  .table tr {
+    display: table-row;
+  }
+  .table th,
+  .table td {
+    text-align: left;
+    vertical-align: top;
+    padding: 24px 12px;
+  }
+  .table th {
+    color: var(--text-faint);
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .table td:first-child {
+    width: 50%;
+    padding-left: 0;
+  }
+  .table td:last-child,
+  .table th:last-child {
+    text-align: right;
+    padding-right: 0;
+  }
+  .table td[data-label]::before {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cardImage img {
+    transition: none;
+  }
+}

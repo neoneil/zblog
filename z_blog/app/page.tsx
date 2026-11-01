@@ -120,9 +120,9 @@ export default async function HomePage() {
             </div>
           </section>
 
-          <KnowledgeEntries />
-
           <CategoriesSection />
+
+          <KnowledgeEntries />
 
           <section className="w-full py-6 sm:py-8">
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

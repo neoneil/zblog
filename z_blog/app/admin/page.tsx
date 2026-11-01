@@ -69,6 +69,15 @@ export default async function AdminPage() {
 
       <PageSection className="pt-0">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {profile.role === "admin" && (
+            <FeatureCard
+              title="网页布局和会员详情"
+              description="查看 STELLARNESTS 首页架构、会员权益、收费草稿与支付邮件流程。仅为规划预览，不修改现有配置。"
+              href="/admin/site-plan"
+              badge="Planning"
+              meta="仅管理员"
+            />
+          )}
           {adminCards.map((card) => (
             <FeatureCard key={card.href} {...card} meta="管理" />
           ))}
