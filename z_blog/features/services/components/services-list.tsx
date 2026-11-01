@@ -10,15 +10,20 @@ import {
 } from "../lib/catalog";
 import { ProductCard, ShopShell, styles } from "./shop-shared";
 
-export default function ServicesList() {
+export default function ServicesList({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const { t } = usePreferences();
   const [filter, setFilter] = useState<ProductFilter>("all"),
     [sort, setSort] = useState<ProductSort>("title-asc");
   const selected = selectProducts(filter, sort);
-  return (
-    <ShopShell>
+  const Heading = embedded ? "h2" : "h1";
+  const content = (
+    <>
       <header className={styles.header}>
-        <h1>{t({ en: "Products", zh: "课程与服务" })}</h1>
+        <Heading>{t({ en: "Products", zh: "课程与服务" })}</Heading>
       </header>
       <div className={styles.toolbar}>
         <label>
@@ -77,6 +82,13 @@ export default function ServicesList() {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-    </ShopShell>
+    </>
+  );
+  return embedded ? (
+    <section id="home-services" className={styles.embedded}>
+      {content}
+    </section>
+  ) : (
+    <ShopShell>{content}</ShopShell>
   );
 }

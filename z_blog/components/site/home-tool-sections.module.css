@@ -1,0 +1,110 @@
+.section {
+  padding: 24px 0;
+  margin-bottom: 32px;
+}
+.section > header {
+  margin-bottom: 24px;
+}
+.section > header > p {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 8px;
+}
+.section h2 {
+  font-size: 24px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.grid,
+.additionalGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.entry {
+  min-width: 0;
+  height: 100%;
+  border-radius: 8px;
+}
+.entryContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px;
+}
+.entry svg {
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+.entry h3 {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.entry p {
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 16px 0 24px;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+.actions > a:not(:first-child) {
+  color: var(--primary);
+  font-size: 13px;
+}
+.additionalGrid > div:last-child {
+  display: block;
+}
+.compact {
+  padding: 16px;
+  min-width: 0;
+}
+.compact h2 {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+.compact .compactAction {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 36px;
+  font-size: 12px;
+  padding: 8px;
+  white-space: normal;
+}
+.compact .compactMedia {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 90px;
+  margin-bottom: 16px;
+}
+.compact .compactCopy {
+  max-width: 100%;
+  height: auto;
+}
+.compact p {
+  font-size: 13px;
+  line-height: 1.65;
+}
+.compact .compactItems {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+}
+.compact .compactItems > div {
+  padding: 6px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -43,11 +43,13 @@ export function ExploreShell({
   description,
   children,
   signs,
+  tools = stellaTools,
 }: {
   title: Copy;
   description: Copy;
   children: React.ReactNode;
   signs?: number[];
+  tools?: readonly (typeof stellaTools)[number][];
 }) {
   const { t } = useExplore();
   return (
@@ -68,7 +70,7 @@ export function ExploreShell({
         <section className={styles.section}>
           <h2>{t({ en: "Explore", zh: "探索星象" })}</h2>
           <div className={styles.grid}>
-            {stellaTools.map((tool) => (
+            {tools.map((tool) => (
               <Link
                 className={styles.link}
                 key={tool.slug}

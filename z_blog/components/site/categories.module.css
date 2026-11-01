@@ -1,0 +1,28 @@
+.homeGrid,
+.extrasGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.homeGrid .card,
+.extrasGrid .card {
+  min-width: 0;
+}
+.homeGrid .title,
+.extrasGrid .title {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+.homeGrid .action,
+.extrasGrid .action {
+  min-width: 0;
+  width: 100%;
+  padding: 10px 8px;
+  min-height: 44px;
+  font-size: 12px;
+}
+@media (min-width: 1024px) {
+  .homeGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

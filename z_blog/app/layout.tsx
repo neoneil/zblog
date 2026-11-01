@@ -7,10 +7,10 @@ import { PreferencesProvider } from "@/components/site/preferences-provider";
 
 export const metadata: Metadata = {
   title: {
-    default: "星语童年",
-    template: "%s | 星语童年",
+    default: "星辰之巢",
+    template: "%s | 星辰之巢",
   },
-  description: "星语童年提供亲子成长、星盘解析、塔罗 AI、视频与知识库内容体验。",
+  description: "身处混沌，始终自有中心",
 };
 
 export default function RootLayout({

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { usePreferences } from "@/components/site/preferences-provider";
+import styles from "./site/home-tool-sections.module.css";
 
 const items = [
   { zh: "托特塔罗牌阵", en: "Thoth Tarot Spreads" },
@@ -11,10 +12,13 @@ const items = [
   { zh: "静观与自我反思", en: "Contemplation & Reflection" },
 ];
 
-export default function Circle() {
+export default function Circle({ compact = false }: { compact?: boolean }) {
   const { language, t } = usePreferences();
   return (
-    <Link href={`/thoth-tarot/readings?lang=${language}`} className="relative block min-h-[230px] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--shadow-md)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] sm:p-6">
+    <Link
+      href={`/thoth-tarot/readings?lang=${language}`}
+      className={`${compact ? styles.compact : ""} relative block min-h-[230px] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--shadow-md)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] sm:p-6`}
+    >
       <div className="absolute inset-0 bg-[var(--section-gradient)]" />
 
       <div className="relative z-10 flex h-full flex-col justify-between gap-5">
@@ -28,11 +32,23 @@ export default function Circle() {
           </h2>
 
           <p className="mt-3 max-w-xl text-sm leading-6 text-[var(--text-soft)]">
-            {t({ zh: "选择适合此刻问题的牌阵，探索托特塔罗的象征、元素与生命之树，留下一段静观与自我反思的时间。", en: "Choose a spread for your question and explore the symbols, elements and Tree of Life of Thoth Tarot, with space for contemplation and self-reflection." })}
+            {t(
+              compact
+                ? {
+                    zh: "透特塔罗的牌阵、象征与元素。",
+                    en: "Spreads, symbols and elements of Thoth Tarot.",
+                  }
+                : {
+                    zh: "选择适合此刻问题的牌阵，探索托特塔罗的象征、元素与生命之树，留下一段静观与自我反思的时间。",
+                    en: "Choose a spread for your question and explore the symbols, elements and Tree of Life of Thoth Tarot, with space for contemplation and self-reflection.",
+                  },
+            )}
           </p>
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-2">
+        <div
+          className={`${compact ? styles.compactItems : ""} grid gap-2 sm:grid-cols-2`}
+        >
           {items.slice(0, 4).map((item) => (
             <div
               key={item.en}
@@ -45,7 +61,9 @@ export default function Circle() {
         </div>
 
         <div>
-          <span className={buttonVariants({ variant: "secondary", size: "sm" })}>
+          <span
+            className={`${buttonVariants({ variant: "secondary", size: "sm" })} ${compact ? styles.compactAction : ""}`}
+          >
             {t({ zh: "选择牌阵", en: "Choose Your Spread" })}
           </span>
         </div>

@@ -67,7 +67,7 @@ test("homepage categories retain the three module entrances and bilingual descri
   assert.equal(categories[0].href, undefined);
   assert.match(categories[0].title.en, /Astrology Tools$/);
   assert.match(categories[0].title.zh.trim(), /占星工具$/);
-  assert.match(categories[0].description.en, /eleven astrology tools/);
+  assert.match(categories[0].description.en, /eight astrology tools/);
   assert.match(categories[1].description.en, /Sun, Moon, Rising/);
   assert.match(categories[2].description.en, /daily, monthly and yearly/);
   for (const category of categories.slice(0, 3)) {
@@ -77,13 +77,33 @@ test("homepage categories retain the three module entrances and bilingual descri
   assert.equal(categories[3].href, undefined);
 });
 
-test("Astrology Tools reuses its card title and the navbar's eleven-entry registry", () => {
-  const page = readFileSync(new URL("../app/categories/understanding-children/page.tsx", import.meta.url), "utf8");
-  const overview = readFileSync(new URL("../features/stella/components/stella-tools-overview.tsx", import.meta.url), "utf8");
-  const shell = readFileSync(new URL("../features/stella/components/explore-shared.tsx", import.meta.url), "utf8");
+test("Astrology Tools derives its eight explorer links from the shared registry", () => {
+  const page = readFileSync(
+    new URL(
+      "../app/categories/understanding-children/page.tsx",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+  const overview = readFileSync(
+    new URL(
+      "../features/stella/components/stella-tools-overview.tsx",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+  const shell = readFileSync(
+    new URL(
+      "../features/stella/components/explore-shared.tsx",
+      import.meta.url,
+    ),
+    "utf8",
+  );
   assert.match(page, /StellaToolsOverview/);
   assert.doesNotMatch(page, /supabase/);
   assert.match(overview, /ExploreShell/);
   assert.match(overview, /title=\{categories\[0\]\.title\}/);
-  assert.match(shell, /stellaTools\.map/);
+  assert.match(shell, /tools = stellaTools/);
+  assert.match(shell, /tools\.map/);
+  assert.match(overview, /tools=\{stellaExplorerTools\}/);
 });

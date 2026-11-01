@@ -2,6 +2,9 @@
 @plugin "@tailwindcss/typography";
 
 :root {
+  --hero-brand-ink: #ecdca9;
+  --hero-brand-muted: #c5b89d;
+  --hero-brand-rule: rgba(236, 220, 169, .32);
   --explore-bg: #0f0c29;
   --explore-surface: #19153b;
   --explore-calendar: #19162f;

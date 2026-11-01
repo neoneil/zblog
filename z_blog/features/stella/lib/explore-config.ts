@@ -13,6 +13,9 @@ export const stellaTools = [
   { slug: "eclipse", en: "Eclipses", zh: "日月食" },
 ] as const;
 export const stellaHref = (slug: string) => `/stella${slug ? `/${slug}` : ""}`;
+export const stellaExplorerTools = stellaTools.filter(
+  (tool) => !["", "birth-chart", "numerology"].includes(tool.slug),
+);
 export const signSlugs = [
   "aries",
   "taurus",

@@ -68,7 +68,7 @@ export async function sendContactEmail(
       from: env.CONTACT_FROM_EMAIL,
       to: [env.CONTACT_TO_EMAIL],
       reply_to: message.email,
-      subject: "Website contact · Cosmic Childhood",
+      subject: "Website contact · Stellarnests",
       text: `Name: ${message.name || "Not provided"}\nEmail: ${message.email}\n\n${message.message}`,
     }),
     signal: AbortSignal.timeout(10000),

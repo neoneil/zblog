@@ -239,7 +239,7 @@ export default function SitePlanDocument() {
               </div>
               <p className={styles.callout}>
                 品牌目标统一为
-                STELLARNESTS，不再沿用原“星语童年”主题。本页只展示目标，不执行全站更名。
+                STELLARNESTS，不再沿用原“星辰之巢”主题。本页只展示目标，不执行全站更名。
               </p>
             </section>
 

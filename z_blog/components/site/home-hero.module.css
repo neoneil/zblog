@@ -1,0 +1,74 @@
+.content {
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+  color: var(--hero-brand-ink, var(--stella-heading));
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+}
+.content .eyebrow {
+  margin: 0 0 18px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--hero-brand-ink, var(--stella-heading));
+}
+.content .title {
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+  font-size: 32px;
+  font-weight: 750;
+  line-height: 1.2;
+  color: var(--hero-brand-ink, var(--stella-heading));
+  letter-spacing: 0;
+  margin: 0;
+}
+.title span {
+  display: block;
+  font-size: 25px;
+  line-height: 1.5;
+  margin-top: 16px;
+}
+.rule {
+  width: 100%;
+  max-width: 300px;
+  height: 1px;
+  margin: 24px auto;
+  background: var(--hero-brand-rule, var(--border-strong));
+}
+.content .motto {
+  color: var(--hero-brand-ink, var(--stella-heading));
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+.content .translation {
+  color: var(--hero-brand-muted, var(--stella-heading));
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0;
+}
+.content .actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: start;
+  gap: 8px;
+  margin-top: 28px;
+  text-align: left;
+}
+.actions > a {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  padding: 8px 4px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .actions > a { font-size: 14px; }
+}
+@media (min-width: 1024px) {
+  .stage .content { width: 36%; max-width: 400px; }
+  .content .eyebrow { font-size: 13px; }
+  .content .title { font-size: 36px; }
+}

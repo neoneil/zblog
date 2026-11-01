@@ -14,10 +14,10 @@ export const knowledgeEntries = [
 
 export function KnowledgeEntries() {
   const { t, language } = usePreferences();
-  return <section className="mb-14" aria-labelledby="thoth-heading">
+  return <section id="home-knowledge" className="mb-14" aria-labelledby="thoth-heading">
     <div className="mb-6"><p className="text-sm text-[var(--text-soft)]">{t({zh:'透特知识体系',en:'Thoth Knowledge'})}</p>
       <h2 id="thoth-heading" className="mt-2 text-2xl font-semibold">{t({zh:'从符号到连接',en:'Explore the correspondences'})}</h2></div>
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
       {knowledgeEntries.map(entry => <Link key={entry.slug} href={`/thoth/${entry.slug}?lang=${language}`} className="group block h-full">
         <Card className="h-full transition-colors group-hover:border-[var(--primary)]"><CardContent className="flex h-full flex-col gap-3">
           <Badge variant="secondary" className="self-start">{entry.en}</Badge>

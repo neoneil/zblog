@@ -9,6 +9,14 @@
   margin: auto;
   min-width: 0;
 }
+.embedded {
+  color: var(--text);
+  padding: 48px 0;
+}
+.embedded > .header h2 {
+  font-size: 28px;
+  color: var(--primary);
+}
 .header {
   text-align: center;
   margin-bottom: 40px;

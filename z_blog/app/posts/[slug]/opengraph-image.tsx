@@ -23,7 +23,7 @@ export default async function Image({
     .eq("status", "published")
     .single();
 
-  const title = post?.title ?? "星语童年";
+  const title = post?.title ?? "星辰之巢";
   const excerpt = post?.excerpt ?? "阅读最新文章";
 
   return new ImageResponse(

@@ -1,7 +1,7 @@
 import type { LocalizedCopy } from "@/components/site/preferences-provider";
 
 export const siteCopy = {
-  brand: { zh: "星语童年", en: "Cosmic Childhood" },
+  brand: { zh: "星辰之巢", en: "Stellarnests" },
   navHome: { zh: "首页", en: "Home" },
   navCategories: { zh: "主要分类", en: "Categories" },
   navResources: { zh: "资源", en: "Resources" },
@@ -16,7 +16,7 @@ export const siteCopy = {
   navAdmin: { zh: "管理后台", en: "Admin" },
   navLogin: { zh: "登录", en: "Log in" },
   navSignup: { zh: "注册", en: "Sign up" },
-  heroBadge: { zh: "星语童年", en: "Cosmic Childhood" },
+  heroBadge: { zh: "星辰之巢", en: "Stellarnests" },
   heroTitleLineOne: { zh: "用智慧、自然与星辰", en: "Wisdom, nature, and the stars" },
   heroTitleLineTwo: { zh: "陪伴孩子成长", en: "for a child's growing world" },
   heroDescription: {

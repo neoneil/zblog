@@ -29,6 +29,42 @@ const errors: Record<string, { en: string; zh: string }> = {
 };
 
 export default function AboutContact() {
+  return (
+    <PageShell>
+      <AboutSection />
+      <ContactSection />
+      <NewsletterPlaceholder />
+    </PageShell>
+  );
+}
+
+export function AboutSection({ embedded = false }: { embedded?: boolean }) {
+  const { t } = usePreferences();
+  const Heading = embedded ? "h2" : "h1";
+  return (
+    <section id={embedded ? "home-about" : undefined} className={styles.about}>
+      <p className={styles.eyebrow}>{t({ en: "About Us", zh: "关于我们" })}</p>
+      <Heading>{t({ en: "Stellarnests", zh: "星辰之巢" })}</Heading>
+      <p>
+        {t({
+          en: "We bring astrology, tarot and thoughtful learning into a space for curiosity, self-understanding and meaningful connection.",
+          zh: "我们把占星、塔罗与用心的学习汇聚在一起，为好奇心、自我理解与有意义的连接留出空间。",
+        })}
+      </p>
+      <p>
+        {t({
+          en: "Through birth charts, symbolic stories and structured courses, we explore patterns and perspectives while leaving room for your own experience and choices.",
+          zh: "通过出生星盘、象征故事与结构化课程，我们探索不同模式与视角，也始终为你的亲身经验和自主选择保留空间。",
+        })}
+      </p>
+      <ButtonLink href="/services" variant="secondary">
+        {t({ en: "Explore Services", zh: "浏览课程与服务" })}
+      </ButtonLink>
+    </section>
+  );
+}
+
+export function ContactSection() {
   const { t } = usePreferences();
   const [busy, setBusy] = useState(false),
     [status, setStatus] = useState<string | null>(null);
@@ -77,100 +113,76 @@ export default function AboutContact() {
     }
   }
   return (
-    <PageShell>
-      <section className={styles.about}>
-        <p className={styles.eyebrow}>
-          {t({ en: "About Us", zh: "关于我们" })}
-        </p>
-        <h1>{t({ en: "Cosmic Childhood", zh: "星语童年" })}</h1>
-        <p>
-          {t({
-            en: "We bring astrology, tarot and thoughtful learning into a space for curiosity, self-understanding and meaningful connection.",
-            zh: "我们把占星、塔罗与用心的学习汇聚在一起，为好奇心、自我理解与有意义的连接留出空间。",
-          })}
-        </p>
-        <p>
-          {t({
-            en: "Through birth charts, symbolic stories and structured courses, we explore patterns and perspectives while leaving room for your own experience and choices.",
-            zh: "通过出生星盘、象征故事与结构化课程，我们探索不同模式与视角，也始终为你的亲身经验和自主选择保留空间。",
-          })}
-        </p>
-        <ButtonLink href="/services" variant="secondary">
-          {t({ en: "Explore Services", zh: "浏览课程与服务" })}
-        </ButtonLink>
-      </section>
-      <section className={styles.contact} aria-labelledby="contact-title">
-        <h2 id="contact-title">{t({ en: "Contact", zh: "联系我们" })}</h2>
-        <form onSubmit={submit} className={styles.form} aria-busy={busy}>
-          <div className={styles.row}>
-            <label>
-              {t({ en: "Name", zh: "姓名" })}
-              <Input
-                name="name"
-                autoComplete="name"
-                maxLength={100}
-                disabled={busy}
-              />
-            </label>
-            <label>
-              {t({ en: "Email", zh: "邮箱" })} *
-              <Input
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                maxLength={254}
-                disabled={busy}
-              />
-            </label>
-          </div>
+    <section className={styles.contact} aria-labelledby="contact-title">
+      <h2 id="contact-title">{t({ en: "Contact", zh: "联系我们" })}</h2>
+      <form onSubmit={submit} className={styles.form} aria-busy={busy}>
+        <div className={styles.row}>
           <label>
-            {t({ en: "Message", zh: "留言" })} *
-            <Textarea
-              name="message"
-              required
-              maxLength={5000}
+            {t({ en: "Name", zh: "姓名" })}
+            <Input
+              name="name"
+              autoComplete="name"
+              maxLength={100}
               disabled={busy}
-              className={styles.message}
             />
           </label>
-          <div className={styles.honeypot} aria-hidden="true">
-            <label>
-              Website
-              <Input name="website" tabIndex={-1} autoComplete="off" />
-            </label>
-          </div>
-          {status && (
-            <p
-              role={status === "SENT" ? "status" : "alert"}
-              className={status === "SENT" ? styles.success : styles.error}
-            >
-              {status === "SENT"
-                ? t({
-                    en: "Thank you. Your message has been sent.",
-                    zh: "谢谢，你的留言已发送。",
-                  })
-                : t(errors[status] ?? errors.SEND_FAILED)}
-            </p>
+          <label>
+            {t({ en: "Email", zh: "邮箱" })} *
+            <Input
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              maxLength={254}
+              disabled={busy}
+            />
+          </label>
+        </div>
+        <label>
+          {t({ en: "Message", zh: "留言" })} *
+          <Textarea
+            name="message"
+            required
+            maxLength={5000}
+            disabled={busy}
+            className={styles.message}
+          />
+        </label>
+        <div className={styles.honeypot} aria-hidden="true">
+          <label>
+            Website
+            <Input name="website" tabIndex={-1} autoComplete="off" />
+          </label>
+        </div>
+        {status && (
+          <p
+            role={status === "SENT" ? "status" : "alert"}
+            className={status === "SENT" ? styles.success : styles.error}
+          >
+            {status === "SENT"
+              ? t({
+                  en: "Thank you. Your message has been sent.",
+                  zh: "谢谢，你的留言已发送。",
+                })
+              : t(errors[status] ?? errors.SEND_FAILED)}
+          </p>
+        )}
+        <Button type="submit" disabled={busy}>
+          {busy ? (
+            <LoaderCircle size={16} className="animate-spin" aria-hidden />
+          ) : (
+            <Send size={16} aria-hidden />
           )}
-          <Button type="submit" disabled={busy}>
-            {busy ? (
-              <LoaderCircle size={16} className="animate-spin" aria-hidden />
-            ) : (
-              <Send size={16} aria-hidden />
+          <span>
+            {t(
+              busy
+                ? { en: "Sending…", zh: "发送中…" }
+                : { en: "Send", zh: "发送" },
             )}
-            <span>
-              {t(
-                busy
-                  ? { en: "Sending…", zh: "发送中…" }
-                  : { en: "Send", zh: "发送" },
-              )}
-            </span>
-          </Button>
-        </form>
-      </section>
-      <NewsletterPlaceholder />
-    </PageShell>
+          </span>
+        </Button>
+      </form>
+    </section>
   );
 }
 
