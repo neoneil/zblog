@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 
-export type ContactMessage = { name: string; email: string; message: string };
+export type ContactMessage = { name: string; email: string; message: string; wechat?: string };
 type Environment = Record<string, string | undefined>;
 type Send = (
   message: ContactMessage,
@@ -22,6 +22,9 @@ export function validateContact(value: unknown): ContactMessage | null {
   const name = v.name.trim(),
     email = v.email.trim(),
     message = v.message.trim();
+  if (v.wechat !== undefined && typeof v.wechat !== "string") return null;
+  const wechat = typeof v.wechat === "string" ? v.wechat.trim() : "";
+  if (wechat.length > 100 || /[\x00-\x1f\x7f]/.test(wechat)) return null;
   if (
     name.length > 100 ||
     /[\r\n\x00-\x1f\x7f]/.test(name) ||
@@ -33,7 +36,7 @@ export function validateContact(value: unknown): ContactMessage | null {
     /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(message)
   )
     return null;
-  return { name, email, message };
+  return { name, email, message, ...(wechat ? { wechat } : {}) };
 }
 
 export function createContactLimiter() {
@@ -69,7 +72,7 @@ export async function sendContactEmail(
       to: [env.CONTACT_TO_EMAIL],
       reply_to: message.email,
       subject: "Website contact · Stellarnests",
-      text: `Name: ${message.name || "Not provided"}\nEmail: ${message.email}\n\n${message.message}`,
+      text: `Name: ${message.name || "Not provided"}\nEmail: ${message.email}\nWeChat: ${message.wechat || "Not provided"}\n\n${message.message}`,
     }),
     signal: AbortSignal.timeout(10000),
   });

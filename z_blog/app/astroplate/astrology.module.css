@@ -1,0 +1,19 @@
+.page p,
+.page label > span,
+.page div:global(.text-sm),
+.page .infoRow > div {
+  color: var(--archive-text);
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+@media (min-width: 640px) {
+  .page p,
+  .page label > span,
+  .page div:global(.text-sm),
+  .page .infoRow > div {
+    font-size: 18px;
+    line-height: 32px;
+  }
+}

@@ -5,10 +5,12 @@ import { usePreferences } from "@/components/site/preferences-provider";
 import { Select } from "@/components/ui/select";
 import {
   selectProducts,
+  products,
   type ProductFilter,
   type ProductSort,
 } from "../lib/catalog";
 import { ProductCard, ShopShell, styles } from "./shop-shared";
+import archiveStyles from "@/features/thoth/components/knowledge-entries.module.css";
 
 export default function ServicesList({
   embedded = false,
@@ -17,13 +19,17 @@ export default function ServicesList({
 }) {
   const { t } = usePreferences();
   const [filter, setFilter] = useState<ProductFilter>("all"),
-    [sort, setSort] = useState<ProductSort>("title-asc");
-  const selected = selectProducts(filter, sort);
+    [sort, setSort] = useState<ProductSort | "featured">("featured");
+  const selected = sort === "featured" ? products.filter((item) => filter === "all" || item.category === filter) : selectProducts(filter, sort);
   const Heading = embedded ? "h2" : "h1";
   const content = (
     <>
       <header className={styles.header}>
-        <Heading>{t({ en: "Products", zh: "课程与服务" })}</Heading>
+        <Heading>{t({ en: "THE ARCANE SHOP", zh: "奥秘商店" })}</Heading>
+        <div className={`${archiveStyles.subtitle} mt-3`}>{t({
+          en: "From Ancient Wisdom to Everyday Magic — Discover Courses, Readings & Mystical Treasures.",
+          zh: "从古老智慧到日常魔法——探索神秘学课程、专属解读与魔法珍藏。",
+        })}</div>
       </header>
       <div className={styles.toolbar}>
         <label>
@@ -42,6 +48,7 @@ export default function ServicesList({
             <option value="readings">
               {t({ en: "Readings", zh: "解读服务" })}
             </option>
+            <option value="physical">{t({ en: "Physical goods", zh: "实物商品" })}</option>
           </Select>
         </label>
         <label>
@@ -49,8 +56,9 @@ export default function ServicesList({
           <Select
             aria-label={t({ en: "Sort by", zh: "排序" })}
             value={sort}
-            onChange={(event) => setSort(event.target.value as ProductSort)}
+            onChange={(event) => setSort(event.target.value as ProductSort | "featured")}
           >
+            <option value="featured">{t({ en: "Featured", zh: "推荐顺序" })}</option>
             {(
               [
                 ["title-asc", { en: "Alphabetically, A-Z", zh: "名称 A-Z" }],
@@ -77,10 +85,13 @@ export default function ServicesList({
           })}
         </p>
       </div>
-      <div className={styles.grid}>
-        {selected.map((product) => (
+      <div className={styles.onlineGrid}>
+        {selected.filter((product) => product.category !== "physical").map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
+      </div>
+      <div className={styles.physicalGrid}>
+        {selected.filter((product) => product.category === "physical").map((product) => <ProductCard key={product.id} product={product} />)}
       </div>
     </>
   );

@@ -3,6 +3,9 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import type { AiAccessStatus } from "@/features/billing/lib/types";
+import { usePreferences } from "@/components/site/preferences-provider";
+import { astroCopy, astroConsultationZh } from "./copy";
+import styles from "./astrology.module.css";
 import { NatalWheelCN } from "./natal-wheel-cn-v3";
 import { calculateNatalChart, DEFAULT_FORM, HOUSE_SYSTEM_ZH, ZODIAC_ZH, isRecord, type BirthForm, type ChartPointJson, type OpenAIChartJson } from "@/lib/astrology/natal-chart";
 
@@ -57,6 +60,8 @@ const INPUT_CLASS =
   "w-full rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--text)] outline-none transition placeholder:text-[var(--text-faint)] focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary-soft)]";
 
 export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
+  const { t, language } = usePreferences();
+  const tr = (value: string) => language === "zh" ? astroConsultationZh[value] ?? value : astroCopy[value] ?? value;
   const [mounted, setMounted] = useState(false);
   const [form, setForm] = useState<BirthForm>(DEFAULT_FORM);
   const [submittedForm, setSubmittedForm] = useState<BirthForm>(DEFAULT_FORM);
@@ -229,6 +234,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
         },
         body: JSON.stringify({
           question: userQuestion,
+          language,
           chartJson,
         }),
       });
@@ -240,16 +246,16 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
           setDailyLimitReached(true);
         }
 
-        throw new Error(data?.error || "AI 解读生成失败。");
+        throw new Error(data?.error || tr("AI 解读生成失败。"));
       }
 
-      setReading(data?.reading || "暂时没有生成解读。");
+      setReading(data?.reading || tr("暂时没有生成解读。"));
       if (!accessStatus.isAdmin && !accessStatus.isPaid) {
         setDailyLimitReached(true);
       }
     } catch (error) {
       setReadingError(
-        error instanceof Error ? error.message : "AI 解读生成失败。",
+        error instanceof Error ? error.message : tr("AI 解读生成失败。"),
       );
     } finally {
       setReadingLoading(false);
@@ -257,15 +263,15 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
   }
 
   const accessLabel = accessStatus.isAdmin
-    ? "Admin 无限制使用"
+    ? null
     : accessStatus.isPaid
-      ? "已开通付费权限，无限制使用"
+      ? tr("已开通付费权限，无限制使用")
       : dailyLimitReached
-        ? "今日免费 AI 解读次数已用完"
-        : "普通用户每日可免费 AI 解读 1 次";
+        ? tr("今日免费 AI 解读次数已用完")
+        : tr("普通用户每日可免费 AI 解读 1 次");
 
   return (
-    <main className="min-h-screen bg-[var(--card-soft)] px-4 py-5 text-[var(--primary)] sm:px-5 md:px-6 md:py-8 lg:px-8">
+    <main className={`${styles.page} min-h-screen bg-[var(--card-soft)] px-4 py-5 text-[var(--primary)] sm:px-5 md:px-6 md:py-8 lg:px-8`}>
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-[var(--bg-soft)]" />
         <div className="absolute inset-0 opacity-70 [background-image:radial-gradient(var(--primary-soft)_0.8px,transparent_0.8px)] [background-size:34px_34px]" />
@@ -275,37 +281,30 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
       <div className="relative mx-auto max-w-[1600px]">
         <div className="mb-6 flex flex-col gap-4 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-3 inline-flex rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--primary)] shadow-[var(--shadow-md)]">
-              星盘 Natal Chart
-            </p>
             <h1 className="text-2xl font-semibold tracking-tight text-[var(--text)] sm:text-3xl md:text-5xl">
-              出生星盘解析
+              {t({ zh: "本命星图", en: "NATAL CHART" })}
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--primary)] md:text-base">
-              先输入出生信息，再点击按钮生成星盘。右侧会生成星盘，并进行AI解读。
+              {t({ zh: "探索核心星体、宫位与宇宙能量节奏，开启更清晰的自我认知之旅。", en: "Explore Your Key Planets, Houses, and Cosmic Rhythms — Discover a Clearer Path to Self-Understanding." })}
             </p>
-            <p className="mt-3 inline-flex rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1.5 text-xs font-medium text-[var(--primary)] shadow-[var(--shadow-sm)]">
+            {accessLabel && <p className="mt-3 inline-flex rounded-full border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1.5 text-xs font-medium text-[var(--primary)] shadow-[var(--shadow-sm)]">
               {accessLabel}
-            </p>
+            </p>}
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
           <section className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6 xl:col-span-1">
             <div className="mb-5">
-              <h2 className="text-[32px] font-semibold leading-none text-[var(--text)]">
-                出生信息
-              </h2>
-              <p className="mt-3 text-sm text-[var(--primary)]">
-                不知道经纬度的话，可以都填 0，不影响生成。
-              </p>
+              <h2 className="text-[32px] font-semibold leading-none text-[var(--text)]">{tr("出生信息")}</h2>
+              <p className="mt-3 text-sm text-[var(--primary)]">{tr("不知道经纬度的话，可以都填 0，不影响生成。")}</p>
             </div>
 
             <div className="grid gap-4">
-              <Field label="姓名">
+              <Field label={tr("姓名")}>
                 <input
                   className={INPUT_CLASS}
-                  placeholder="可留空"
+                  placeholder={tr("可留空")}
                   value={form.name}
                   onChange={(e) =>
                     setForm((prev) => ({ ...prev, name: e.target.value }))
@@ -314,7 +313,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
               </Field>
 
               <div className="grid grid-cols-3 gap-4">
-                <Field label="出生年">
+                <Field label={tr("出生年")}>
                   <input
                     className={INPUT_CLASS}
                     type="number"
@@ -328,7 +327,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                   />
                 </Field>
 
-                <Field label="出生月">
+                <Field label={tr("出生月")}>
                   <input
                     className={INPUT_CLASS}
                     type="number"
@@ -344,7 +343,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                   />
                 </Field>
 
-                <Field label="出生日">
+                <Field label={tr("出生日")}>
                   <input
                     className={INPUT_CLASS}
                     type="number"
@@ -362,7 +361,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <Field label="出生小时">
+                <Field label={tr("出生小时")}>
                   <input
                     className={INPUT_CLASS}
                     type="number"
@@ -378,7 +377,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                   />
                 </Field>
 
-                <Field label="出生分钟">
+                <Field label={tr("出生分钟")}>
                   <input
                     className={INPUT_CLASS}
                     type="number"
@@ -396,11 +395,11 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
               </div>
 
               <div className="space-y-3">
-                <Field label="出生城市 / 城市, 国家">
+                <Field label={tr("出生城市 / 城市, 国家")}>
                   <div className="flex items-stretch gap-3">
                     <input
                       className={`${INPUT_CLASS} min-w-0 flex-1`}
-                      placeholder="例如：悉尼, 澳大利亚"
+                      placeholder={tr("例如：悉尼, 澳大利亚")}
                       value={cityQuery}
                       onChange={(e) => setCityQuery(e.target.value)}
                     />
@@ -410,30 +409,27 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                       disabled={geoLoading}
                       className="shrink-0 min-w-[116px] rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm font-medium text-[var(--primary)] transition hover:border-[var(--border)] hover:bg-[var(--card-soft)] disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      {geoLoading ? "查询中..." : "自动查询"}
+                      {geoLoading ? tr("查询中...") : tr("自动查询")}
                     </button>
                   </div>
                 </Field>
 
-                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">
-                  可以输入城市名自动填写经纬度。建议写成“城市, 国家”，例如
-                  Melbourne, Australia，这样结果更稳定。
-                </div>
+                <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">{tr("可以输入城市名自动填写经纬度。建议写成“城市, 国家”，例如 Melbourne, Australia，这样结果更稳定。")}</div>
 
                 {geoError ? (
                   <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">
-                    {geoError}
+                    {tr(geoError)}
                   </div>
                 ) : null}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <Field label="纬度 Latitude">
+                <Field label={tr("纬度 Latitude")}>
                   <input
                     className={INPUT_CLASS}
                     type="number"
                     step="0.0001"
-                    placeholder="不知道可填 0"
+                    placeholder={tr("不知道可填 0")}
                     value={form.latitude}
                     onChange={(e) =>
                       setForm((prev) => ({
@@ -444,12 +440,12 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                   />
                 </Field>
 
-                <Field label="经度 Longitude">
+                <Field label={tr("经度 Longitude")}>
                   <input
                     className={INPUT_CLASS}
                     type="number"
                     step="0.0001"
-                    placeholder="不知道可填 0"
+                    placeholder={tr("不知道可填 0")}
                     value={form.longitude}
                     onChange={(e) =>
                       setForm((prev) => ({
@@ -461,12 +457,9 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                 </Field>
               </div>
 
-              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">
-                提示：经纬度会影响上升 Ascendant、天顶 Midheaven、宫位 Houses
-                等结果。 如果用户不知道，也可以直接填 0，先生成可用版本。
-              </div>
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm leading-7 text-[var(--primary)]">{tr("提示：经纬度会影响上升 Ascendant、天顶 Midheaven、宫位 Houses 等结果。 如果用户不知道，也可以直接填 0，先生成可用版本。")}</div>
 
-              <Field label="宫位系统 House System">
+              <Field label={tr("宫位系统 House System")}>
                 <select
                   className={INPUT_CLASS}
                   value={form.houseSystem}
@@ -477,19 +470,17 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                     }))
                   }
                 >
-                  <option value="placidus">普拉西德制</option>
-                  <option value="koch">柯赫制</option>
-                  <option value="campanus">坎帕努斯制</option>
-                  <option value="whole-sign">整宫制</option>
-                  <option value="equal-house">等宫制</option>
-                  <option value="regiomontanus">
-                    雷吉蒙塔努斯制 Regiomontanus
-                  </option>
-                  <option value="topocentric">地平制</option>
+                  <option value="placidus">{tr("普拉西德制")}</option>
+                  <option value="koch">{tr("柯赫制")}</option>
+                  <option value="campanus">{tr("坎帕努斯制")}</option>
+                  <option value="whole-sign">{tr("整宫制")}</option>
+                  <option value="equal-house">{tr("等宫制")}</option>
+                  <option value="regiomontanus">{tr("雷吉蒙塔努斯制 Regiomontanus")}</option>
+                  <option value="topocentric">{tr("地平制")}</option>
                 </select>
               </Field>
 
-              <Field label="黄道类型">
+              <Field label={tr("黄道类型")}>
                 <select
                   className={INPUT_CLASS}
                   value={form.zodiac}
@@ -500,8 +491,8 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                     }))
                   }
                 >
-                  <option value="tropical">回归黄道</option>
-                  <option value="sidereal">恒星黄道</option>
+                  <option value="tropical">{tr("回归黄道")}</option>
+                  <option value="sidereal">{tr("恒星黄道")}</option>
                 </select>
               </Field>
 
@@ -514,7 +505,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                 }}
                 className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-soft)] px-4 py-4 text-base font-semibold text-[var(--primary)] shadow-[var(--shadow-md)] transition hover:brightness-110"
               >
-                {calcState.isLoading ? "生成中..." : "生成星盘 ✦"}
+                {calcState.isLoading ? tr("生成中...") : tr("生成星盘 ✦")}
               </button>
             </div>
           </section>
@@ -523,9 +514,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
             <div className="rounded-[24px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 md:p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[var(--primary)]">
-                    已生成的本命盘 Natal Chart
-                  </p>
+                  <p className="text-sm font-medium text-[var(--primary)]">{tr("已生成的本命盘 Natal Chart")}</p>
                 </div>
                 <span className="rounded-xl border border-[var(--border)] bg-[var(--card-soft)] px-3 py-1.5 text-xs font-medium text-[var(--primary)]">
                   SVG
@@ -534,26 +523,24 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
 
               <div className="relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-3">
                 {chartJson ? (
-                  <NatalWheelCN chartJson={chartJson} />
+                  <NatalWheelCN chartJson={chartJson} language={language} />
                 ) : (
                   <div className="flex min-h-[720px] items-center justify-center rounded-[24px] border border-dashed border-[var(--border)] text-center text-[var(--primary)]">
                     <div>
                       <div className="mb-3 text-3xl text-[var(--primary)]">✦</div>
-                      <p className="text-sm">生成后会在这里显示星盘</p>
+                      <p className="text-sm">{tr("生成后会在这里显示星盘")}</p>
                     </div>
                   </div>
                 )}
               </div>
 
               {calcState.isLoading ? (
-                <div className="mt-4 text-center text-sm text-[var(--primary)]">
-                  正在生成星盘...
-                </div>
+                <div className="mt-4 text-center text-sm text-[var(--primary)]">{tr("正在生成星盘...")}</div>
               ) : null}
 
               {calcState.error ? (
                 <div className="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
-                  {calcState.error}
+                  {language === "en" ? "Unable to calculate the chart. Check your birth details and try again." : calcState.error}
                 </div>
               ) : null}
 
@@ -564,13 +551,11 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
               </div>
 
               <div className="mt-4 rounded-[22px] border border-[var(--border)] bg-[var(--card-soft)] p-5">
-                <h3 className="mb-3 text-[20px] font-semibold text-[var(--text)]">
-                  星盘信息概览
-                </h3>
+                <h3 className="mb-3 text-[20px] font-semibold text-[var(--text)]">{tr("星盘信息概览")}</h3>
 
                 <div className="space-y-3 text-sm leading-7 text-[var(--primary)]">
                   <InfoRow
-                    label="出生时间"
+                    label={tr("出生时间")}
                     value={`${submittedForm.year}-${String(submittedForm.month).padStart(2, "0")}-${String(
                       submittedForm.day,
                     ).padStart(
@@ -581,20 +566,18 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                     ).padStart(2, "0")}`}
                   />
                   <InfoRow
-                    label="出生地点"
-                    value={`纬度 ${submittedForm.latitude}, 经度 ${submittedForm.longitude}`}
+                    label={tr("出生地点")}
+                    value={language === "zh" ? `纬度 ${submittedForm.latitude}, 经度 ${submittedForm.longitude}` : `Latitude ${submittedForm.latitude}, Longitude ${submittedForm.longitude}`}
                   />
                   <InfoRow
-                    label="黄道类型"
-                    value={ZODIAC_ZH[submittedForm.zodiac]}
+                    label={tr("黄道类型")}
+                    value={language === "zh" ? ZODIAC_ZH[submittedForm.zodiac] : submittedForm.zodiac}
                   />
                   <InfoRow
-                    label="宫位系统"
-                    value={HOUSE_SYSTEM_ZH[submittedForm.houseSystem]}
+                    label={tr("宫位系统")}
+                    value={language === "zh" ? HOUSE_SYSTEM_ZH[submittedForm.houseSystem] : submittedForm.houseSystem}
                   />
-                  <p className="pt-2 text-[var(--primary)]">
-                    经纬度为 0 时，宫位、上升、天顶的精确性可能下降。
-                  </p>
+                  <p className="pt-2 text-[var(--primary)]">{tr("经纬度为 0 时，宫位、上升、天顶的精确性可能下降。")}</p>
                 </div>
               </div>
             </div>
@@ -641,19 +624,16 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
             <div className="rounded-[28px] border border-[var(--border)] bg-[var(--bg-soft)] p-5 shadow-[var(--shadow-md)] md:p-6">
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[var(--primary)]">AI 解读</p>
-                  <h2 className="text-[34px] font-semibold leading-none text-[var(--text)]">
-                    星盘中文分析
-                  </h2>
+                  <h2 className="text-[34px] font-semibold leading-none text-[var(--text)]">{tr("星盘中文分析")}</h2>
                 </div>
                 <div className="text-2xl text-[var(--primary)]">✧</div>
               </div>
 
               <div className="space-y-3">
-                <Field label="你想问 AI 的问题（可选）">
+                <Field label={tr("你想问 AI 的问题（可选）")}>
                   <textarea
                     className={`${INPUT_CLASS} min-h-[90px] resize-y`}
-                    placeholder="例如：我的感情模式是什么？我的事业方向适合什么类型？不输入也可，由 AI 概括体验。"
+                    placeholder={tr("例如：我的感情模式是什么？我的事业方向适合什么类型？不输入也可，由 AI 概括体验。")}
                     value={userQuestion}
                     onChange={(e) => setUserQuestion(e.target.value)}
                   />
@@ -665,32 +645,26 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                   onClick={handleGenerateReading}
                   className="w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-soft)] px-4 py-4 text-base font-semibold text-[var(--primary)] shadow-[var(--shadow-md)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {readingLoading ? "AI 解读生成中..." : "AI 解读星盘 ✦"}
+                  {readingLoading ? tr("AI 解读生成中...") : tr("AI 解读星盘 ✦")}
                 </button>
 
                 {!chartJson ? (
-                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
-                    请先生成星盘，然后点击上方按钮进行解读。
-                  </div>
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">{tr("请先生成星盘，然后点击上方按钮进行解读。")}</div>
                 ) : null}
 
                 {dailyLimitReached ? (
-                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
-                    今日免费 AI 解读次数已用完。购买 Astroplate AI 时间包后可无限使用。
-                  </div>
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">{tr("今日免费 AI 解读次数已用完。购买 Astroplate AI 时间包后可无限使用。")}</div>
                 ) : null}
 
                 {readingError ? (
                   <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">
-                    {readingError}
+                    {language === "en" ? "Unable to generate the reading. Please try again later." : readingError}
                   </div>
                 ) : null}
 
                 <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-4">
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <h3 className="text-sm font-semibold text-[var(--text)]">
-                      解读结果
-                    </h3>
+                    <h3 className="text-sm font-semibold text-[var(--text)]">{tr("解读结果")}</h3>
                     {reading ? (
                       <button
                         type="button"
@@ -698,27 +672,19 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                           await navigator.clipboard.writeText(reading);
                         }}
                         className="rounded-xl border border-[var(--border)] bg-[var(--card-soft)] px-3 py-2 text-xs font-medium text-[var(--primary)] transition hover:bg-[var(--card-soft)]"
-                      >
-                        复制解读
-                      </button>
+                      >{tr("复制解读")}</button>
                     ) : null}
                   </div>
 
                   <div className="max-h-[560px] overflow-auto rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] p-4">
                     {readingLoading ? (
-                      <p className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">
-                        正在生成解读，请稍等...
-                      </p>
+                      <p className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">{tr("正在生成解读，请稍等...")}</p>
                     ) : reading ? (
                       <div className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">
                         {reading}
                       </div>
                     ) : (
-                      <p className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">
-                        这里会显示 AI 返回的中文解读结果……
-                        {"\n"}
-                        请先生成星盘，然后点击上方按钮进行解读。
-                      </p>
+                      <p className="whitespace-pre-wrap text-sm leading-7 text-[var(--primary)]">{tr("这里会显示 AI 返回的中文解读结果……")}{"\n"}{tr("请先生成星盘，然后点击上方按钮进行解读。")}</p>
                     )}
                   </div>
                 </div>
@@ -743,20 +709,23 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 }
 
 function SummaryCard({ item }: { item: ChartPointJson }) {
-  const symbol = POINT_SYMBOLS[item.key] ?? "✦";
+  const { language } = usePreferences();
+  const symbol = language === "zh" ? POINT_SYMBOLS[item.key] ?? "✦" : ({
+    sun: "Sun", moon: "Moon", mercury: "Mer", venus: "Ven", mars: "Mars",
+    jupiter: "Jup", saturn: "Sat", uranus: "Ura", neptune: "Nep", pluto: "Plu",
+    ascendant: "ASC", midheaven: "MC",
+  } as Record<string, string>)[item.key] ?? item.label;
 
   return (
     <div className="rounded-[20px] border border-[var(--border)] bg-[var(--bg-soft)] p-4 text-center shadow-[var(--shadow-md)]">
-      <div className="text-[34px] leading-none text-[var(--primary)] drop-shadow-[var(--drop-shadow)]">
+      <div className={`${language === "zh" ? "text-[34px]" : "text-xl"} flex h-9 items-center justify-center font-bold leading-none text-[var(--primary)] drop-shadow-[var(--drop-shadow)]`}>
         {symbol}
       </div>
       <p className="mt-2 text-[14px] leading-5 text-[var(--text)]">
-        {item.labelZh}
-        <br />
-        <span className="text-[var(--primary)]">{item.label}</span>
+        {language === "zh" ? item.labelZh : item.label}
       </p>
       <p className="mt-2 text-[15px] font-medium text-[var(--primary)]">
-        {item.signZh}
+        {language === "zh" ? item.signZh : item.sign}
       </p>
       <p className="text-[14px] text-[var(--primary)]">
         {item.signDegrees.toFixed(2)}°
@@ -767,7 +736,7 @@ function SummaryCard({ item }: { item: ChartPointJson }) {
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex gap-3">
+    <div className={`${styles.infoRow} flex flex-wrap gap-3`}>
       <div className="min-w-[76px] text-[var(--primary)]">{label}</div>
       <div className="text-[var(--primary)]">{value}</div>
     </div>

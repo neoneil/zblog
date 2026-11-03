@@ -1,30 +1,21 @@
 import Image from "next/image";
 import heroStyles from "@/components/site/home-hero.module.css";
 import { KnowledgeEntries } from "@/features/thoth/components/knowledge-entries";
-import ParentingLabSection, {
-  ParentingNewsletter,
-} from "@/components/ParentingLabSection";
+import { ParentingNewsletter } from "@/components/ParentingLabSection";
 import {
   TarotHomeSection,
   CalculatorsHomeSection,
-  ExistingAdditionalEntries,
 } from "@/components/site/home-tool-sections";
 import {
   AboutSection,
-  ContactSection,
 } from "@/features/contact/components/about-contact";
 import ServicesList from "@/features/services/components/services-list";
+import ContactEntry from "@/features/contact/components/contact-entry";
 import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
-import { Badge } from "@/components/ui/badge";
-import { ButtonLink } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { getCurrentUserWithRole } from "@/lib/auth/current-user";
+import HomeHeroActions from "@/components/site/home-hero-actions";
 
 export default async function HomePage() {
-  const { role } = await getCurrentUserWithRole();
-  const isAdmin = role === "admin";
-
   return (
     <main className="min-h-screen bg-[var(--bg)] bg-[image:var(--app-gradient)] text-[var(--text)]">
       <div className="pt-4 pb-10 sm:pt-6 sm:pb-12 lg:pt-8 lg:pb-14">
@@ -52,17 +43,7 @@ export default async function HomePage() {
                   <p className={heroStyles.motto} lang="en">Amidst Chaos, Always Centered.</p>
                   <p className={heroStyles.translation}>身处混沌，始终自有中心。</p>
 
-                  <div className={heroStyles.actions}>
-                    <ButtonLink href="/tarot-novel" variant="hero" size="lg">
-                      占星塔罗小说
-                    </ButtonLink>
-                    <ButtonLink href="/pricing" variant="hero" size="lg">
-                      成为会员
-                    </ButtonLink>
-                    <ButtonLink href="/tarot-ai" variant="hero" size="lg">
-                      体验塔罗 AI
-                    </ButtonLink>
-                  </div>
+                  <HomeHeroActions />
                 </div>
               </div>
             </div>
@@ -74,34 +55,16 @@ export default async function HomePage() {
           <CalculatorsHomeSection />
           <CategoriesSection homeLayout />
 
-          <ParentingLabSection isAdmin={isAdmin} includeNewsletter={false} />
-          <ExistingAdditionalEntries />
-
-          <section className="mb-12 grid gap-4 sm:grid-cols-3">
-            {[
-              ["AI 工具", "塔罗与星盘分开计时，付费后解锁对应产品。"],
-              ["内容知识库", "塔罗文档、牌库与图片素材按入口集中管理。"],
-              ["运营后台", "视频、文章、素材和权限入口只对管理员开放。"],
-            ].map(([title, text]) => (
-              <Card key={title} className="bg-[color:var(--card)]/92">
-                <CardContent className="p-5">
-                  <Badge variant="secondary">{title}</Badge>
-                  <p className="mt-4 text-sm leading-6 text-[var(--text-soft)]">
-                    {text}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </section>
-
           <ServicesList embedded />
-          <ContactSection />
-          <section
-            id="home-newsletter"
-            className="mx-auto max-w-2xl py-8 sm:py-10"
-          >
-            <ParentingNewsletter />
-          </section>
+          <div className="grid items-stretch gap-6 lg:grid-cols-2">
+            <ContactEntry />
+            <section
+              id="home-newsletter"
+              className="flex w-full min-w-0 flex-col py-8 sm:py-10"
+            >
+              <ParentingNewsletter />
+            </section>
+          </div>
           <AboutSection embedded />
         </Container>
       </div>

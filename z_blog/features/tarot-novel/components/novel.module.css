@@ -1,0 +1,27 @@
+.page { color: var(--novel-gold); background: var(--bg); min-height: 100vh; }
+.page h1, .page h2 { color: var(--heading); }
+.page p { color: var(--novel-gold); }
+.hero { position: relative; overflow: hidden; border-radius: var(--radius-lg); margin-top: 20px; }
+.overlay { position: absolute; inset: 0; background: var(--hero-overlay-strong); }
+.heroText { position: relative; padding: 48px 20px; display: grid; gap: 24px; }
+.page .bookTitle { font-size: 19px; font-weight: 700; white-space: nowrap; line-height: 1.3; letter-spacing: 0; }
+.heroText p { max-width: 650px; line-height: 1.8; }
+.heroText > a { justify-self: start; }
+.chapters { display: grid; align-items: start; gap: 28px; margin-top: 28px; scroll-margin-top: 100px; }
+.page h2 { font-size: 22px; margin: 16px 0; }
+.directory { display: grid; gap: 8px; }
+.directory button { height: auto; min-height: 48px; white-space: normal; justify-content: start; text-align: left; color: var(--novel-gold); }
+.video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; margin: 24px 0; }
+.chapterPreview { display: grid; gap: 16px; align-items: center; }
+.previewVideo { max-width: 240px; margin: 0; }
+.previewCopy { min-width: 0; }
+.previewCopy p { font-size: 14px; }
+.page .previewCopy h2 { font-size: 20px; margin: 8px 0 12px; overflow-wrap: anywhere; }
+@media (min-width: 640px) {
+  .chapterPreview { grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 20px; }
+}
+.reader { max-width: 860px; margin: 32px auto; }
+.reader h1 { font-size: 28px; line-height: 1.4; }
+.body { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 2; font-size: 17px; margin-top: 32px; }
+@media (min-width: 640px) { .page .bookTitle { font-size: 32px; } .heroText { padding: 64px 32px; } }
+@media (min-width: 1024px) { .page .bookTitle { font-size: 44px; } .chapters { grid-template-columns: minmax(0, 1fr) 320px; } }

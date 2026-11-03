@@ -25,7 +25,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Card className={styles.productCard}>
       <Link className={styles.productLink} href={productHref(product)}>
-        <div className={styles.cardImage}>
+        <div className={`${styles.cardImage} ${product.category !== "physical" ? styles.onlineImage : ""}`}>
           <Image
             src={product.image}
             alt={t(product.title)}
@@ -35,6 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         <div className={styles.cardContent}>
           <h2>{t(product.title)}</h2>
+          {product.category !== "physical" && <div className={styles.cardDescription}>{t(product.intro)}</div>}
           <p>{formatPrice(product.priceCents, language)}</p>
         </div>
       </Link>

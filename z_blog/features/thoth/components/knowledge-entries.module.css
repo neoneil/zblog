@@ -1,0 +1,9 @@
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 8px; }
+.card { display: flex; flex-direction: column; overflow: hidden; height: 100%; }
+.media { position: relative; flex: none; aspect-ratio: 16 / 9; margin: 10px 10px 0; overflow: hidden; border-radius: var(--radius-sm); }
+.image { object-fit: cover; }
+.card .copy { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 20px; }
+.copy h3, .copy span { color: var(--archive-heading); }
+.copy p, .subtitle { color: var(--archive-text); font-size: 16px; line-height: 28px; }
+@media (min-width: 640px) { .copy p, .subtitle { font-size: 18px; line-height: 32px; } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; } .card .copy { padding: 20px; } }

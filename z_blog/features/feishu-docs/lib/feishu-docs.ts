@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import {
   GetObjectCommand,
   ListObjectsV2Command,
@@ -45,6 +46,9 @@ export type FeishuDoc = {
   category: string;
   sourcePath: string;
   markdown: string;
+  markdownEn?: string;
+  titleEn?: string;
+  sectionsEn?: FeishuDocSection[];
   sections: FeishuDocSection[];
   imageCount: number;
   missingImageCount: number;
@@ -266,11 +270,15 @@ function normalizeSectionTitle(title: string) {
 
 function getSectionId(title: string) {
   const normalizedTitle = normalizeSectionTitle(title);
+  if (/imagery explained/i.test(title)) return "image-explanation";
+  if (/symbol analysis|meaning breakdown/i.test(title)) return "symbol-analysis";
+  if (/case studies/i.test(title)) return "case-reading";
+  if (/practical application/i.test(title)) return "practical-use";
 
   if (normalizedTitle.includes("画面讲解")) return "image-explanation";
-  if (normalizedTitle.includes("符号拆解")) return "symbol-analysis";
-  if (normalizedTitle.includes("案例解读")) return "case-reading";
-  if (normalizedTitle.includes("实战应用") || normalizedTitle.includes("实战运用")) {
+  if (normalizedTitle.includes("符号拆解") || normalizedTitle.includes("含义拆解")) return "symbol-analysis";
+  if (normalizedTitle.includes("案例解读") || normalizedTitle.includes("人物案例")) return "case-reading";
+  if (normalizedTitle.includes("实战应用") || normalizedTitle.includes("实战运用") || normalizedTitle.includes("实战解读")) {
     return "practical-use";
   }
 
@@ -317,7 +325,7 @@ function matchImagesForCard(cardName: string, images: R2ImageObject[]) {
     });
 }
 
-function replaceMarkdownImages(markdown: string, images: R2ImageObject[], cardName: string) {
+function replaceMarkdownImages(markdown: string, images: R2ImageObject[], cardName: string, language = "zh") {
   let imageIndex = 0;
 
   return markdown.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, altText: string) => {
@@ -327,6 +335,7 @@ function replaceMarkdownImages(markdown: string, images: R2ImageObject[], cardNa
     imageIndex += 1;
 
     if (!image) {
+      if (language === "en") return `> Missing image: illustration ${currentIndex} was not found.`;
       return `> 图片缺失：${cardName} 第 ${currentIndex} 张图片素材未在 R2 中找到。`;
     }
 
@@ -342,12 +351,26 @@ export async function getFeishuDocsData(): Promise<FeishuDocsData> {
 
   const documents = await Promise.all(
     markdownFiles.sort(sortDocPaths).map(async (filePath) => {
-      const markdown = await fs.readFile(filePath, "utf8");
+      const sourceMarkdown = await fs.readFile(filePath, "utf8");
+      const separateEntries = (value: string) => {
+        const content = ["小牌-火", "小牌-水", "小牌-土"].includes(getCategory(filePath))
+          ? value.replace(/^#{1,6}[ \t]+(?:一[、.．][ \t]*含义解读|(?:1\.|I\.)[ \t]*Meaning Interpretation)[ \t]*\r?$/gmi, "")
+          : value;
+        return content.replace(/\s*\*\*(\d+\\?\.[^\n]*?)\*\*/g, "\n\n**$1**");
+      };
+      const markdown = separateEntries(sourceMarkdown);
       const cardName = getCardName(filePath);
       const matchedImages = matchImagesForCard(cardName, r2Images);
       const imageReferences = markdown.match(/!\[[^\]]*\]\([^)]+\)/g) ?? [];
       const missingImageCount = Math.max(0, imageReferences.length - matchedImages.length);
       const relativePath = path.relative(DOCS_ROOT, filePath).split(path.sep).join("/");
+      let translated: { markdown: string; sourceHash: string } | null = null;
+      try {
+        const filename = createHash("sha256").update(relativePath).digest("hex") + ".json";
+        translated = JSON.parse(await fs.readFile(path.join(process.cwd(), "features/feishu-docs/translations", filename), "utf8"));
+        if (translated?.sourceHash !== createHash("sha256").update(sourceMarkdown).digest("hex")) translated = null;
+      } catch { /* A missing translation must not prevent reading the Chinese source. */ }
+      const english = translated ? injectSectionIds(replaceMarkdownImages(separateEntries(translated.markdown), matchedImages, "Tarot card", "en")) : null;
       const renderedMarkdown = injectSectionIds(
         replaceMarkdownImages(markdown, matchedImages, cardName),
       );
@@ -359,6 +382,9 @@ export async function getFeishuDocsData(): Promise<FeishuDocsData> {
         category: getCategory(filePath),
         sourcePath: relativePath,
         markdown: renderedMarkdown.markdown,
+        markdownEn: english?.markdown,
+        titleEn: translated ? getTitle(translated.markdown, filePath) : undefined,
+        sectionsEn: english?.sections,
         sections: renderedMarkdown.sections,
         imageCount: Math.min(imageReferences.length, matchedImages.length),
         missingImageCount,

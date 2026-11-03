@@ -78,6 +78,7 @@ export function ContactSection() {
     const payload = {
       name: String(data.get("name") ?? ""),
       email: String(data.get("email") ?? ""),
+      wechat: String(data.get("wechat") ?? ""),
       message: String(data.get("message") ?? ""),
       website: String(data.get("website") ?? ""),
     };
@@ -136,6 +137,10 @@ export function ContactSection() {
               maxLength={254}
               disabled={busy}
             />
+          </label>
+          <label>
+            {t({ en: "WeChat", zh: "微信号" })}
+            <Input name="wechat" maxLength={100} disabled={busy} />
           </label>
         </div>
         <label>

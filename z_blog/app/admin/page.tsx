@@ -70,6 +70,12 @@ export default async function AdminPage() {
       <PageSection className="pt-0">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {profile.role === "admin" && (
+            <FeatureCard title="欢迎邮件" description="编辑 Newsletter 双语欢迎信、图片及出生星盘跳转链接。" href="/admin/newsletter" badge="Newsletter" meta="仅管理员" />
+          )}
+          {profile.role === "admin" && (
+            <FeatureCard title="小说更新" description="编写双语小说章节，添加 YouTube 视频并管理草稿和发布状态。" href="/admin/novel" badge="Novel" meta="仅管理员" />
+          )}
+          {profile.role === "admin" && (
             <FeatureCard
               title="网页布局和会员详情"
               description="查看 STELLARNESTS 首页架构、会员权益、收费草稿与支付邮件流程。仅为规划预览，不修改现有配置。"

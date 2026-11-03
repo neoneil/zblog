@@ -2,6 +2,10 @@
 @plugin "@tailwindcss/typography";
 
 :root {
+  --archive-overlay: rgba(0, 0, 0, .65);
+  --archive-heading: #f0c84a;
+  --archive-text: #f0e6ce;
+  --novel-gold: #e6bd62;
   --hero-brand-ink: #ecdca9;
   --hero-brand-muted: #c5b89d;
   --hero-brand-rule: rgba(236, 220, 169, .32);

@@ -121,10 +121,6 @@ export default function NavbarClient({
               {t(siteCopy.navCategories)}
             </Link>
 
-            <Link href="/resources" className={navLinkClass}>
-              {t(siteCopy.navResources)}
-            </Link>
-
             <Link href="/aboutus" className={navLinkClass}>
               {t(siteCopy.navAbout)}
             </Link>
@@ -242,14 +238,6 @@ export default function NavbarClient({
                 onClick={() => setMobileOpen(false)}
               >
                 {t(siteCopy.navCategories)}
-              </Link>
-
-              <Link
-                href="/resources"
-                className={mobileLinkClass}
-                onClick={() => setMobileOpen(false)}
-              >
-                {t(siteCopy.navResources)}
               </Link>
 
               <Link

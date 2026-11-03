@@ -18,6 +18,7 @@ import { isTarotReadingResult, type TarotReadingResult } from "@/lib/tarot/readi
 import type { DrawnTarotCard, TarotCard as TarotCardType } from "@/types/tarot";
 
 import type { TarotStage } from "./tarot-stage";
+import { usePreferences } from "@/components/site/preferences-provider";
 
 type TarotClientProps = {
   accessStatus: AiAccessStatus;
@@ -25,6 +26,7 @@ type TarotClientProps = {
 };
 
 export default function TarotClient({ accessStatus, mode = "three-cards" }: TarotClientProps) {
+  const { t, language } = usePreferences();
   const config = tarotModes[mode];
   const positionOrder = config.positions.map(position => position.key);
   const cardCount = positionOrder.length;
@@ -164,7 +166,7 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
     }
   }
 
-  const actionLabel =
+  const actionLabelZh =
     stage === "idle"
       ? "开始洗牌"
       : stage === "shuffling"
@@ -178,6 +180,13 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
             : stage === "reading"
               ? "正在解读..."
               : "再次抽牌";
+  const actionLabel = t({ zh: actionLabelZh, en:
+    stage === "idle" ? "Start shuffling" : stage === "shuffling" ? "Stop shuffling"
+      : stage === "selecting" ? `Choose ${cardCount} cards (${selectedCards.length}/${cardCount})`
+      : stage === "gathering" ? "Gathering your cards…"
+      : stage === "ready" || stage === "revealing" ? "Tap a card to reveal"
+      : stage === "reading" ? "Reading your cards…" : "Draw again",
+  });
 
   const actionDisabled =
     dailyLimitReached ||
@@ -210,15 +219,13 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
           </nav>
           <header className={styles.heading}>
             <p className={styles.eyebrow}>{config.title.zh} / {config.title.en} · {cardCount} 张牌</p>
-            <div className={styles.sigil} aria-hidden="true">☽ ✧ ☾</div>
-            <h1>{stage === "idle" ? mode === "three-cards" ? <>向塔罗<br />轻声提问</> : <>{config.title.zh}<br />{config.title.en}</> : collected ? `你的${countLabel}张牌` : "想着你的问题"}</h1>
+            <h1>{stage === "idle" ? mode === "three-cards" ? t({ zh: "向塔罗轻声提问", en: "Whisper to the Tarot" }) : config.title[language] : collected ? t({ zh: `你的${countLabel}张牌`, en: "Your cards" }) : t({ zh: "想着你的问题", en: "Focus on your question" })}</h1>
             {accessLabel && <p className={styles.access}>{accessLabel}</p>}
           </header>
 
           <section className={styles.table} aria-label="塔罗抽牌">
             {stage === "idle" ? (
               <div className={styles.questionForm}>
-                <div className={styles.moons} aria-hidden="true">☽ ☽ ● ☾ ☾</div>
                 <label className={styles.srOnly} htmlFor="tarot-question">你的问题</label>
                 <textarea id="tarot-question" value={question}
                   onChange={(e) => setQuestion(e.target.value)}

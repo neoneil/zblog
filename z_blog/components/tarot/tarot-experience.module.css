@@ -22,7 +22,7 @@
 .content { position: relative; z-index: 1; max-width: 1440px; margin: auto; padding: 52px 0 64px; }
 .heading { position: relative; z-index: 2; text-align: center; padding: 0 20px; }
 .modeNav { position: relative; z-index: 4; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 24px; padding: 0 20px 24px; color: var(--tarot-muted); font-size: 16px; line-height: 1.5; }
-.modeNav a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 0; border-bottom: 1px solid transparent; }
+.modeNav a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 0; border-bottom: 1px solid transparent; font-weight: 700; }
 @media (min-width: 640px) { .modeNav { font-size: 18px; } }
 .modeNav a[aria-current="page"], .modeNav a:hover { color: var(--tarot-ink); border-color: var(--tarot-gold); }
 .verdict { position: relative; z-index: 2; text-align: center; font: 32px Georgia, serif; color: var(--heading); margin: 24px 16px; }
@@ -50,9 +50,10 @@
   .experience[data-card-count="5"] .selectedSlot:nth-child(5) { grid-column: auto; }
   .experience[data-card-count="5"] .cardScene:not([data-idle="true"]) { min-height: 470px; }
 }
-.eyebrow { color: var(--tarot-muted); font-size: 12px; }
+.eyebrow { color: var(--tarot-muted); font-size: 18px; line-height: 1.6; font-weight: 700; }
 .sigil { color: var(--tarot-gold); margin: 22px 0 14px; font: 28px Georgia, serif; }
-.heading h1 { margin: 0; font-family: "Noto Serif SC", "Songti SC", SimSun, Georgia, serif; font-size: 42px; line-height: 1.4; font-weight: 400; }
+.heading h1 { margin: 12px 0 0; font-family: "Noto Serif SC", "Songti SC", SimSun, Georgia, serif; font-size: 24px; line-height: 1.4; font-weight: 400; white-space: nowrap; }
+@media (min-width: 640px) { .heading h1 { font-size: 42px; } }
 .access { font-size: 12px; color: var(--tarot-muted); margin-top: 18px; }
 .experience:not([data-stage="idle"]) .heading h1 { font-size: 20px; color: var(--tarot-muted); }
 .experience:not([data-stage="idle"]) .sigil { margin: 12px 0; }
@@ -133,8 +134,14 @@
 .lightA { background-image: url("/tarot-experience/lights-1.webp"); animation: breathe 3.6s ease-in-out infinite; }
 .lightB { background-image: url("/tarot-experience/lights-2.webp"); animation: breathe 3s ease-in-out infinite reverse; }
 .orbit { position: absolute; top: 420px; left: 50%; width: 1200px; height: 1200px; border: 1px solid var(--tarot-line); border-radius: 50%; transform: translateX(-50%); opacity: .5; }
-.spark { position: absolute; left: var(--left); top: var(--top); width: var(--size); height: var(--size); background: var(--tarot-ink); border-radius: 50%; box-shadow: 0 0 8px var(--tarot-gold); opacity: 0; animation: drift var(--duration) var(--delay) ease-in-out infinite; }
-.spark:nth-child(7n)::after { content: ""; position: absolute; inset: -3px; border: 1px solid var(--tarot-gold); transform: rotate(45deg); }
+.spark { position: absolute; left: var(--left); top: var(--top); width: var(--size); height: 2px; background: linear-gradient(90deg, var(--tarot-particle-core), transparent); border-radius: 50%; opacity: 0; transform: rotate(-35deg); animation: meteorPass var(--duration) var(--delay) linear infinite; }
+.spark::after { content: ""; position: absolute; left: 0; top: -1px; width: 4px; height: 4px; border-radius: 50%; background: var(--tarot-particle-core); box-shadow: 0 0 8px var(--tarot-particle-core), 0 0 16px var(--tarot-gold); }
+@keyframes meteorPass {
+  0%, 72% { opacity: 0; transform: translate(100px, -70px) rotate(-35deg); }
+  75% { opacity: .9; }
+  86% { opacity: 0; transform: translate(-350px, 245px) rotate(-35deg); }
+  100% { opacity: 0; transform: translate(-350px, 245px) rotate(-35deg); }
+}
 .sparkBurst { position: absolute; z-index: 80; top: -42px; left: -36px; width: calc(100% + 72px); aspect-ratio: 625 / 1024; overflow: hidden; border-radius: 24px; pointer-events: none; }
 .orbitBurst { position: absolute; z-index: 80; inset: -32px; pointer-events: none; }
 .goldMote, .goldStar { position: absolute; left: var(--origin-x); top: var(--origin-y); width: var(--mote-size); height: var(--mote-size); border-radius: 50%; background: var(--tarot-particle); box-shadow: 0 0 4px 1px var(--tarot-particle-core), 0 0 12px 3px var(--tarot-particle-halo), 0 0 26px var(--tarot-particle-halo); opacity: 0; animation: goldBurst var(--burst-duration) var(--burst-delay) cubic-bezier(.2,.55,.4,1) both; }

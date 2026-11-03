@@ -56,16 +56,25 @@
   margin-top: 28px;
   text-align: left;
 }
+.actions > button,
 .actions > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 100%;
   min-width: 0;
-  height: 48px;
+  height: 64px;
   padding: 8px 4px;
-  font-size: 12px;
-  white-space: nowrap;
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  opacity: 1;
 }
 @media (min-width: 640px) {
-  .actions > a { font-size: 14px; }
+  .actions > button,
+  .actions > a { font-size: 12px; }
 }
 @media (min-width: 1024px) {
   .stage .content { width: 36%; max-width: 400px; }

@@ -25,11 +25,11 @@ function load(path, imports = {}) {
 const catalog = load("../features/services/lib/catalog.ts");
 const cart = load("../features/services/lib/cart.ts", { "./catalog": catalog });
 
-test("three bilingual products have distinct local images, minor-unit AUD prices and valid routes", () => {
-  assert.equal(catalog.products.length, 3);
-  assert.equal(new Set(catalog.products.map((p) => p.id)).size, 3);
-  assert.equal(new Set(catalog.products.map((p) => p.slug)).size, 3);
-  assert.equal(new Set(catalog.products.map((p) => p.image)).size, 3);
+test("seven bilingual products have distinct local images, minor-unit AUD prices and valid routes", () => {
+  assert.equal(catalog.products.length, 7);
+  assert.equal(new Set(catalog.products.map((p) => p.id)).size, 7);
+  assert.equal(new Set(catalog.products.map((p) => p.slug)).size, 7);
+  assert.equal(new Set(catalog.products.map((p) => p.image)).size, 7);
   for (const p of catalog.products) {
     assert.ok(existsSync(new URL(`../public${p.image}`, import.meta.url)));
     assert.ok(Number.isSafeInteger(p.priceCents) && p.priceCents > 0);
@@ -43,7 +43,8 @@ test("three bilingual products have distinct local images, minor-unit AUD prices
 test("filters and all sort options work without mutating the catalog", () => {
   const before = JSON.stringify(catalog.products);
   assert.equal(catalog.selectProducts("courses", "title-asc").length, 2);
-  assert.equal(catalog.selectProducts("readings", "title-asc").length, 1);
+  assert.equal(catalog.selectProducts("readings", "title-asc").length, 2);
+  assert.equal(catalog.selectProducts("physical", "title-asc").length, 3);
   for (const field of ["title", "price", "date"]) {
     const asc = catalog.selectProducts("all", `${field}-asc`).map((p) => p.id);
     const desc = catalog
@@ -53,11 +54,11 @@ test("filters and all sort options work without mutating the catalog", () => {
   }
   assert.equal(
     catalog.selectProducts("all", "title-asc")[0].id,
-    "transits-course",
+    "arcane-creations",
   );
   assert.equal(
     catalog.selectProducts("all", "price-asc")[0].id,
-    "tarot-reading",
+    "arcane-creations",
   );
   assert.equal(JSON.stringify(catalog.products), before);
 });
@@ -89,11 +90,11 @@ test("quantities, removals and exact integer subtotals remain consistent", () =>
   let value = cart.changeQuantity([], "tarot-reading", 1);
   value = cart.changeQuantity(value, "tarot-reading", 3);
   value = cart.changeQuantity(value, "natal-masterclass", 2);
-  assert.deepEqual(cart.cartTotals(value), { count: 5, subtotalCents: 106934 });
+  assert.deepEqual(cart.cartTotals(value), { count: 5, subtotalCents: 80934 });
   assert.deepEqual(cart.changeQuantity(value, "fake", 1), value);
   assert.deepEqual(cart.changeQuantity(value, "tarot-reading", -1), value);
   assert.deepEqual(cart.changeQuantity(value, "tarot-reading", 100), value);
   value = cart.changeQuantity(value, "tarot-reading", 0);
-  assert.deepEqual(cart.cartTotals(value), { count: 2, subtotalCents: 63800 });
+  assert.deepEqual(cart.cartTotals(value), { count: 2, subtotalCents: 37800 });
   assert.deepEqual(cart.changeQuantity(value, "natal-masterclass", 0), []);
 });

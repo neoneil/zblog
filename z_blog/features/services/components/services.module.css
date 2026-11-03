@@ -73,6 +73,19 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 28px;
 }
+.onlineGrid, .physicalGrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+.physicalGrid:not(:empty) { margin-top: 32px; }
+.cardImage.onlineImage { aspect-ratio: 16 / 9; }
+.cardContent .cardDescription { font-size: 16px; line-height: 28px; color: var(--archive-text); margin-bottom: 20px; }
+.cardContent h2 { color: var(--archive-heading); overflow-wrap: anywhere; }
+@media (min-width: 640px) {
+  .onlineGrid, .physicalGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cardContent .cardDescription { font-size: 18px; line-height: 32px; }
+}
+@media (min-width: 1024px) {
+  .onlineGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .physicalGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 .productCard {
   overflow: hidden;
   border-radius: 8px;
@@ -105,7 +118,7 @@
 .cardContent h2 {
   font-size: 19px;
   margin: 0 0 16px;
-  color: var(--text);
+  color: var(--archive-heading);
 }
 .cardContent p {
   margin: auto 0 0;

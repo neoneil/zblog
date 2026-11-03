@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import NewsletterEntry from "@/components/site/newsletter-entry";
 
 const cards = [
   {
@@ -92,22 +92,5 @@ export default function ParentingLabSection({
 }
 
 export function ParentingNewsletter() {
-  return (
-    <Card className="bg-[var(--card-soft)]">
-      <CardHeader className="block px-5 py-5">
-        <Badge variant="outline">Newsletter</Badge>
-        <CardTitle className="mt-3 text-xl">订阅更新</CardTitle>
-        <CardDescription className="leading-6">
-          用于后续承接课程、视频和会员权益更新。
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="space-y-3 px-5 pb-5 pt-0">
-        <Input type="email" placeholder="你的邮箱" />
-        <ButtonLink href="/newsletter" variant="primary" fullWidth>
-          订阅
-        </ButtonLink>
-      </CardContent>
-    </Card>
-  );
+  return <NewsletterEntry />;
 }

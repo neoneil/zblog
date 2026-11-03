@@ -45,6 +45,12 @@ const request = (value = body, headers = {}) =>
     body: typeof value === "string" ? value : JSON.stringify(value),
   });
 
+test("optional WeChat is validated and preserved", () => {
+  assert.equal(validateContact({ ...body, wechat: " reader_123 " }).wechat, "reader_123");
+  assert.ok(validateContact(body));
+  for (const wechat of [42, "a".repeat(101), "bad\nvalue"]) assert.equal(validateContact({ ...body, wechat }), null);
+});
+
 test("validation accepts bilingual text but rejects invalid emails, controls and empty/oversized messages", () => {
   assert.ok(
     validateContact({

@@ -9,11 +9,12 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import type { FeishuDoc } from "@/features/feishu-docs/lib/feishu-docs";
+import { usePreferences } from "@/components/site/preferences-provider";
+import { tarotDeck } from "@/lib/tarot/full-deck";
 
 type FeishuDocsClientProps = {
   documents: FeishuDoc[];
@@ -34,6 +35,12 @@ export function FeishuDocsClient({
   documents,
   categories,
 }: FeishuDocsClientProps) {
+  const { t, language } = usePreferences();
+  const categoryLabel = (category: string) => language === "zh" ? category : ({ "全部": "All", "大牌": "Major Arcana", "小牌-火": "Minor Arcana · Fire", "小牌-水": "Minor Arcana · Water", "小牌-风": "Minor Arcana · Air", "小牌-土": "Minor Arcana · Earth" }[category] ?? getCategoryLabel(category));
+  const documentTitle = (doc: FeishuDoc) => {
+    const clean = (value: string) => value.replace(/^[\d\s]+/, "").replace(/[✅️*]/g, "").trim();
+    return language === "zh" ? doc.title : doc.titleEn ?? tarotDeck.find((card) => clean(card.nameCn) === clean(doc.cardName) || clean(card.nameCn) === clean(doc.title))?.name ?? doc.title;
+  };
   const [activeId, setActiveId] = useState(documents[0]?.id ?? "");
   const [activeCategory, setActiveCategory] = useState("全部");
   const contentScrollRef = useRef<HTMLDivElement>(null);
@@ -80,12 +87,9 @@ export function FeishuDocsClient({
         <Card className="overflow-hidden bg-[var(--card)]">
           <CardHeader className="items-start gap-3 border-b border-[var(--border)] pb-5">
             <div>
-              <CardTitle>文档目录</CardTitle>
-              <CardDescription>
-                塔罗知识库内容与图片素材
-              </CardDescription>
+              <CardTitle className="text-2xl font-bold">{t({ zh: "目录", en: "Contents" })}</CardTitle>
             </div>
-            <Badge variant="secondary">{filteredDocuments.length} files</Badge>
+            <Badge variant="secondary">{t({ zh: `${filteredDocuments.length} 篇`, en: `${filteredDocuments.length} files` })}</Badge>
           </CardHeader>
 
           <CardContent className="space-y-4 p-4">
@@ -107,7 +111,7 @@ export function FeishuDocsClient({
                     if (nextDocument) setActiveId(nextDocument.id);
                   }}
                 >
-                  {category}
+                  {categoryLabel(category)}
                 </Button>
               ))}
             </div>
@@ -118,7 +122,7 @@ export function FeishuDocsClient({
                   <div key={group.category} className="space-y-2">
                     <div className="flex items-center justify-between gap-3 px-1">
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-faint)]">
-                        {group.category}
+                        {categoryLabel(group.category)}
                       </p>
                       <span className="text-xs text-[var(--text-faint)]">
                         {group.documents.length}
@@ -144,7 +148,7 @@ export function FeishuDocsClient({
                             >
                               <span className="flex items-center justify-between gap-3">
                                 <span className="block text-sm font-semibold text-[var(--text)]">
-                                  {document.title}
+                                  {documentTitle(document)}
                                 </span>
                                 <span
                                   className={[
@@ -156,11 +160,11 @@ export function FeishuDocsClient({
                                 </span>
                               </span>
                               <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[var(--text-soft)]">
-                                <span>{getCategoryLabel(document.category)}</span>
-                                <span>{document.imageCount} images</span>
+                                <span>{categoryLabel(document.category)}</span>
+                                <span>{t({ zh: `${document.imageCount} 张图片`, en: `${document.imageCount} images` })}</span>
                                 {document.missingImageCount > 0 && (
                                   <Badge variant="warning">
-                                    缺 {document.missingImageCount}
+                                    {t({ zh: `缺 ${document.missingImageCount}`, en: `${document.missingImageCount} missing` })}
                                   </Badge>
                                 )}
                               </span>
@@ -175,7 +179,7 @@ export function FeishuDocsClient({
                               ].join(" ")}
                             >
                               <div className="min-h-0 space-y-1 pl-3">
-                                {document.sections.map((section) => (
+                                {(language === "en" ? document.sectionsEn ?? document.sections : document.sections).map((section) => (
                                   <button
                                     key={`${document.id}-${section.id}`}
                                     type="button"
@@ -207,29 +211,28 @@ export function FeishuDocsClient({
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
                   <div className="mb-3 flex flex-wrap items-center gap-2">
-                    <Badge>{activeDocument.category}</Badge>
-                    <Badge variant="secondary">{activeDocument.sourcePath}</Badge>
+                    <Badge>{categoryLabel(activeDocument.category)}</Badge>
                     {activeDocument.missingImageCount > 0 && (
                       <Badge variant="warning">
-                        图片缺失 {activeDocument.missingImageCount}
+                        {t({ zh: `图片缺失 ${activeDocument.missingImageCount}`, en: `${activeDocument.missingImageCount} missing images` })}
                       </Badge>
                     )}
                   </div>
 
                   <h1 className="text-2xl font-semibold tracking-tight text-[var(--text)] sm:text-3xl">
-                    {activeDocument.title}
+                    {documentTitle(activeDocument)}
                   </h1>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 sm:min-w-44">
                   <div className="rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-3">
-                    <p className="text-xs text-[var(--text-faint)]">图片</p>
+                    <p className="text-xs text-[var(--text-faint)]">{t({ zh: "图片", en: "Images" })}</p>
                     <p className="mt-1 text-xl font-semibold text-[var(--text)]">
                       {activeDocument.imageCount}
                     </p>
                   </div>
                   <div className="rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card)] p-3">
-                    <p className="text-xs text-[var(--text-faint)]">缺失</p>
+                    <p className="text-xs text-[var(--text-faint)]">{t({ zh: "缺失", en: "Missing" })}</p>
                     <p className="mt-1 text-xl font-semibold text-[var(--text)]">
                       {activeDocument.missingImageCount}
                     </p>
@@ -256,7 +259,7 @@ export function FeishuDocsClient({
                     a: () => null,
                   }}
                 >
-                  {getCleanMarkdown(activeDocument.markdown)}
+                  {getCleanMarkdown(language === "en" ? activeDocument.markdownEn ?? activeDocument.markdown : activeDocument.markdown)}
                 </ReactMarkdown>
               </div>
               </div>
