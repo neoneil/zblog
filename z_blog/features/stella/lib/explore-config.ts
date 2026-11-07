@@ -9,7 +9,7 @@ export const stellaTools = [
   { slug: "void-of-course-moon", en: "Void of Course Moon", zh: "月亮空亡" },
   { slug: "planets", en: "Planets in Signs", zh: "行星落座" },
   { slug: "numerology", en: "Numerology", zh: "生命数字" },
-  { slug: "birthday", en: "Birthday Horoscope", zh: "生日运势" },
+  { slug: "birthday", en: "Birthday Horoscope", zh: "生日密码" },
   { slug: "eclipse", en: "Eclipses", zh: "日月食" },
 ] as const;
 export const stellaHref = (slug: string) => `/stella${slug ? `/${slug}` : ""}`;

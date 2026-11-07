@@ -1,0 +1,11 @@
+.glow {
+  transition: border-color .2s, box-shadow .2s, background-color .2s;
+}
+.glow:hover,
+.glow:focus-visible {
+  border-color: var(--explore-accent);
+  box-shadow: 0 0 20px var(--button-glow);
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow { transition: none; }
+}

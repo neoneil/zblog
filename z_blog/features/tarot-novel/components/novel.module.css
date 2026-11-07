@@ -2,8 +2,13 @@
 .page h1, .page h2 { color: var(--heading); }
 .page p { color: var(--novel-gold); }
 .hero { position: relative; overflow: hidden; border-radius: var(--radius-lg); margin-top: 20px; }
-.overlay { position: absolute; inset: 0; background: var(--hero-overlay-strong); }
-.heroText { position: relative; padding: 48px 20px; display: grid; gap: 24px; }
+.heroMedia { position: relative; min-width: 0; }
+.heroImage { display: block; width: 100%; height: auto; }
+.heroOverlay { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(to top, var(--novel-hero-scrim) 0%, var(--archive-overlay) 24%, transparent 56%); transition: opacity .45s ease; }
+.heroText { position: absolute; z-index: 1; bottom: 0; left: 0; width: 50%; padding: 32px; display: grid; gap: 12px; opacity: 0; transform: translateY(28px); pointer-events: none; transition: opacity .45s ease, transform .55s ease; }
+.hero:is(:hover, :focus-within) .heroOverlay { opacity: 1; }
+.hero:is(:hover, :focus-within) .heroText { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.hero:focus-visible { outline: 2px solid var(--novel-gold); outline-offset: 4px; }
 .page .bookTitle { font-size: 19px; font-weight: 700; white-space: nowrap; line-height: 1.3; letter-spacing: 0; }
 .heroText p { max-width: 650px; line-height: 1.8; }
 .heroText > a { justify-self: start; }
@@ -23,5 +28,17 @@
 .reader { max-width: 860px; margin: 32px auto; }
 .reader h1 { font-size: 28px; line-height: 1.4; }
 .body { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 2; font-size: 17px; margin-top: 32px; }
-@media (min-width: 640px) { .page .bookTitle { font-size: 32px; } .heroText { padding: 64px 32px; } }
-@media (min-width: 1024px) { .page .bookTitle { font-size: 44px; } .chapters { grid-template-columns: minmax(0, 1fr) 320px; } }
+@media (min-width: 1024px) { .page .bookTitle { font-size: 24px; } .chapters { grid-template-columns: minmax(0, 1fr) 320px; } }
+@media (min-width: 1280px) { .page .bookTitle { font-size: 32px; } }
+@media (max-width: 767px) {
+  .heroText { width: 100%; padding: 16px; gap: 8px; }
+  .heroText p { font-size: 13px; line-height: 1.5; }
+  .heroOverlay { background: linear-gradient(to top, var(--novel-hero-scrim) 0%, var(--archive-overlay) 38%, transparent 70%); }
+}
+@media (hover: none) and (max-width: 767px) {
+  .heroText { position: relative; opacity: 1; transform: none; pointer-events: auto; }
+  .heroOverlay { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroText, .heroOverlay { transition: none; transform: none; }
+}

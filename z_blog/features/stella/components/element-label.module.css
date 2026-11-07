@@ -1,0 +1,4 @@
+.label[data-element="Fire"] { color: var(--element-fire); }
+.label[data-element="Earth"] { color: var(--element-earth); }
+.label[data-element="Air"] { color: var(--element-air); }
+.label[data-element="Water"] { color: var(--element-water); }

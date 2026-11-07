@@ -1,4 +1,5 @@
 "use client";
+import { ElementLabel, ElementHeading } from "./element-label";
 
 import Link from "next/link";
 import { ZodiacConstellation, ZodiacLabel } from "./zodiac-constellation";
@@ -52,7 +53,7 @@ export default function CompatibilityExplorer({ pair }: { pair?: string }) {
           <div>
             <dt>{t({ en: "Elements", zh: "元素" })}</dt>
             <dd>
-              {t(elements[first % 4])} + {t(elements[second % 4])}
+              <ElementLabel element={elements[first % 4]} /> + <ElementLabel element={elements[second % 4]} />
             </dd>
           </div>
           <div>
@@ -69,8 +70,8 @@ export default function CompatibilityExplorer({ pair }: { pair?: string }) {
             </dd>
           </div>
         </dl>
-        <Section title={dynamics.elementTitle}>
-          <div className={pairStyles.combination}>{t(elements[first % 4])}<span>+</span>{t(elements[second % 4])}</div>
+        <Section title={dynamics.elementTitle} titleContent={<ElementHeading text={t(dynamics.elementTitle)} />}>
+          <div className={pairStyles.combination}><ElementLabel element={elements[first % 4]} /><span>+</span><ElementLabel element={elements[second % 4]} /></div>
           {dynamics.elementParagraphs.map((paragraph, index) => <p key={index}>{t(paragraph)}</p>)}
         </Section>
         <Section title={dynamics.modalityTitle}>

@@ -6,6 +6,7 @@
   --archive-heading: #f0c84a;
   --archive-text: #f0e6ce;
   --novel-gold: #e6bd62;
+  --novel-hero-scrim: rgba(0, 0, 0, .92);
   --hero-brand-ink: #ecdca9;
   --hero-brand-muted: #c5b89d;
   --hero-brand-rule: rgba(236, 220, 169, .32);
@@ -24,6 +25,10 @@
   --explore-success-border: #245642;
   --explore-banner: #141e30;
   --explore-warning: #f5b96a;
+  --element-fire: #ff6b4a;
+  --element-earth: #4ade80;
+  --element-air: #60a5fa;
+  --element-water: #818cf8;
   --explore-moon-light: #f6d86a;
   --explore-moon-dark: #514064;
   --explore-moon-shadow: #080c17;

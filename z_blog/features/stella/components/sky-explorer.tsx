@@ -1,4 +1,5 @@
 "use client";
+import { ElementLabel } from "./element-label";
 import { skyFaq } from "../lib/faq-content";
 import { FAQ } from "./explore-shared";
 
@@ -173,7 +174,7 @@ export default function SkyExplorer({
             return (
               <article key={element.en}>
                 <h3>
-                  {t(element)} · {matches.length}
+                  <ElementLabel element={element} /> · {matches.length}
                 </h3>
                 <div className={styles.progress}>
                   <span style={{ width: `${matches.length * 10}%` }} />

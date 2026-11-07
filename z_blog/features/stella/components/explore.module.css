@@ -19,9 +19,10 @@
   text-align: center;
   margin: 0 auto 40px;
 }
-.header p {
+.root .header > p {
   max-width: 700px;
   margin: 12px auto;
+  text-align: center;
 }
 .root h1,
 .root h2,
@@ -74,6 +75,7 @@
   gap: 12px;
 }
 .card {
+  composes: glow from "./card-effects.module.css";
   border: 1px solid var(--explore-border);
   border-radius: 8px;
   background: var(--explore-surface);
@@ -81,6 +83,7 @@
   min-width: 0;
 }
 .link {
+  composes: glow from "./card-effects.module.css";
   display: flex;
   align-items: center;
   gap: 12px;
@@ -91,9 +94,6 @@
   min-height: 60px;
   font-size: 14px;
   color: var(--explore-text);
-  transition:
-    background 0.18s,
-    border-color 0.18s;
 }
 .link:hover {
   background: var(--explore-hover);
@@ -298,6 +298,7 @@
   padding: 8px 0;
 }
 .day {
+  composes: glow from "./card-effects.module.css";
   background: var(--explore-calendar);
   border: 1px solid var(--explore-border);
   border-radius: 8px;
@@ -364,9 +365,12 @@
   border-radius: 5px;
   color: var(--explore-text);
   font-size: 13px;
+  transition: border-color .2s, box-shadow .2s;
 }
-.dates a:hover {
+.dates a:hover,
+.dates a:focus-visible {
   border-color: var(--explore-accent);
+  box-shadow: 0 0 20px var(--button-glow);
 }
 .facts {
   display: grid;

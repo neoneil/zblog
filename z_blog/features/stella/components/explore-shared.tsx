@@ -17,10 +17,12 @@ export function useExplore() {
 }
 export function Section({
   title,
+  titleContent,
   children,
   sign,
 }: {
   title: Copy;
+  titleContent?: React.ReactNode;
   children: React.ReactNode;
   sign?: number;
 }) {
@@ -29,7 +31,7 @@ export function Section({
     <section className={styles.section}>
       <h2>
         {sign === undefined ? (
-          t(title)
+          titleContent ?? t(title)
         ) : (
           <ZodiacLabel sign={sign}>{t(title)}</ZodiacLabel>
         )}
@@ -41,12 +43,14 @@ export function Section({
 export function ExploreShell({
   title,
   description,
+  subtitle,
   children,
   signs,
   tools = stellaTools,
 }: {
   title: Copy;
   description: Copy;
+  subtitle?: Copy;
   children: React.ReactNode;
   signs?: number[];
   tools?: readonly (typeof stellaTools)[number][];
@@ -57,6 +61,7 @@ export function ExploreShell({
       <div className={styles.inner}>
         <header className={styles.header}>
           <h1>{t(title)}</h1>
+          {subtitle ? <p>{t(subtitle)}</p> : null}
           {signs?.length ? (
             <div className={styles.constellationRow}>
               {signs.map((sign, index) => (

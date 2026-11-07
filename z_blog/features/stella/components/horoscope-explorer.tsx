@@ -1,4 +1,5 @@
 "use client";
+import { ElementLabel } from "./element-label";
 
 import Link from "next/link";
 import { SIGN_NAMES, SIGN_SYMBOLS } from "../lib/sky";
@@ -309,7 +310,7 @@ export default function HoroscopeExplorer({
             ))}
           </ul>
           <h3>{t({ en: "Element", zh: "元素" })}</h3>
-          <p>{t(elements[sign % 4])}</p>
+          <p><ElementLabel element={elements[sign % 4]} /></p>
           <h3>{t({ en: "Modality", zh: "模式" })}</h3>
           <p>{t(modalities[sign % 3])}</p>
           <h3>{t({ en: "Ruling Planet", zh: "守护星" })}</h3>

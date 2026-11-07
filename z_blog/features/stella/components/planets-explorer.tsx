@@ -1,6 +1,10 @@
 "use client";
+import { ElementLabel } from "./element-label";
 
 import Link from "next/link";
+import planetStyles from "./planets.module.css";
+import { planetaryTransits, planetaryDurations } from "../lib/planetary-transits";
+import { planetAstrology } from "../lib/planet-astrology";
 import { ZodiacLabel } from "./zodiac-constellation";
 import {
   SIGN_NAMES,
@@ -85,7 +89,7 @@ export default function PlanetsExplorer({
           <YearNav slug={`planets/${planet}`} year={year} />
           {ingresses.length ? (
             <div className={styles.tableWrap}>
-              <table className={styles.table}>
+              <table className={`${styles.table} ${planetStyles.ingressTable}`}>
                 <thead>
                   <tr>
                     {[
@@ -102,7 +106,7 @@ export default function PlanetsExplorer({
                 </thead>
                 <tbody>
                   {ingresses.map((row) => (
-                    <tr key={row.time}>
+                    <tr key={row.time} className={planetStyles.ingressRow}>
                       <td>
                         <TimeText value={row.time} dateOnly />
                       </td>
@@ -112,7 +116,9 @@ export default function PlanetsExplorer({
                           {SIGN_NAMES[language][row.sign]}
                         </ZodiacLabel>
                       </td>
-                      <td>{t(elements[row.sign % 4])}</td>
+                      <td>
+                        <ElementLabel element={elements[row.sign % 4]} />
+                      </td>
                       <td>
                         {t(
                           row.retrograde
@@ -134,15 +140,20 @@ export default function PlanetsExplorer({
             </p>
           )}
         </Section>
+        {planetAstrology[planet] ? (
+          <Section title={{ en: `About ${name.en} in Astrology`, zh: `占星学中的${name.zh}` }}>
+            {planetAstrology[planet].map((paragraph) => <p key={paragraph.en}>{t(paragraph)}</p>)}
+          </Section>
+        ) : null}
         <Section
           title={{
             en: `${name.en} Through the Signs`,
             zh: `${name.zh}经过十二星座`,
           }}
         >
-          <div className={styles.grid}>
+          <div className={planetStyles.signCards}>
             {signQualities.map((_, i) => (
-              <article key={i}>
+              <article key={i} className={styles.card}>
                 <h3>
                   <ZodiacLabel sign={i}>
                     {SIGN_SYMBOLS[i]} {SIGN_NAMES[language][i]}
@@ -193,12 +204,14 @@ export default function PlanetsExplorer({
                   {SIGN_SYMBOLS[p.signIndex]}{" "}
                   {SIGN_NAMES[language][p.signIndex]}
                 </ZodiacLabel>{" "}
-                {p.signDegrees.toFixed(2)}° ·{" "}
-                {t(
-                  p.retrograde
-                    ? { en: "Retrograde", zh: "逆行" }
-                    : { en: "Direct", zh: "顺行" },
-                )}
+                <span className={planetStyles.motion}>
+                  {p.signDegrees.toFixed(2)}° ·{" "}
+                  {t(
+                    p.retrograde
+                      ? { en: "Retrograde", zh: "逆行" }
+                      : { en: "Direct", zh: "顺行" },
+                  )}
+                </span>
               </p>
               <span className={styles.small}>{t(planetCopy[p.key].theme)}</span>
             </Link>
@@ -207,12 +220,7 @@ export default function PlanetsExplorer({
       <Section
         title={{ en: "Understanding Planetary Transits", zh: "理解行星行运" }}
       >
-        <p>
-          {t({
-            en: "A sign transit is the time a planet spends in one 30-degree sector of the tropical zodiac. Retrograde motion can take it back across a boundary, producing repeated entries. Inner planets describe faster-changing themes; outer planets describe longer collective cycles.",
-            zh: "落座行运是行星在回归黄道一个 30 度区间内运行的过程。逆行可能让它重新越过边界，因此会出现多次进入。内行星对应较快变化的主题，外行星对应更长的集体周期。",
-          })}
-        </p>
+        {planetaryTransits.map((paragraph) => <p key={paragraph.en}>{t(paragraph)}</p>)}
       </Section>
       <Section
         title={{
@@ -227,24 +235,30 @@ export default function PlanetsExplorer({
                 <th>{t({ en: "Planet", zh: "行星" })}</th>
                 <th>
                   {t({
-                    en: "Approximate time per sign",
+                    en: "Average Time in Each Sign",
                     zh: "每个星座的大致停留时间",
                   })}
                 </th>
+                <th>{t({ en: "Full Zodiac Cycle", zh: "完整黄道周期" })}</th>
               </tr>
             </thead>
             <tbody>
-              {Object.entries(planetCopy).map(([key, value]) => (
+              {planetaryDurations.map(({ key, stay, cycle }) => (
                 <tr key={key}>
                   <th scope="row">
-                    {PLANET_SYMBOLS[key]} {t(value.name)}
+                    {PLANET_SYMBOLS[key]} {t(planetCopy[key].name)}
                   </th>
-                  <td>{value.period}</td>
+                  <td>{t(stay)}</td>
+                  <td>{t(cycle)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <p className={styles.small}>{t({
+          en: "Approximate reference values, not fixed transit durations. The cycle column gives the Moon's sidereal month, the Sun's apparent annual circuit and the planets' orbital periods around the Sun. In particular, Mercury's 88 days and Venus's 225 days are not their geocentric journeys through all twelve signs. Retrograde motion can extend or repeat a sign transit.",
+          zh: "以上为近似参考值，并非固定行运时长。周期一栏列出月亮的恒星月、太阳的视周年运动，以及各行星绕太阳的公转周期。尤其是水星的 88 天和金星的 225 天，并不是从地球观察它们经过全部十二星座所需的时间。逆行可能延长或重复某个星座的行运。",
+        })}</p>
       </Section>
     </ExploreShell>
   );

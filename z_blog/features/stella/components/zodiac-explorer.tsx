@@ -1,4 +1,5 @@
 "use client";
+import { ElementLabel } from "./element-label";
 
 import Link from "next/link";
 import { SIGN_NAMES, SIGN_SYMBOLS } from "../lib/sky";
@@ -66,7 +67,7 @@ export default function ZodiacExplorer({ sign }: { sign?: number }) {
         </div>
         <div className={styles.meta}>
           <span>{t(profile.dates)}</span>
-          <span>{t(elements[sign % 4])}</span>
+          <ElementLabel element={elements[sign % 4]} />
           <span>{t(modalities[sign % 3])}</span>
           <span>
             {t({ en: "Ruled by", zh: "守护星" })}{" "}

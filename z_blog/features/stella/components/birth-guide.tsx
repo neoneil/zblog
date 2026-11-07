@@ -1,4 +1,5 @@
 "use client";
+import { ElementLabel } from "./element-label";
 
 import Link from "next/link";
 import { guideFaq } from "../lib/faq-content";
@@ -196,7 +197,7 @@ export default function BirthGuide() {
                 </ZodiacLabel>
               </h3>
               <span className={styles.small}>
-                {t(elements[i % 4])} · {t(modalities[i % 3])} ·{" "}
+                <ElementLabel element={elements[i % 4]} /> · {t(modalities[i % 3])} ·{" "}
                 {t(planetCopy[rulers[i]].name)}
               </span>
               <p>{t(signQualities[i])}</p>

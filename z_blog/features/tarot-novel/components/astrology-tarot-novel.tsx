@@ -22,9 +22,11 @@ export function AstrologyTarotNovel({ chapters = [], chapter, comments = [], com
   return (
     <main className={styles.page}><Container><div className="py-8 sm:py-12">
       <ButtonLink href={chapter ? "/tarot-novel#chapters" : "/"} variant="ghost">{text(chapter ? "返回章节目录" : "返回首页", chapter ? "Back to chapters" : "Back home")}</ButtonLink>
-      {!chapter && <section className={styles.hero}>
-        <Image src="/hero.png" alt="" fill priority className="object-cover" />
-        <div className={styles.overlay} />
+      {!chapter && <section className={styles.hero} tabIndex={0} aria-label={text("星尘物语：让我们再死一次", "Stardust Stories: Let Us Die Once More")}>
+        <div className={styles.heroMedia}>
+          <Image src="/stardust-stories-hero.png" alt="" width={1672} height={941} sizes="(max-width: 1152px) 100vw, 1152px" priority className={styles.heroImage} />
+        </div>
+        <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroText}>
           <p>{text("星尘物语", "STARDUST STORIES")}</p>
           <h1 className={styles.bookTitle}>{text("让我们再死一次", "LET US DIE ONCE MORE")}</h1>

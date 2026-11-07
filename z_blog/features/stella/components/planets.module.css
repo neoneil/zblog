@@ -1,0 +1,16 @@
+.motion { display: inline-block; white-space: nowrap; }
+.ingressTable thead th {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--archive-heading);
+  text-shadow: 0 0 6px var(--button-glow), 0 0 14px var(--button-glow);
+}
+.ingressRow {
+  composes: glow from "./card-effects.module.css";
+  position: relative;
+}
+.ingressRow:hover { z-index: 1; }
+.signCards { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 768px) {
+  .signCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

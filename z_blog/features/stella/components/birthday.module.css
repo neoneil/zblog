@@ -1,0 +1,6 @@
+.columns { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.list { margin: 0; padding-left: 20px; list-style: disc; }
+.list li { padding: 6px 0; color: var(--explore-muted); line-height: 1.8; }
+.ctaRow { display: flex; justify-content: center; margin-top: 24px; }
+.cta { composes: glow from "./card-effects.module.css"; text-align: center; }
+@media (min-width: 768px) { .columns { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
