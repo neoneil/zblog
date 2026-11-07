@@ -20,8 +20,8 @@ export const categories: CategoryItem[] = [
       en: "Stella Astrology Tools",
     },
     description: {
-      zh: "从星座配对、今日星空到月亮日历与日月食，探索八项占星工具。",
-      en: "Explore eight astrology tools, from compatibility and today's sky to moon calendars and eclipses.",
+      zh: "从出生星盘、星座配对到月亮日历、生命数字与日月食，探索十一项占星工具。",
+      en: "Explore eleven astrology tools, from birth charts and compatibility to moon calendars, numerology and eclipses.",
     },
     backgroundImage: "/category-cards/understanding-bg.png",
     buttonVariant: "green",

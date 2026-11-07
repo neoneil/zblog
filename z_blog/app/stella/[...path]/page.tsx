@@ -21,6 +21,7 @@ import {
   planetCopy,
 } from "@/features/stella/lib/explore-config";
 import { getExploreSkySnapshot } from "@/features/stella/lib/sky";
+import { retrogradeReferenceDate } from "@/features/stella/lib/retrograde-reference";
 import {
   moonMonth,
   calendarRetrogradePeriods,
@@ -118,12 +119,14 @@ export default async function StellaExplorePage({
     notFound();
   if (slug === "retrograde") {
     if (detail && !planetKeys.includes(detail)) notFound();
+    const referenceDate = retrogradeReferenceDate(year, now);
     return (
       <RetrogradeExplorer
         year={year}
         planet={detail}
-        snapshot={getExploreSkySnapshot(now)}
-        time={now.toISOString()}
+        snapshot={getExploreSkySnapshot(referenceDate)}
+        time={referenceDate.toISOString()}
+        isCurrentTime={year === now.getUTCFullYear()}
         periods={calendarRetrogradePeriods(year, detail ? [detail] : undefined)}
       />
     );

@@ -1,4 +1,6 @@
 "use client";
+import { moonFaq } from "../lib/faq-content";
+import { FAQ } from "./explore-shared";
 
 import { useState } from "react";
 import { ZodiacConstellation, ZodiacLabel } from "./zodiac-constellation";
@@ -170,6 +172,7 @@ export default function MoonExplorer({
           ))}
         </div>
       </Section>
+      <FAQ items={moonFaq} />
     </ExploreShell>
   );
 }

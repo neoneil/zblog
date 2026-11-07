@@ -2,16 +2,16 @@
 
 import { ExploreShell } from "./explore-shared";
 import { categories } from "@/lib/categories";
-import { stellaExplorerTools } from "../lib/explore-config";
+import { stellaTools } from "../lib/explore-config";
 
 export default function StellaToolsOverview() {
   return (
     <ExploreShell
       title={categories[0].title}
-      tools={stellaExplorerTools}
+      tools={stellaTools}
       description={{
-        en: "Compatibility, the sky, lunar rhythms and eight ways to explore astrology.",
-        zh: "从星座配对到行星与月相节奏，探索八项占星工具。",
+        en: "Explore eleven astrology tools, from birth charts and compatibility to lunar calendars, numerology and eclipses.",
+        zh: "从出生星盘与星座配对，到月亮日历、生命数字和日月食，探索十一项占星工具。",
       }}
     >
       {null}

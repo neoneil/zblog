@@ -1,4 +1,5 @@
 "use client";
+import { numerologyFaq } from "../lib/faq-content";
 
 import { useState } from "react";
 import { Calculator } from "lucide-react";
@@ -237,6 +238,7 @@ export default function NumerologyExplorer() {
       </Section>
       <FAQ
         items={[
+          ...numerologyFaq,
           {
             question: {
               en: "Which calculation method is used?",

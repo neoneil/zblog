@@ -31,12 +31,14 @@
 }
 .root h1 {
   font-family: "Stella Cinzel", Georgia, serif;
+  font-weight: 700;
   font-size: 32px;
   color: var(--explore-title);
   margin: 12px 0 20px;
 }
 .root h2 {
   font-family: "Stella Cinzel", Georgia, serif;
+  font-weight: 700;
   font-size: 22px;
   color: var(--explore-text);
   margin: 0 0 20px;

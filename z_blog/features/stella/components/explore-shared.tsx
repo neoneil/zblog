@@ -308,7 +308,7 @@ export function FAQ({ items }: { items: { question: Copy; answer: Copy }[] }) {
         {items.map((item) => (
           <details key={item.question.en}>
             <summary>{t(item.question)}</summary>
-            <p>{t(item.answer)}</p>
+            {t(item.answer).split(/\n\n+/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
           </details>
         ))}
       </div>

@@ -1,0 +1,10 @@
+.cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.card { display: flex; flex-direction: column; min-width: 0; padding: 24px; border: 1px solid var(--explore-border); border-radius: 8px; background: var(--explore-surface); transition: border-color .2s, box-shadow .2s; }
+.card:hover { border-color: var(--explore-accent); box-shadow: var(--shadow-md); }
+.card h3 { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.symbol { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; flex: none; border: 1px solid var(--explore-border); border-radius: 8px; color: var(--explore-title); font-size: 28px; }
+.card a { display: inline-flex; align-items: center; gap: 8px; align-self: start; margin-top: auto; padding-top: 16px; color: var(--explore-accent); font-weight: 600; }
+.card a:focus-visible { outline: 2px solid var(--explore-accent); outline-offset: 4px; }
+.comparison { padding: 20px 0; border-bottom: 1px solid var(--explore-border); }
+.comparison strong { color: var(--explore-title); }
+@media (min-width: 768px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const celestialCopy = [
   {
     title: { en: "STELLAR EXPLORER", zh: "星象天机" },
-    description: { en: "Explore Eight Astrology Tools — From Zodiac Compatibility and Today's Sky to Moon Calendars, Eclipses, and Birthday Horoscopes. Unlock the Secrets of the Cosmos.", zh: "探索八大占星工具，从星座配对、今日星空到月亮日历、日月食与生日密码，揭开宇宙星辰的神秘奥秘。" },
+    description: { en: "Explore Eleven Astrology Tools — From Birth Charts and Zodiac Compatibility to Today's Sky, Moon Calendars, Numerology, Eclipses, and Birthday Horoscopes. Unlock the Secrets of the Cosmos.", zh: "探索十一项占星工具，从出生星盘、星座配对、今日星空到月亮日历、生命数字、日月食与生日密码，揭开宇宙星辰的神秘奥秘。" },
     backgroundImage: "/knowledge/stellar-explorer.png",
   },
   {

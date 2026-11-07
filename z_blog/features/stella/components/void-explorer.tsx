@@ -1,4 +1,6 @@
 "use client";
+import { voidFaq } from "../lib/faq-content";
+import VoidGuide from "./void-guide";
 
 import { useState } from "react";
 import { ZodiacLabel } from "./zodiac-constellation";
@@ -144,45 +146,10 @@ export default function VoidExplorer({
           </table>
         </div>
       </Section>
-      <Section
-        title={{
-          en: "How These Windows Are Calculated",
-          zh: "这些区间如何计算",
-        }}
-      >
-        <p>
-          {t({
-            en: "The calendar includes five major aspects to the Sun and eight other planets. Sign changes are sampled hourly; we scan backward in half-hour steps for the final aspect window within 1 degree. These are calendar estimates, not exact aspect times. This month's table includes intervals ending within the month.",
-            zh: "日历纳入月亮与太阳及另外八颗行星的五种主要相位。换座按小时取样，再以半小时步长向前回查最后一个 1 度以内的相位窗口。因此这些是日历估算值，而非精确相位时刻。本月表格收录在本月结束的区间。",
-          })}
-        </p>
-      </Section>
-      <Section
-        title={{ en: "Using a Quiet Interval", zh: "如何度过安静的间隙" }}
-      >
-        <div className={styles.grid}>
-          <article>
-            <h3>{t({ en: "Rest and review", zh: "休息与回顾" })}</h3>
-            <p>
-              {t({
-                en: "Use the interval for familiar routines, finishing an existing task, journaling or rest. Notice what feels complete before deciding what comes next.",
-                zh: "可以安排熟悉的日常、完成已有任务、记录感受或休息。决定下一步之前，先留意什么已经完成。",
-              })}
-            </p>
-          </article>
-          <article>
-            <h3>{t({ en: "Keep perspective", zh: "保持理性" })}</h3>
-            <p>
-              {t({
-                en: "Traditional caution about new beginnings is symbolic guidance, not a proven causal effect. Do not delay urgent care or important responsibilities because of a lunar calendar.",
-                zh: "传统上对新开始的谨慎态度属于象征性指导，并非已证实的因果效应。不要因为月历而延误紧急照护或重要责任。",
-              })}
-            </p>
-          </article>
-        </div>
-      </Section>
+      <VoidGuide />
       <FAQ
         items={[
+          ...voidFaq,
           {
             question: {
               en: "Why do times vary between calendars?",

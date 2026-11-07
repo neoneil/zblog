@@ -7,14 +7,14 @@ import {
   compatibilityPairs,
   signSlugs,
   parsePair,
-  pairDynamics,
   elements,
   modalities,
   rulers,
   planetCopy,
-  signQualities,
-  signChallenges,
 } from "../lib/explore-config";
+import { zodiacProfiles } from "../lib/zodiac-profiles";
+import { compatibilityNarrative } from "../lib/compatibility-content";
+import pairStyles from "./compatibility.module.css";
 import {
   ExploreShell,
   Section,
@@ -30,7 +30,7 @@ export default function CompatibilityExplorer({ pair }: { pair?: string }) {
   const sign = (i: number) => SIGN_NAMES[language][i];
   if (selected) {
     const [first, second] = selected,
-      dynamics = pairDynamics(first, second);
+      dynamics = compatibilityNarrative(first, second);
     return (
       <ExploreShell
         signs={[first, second]}
@@ -39,8 +39,8 @@ export default function CompatibilityExplorer({ pair }: { pair?: string }) {
           zh: `${SIGN_NAMES.zh[first]}与${SIGN_NAMES.zh[second]}配对`,
         }}
         description={{
-          en: "Element harmony, relationship rhythms and opportunities to grow together.",
-          zh: "探索元素互动、关系节奏与共同成长的空间。",
+          en: `${SIGN_SYMBOLS[first]} ${zodiacProfiles[first].dates.en} — ${SIGN_SYMBOLS[second]} ${zodiacProfiles[second].dates.en}`,
+          zh: `${SIGN_SYMBOLS[first]} ${zodiacProfiles[first].dates.zh} — ${SIGN_SYMBOLS[second]} ${zodiacProfiles[second].dates.zh}`,
         }}
       >
         <div className={styles.header}>
@@ -69,11 +69,13 @@ export default function CompatibilityExplorer({ pair }: { pair?: string }) {
             </dd>
           </div>
         </dl>
-        <Section title={{ en: "Element Harmony", zh: "元素关系" }}>
-          <p>{t(dynamics.harmony)}</p>
+        <Section title={dynamics.elementTitle}>
+          <div className={pairStyles.combination}>{t(elements[first % 4])}<span>+</span>{t(elements[second % 4])}</div>
+          {dynamics.elementParagraphs.map((paragraph, index) => <p key={index}>{t(paragraph)}</p>)}
         </Section>
-        <Section title={{ en: "Modality Dynamics", zh: "模式互动" }}>
-          <p>{t(dynamics.modality)}</p>
+        <Section title={dynamics.modalityTitle}>
+          <div className={pairStyles.combination}>{t(modalities[first % 3])}<span>+</span>{t(modalities[second % 3])}</div>
+          {dynamics.modalityParagraphs.map((paragraph, index) => <p key={index}>{t(paragraph)}</p>)}
         </Section>
         <Section title={{ en: "Soul-Level Connection", zh: "深层连接" }}>
           <p>
@@ -82,20 +84,29 @@ export default function CompatibilityExplorer({ pair }: { pair?: string }) {
               zh: "把差异当作理解的邀请，而非关系的判决。共同意愿和真诚修复，比任何星座组合更重要。",
             })}
           </p>
+          <div className={pairStyles.columns}>
+            {[first, second].map((i, index) => <article key={index}>
+              <h3><ZodiacLabel sign={i}>{SIGN_SYMBOLS[i]} {sign(i)}</ZodiacLabel></h3>
+              <p>{t(zodiacProfiles[i].purpose)}</p>
+              <p>{t(zodiacProfiles[i].lesson)}</p>
+            </article>)}
+          </div>
         </Section>
         <Section title={{ en: "Sign Profiles", zh: "双方星座资料" }}>
-          <div className={styles.grid}>
+          <div className={pairStyles.columns}>
             {[first, second].map((i, index) => (
-              <article key={index} className={styles.card}>
+              <article key={index}>
                 <h3>
                   <ZodiacLabel sign={i}>
                     {SIGN_SYMBOLS[i]} {sign(i)}
                   </ZodiacLabel>
                 </h3>
-                <p>{t(signQualities[i])}</p>
-                <p>{t(signChallenges[i])}</p>
+                <div className={pairStyles.traits}>{zodiacProfiles[i].traits.map((trait) => <span key={trait.en}>{t(trait)}</span>)}</div>
+                {zodiacProfiles[i].about.map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{t(paragraph)}</p>)}
+                <p><strong>{t({ en: "Strengths", zh: "优势" })}: </strong>{zodiacProfiles[i].strengths.map(t).join(language === "zh" ? "、" : ", ")}</p>
+                <p><strong>{t({ en: "Growth opportunities", zh: "成长课题" })}: </strong>{zodiacProfiles[i].challenges.map(t).join(language === "zh" ? "、" : ", ")}</p>
                 <Link
-                  href={`/stella/birth-chart#${signSlugs[i]}`}
+                  href={`/stella/zodiac/${signSlugs[i]}`}
                   className={styles.muted}
                 >
                   {t({ en: "Explore this sign", zh: "了解这个星座" })} →
@@ -103,6 +114,9 @@ export default function CompatibilityExplorer({ pair }: { pair?: string }) {
               </article>
             ))}
           </div>
+        </Section>
+        <Section title={{ en: "Learn More About Each Sign", zh: "深入了解双方星座" }}>
+          <div className={pairStyles.profileLinks}>{[first, second].map((i, index) => <Link key={index} href={`/stella/zodiac/${signSlugs[i]}`}><ZodiacLabel sign={i}>{SIGN_SYMBOLS[i]} {sign(i)} →</ZodiacLabel></Link>)}</div>
         </Section>
         <p>
           {t({

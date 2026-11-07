@@ -40,6 +40,7 @@
 .section { padding: 18px 0; border-bottom: 1px solid var(--stella-divider); }
 .section:first-child { padding-top: 2px; }
 .section:last-child { border-bottom: 0; }
+.experience h1, .experience h2 { font-weight: 700; }
 .section h2 { margin: 0 0 12px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
 .section h3 { margin: 0 0 10px; font-size: 13px; }
 .section p { margin: 0 0 12px; color: var(--stella-muted); line-height: 1.75; }

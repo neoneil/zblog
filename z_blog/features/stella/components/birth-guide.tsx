@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { guideFaq } from "../lib/faq-content";
 import { ZodiacLabel } from "./zodiac-constellation";
 import { SIGN_NAMES, SIGN_SYMBOLS } from "../lib/sky";
 import {
@@ -26,16 +27,16 @@ const placements: { symbol: string; title: Copy; copy: Copy }[] = [
     symbol: "☉",
     title: { en: "Sun Sign", zh: "太阳星座" },
     copy: {
-      en: "Your Sun describes identity, vitality and the direction of creative expression. It is one part of the chart, not the whole personality.",
-      zh: "太阳对应自我认同、生命力和创造性表达的方向。它是星盘的一部分，并不代表完整人格。",
+      en: "The Sun is a starting point for exploring identity: what gives you energy, how you create and which choices feel personally meaningful. Its sign offers a style of expression; its house and aspects add context that a single zodiac label cannot provide.",
+      zh: "太阳是探索自我认同的起点：什么让你充满活力，如何发挥创造力，哪些选择对你真正有意义。太阳星座提示表达风格，宫位与相位则补充单一星座标签无法呈现的背景。",
     },
   },
   {
     symbol: "☽",
     title: { en: "Moon Sign", zh: "月亮星座" },
     copy: {
-      en: "The Moon describes emotional responses, familiar habits and what helps you feel secure. Its faster motion makes the birth date and time important.",
-      zh: "月亮对应情绪反应、熟悉的习惯和安全感来源。它移动较快，因此出生日期和时间很重要。",
+      en: "The Moon helps you reflect on emotional habits, private needs and the ways you restore a sense of safety. Notice how you react before you have time to think. Its house and aspects describe the settings and relationships in which these responses become especially noticeable.",
+      zh: "月亮帮助你观察情绪习惯、私密需求与恢复安全感的方式。留意来不及思考时的本能回应，再结合宫位和相位，理解这些反应在哪些生活场景与关系中更为明显。",
     },
   },
   {
@@ -50,24 +51,24 @@ const placements: { symbol: string; title: Copy; copy: Copy }[] = [
     symbol: "MC",
     title: { en: "Midheaven", zh: "天顶" },
     copy: {
-      en: "The Midheaven relates to public direction, vocation and what you develop through responsibility. It is not a prediction of a particular occupation.",
-      zh: "天顶对应公共方向、职业志向与责任中的发展，并不预言某一种具体职业。",
+      en: "The Midheaven invites reflection on public contribution, professional identity and the qualities you develop by taking responsibility. Consider what you want your work to stand for, not merely a job title. Read its ruler and aspects alongside the rest of the chart rather than predicting a fixed occupation.",
+      zh: "天顶引导你思考公共贡献、职业认同与承担责任时形成的品质。关注你希望工作体现的价值，而不仅是职位名称。结合守护星、相位与完整星盘理解它，不把它当作某种固定职业的预言。",
     },
   },
   {
     symbol: "♇",
     title: { en: "Planetary Positions", zh: "行星位置" },
     copy: {
-      en: "Each planet represents a function. Its sign suggests a style of expression, while its house places that theme in a part of daily life.",
-      zh: "每颗行星象征一种功能，星座提示表达风格，宫位则把主题放进生活领域。",
+      en: "Mercury, Venus and Mars offer lenses on thinking, relating and taking action. Jupiter and Saturn bring questions of growth, limits and commitment, while the outer planets add wider cycles of change. A placement becomes more useful when sign, house and aspects are interpreted together.",
+      zh: "水星、金星和火星分别提供观察思考、关系与行动的视角。木星与土星关联拓展、边界和承诺，外行星则补充更长期的变化周期。把星座、宫位与相位放在一起，才能让单个落点获得更完整的意义。",
     },
   },
   {
     symbol: "⌂",
     title: { en: "Houses", zh: "十二宫位" },
     copy: {
-      en: "Houses organize the chart into life areas. Different house systems may give different cusps, so compare charts using the same settings.",
-      zh: "宫位将星盘划分为不同生活领域。不同宫制可能给出不同宫头，比较星盘时应使用相同设置。",
+      en: "The twelve houses locate chart themes in everyday experience: identity, money, learning, home, creativity, routines, partnership and beyond. A planet's house asks where its symbolism may be explored. House cusps depend on the birth time, location and chosen house system, so keep those settings consistent when comparing charts.",
+      zh: "十二宫把星盘主题放进实际生活：自我、金钱、学习、家庭、创造、日常与伙伴关系等。行星所在宫位提示可在哪个领域探索其象征。宫头取决于出生时间、地点及宫制，因此比较星盘时需要保持这些设置一致。",
     },
   },
   {
@@ -80,10 +81,10 @@ const placements: { symbol: string; title: Copy; copy: Copy }[] = [
   },
   {
     symbol: "✦",
-    title: { en: "Soul Purpose", zh: "成长方向" },
+    title: { en: "Soul Purpose", zh: "灵魂使命" },
     copy: {
-      en: "Read the whole chart as a set of questions about values, growth and contribution. No placement removes your freedom to choose how to live.",
-      zh: "把完整星盘看作关于价值观、成长和贡献的一组问题。任何位置都不会剥夺你选择生活方式的自由。",
+      en: "A soul-oriented reading asks how insight can become a more intentional life. Use recurring themes to reflect on values, service and the qualities you want to cultivate. Esoteric traditions add symbolic frameworks, but a chart cannot establish an objective spiritual rank or remove your freedom to choose.",
+      zh: "面向灵魂成长的解读关注：如何把理解转化为更有意识的生活。通过反复出现的主题，思考价值观、贡献与希望培养的品质。秘传传统提供额外的象征框架，但星盘不能客观判定灵性等级，也不会剥夺你的选择自由。",
     },
   },
 ];
@@ -162,6 +163,19 @@ export default function BirthGuide() {
           ))}
         </div>
       </Section>
+      <Section title={{ en: "Beyond Personality Astrology", zh: "超越性格层面的占星" }}>
+        <p>{t({
+          en: "Move from describing familiar tendencies to choosing how you want to live. Reflection becomes useful when it changes an everyday decision.",
+          zh: "从描述熟悉的倾向，走向主动选择生活方式。当一次反思改变了日常决定，理解才真正落地。",
+        })}</p>
+        <div className={styles.grid}>
+          {[
+            { title: { en: "Soul Purpose", zh: "灵魂使命" }, copy: { en: "Consider a quality you want to practise, not a destiny you must fulfil. Let the Ascendant prompt questions about courage, awareness and contribution; your circumstances and choices shape the answer.", zh: "关注希望练习的品质，而不是必须完成的宿命。以上升星座为起点，思考勇气、觉察与贡献，再由现实处境和个人选择形成答案。" } },
+            { title: { en: "Growth Through Challenge", zh: "在挑战中成长" }, copy: { en: "When two needs seem incompatible, avoid labelling one as a flaw. Name the tension, experiment with a small change and notice what helps you respond more thoughtfully.", zh: "当两种需要看似冲突时，不急着把其中一种视为缺陷。说清张力、尝试小幅调整，观察什么能帮助自己更有意识地回应。" } },
+            { title: { en: "Life as a Journey", zh: "把生命视为旅程" }, copy: { en: "Return to your chart as your experience changes. Keep a journal of questions and decisions; over time, compare interpretation with lived experience rather than treating the first reading as a final identity.", zh: "随着经历变化重新阅读星盘，记录问题与决定。让诠释与真实生活相互对照，而不是把第一次解读当成最终的身份定义。" } },
+          ].map((item) => <article key={item.title.en} className={styles.card}><h3>{t(item.title)}</h3><p>{t(item.copy)}</p></article>)}
+        </div>
+      </Section>
       <Section title={{ en: "The Twelve Houses", zh: "十二宫位" }}>
         <div className={styles.grid}>
           {houseThemes.map((item, i) => (
@@ -193,6 +207,7 @@ export default function BirthGuide() {
       </Section>
       <FAQ
         items={[
+          ...guideFaq,
           {
             question: {
               en: "Can I calculate without a birth time?",

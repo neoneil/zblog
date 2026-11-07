@@ -35,7 +35,7 @@ const date = new Date("2026-03-03T01:00:00Z");
 // Captured from the live public page, not inferred from our ephemeris.
 // Venus's Libra index follows from the page's Aries solar house 7.
 const monthlyAriesSource = {
-  source: "https://stellasophy.com/horoscope/monthly/aries",
+  source: "Public reference capture: /horoscope/monthly/aries",
   heading: "October 2026",
   observedUtcDate: "2026-10-31",
   sign: 0,

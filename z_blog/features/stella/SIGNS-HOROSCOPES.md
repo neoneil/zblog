@@ -32,7 +32,7 @@ Key dates reuse the existing sampled ingress calendar and computed eclipse peaks
 ## Reference and Limits
 
 Public page layouts and navigation inspected on 2026-11-01:
-https://stellasophy.com/zodiac, `/zodiac/aries`, `/horoscope`, `/horoscope/aries`,
+Reference routes: `/zodiac`, `/zodiac/aries`, `/horoscope`, `/horoscope/aries`,
 `/horoscope/monthly`, `/horoscope/monthly/aries`, `/horoscope/yearly`, and
 `/horoscope/yearly/aries`.
 

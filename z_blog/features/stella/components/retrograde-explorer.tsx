@@ -1,4 +1,10 @@
 "use client";
+import { retrogradeFaq } from "../lib/faq-content";
+import { retrogradeMeaning } from "../lib/retrograde-meaning";
+import { retrogradeGuides } from "../lib/retrograde-guides";
+import PlanetRetrogradeGuide from "./planet-retrograde-guide";
+import guideStyles from "./retrograde.module.css";
+import { ArrowUpRight } from "lucide-react";
 
 import Link from "next/link";
 import { ZodiacConstellation, ZodiacLabel } from "./zodiac-constellation";
@@ -27,12 +33,14 @@ export default function RetrogradeExplorer({
   periods,
   time,
   planet,
+  isCurrentTime = true,
 }: {
   year: number;
   snapshot: SkySnapshot;
   periods: RetrogradePeriod[];
   time: string;
   planet?: string;
+  isCurrentTime?: boolean;
 }) {
   const { t, language } = useExplore(),
     now = Date.parse(time),
@@ -49,19 +57,20 @@ export default function RetrogradeExplorer({
         zh: planet ? `${name!.zh}逆行 · ${year}` : `行星逆行 · ${year}`,
       }}
       description={{
-        en: "Current motion and a calculated annual schedule of apparent retrograde periods.",
-        zh: "当前运动状态，以及通过实际视运动计算的全年逆行区间。",
+        en: "Planetary motion at the displayed reference time and the selected year's retrograde schedule.",
+        zh: "查看显示参考时刻的行星运动状态，以及所选年份的逆行日历。",
       }}
     >
       <YearNav
         slug={planet ? `retrograde/${planet}` : "retrograde"}
         year={year}
       />
-      <Section title={{ en: "Current Retrograde Status", zh: "当前逆行状态" }}>
+      <Section title={isCurrentTime ? { en: "Current Retrograde Status", zh: "当前逆行状态" } : { en: `Retrograde Status — ${year} Reference Date`, zh: `${year} 年参考日期的逆行状态` }}>
+        {!isCurrentTime && <p className={styles.small}>{t({ en: "Historical and future years use the same UTC month and day as today in the selected year; a leap day is clamped to the last valid day. Schedule statuses are relative to this reference time.", zh: "历史或未来年份采用所选年中与今天相同的 UTC 月日，闰日取当月最后一个有效日期。下方日历状态也以此参考时刻为准。" })}</p>}
         <p>
           {t({
             en: `${current.filter((p) => p.retrograde).length} of ${current.length} planets are retrograde.`,
-            zh: `${current.length} 颗行星中，当前有 ${current.filter((p) => p.retrograde).length} 颗逆行。`,
+            zh: `${current.length} 颗行星中，该参考时刻有 ${current.filter((p) => p.retrograde).length} 颗逆行。`,
           })}{" "}
           <TimeText value={time} />
         </p>
@@ -195,7 +204,7 @@ export default function RetrogradeExplorer({
                         >
                           {t(
                             active
-                              ? { en: "Active now", zh: "进行中" }
+                          ? { en: isCurrentTime ? "Active now" : "Active at reference time", zh: isCurrentTime ? "进行中" : "参考时刻进行中" }
                               : Date.parse(p.start) > now
                                 ? { en: "Upcoming", zh: "即将到来" }
                                 : { en: "Complete", zh: "已结束" },
@@ -217,38 +226,33 @@ export default function RetrogradeExplorer({
           </p>
         )}
       </Section>
+      {planet ? <PlanetRetrogradeGuide planet={planet} position={current[0]} time={time} year={year} /> : <>
       <Section title={{ en: "What Retrograde Means", zh: "逆行意味着什么" }}>
-        <p>
-          {t({
-            en: "Retrograde occurs when a planet's apparent geocentric longitude decreases. Relative orbital motion creates this perspective; the planet does not reverse its physical orbit. Station times mark the transition between direct and retrograde motion.",
-            zh: "当行星的地心视黄经减小时，称为逆行。这来自相对公转运动形成的观察视角，而非行星真的改变公转方向。留点是顺行与逆行之间的转换时刻。",
-          })}
-        </p>
+        {retrogradeMeaning.map((paragraph, index) => <p key={index}>{t(paragraph)}</p>)}
       </Section>
       <Section
         title={{
-          en: planet ? `Working with ${name!.en}` : "Reflection by Planet",
-          zh: planet ? `与${name!.zh}主题相处` : "各行星的反思主题",
+          en: "How Each Planet's Retrograde Affects You",
+          zh: "各行星逆行如何影响你",
         }}
       >
-        <div className={styles.grid}>
-          {(planet ? [planet] : planetKeys).map((key) => (
-            <article key={key}>
+        <div className={guideStyles.cards}>
+          {planetKeys.map((key) => (
+            <article key={key} className={guideStyles.card}>
               <h3>
-                {PLANET_SYMBOLS[key]} {t(planetCopy[key].name)}
+                <span className={guideStyles.symbol} aria-hidden="true">{PLANET_SYMBOLS[key]}</span> {t({ en: `${planetCopy[key].name.en} Retrograde`, zh: `${planetCopy[key].name.zh}逆行` })}
               </h3>
               <p>
-                {t({
-                  en: `Review ${planetCopy[key].theme.en}. Revisit unfinished conversations or commitments, check assumptions, and allow time for adjustment. These are reflective prompts, not evidence that particular events must occur.`,
-                  zh: `围绕${planetCopy[key].theme.zh}进行回顾。重新讨论未完成的交流或承诺，核对假设，也为调整留出时间。这些是反思提示，并不意味着某件事必然发生。`,
-                })}
+                {t(retrogradeGuides[key].summary)}
               </p>
+              <Link href={`/stella/retrograde/${key}?year=${year}`}>{t({ en: `Full ${planetCopy[key].name.en} Retrograde Guide`, zh: `${planetCopy[key].name.zh}逆行完整指南` })}<ArrowUpRight size={16} aria-hidden="true" /></Link>
             </article>
           ))}
         </div>
       </Section>
       <FAQ
         items={[
+          ...retrogradeFaq,
           {
             question: {
               en: "How are the dates calculated?",
@@ -261,6 +265,7 @@ export default function RetrogradeExplorer({
           },
         ]}
       />
+      </>}
       {planet ? (
         <Back
           href="/stella/retrograde"

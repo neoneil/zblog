@@ -75,7 +75,7 @@ Stella scene's `--stella-*` variables are not modified.
 
 ## Reference and Limits
 
-Public reference inspected on 2026-10-31: https://stellasophy.com/ and its eleven
+Public reference inspected on 2026-10-31: the reference homepage and its eleven
 Explore destinations, including example compatibility, birthday, planet,
 retrograde and eclipse detail pages. The dark palette, typography and content
 hierarchy follow that reference, while the existing site's navbar/branding and

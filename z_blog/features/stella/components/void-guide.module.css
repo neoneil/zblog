@@ -1,0 +1,14 @@
+.cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.card { min-width: 0; padding: 24px; border: 1px solid var(--explore-border); border-top: 3px solid var(--explore-accent); border-radius: 8px; background: var(--explore-surface); transition: border-color .2s, box-shadow .2s; }
+.card:hover { border-color: var(--explore-accent); box-shadow: var(--shadow-md); }
+.card header { display: flex; align-items: center; gap: 16px; }
+.card header h3 { margin: 0; font-weight: 700; }
+.icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; flex: none; border: 1px solid var(--explore-border); border-radius: 8px; color: var(--explore-title); }
+.card ul { list-style: none; padding: 0; margin: 0; }
+.card li { padding: 16px 0; border-top: 1px solid var(--explore-border); }
+.card li:last-child { padding-bottom: 0; }
+.perspective { display: flex; align-items: center; gap: 12px; color: var(--explore-title); }
+.perspective h3 { font-weight: 700; }
+.note { display: flex; align-items: flex-start; gap: 12px; padding: 16px 0; border-top: 1px solid var(--explore-border); }
+.note svg { flex: none; margin-top: 3px; color: var(--explore-accent); }
+@media (min-width: 768px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
