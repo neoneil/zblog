@@ -89,7 +89,7 @@ export default function PlanetsExplorer({
           <YearNav slug={`planets/${planet}`} year={year} />
           {ingresses.length ? (
             <div className={styles.tableWrap}>
-              <table className={`${styles.table} ${planetStyles.ingressTable}`}>
+              <table className={styles.table}>
                 <thead>
                   <tr>
                     {[
@@ -106,7 +106,7 @@ export default function PlanetsExplorer({
                 </thead>
                 <tbody>
                   {ingresses.map((row) => (
-                    <tr key={row.time} className={planetStyles.ingressRow}>
+                    <tr key={row.time}>
                       <td>
                         <TimeText value={row.time} dateOnly />
                       </td>

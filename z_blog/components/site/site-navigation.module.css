@@ -1,0 +1,46 @@
+.items { display: flex; gap: 2px; flex-wrap: wrap; align-items: center; }
+.item { position: relative; min-width: 0; }
+.link, .item .trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  height: auto;
+  border-radius: 4px;
+  padding: 10px 9px;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  background: transparent;
+  white-space: nowrap;
+}
+.link:hover, .link[aria-current="page"], .item .trigger:hover, .item .trigger[aria-expanded="true"] { color: var(--text); background: var(--card-muted); }
+.link:focus-visible, .item .trigger:focus-visible, .panel a:focus-visible { outline: 2px solid var(--element-air); outline-offset: 2px; }
+.trigger svg { flex-shrink: 0; transition: transform .2s ease; }
+.chevronOpen { transform: rotate(180deg); }
+.panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 280px;
+  max-width: calc(100vw - 48px);
+  max-height: 65dvh;
+  overflow-y: auto;
+  z-index: 60;
+  padding: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--card);
+  box-shadow: var(--shadow-lg);
+}
+.item:nth-last-child(-n+3) .panel { left: auto; right: 0; }
+.panel a { display: block; padding: 12px; border-radius: 4px; font-size: 14px; line-height: 1.5; color: var(--text); overflow-wrap: anywhere; }
+.panel a:hover { background: var(--card-muted); }
+.mobile .items { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+.mobile .link, .mobile .item .trigger { width: 100%; justify-content: space-between; font-size: 14px; padding: 12px; }
+.mobile .panel { position: static; width: 100%; max-width: none; max-height: none; border: 0; border-left: 1px solid var(--border-strong); border-radius: 0; background: transparent; box-shadow: none; margin: 4px 0 8px; }
+.desktop { padding: 6px 0 10px; border-top: 1px solid var(--border); }
+.desktop .items { justify-content: center; }
+@media (prefers-reduced-motion: reduce) { .trigger svg { transition: none; } }

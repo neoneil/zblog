@@ -1,4 +1,5 @@
 "use client";
+import moonStyles from "./moon.module.css";
 import { moonFaq } from "../lib/faq-content";
 import { FAQ } from "./explore-shared";
 
@@ -154,9 +155,9 @@ export default function MoonExplorer({
       <Section
         title={{ en: "Moon Signs and Their Energy", zh: "月亮星座与情绪主题" }}
       >
-        <div className={styles.grid}>
+        <div className={moonStyles.signCards}>
           {signQualities.map((copy, i) => (
-            <article key={i}>
+            <article key={i} className={styles.card}>
               <h3>
                 <ZodiacLabel sign={i}>
                   {SIGN_SYMBOLS[i]} {SIGN_NAMES[language][i]}

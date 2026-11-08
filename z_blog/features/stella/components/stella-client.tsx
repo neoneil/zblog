@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { Bookmark, ChevronDown, ChevronUp, Download, Focus, Maximize2, Minus, Pause, Play, Plus, Rewind, RotateCcw, Search, Send, Settings2, X } from "lucide-react";
 import { usePreferences } from "@/components/site/preferences-provider";
 import { calculateNatalChart, type BirthForm, type OpenAIChartJson } from "@/lib/astrology/natal-chart";
+import { formatDegrees } from "@/lib/astrology/format-degrees";
 import { getSkySnapshot, PLANET_SYMBOLS, SIGN_NAMES, SIGN_SYMBOLS } from "../lib/sky";
 import StellaScene, { type SceneHandle, type SceneOptions } from "./stella-scene";
 import styles from "./stella.module.css";
@@ -200,7 +201,31 @@ export default function StellaClient() {
           <button type="submit" className={styles.primary+" "+styles.calculate} disabled={chartBusy}>{chartBusy?t({zh:"计算中…",en:"Calculating…"}):t({zh:"计算星盘",en:"Calculate Chart"})}</button>
           {chartError&&<p role="alert" className={styles.error}>{chartError}</p>}
         </form>
-        {chart&&<section className={styles.chartResult}><div className={styles.chartTitle}><h2>{submitted?.name||t({zh:"我的星盘",en:"My Chart"})}</h2><button className={styles.textButton} type="button" onClick={()=>scene.current?.download()} title={t({zh:"下载星盘图片",en:"Download chart image"})} aria-label={t({zh:"下载星盘图片",en:"Download chart image"})}><Download size={16}/></button></div><p className={styles.status}>{submitted?.date} · {submitted?.time}<br/>{submitted?.place}</p><div className={styles.bigThree}>{anglePoints.map(p=><div key={p.key}><span>{PLANET_SYMBOLS[p.key]} {language==="zh"?p.labelZh:p.label}</span><strong>{language==="zh"?p.signZh:p.sign}</strong>{" "}<ZodiacConstellation sign={p.sign} size="tiny"/></div>)}</div><div className={styles.smallActions}><button type="button" className={styles.secondary} onClick={saveBirth}><Bookmark size={13}/>{saved?t({zh:"已保存在此浏览器",en:"Saved in This Browser"}):t({zh:"保存星盘",en:"Save Chart"})}</button><button type="button" className={styles.secondary} onClick={()=>{setTab("ask");setMobileOpen(true);if(window.innerWidth<=700)setBirthOpen(false);}}><Send size={13}/>{t({zh:"询问星盘",en:"Ask My Chart"})}</button></div><section className={styles.section}><h3>{t({zh:"行星位置",en:"PLANETARY POSITIONS"})}</h3><ul className={styles.positionList}>{chart.planets.map(p=><li key={p.key}><span>{PLANET_SYMBOLS[p.key]}</span><button type="button" onClick={()=>scene.current?.focusPlanet(p.key)}>{language==="zh"?p.labelZh:p.label}</button><span>{SIGN_SYMBOLS[Math.floor(p.absoluteDegrees/30)]} {p.signDegrees.toFixed(1)}° · H{p.house} {p.retrograde?"℞":""} <ZodiacConstellation sign={Math.floor(p.absoluteDegrees/30)} size="tiny"/></span></li>)}</ul></section><button type="button" className={styles.secondary} onClick={downloadData}><Download size={13}/>{t({zh:"下载星盘数据",en:"Download Chart Data"})}</button></section>}
+        {chart&&<section className={styles.chartResult}>
+          <div className={styles.chartTitle}><h2>{submitted?.name||t({zh:"我的星盘",en:"My Chart"})}</h2><button className={styles.textButton} type="button" onClick={()=>scene.current?.download()} title={t({zh:"下载星盘图片",en:"Download chart image"})} aria-label={t({zh:"下载星盘图片",en:"Download chart image"})}><Download size={16}/></button></div>
+          <p className={styles.status}>{submitted?.date} · {submitted?.time}<br/>{submitted?.place}</p>
+          <div className={styles.bigThree}>{anglePoints.map(p=><div key={p.key}>
+            <span>{PLANET_SYMBOLS[p.key]} {language==="zh"?p.labelZh:p.label}</span>
+            <strong>{language==="zh"?p.signZh:p.sign}</strong>{" "}<ZodiacConstellation sign={p.sign} size="tiny"/>
+            <span title={`${p.absoluteDegrees.toFixed(6)}°`}>{formatDegrees(p.signDegrees)}</span>
+          </div>)}</div>
+          <div className={styles.smallActions}><button type="button" className={styles.secondary} onClick={saveBirth}><Bookmark size={13}/>{saved?t({zh:"已保存在此浏览器",en:"Saved in This Browser"}):t({zh:"保存星盘",en:"Save Chart"})}</button><button type="button" className={styles.secondary} onClick={()=>{setTab("ask");setMobileOpen(true);if(window.innerWidth<=700)setBirthOpen(false);}}><Send size={13}/>{t({zh:"询问星盘",en:"Ask My Chart"})}</button></div>
+          <section className={styles.section}>
+            <h3>{t({zh:"行星位置",en:"PLANETARY POSITIONS"})}</h3>
+            <ul className={styles.positionList}>{chart.planets.map(p=><li key={p.key}>
+              <span>{PLANET_SYMBOLS[p.key]}</span><button type="button" onClick={()=>scene.current?.focusPlanet(p.key)}>{language==="zh"?p.labelZh:p.label}</button>
+              <span title={`${p.absoluteDegrees.toFixed(6)}°`}>{SIGN_SYMBOLS[Math.floor(p.absoluteDegrees/30)]} {formatDegrees(p.signDegrees)} · H{p.house} {p.retrograde?"℞":""} <ZodiacConstellation sign={Math.floor(p.absoluteDegrees/30)} size="tiny"/></span>
+            </li>)}</ul>
+          </section>
+          <details className={styles.section}>
+            <summary className={styles.cuspHeading}>{t({zh:"十二宫宫头",en:"House Cusps"})} · {chart.meta.houseSystem}</summary>
+            <ul className={styles.positionList}>{chart.houses.map(h=><li key={h.house}>
+              <span>{h.house}</span><span>{language==="zh"?h.signZh:h.sign}</span>
+              <span title={`${h.cuspDegrees.toFixed(6)}°`}>{formatDegrees(h.signDegrees)}</span>
+            </li>)}</ul>
+          </details>
+          <button type="button" className={styles.secondary} onClick={downloadData}><Download size={13}/>{t({zh:"下载星盘数据",en:"Download Chart Data"})}</button>
+        </section>}
       </div>}
     </aside>
     <button ref={settingsButton} type="button" className={styles.settingsTrigger} aria-label={t({zh:"显示设置",en:"Display settings"})} title={t({zh:"显示设置",en:"Display settings"})} aria-expanded={settingsOpen} aria-controls="stella-settings" onClick={()=>setSettingsOpen(value=>!value)}>{settingsOpen?<X size={19}/>:<Settings2 size={19}/>}</button>

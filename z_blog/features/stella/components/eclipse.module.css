@@ -1,0 +1,4 @@
+.signCards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+@media (min-width: 768px) {
+  .signCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

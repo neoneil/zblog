@@ -28,7 +28,7 @@ export default function ZodiacExplorer({ sign }: { sign?: number }) {
   const names = SIGN_NAMES[language];
   if (sign === undefined)
     return (
-      <ZodiacPageShell>
+      <ZodiacPageShell className={styles.goldHeadings}>
         <header className={styles.intro}>
           <h1>{t({ en: "All 12 Zodiac Signs", zh: "十二星座" })}</h1>
           <p>
@@ -56,7 +56,7 @@ export default function ZodiacExplorer({ sign }: { sign?: number }) {
     name = names[sign],
     opposite = (sign + 6) % 12;
   return (
-    <ZodiacPageShell>
+    <ZodiacPageShell className={styles.goldHeadings}>
       <header className={styles.profileHeader}>
         <span className={styles.symbol} aria-hidden>
           {SIGN_SYMBOLS[sign]}

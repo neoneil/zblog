@@ -507,13 +507,19 @@ select:-webkit-autofill {
   box-shadow: 0 0 0px 1000px var(--card) inset !important;
 }
 
-/* Shared editorial treatment; image-overlay headings retain their contrast. */
+/* Shared editorial treatment. */
 :where(h1, h2, h3, h4, h5, h6) {
   color: var(--heading);
   font-family: Georgia, "Times New Roman", "Songti SC", SimSun, serif;
   letter-spacing: 0;
 }
 :where(h1, h2, h3, h4, h5, h6)[class*="--text-white"] { color: var(--text-white); }
+/* All heading levels share one treatment across page-specific styles. */
+body :is(h1, h2, h3, h4, h5, h6),
+body :is(h1, h2, h3, h4, h5, h6) :where(span, strong, em, a):not([data-element]) {
+  color: var(--archive-heading) !important;
+  font-weight: 700 !important;
+}
 .btn-secondary { color: var(--primary); border-color: var(--primary); background: transparent; }
 .btn-secondary:hover { background: var(--primary-soft); }
 .btn-primary:hover, .topic-btn:hover { box-shadow: 0 0 18px var(--button-glow); }

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import "./home-hero-theme.css";
 import heroStyles from "@/components/site/home-hero.module.css";
 import { KnowledgeEntries } from "@/features/thoth/components/knowledge-entries";
 import { ParentingNewsletter } from "@/components/ParentingLabSection";
@@ -13,7 +14,8 @@ import ServicesList from "@/features/services/components/services-list";
 import ContactEntry from "@/features/contact/components/contact-entry";
 import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
-import HomeHeroActions from "@/components/site/home-hero-actions";
+import HomeHeroContent from "@/components/site/home-hero-content";
+import StellarHousesEntry from "@/components/site/stellar-houses-entry";
 
 export default async function HomePage() {
   return (
@@ -24,27 +26,18 @@ export default async function HomePage() {
             <div className="relative overflow-hidden rounded-[var(--radius-lg)] border border-[color:var(--text-white)]/10 bg-[var(--surface-raised)] shadow-[var(--shadow-lg)]">
               <div className="absolute inset-0">
                 <Image
-                  src="/hero.png"
+                  src="/home-polaris-hero.png"
                   alt="星辰之巢首页背景"
                   fill
                   priority
-                  className="object-cover"
+                  className={heroStyles.image}
                 />
               </div>
 
-              <div className="absolute inset-0 bg-gradient-to-r from-[var(--hero-overlay-strong)] via-[var(--hero-overlay-soft)] to-transparent" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_28%,var(--primary-soft),transparent_32%)] opacity-35" />
+              <div className={heroStyles.overlay} aria-hidden="true" />
 
               <div className={`${heroStyles.stage} relative z-10 flex min-h-[440px] items-center px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[560px] lg:px-12 lg:py-14`}>
-                <div className={heroStyles.content}>
-                  <p className={heroStyles.eyebrow}>✦ POLARIS · THE GUIDING STAR ✦</p>
-                  <h1 className={heroStyles.title}>STELLARNESTS<span>星辰之巢</span></h1>
-                  <div className={heroStyles.rule} aria-hidden="true" />
-                  <p className={heroStyles.motto} lang="en">Amidst Chaos, Always Centered.</p>
-                  <p className={heroStyles.translation}>身处混沌，始终自有中心。</p>
-
-                  <HomeHeroActions />
-                </div>
+                <HomeHeroContent />
               </div>
             </div>
           </section>
@@ -56,6 +49,7 @@ export default async function HomePage() {
           <CategoriesSection homeLayout />
 
           <ServicesList embedded />
+          <StellarHousesEntry />
           <div className="grid items-stretch gap-6 lg:grid-cols-2">
             <ContactEntry />
             <section

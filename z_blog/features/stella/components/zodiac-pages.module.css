@@ -24,6 +24,11 @@
   color: var(--explore-text);
   line-height: 1.45;
 }
+.root.goldHeadings :is(h1, h2, h3, h4),
+.root.goldHeadings .signCard strong {
+  color: var(--archive-heading);
+  font-weight: 700;
+}
 .root h1 {
   font-size: 28px;
   margin: 12px 0;
@@ -134,15 +139,13 @@
   gap: 16px;
 }
 .signCard {
+  composes: glow from "./card-effects.module.css";
   text-align: center;
   border: 1px solid var(--explore-border);
   border-radius: 8px;
   background: var(--explore-surface);
   padding: 20px 12px;
   min-width: 0;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
 }
 .signCard:hover,
 .forecastCard:hover {
@@ -176,6 +179,7 @@
   gap: 20px;
 }
 .forecastCard {
+  composes: glow from "./card-effects.module.css";
   border: 1px solid var(--explore-border);
   border-radius: 8px;
   background: var(--explore-surface);
@@ -245,6 +249,7 @@
   align-items: start;
 }
 .aside {
+  composes: glow from "./card-effects.module.css";
   background: var(--explore-surface);
   border: 1px solid var(--explore-border);
   border-radius: 8px;
@@ -253,6 +258,7 @@
 }
 .aside h3 {
   color: var(--explore-title);
+  font-weight: 700;
   font-size: 14px;
   margin: 24px 0 12px;
 }
@@ -262,6 +268,7 @@
 .aside p,
 .aside li {
   font-size: 14px;
+  font-weight: 600;
 }
 .aside ul {
   padding-left: 18px;
@@ -275,11 +282,13 @@
   display: grid;
   gap: 12px;
   font-size: 14px;
+  font-weight: 600;
 }
 .reading {
   min-width: 0;
 }
 .energy {
+  composes: glow from "./card-effects.module.css";
   background: var(--explore-surface);
   border: 1px solid var(--explore-border);
   border-radius: 8px;
@@ -313,6 +322,7 @@
   text-align: center;
 }
 .cta {
+  composes: glow from "./card-effects.module.css";
   text-align: center;
   margin: 32px 0;
   padding: 32px 20px;

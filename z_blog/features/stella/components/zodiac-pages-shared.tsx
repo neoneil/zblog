@@ -18,9 +18,9 @@ export const horoscopeHref = (
 ) =>
   `/stella/horoscope${period === "daily" ? "" : `/${period}`}${sign === undefined ? "" : `/${signSlugs[sign]}`}`;
 
-export function ZodiacPageShell({ children }: { children: React.ReactNode }) {
+export function ZodiacPageShell({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <main className={styles.root}>
+    <main className={`${styles.root} ${className}`}>
       <div className={styles.inner}>{children}</div>
     </main>
   );

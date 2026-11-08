@@ -1,0 +1,11 @@
+:root {
+  --home-hero-ice: #d9f5ff;
+  --home-hero-blue: #79d9ff;
+  --home-hero-muted: #adc6da;
+  --home-hero-line: rgba(121, 217, 255, .35);
+  --home-hero-glow: rgba(63, 192, 255, .3);
+  --home-hero-button: rgba(9, 28, 49, .74);
+  --home-hero-button-hover: rgba(18, 64, 92, .9);
+  --home-hero-scrim: rgba(3, 12, 26, .88);
+  --home-hero-clear: rgba(3, 12, 26, 0);
+}

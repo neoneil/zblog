@@ -1,0 +1,26 @@
+/* Shared table treatment; keep each table's sizing and responsive layout. */
+body table thead th,
+body table th[scope="col"] {
+  color: var(--archive-heading) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  background: var(--explore-surface) !important;
+  text-shadow: 0 0 6px var(--button-glow), 0 0 14px var(--button-glow);
+  border-bottom-color: var(--explore-border);
+}
+body table tbody tr {
+  position: relative;
+  background: transparent !important;
+  transition: border-color .2s, box-shadow .2s;
+}
+body table tbody tr > :is(th, td) {
+  background: transparent !important;
+}
+body table tbody tr:is(:hover, :focus-within) {
+  z-index: 1;
+  border-color: var(--explore-accent);
+  box-shadow: 0 0 20px var(--button-glow);
+}
+@media (prefers-reduced-motion: reduce) {
+  body table tbody tr { transition: none; }
+}
