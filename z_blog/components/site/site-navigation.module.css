@@ -41,6 +41,9 @@
 .mobile .items { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
 .mobile .link, .mobile .item .trigger { width: 100%; justify-content: space-between; font-size: 14px; padding: 12px; }
 .mobile .panel { position: static; width: 100%; max-width: none; max-height: none; border: 0; border-left: 1px solid var(--border-strong); border-radius: 0; background: transparent; box-shadow: none; margin: 4px 0 8px; }
-.desktop { padding: 6px 0 10px; border-top: 1px solid var(--border); }
-.desktop .items { justify-content: center; }
+.desktop { padding: 0; }
+.desktop .items { justify-content: space-evenly; flex-wrap: nowrap; gap: 4px; }
+.desktop .link, .desktop .item .trigger { font-size: 14px; padding: 8px 5px; min-height: 42px; gap: 4px; white-space: normal; text-align: center; line-height: 1.35; max-width: 122px; }
+:global(html[lang="en"]) .desktop .item[data-nav-group="archive"] { flex: 0 0 144px; }
+:global(html[lang="en"]) .desktop .item[data-nav-group="archive"] .trigger { max-width: none; }
 @media (prefers-reduced-motion: reduce) { .trigger svg { transition: none; } }

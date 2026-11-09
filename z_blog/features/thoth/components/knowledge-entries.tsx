@@ -27,7 +27,7 @@ export function KnowledgeEntries() {
       {knowledgeEntries.map(entry => <Link key={entry.slug} href={`/thoth/${entry.slug}?lang=${language}`} className="group block h-full">
         <Card className={`${styles.card} transition-colors group-hover:border-[var(--primary)]`}>
           <div className={styles.media}>
-            <Image src={`/knowledge/${({ 'tree-of-life': 'tree-of-life', tarot: 'thoth-wisdom', astrology: 'astrology', library: 'esoteric-library' })[entry.slug]}.png`} alt="" fill sizes="(max-width: 1023px) 100vw, 25vw" className={styles.image} />
+            <Image src={`/knowledge/${({ 'tree-of-life': 'shengmingzhishu', tarot: 'thoth-wisdom', astrology: 'zhanxingshu', library: 'esoteric-library' })[entry.slug]}.png`} alt="" fill sizes="(max-width: 1023px) 100vw, 25vw" className={styles.image} />
           </div>
           <CardContent className={styles.copy}>
           <h3 className="break-words text-lg font-semibold">{t(entry)}</h3>

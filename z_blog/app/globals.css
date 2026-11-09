@@ -61,6 +61,14 @@
   --stella-dock-border: #283b4c;
   --stella-dock-button: #121d29;
   --stella-error: #f49c9e;
+  --stella-overlay: rgba(2, 2, 5, .8);
+  --stella-ray-1: #ef747c;
+  --stella-ray-2: #7baff0;
+  --stella-ray-3: #d8c075;
+  --stella-ray-4: #c6a2e6;
+  --stella-ray-5: #83c8ac;
+  --stella-ray-6: #e5a0c0;
+  --stella-ray-7: #a798f0;
 }
 
 html[data-theme="light"] {

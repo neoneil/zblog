@@ -340,13 +340,6 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text-soft);
-}
-.cartLink:hover {
-  color: var(--primary);
-  background: var(--card-muted);
 }
 .badge {
   position: absolute;
@@ -356,9 +349,6 @@
   height: 20px;
   line-height: 20px;
   padding: 0 4px;
-  background: var(--primary);
-  color: var(--text-inverse);
-  border-radius: 50%;
   font-size: 11px;
   text-align: center;
   font-weight: 700;

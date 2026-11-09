@@ -1,5 +1,4 @@
 import Image from "next/image";
-import "./home-hero-theme.css";
 import heroStyles from "@/components/site/home-hero.module.css";
 import { KnowledgeEntries } from "@/features/thoth/components/knowledge-entries";
 import { ParentingNewsletter } from "@/components/ParentingLabSection";
@@ -26,7 +25,7 @@ export default async function HomePage() {
             <div className="relative overflow-hidden rounded-[var(--radius-lg)] border border-[color:var(--text-white)]/10 bg-[var(--surface-raised)] shadow-[var(--shadow-lg)]">
               <div className="absolute inset-0">
                 <Image
-                  src="/home-polaris-hero.png"
+                  src="/home-stellarnests-hero.png"
                   alt="星辰之巢首页背景"
                   fill
                   priority

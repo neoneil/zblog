@@ -48,6 +48,9 @@ const themes: Copy[] = [
     "休息、私人空间与未完成的内在整理",
   ),
 ];
+export function solarHouseTheme(sign:number,transitSign:number):Copy {
+  return themes[solarHouse(sign,transitSign)-1];
+}
 const planetNames: Record<string, Copy> = {
   sun: copy("Sun", "太阳"),
   moon: copy("Moon", "月亮"),

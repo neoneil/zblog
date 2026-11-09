@@ -69,7 +69,7 @@ const calculatorEntries: Entry[] = [
     },
     href: "/astroplate",
     icon: Globe,
-    image: "/knowledge/natal-chart.png",
+    image: "/knowledge/benmingxingtu.png",
   },
   {
     title: { en: "SYNASTRY", zh: "双人合盘" },
@@ -79,7 +79,7 @@ const calculatorEntries: Entry[] = [
     },
     href: "/synastry",
     icon: Heart,
-    image: "/knowledge/synastry.png",
+    image: "/knowledge/shuangrenhepan.png",
   },
   {
     title: { en: "STELLAR BIRTH CHART", zh: "星辰命盘" },
@@ -90,7 +90,7 @@ const calculatorEntries: Entry[] = [
     href: "/stella",
     guide: "/stella/birth-chart",
     icon: Globe,
-    image: "/knowledge/stellar-birth-chart.png",
+    image: "/knowledge/xingchenmingpan.png",
   },
   {
     title: { en: "NUMEROLOGY", zh: "生命灵数" },
@@ -100,7 +100,7 @@ const calculatorEntries: Entry[] = [
     },
     href: "/stella/numerology",
     icon: Hash,
-    image: "/knowledge/numerology.png",
+    image: "/knowledge/shengminglingshu.png",
   },
 ];
 

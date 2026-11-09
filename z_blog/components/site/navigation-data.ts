@@ -41,9 +41,9 @@ export const siteNavigation: NavigationEntry[] = [
   },
   { id: "shop", label: { en: "SHOP", zh: "奥秘商店" }, children: products.map(product => ({ label: product.title, href: productHref(product) })) },
   { id: "community", label: { en: "COMMUNITY", zh: "社群" }, href: "/community" },
-  { id: "classroom", label: { en: "ONLINE CLASS", zh: "在线课堂" }, href: "/classroom" },
-  { id: "about", label: { en: "ABOUT US", zh: "关于我们" }, href: "/aboutus" },
-  { id: "contact", label: { en: "CONTACT", zh: "联系" }, children: [
+  { id: "contact", label: { en: "CONTACT US", zh: "联系我们" }, children: [
+    { label: { en: "ONLINE CLASS", zh: "在线课堂" }, href: "/classroom" },
+    { label: { en: "ABOUT US", zh: "关于我们" }, href: "/aboutus" },
     { label: { en: "SEND A MESSAGE", zh: "星语传讯" }, href: "/contact" },
     { label: { en: "NEWSLETTER", zh: "订阅更新" }, href: "/#home-newsletter" },
   ] },

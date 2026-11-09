@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { usePreferences } from "@/components/site/preferences-provider";
 import { Button } from "@/components/ui/button";
+import glassStyles from "@/components/ui/glass-action.module.css";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { formatPrice, productHref, type Product } from "../lib/catalog";
@@ -98,13 +99,13 @@ export function CartLink() {
   return (
     <Link
       href="/cart"
-      className={styles.cartLink}
+      className={`${styles.cartLink} ${glassStyles.action}`}
       aria-label={label}
       title={label}
     >
       <ShoppingCart size={20} aria-hidden />
       {count > 0 && (
-        <span aria-hidden className={styles.badge}>
+        <span aria-hidden className={`${styles.badge} ${glassStyles.badge}`}>
           {count}
         </span>
       )}

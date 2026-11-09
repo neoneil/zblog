@@ -8,6 +8,7 @@ import { experienceCardBack } from "./tarot-deck";
 import TarotSparkBurst from "./tarot-spark-burst";
 import styles from "./tarot-experience.module.css";
 import { getTarotPositionLabel } from "@/lib/tarot/reading-modes";
+import { usePreferences } from "@/components/site/preferences-provider";
 
 type TarotCardProps = {
   card: DrawnTarotCard;
@@ -22,6 +23,7 @@ type TarotCardProps = {
 
 export default function TarotCard({ card, index, revealed, gathering, canFlip, onFlip, onFlipped, layoutId }: TarotCardProps) {
   const reducedMotion = useReducedMotion();
+  const { t, language } = usePreferences();
   const completed = useRef(false);
   const [faceVisible, setFaceVisible] = useState(false);
 
@@ -33,7 +35,7 @@ export default function TarotCard({ card, index, revealed, gathering, canFlip, o
     {revealed && <TarotSparkBurst key="flip" seed={index + 200} />}
     <motion.button type="button" className={styles.flipper}
       disabled={!canFlip || revealed}
-      aria-label={faceVisible ? card.nameCn : `翻开${getTarotPositionLabel(card.position)}的牌`}
+      aria-label={faceVisible ? (language === "zh" ? card.nameCn : card.name) : t({ zh: `翻开${getTarotPositionLabel(card.position, "zh")}的牌`, en: `Reveal ${getTarotPositionLabel(card.position, "en")}` })}
       onClick={() => onFlip(card.id)}
       animate={{ rotateY: revealed ? 180 : 0, rotateX: revealed ? [0, -12, 0] : 0, z: revealed ? [0, 45, 0] : 0 }}
       transition={{ duration: reducedMotion ? 0 : 2.5, ease: [0.45, 0, 0.25, 1] }}
@@ -54,8 +56,8 @@ export default function TarotCard({ card, index, revealed, gathering, canFlip, o
       </span>
     </motion.button>
     <div className={styles.cardCaption} aria-live="polite">
-      <h3>{faceVisible ? card.nameCn : canFlip ? "点击翻牌" : "已选卡牌"}</h3>
-      <p>{faceVisible ? (card.reversed ? "逆位" : "正位") : "等待揭晓"}</p>
+      <h3>{faceVisible ? (language === "zh" ? card.nameCn : card.name) : t(canFlip ? { zh: "点击翻牌", en: "Tap to reveal" } : { zh: "已选卡牌", en: "Selected card" })}</h3>
+      <p>{t(faceVisible ? (card.reversed ? { zh: "逆位", en: "Reversed" } : { zh: "正位", en: "Upright" }) : { zh: "等待揭晓", en: "Awaiting reveal" })}</p>
     </div>
   </motion.div>;
 }

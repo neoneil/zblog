@@ -7,6 +7,8 @@ import Link from "next/link";
 import { tarotModes, tarotModeOrder, type TarotReadingMode } from "@/lib/tarot/reading-modes";
 import { getYesNoAnswer, tarotAnswerLabels } from "@/lib/tarot/yes-no";
 import TarotAtmosphere from "./tarot-atmosphere";
+import TarotSpreadGuide from "./tarot-spread-guide";
+import spreadStyles from "./tarot-spreads.module.css";
 import styles from "./tarot-experience.module.css";
 import TarotCard from "@/components/tarot/tarot-card";
 import TarotDeck from "@/components/tarot/tarot-deck";
@@ -30,7 +32,7 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
   const config = tarotModes[mode];
   const positionOrder = config.positions.map(position => position.key);
   const cardCount = positionOrder.length;
-  const countLabel = ({ 1: "一", 2: "两", 3: "三", 5: "五" } as Record<number, string>)[cardCount];
+  const countLabel = ({ 1: "一", 2: "两", 3: "三", 5: "五", 6: "六", 10: "十" } as Record<number, string>)[cardCount] || String(cardCount);
   const reducedMotion = useReducedMotion();
   const requestedFlips = useRef(new Set<string>());
   const completedFlips = useRef(new Set<string>());
@@ -200,31 +202,31 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
   const accessLabel = accessStatus.isAdmin
     ? null
     : accessStatus.isPaid
-      ? "已开通付费权限，无限制使用"
+      ? t({ zh: "已开通付费权限，无限制使用", en: "Your paid access is active." })
       : dailyLimitReached
-        ? "今日免费次数已用完"
-        : "普通用户每日可免费使用 1 次";
+        ? t({ zh: "今日免费次数已用完", en: "Today's free reading has been used." })
+        : t({ zh: "普通用户每日可免费使用 1 次", en: "One free reading is available each day." });
 
   const collected = stage === "gathering" || stage === "ready" || stage === "revealing" || stage === "reading" || stage === "done";
   const canFlip = stage === "ready" || stage === "revealing";
 
   return (
-    <main className={styles.experience} data-stage={stage} data-card-count={cardCount}>
+    <main className={`${styles.experience} ${config.fixedQuestion ? spreadStyles.guided : ""}`} data-mode={mode} data-stage={stage} data-card-count={cardCount}>
       <TarotAtmosphere showLights={false} />
       <LayoutGroup id="tarot-experience">
         <div className={styles.content}>
-          <nav className={styles.modeNav} aria-label="塔罗牌阵 / Tarot spreads">
-            <Link href="/parentinglab/asktarotmom">全部牌阵 / All readings</Link>
-            {tarotModeOrder.map(key => <Link key={key} href={tarotModes[key].href} aria-current={mode === key ? "page" : undefined}>{tarotModes[key].title.en}</Link>)}
+          <nav className={styles.modeNav} aria-label={t({ zh: "塔罗牌阵", en: "Tarot spreads" })}>
+            <Link href="/parentinglab/asktarotmom">{t({ zh: "全部牌阵", en: "All readings" })}</Link>
+            {tarotModeOrder.map(key => <Link key={key} href={tarotModes[key].href} aria-current={mode === key ? "page" : undefined}>{t(tarotModes[key].title)}</Link>)}
           </nav>
           <header className={styles.heading}>
-            <p className={styles.eyebrow}>{config.title.zh} / {config.title.en} · {cardCount} 张牌</p>
+            <p className={styles.eyebrow}>{t(config.title)} · {cardCount} {t({ zh: "张牌", en: cardCount === 1 ? "card" : "cards" })}</p>
             <h1>{stage === "idle" ? mode === "three-cards" ? t({ zh: "向塔罗轻声提问", en: "Whisper to the Tarot" }) : config.title[language] : collected ? t({ zh: `你的${countLabel}张牌`, en: "Your cards" }) : t({ zh: "想着你的问题", en: "Focus on your question" })}</h1>
             {accessLabel && <p className={styles.access}>{accessLabel}</p>}
           </header>
 
           <section className={styles.table} aria-label="塔罗抽牌">
-            {stage === "idle" ? (
+            {stage === "idle" ? config.fixedQuestion ? <TarotSpreadGuide mode={mode} /> : (
               <div className={styles.questionForm}>
                 <label className={styles.srOnly} htmlFor="tarot-question">你的问题</label>
                 <textarea id="tarot-question" value={question}
@@ -233,9 +235,9 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
               </div>
             ) : (
               <div className={styles.counter} aria-live="polite">
-                <p>{question || "静心，感受此刻的直觉"}</p>
+                <p>{config.fixedQuestion ? t(config.fixedQuestion) : question || t({ zh: "静心，感受此刻的直觉", en: "Take a quiet moment and follow your intuition." })}</p>
                 {!collected && <div className={styles.counterLine}>
-                  <span>还需选择</span><strong>{cardCount - selectedCards.length}</strong><span>张牌</span>
+                  <span>{t({ zh: "还需选择", en: "Choose" })}</span><strong>{cardCount - selectedCards.length}</strong><span>{t({ zh: "张牌", en: "more cards" })}</span>
                 </div>}
               </div>
             )}
@@ -247,22 +249,22 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
                 <span>{actionLabel}</span>
               </button>
               {stage !== "idle" && <button type="button" onClick={handleReset} disabled={loading}
-                className={styles.reset} aria-label="重置抽牌" title="重置抽牌">↺</button>}
+                className={styles.reset} aria-label={t({ zh: "重置抽牌", en: "Reset reading" })} title={t({ zh: "重置抽牌", en: "Reset reading" })}>↺</button>}
             </div>
-            {dailyLimitReached && <p className={styles.notice}>今日免费次数已用完，开通 Tarot AI 时间包后可继续使用。</p>}
+            {dailyLimitReached && <p className={styles.notice}>{t({ zh: "今日免费次数已用完，开通塔罗解读时长包后可继续使用。", en: "Today's free reading has been used. Purchase a tarot reading time pass to continue." })}</p>}
             <p className={styles.stageStatus} role="status">
-              {stage === "shuffling" && "静心片刻，准备好时停止洗牌"}
-              {stage === "selecting" && `凭直觉，依次选择属于你的${countLabel}张牌`}
-              {stage === "gathering" && `${countLabel}张牌正在汇聚`}
-              {stage === "ready" && "翻开一张牌"}
-              {stage === "revealing" && "点击尚未翻开的牌，全部揭晓后开始解读"}
-              {stage === "reading" && "正在为你解读牌中的讯息"}
-              {stage === "done" && "你的解读已生成"}
+              {stage === "shuffling" && t({ zh: "静心片刻，准备好时停止洗牌", en: "Take a quiet moment, then stop shuffling when you are ready." })}
+              {stage === "selecting" && t({ zh: `凭直觉，依次选择属于你的${countLabel}张牌`, en: `Follow your intuition and select ${cardCount} cards.` })}
+              {stage === "gathering" && t({ zh: `${countLabel}张牌正在汇聚`, en: "Your cards are gathering." })}
+              {stage === "ready" && t({ zh: "翻开一张牌", en: "Reveal a card." })}
+              {stage === "revealing" && t({ zh: "点击尚未翻开的牌，全部揭晓后开始解读", en: "Reveal the remaining cards to begin your reading." })}
+              {stage === "reading" && t({ zh: "正在为你解读牌中的讯息", en: "Your reading is being prepared." })}
+              {stage === "done" && t({ zh: "你的解读已生成", en: "Your reading is ready." })}
             </p>
 
             <div className={styles.cardScene} data-collected={collected} data-idle={stage === "idle"}>
               <TarotDeck cards={tableCards} stage={stage} selectedIds={selectedIds} onSelectCard={handleSelectCard} />
-            {selectedCards.length > 0 && <motion.div layout className={styles.selected} aria-label="已选塔罗牌"
+            {selectedCards.length > 0 && <motion.div layout className={`${styles.selected} ${config.fixedQuestion ? spreadStyles.selected : ""}`} aria-label={t({ zh: "已选塔罗牌", en: "Selected tarot cards" })}
               animate={stage === "gathering" && !reducedMotion
                 ? { rotate: [0, -18, 342, 360], scale: cardCount === 5 ? [0.6, 0.4, 0.6, 1] : [0.76, 0.65, 0.76, 1] }
                 : { rotate: collected ? 360 : 0, scale: 1 }}
@@ -270,8 +272,8 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
               onAnimationComplete={() => { if (stage === "gathering") setStage("ready"); }}>
               {positionOrder.map((position, index) => {
                 const card = selectedCards.find((item) => item.position === position);
-                return <div key={position} className={styles.selectedSlot}>
-                  <p className={styles.position}>{config.positions[index].label.zh}<br /><span lang="en">{config.positions[index].label.en}</span></p>
+                return <div key={position} className={`${styles.selectedSlot} ${config.fixedQuestion ? spreadStyles.slot : ""}`}>
+                  <p className={styles.position}>{config.fixedQuestion ? `${index + 1}. ` : ""}{t(config.positions[index].label)}</p>
                   {card ? <TarotCard key={card.id} card={card} index={index} revealed={revealedIds.includes(card.id)}
                     gathering={stage === "gathering"} canFlip={canFlip}
                     onFlip={handleFlipCard} onFlipped={handleFlipComplete}

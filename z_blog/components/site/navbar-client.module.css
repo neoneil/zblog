@@ -1,0 +1,21 @@
+.inner { width: 100%; max-width: 1720px; margin: 0 auto; padding: 0 24px; }
+.bar { display: flex; align-items: center; justify-content: center; gap: 16px; min-height: 76px; padding: 12px 0; }
+.brand { flex-shrink: 0; white-space: nowrap; font-size: 22px; font-weight: 700; color: var(--text); }
+.navigation, .desktopAccount { display: none; }
+.tools { display: flex; flex-shrink: 0; align-items: center; gap: 6px; margin-left: auto; }
+.account { display: flex; align-items: center; gap: 4px; }
+.mobileAccount { flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
+.avatar { width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
+.preferences { display: flex; flex-shrink: 0; align-items: center; gap: 4px; }
+.mobilePanel { max-height: calc(100dvh - 84px); overflow-y: auto; border-top: 1px solid var(--border); padding-bottom: 20px; }
+@media (min-width: 1440px) {
+  .navigation { display: block; flex: 0 1 auto; min-width: 0; }
+  .desktopAccount { display: block; }
+  .tools { margin-left: 0; }
+  .menuButton, .mobilePanel { display: none; }
+  .account { gap: 6px; }
+  .desktopAccount :is(a, button) { min-height: 38px; height: auto; padding: 6px; font-size: 14px; white-space: nowrap; }
+  .desktopAccount a[href="/pricing"] { max-width: 128px; padding: 7px 10px; white-space: normal; text-align: center; line-height: 1.3; }
+  .desktopAccount .preferences button { width: 34px; min-width: 34px; height: 34px; min-height: 34px; padding: 0; }
+  .cart a { width: 36px; height: 36px; min-height: 36px; padding: 0; }
+}

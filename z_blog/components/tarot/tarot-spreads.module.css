@@ -1,0 +1,40 @@
+.guide { width: min(960px, calc(100% - 40px)); margin: 0 auto 20px; }
+.theme { text-align: center; font-size: 18px; line-height: 1.7; color: var(--tarot-ink); max-width: 760px; margin: 0 auto 24px; }
+.positions { display: grid; grid-template-columns: minmax(0,1fr); gap: 12px 24px; }
+.positions li { display: flex; gap: 12px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--tarot-line); min-width: 0; }
+.number { display: grid; place-items: center; width: 30px; height: 30px; flex-shrink: 0; border: 1px solid var(--tarot-line); border-radius: 50%; font-size: 14px; color: var(--tarot-gold); }
+.positions h2 { font-size: 16px; line-height: 1.5; }
+.positions p { color: var(--tarot-muted); font-size: 14px; line-height: 1.7; margin-top: 5px; }
+.note { margin-top: 20px; text-align: center; color: var(--tarot-muted); font-size: 14px; line-height: 1.7; }
+.guided .selected { position: relative; top: auto !important; width: min(1000px, calc(100% - 32px)); max-width: none; margin: 24px auto; gap: 24px 14px; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.guided .slot { padding-top: 0 !important; transform: none !important; }
+.guided .slot > p { min-height: 48px; margin-bottom: 12px; font-size: 13px; overflow-wrap: anywhere; }
+.guided .slot > div { max-width: 120px; }
+.guided [data-idle="false"] { min-height: 0 !important; }
+.guided[data-mode="love-triangle"] .selected { max-width: 640px; grid-template-areas: ". relationship ." "you . partner"; }
+.guided[data-mode="love-triangle"] .slot:nth-child(1) { grid-area: you; }
+.guided[data-mode="love-triangle"] .slot:nth-child(2) { grid-area: partner; }
+.guided[data-mode="love-triangle"] .slot:nth-child(3) { grid-area: relationship; }
+.guided[data-mode="free-flow"][data-card-count="5"] .selected { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.guided[data-mode="free-flow"] .slot:nth-child(4), .guided[data-mode="free-flow"] .slot:nth-child(5) { grid-column: auto !important; }
+.guided[data-mode="two-choices"] .selected { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.guided[data-mode="celtic-cross"] .selected {
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  grid-template-areas: ". potential . outcome" ". current . hopes" "background crossing nearFuture environment" ". subconscious . attitude";
+}
+.guided[data-mode="celtic-cross"] .slot:nth-child(1) { grid-area: current; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(2) { grid-area: crossing; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(3) { grid-area: subconscious; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(4) { grid-area: background; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(5) { grid-area: potential; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(6) { grid-area: nearFuture; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(7) { grid-area: attitude; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(8) { grid-area: environment; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(9) { grid-area: hopes; }
+.guided[data-mode="celtic-cross"] .slot:nth-child(10) { grid-area: outcome; }
+@media (min-width: 640px) {
+  .positions { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .guided .slot > p { font-size: 15px; }
+  .guided[data-mode="free-flow"][data-card-count="5"] .selected { grid-template-columns: repeat(5,minmax(0,1fr)); }
+  .guided .slot > div { max-width: 140px; }
+}

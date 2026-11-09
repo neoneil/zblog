@@ -18,12 +18,13 @@ const { siteNavigation: entries } = load('components/site/navigation-data.ts');
 const byId = id => entries.find(entry => entry.id === id);
 
 test('top level follows the requested order with Community as a direct link', () => {
-  assert.deepEqual(entries.map(entry => entry.id), ['home','stories','archive','tarot','blueprints','celestial','shop','community','classroom','about','contact']);
+  assert.deepEqual(entries.map(entry => entry.id), ['home','stories','archive','tarot','blueprints','celestial','shop','community','contact']);
   assert.equal(byId('community').href, '/community');
   assert.equal(byId('community').children, undefined);
   assert.equal(byId('stories').href, '/tarot-novel');
-  assert.equal(byId('classroom').href, '/classroom');
-  assert.equal(byId('about').href, '/aboutus');
+  assert.equal(byId('classroom'), undefined);
+  assert.equal(byId('about'), undefined);
+  assert.equal(byId('contact').label.zh, '联系我们');
 });
 
 test('five category dropdowns have 4/4/4/4/7 links matching home destinations', () => {
@@ -34,7 +35,7 @@ test('five category dropdowns have 4/4/4/4/7 links matching home destinations', 
   assert.deepEqual(byId('celestial').children.map(item => item.href), ['/categories/understanding-children','/stella/zodiac','/stella/horoscope','/parentinglab/healingdaily/videos?category=general']);
   const { products, productHref } = load('features/services/lib/catalog.ts');
   assert.deepEqual(byId('shop').children.map(item => item.href), products.map(productHref));
-  assert.deepEqual(byId('contact').children.map(item => item.href), ['/contact','/#home-newsletter']);
+  assert.deepEqual(byId('contact').children.map(item => item.href), ['/classroom','/aboutus','/contact','/#home-newsletter']);
 });
 
 test('all labels are bilingual, utility controls and authorization remain present', () => {
@@ -44,6 +45,8 @@ test('all labels are bilingual, utility controls and authorization remain presen
   });
   const navbar = read('components/site/navbar-client.tsx');
   for (const text of ['<CartLink />','href="/pricing"','canManagePosts &&','href="/admin"','<LogoutButton />','<ThemeToggle />','<LanguageToggle />','src={avatar}']) assert.ok(navbar.includes(text), text);
+  assert.ok(!navbar.includes('{email}'));
+  assert.ok(!navbar.includes('>{name}</span>'));
   const nav = read('components/site/site-navigation.tsx');
   for (const text of ['aria-expanded','aria-controls','ArrowDown','ArrowUp','Escape','pointerdown','localizedQuery']) assert.ok(nav.includes(text), text);
 });

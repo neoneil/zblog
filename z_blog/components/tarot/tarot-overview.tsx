@@ -24,12 +24,12 @@ export default function TarotOverview() {
           return <Link key={mode} href={config.href} className={styles.modeLink}>
             <Card className={styles.modeCard}>
               <div className={styles.art}>
-                <Image src={encodeURI(config.image)} alt={`${config.title.zh} / ${config.title.en}`} fill
+                <Image src={encodeURI(config.image)} alt={t(config.title)} fill
                   sizes="(min-width: 1024px) 220px, 180px" className={styles.image} />
               </div>
               <CardContent className={styles.details}>
                 <Badge variant="secondary">{config.positions.length} {t({ zh: "张牌", en: config.positions.length === 1 ? "card" : "cards" })}</Badge>
-                <h2>{config.title.en}<span lang="zh-CN">{config.title.zh}</span></h2>
+                <h2>{t(config.title)}</h2>
                 <p>{t(config.description)}</p>
                 <span className={styles.begin}>{t({ zh: "开始抽牌", en: "Begin reading" })} →</span>
               </CardContent>
