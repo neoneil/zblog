@@ -1,4 +1,5 @@
 import type { LocalizedCopy as Copy } from "@/components/site/preferences-provider";
+import { serviceGuideImages } from "./service-guide-assets";
 
 export type Product = {
   id: string;
@@ -172,7 +173,7 @@ const legacyProducts: Product[] = [
 
 const offerings = [
   { id: legacyProducts[0].id, slug: legacyProducts[0].slug, category: "courses", image: "zhanxingyanxi", priceCents: 29900, title: { en: "ASTROLOGY COURSES", zh: "占星研习" }, intro: { en: "Explore Astrology Through Live, One-on-One Online Lessons with Professional Astrologers — Learn at Your Own Pace and Unlock Cosmic Wisdom.", zh: "与专业占星师一对一在线实时授课，按照自己的节奏探索占星奥秘，开启星象智慧之旅。" } },
-  { id: legacyProducts[1].id, slug: legacyProducts[1].slug, category: "readings", image: "chart-consultation", priceCents: 18900, title: { en: "CHART CONSULTATION", zh: "星盘咨询" }, intro: { en: "Explore Your Birth Chart Through Live, One-on-One Online Consultations with Professional Astrologers — Discover Cosmic Insights and Gain Deeper Self-Understanding.", zh: "与专业占星师一对一在线实时咨询，深入解读个人星盘，探索星象奥秘，开启更深层的自我认知之旅。" } },
+  { id: legacyProducts[1].id, slug: legacyProducts[1].slug, category: "readings", image: "xingpanzixun", priceCents: 18900, title: { en: "CHART CONSULTATION", zh: "星盘咨询" }, intro: { en: "Explore Your Birth Chart Through Live, One-on-One Online Consultations with Professional Astrologers — Discover Cosmic Insights and Gain Deeper Self-Understanding.", zh: "与专业占星师一对一在线实时咨询，深入解读个人星盘，探索星象奥秘，开启更深层的自我认知之旅。" } },
   { id: "tarot-course", slug: "tarot-course", category: "courses", image: "tarot-course", priceCents: 24900, title: { en: "TAROT COURSES", zh: "塔罗研习" }, intro: { en: "Explore Tarot Through Live, One-on-One Online Lessons with Professional Tarot Readers — Learn at Your Own Pace and Unlock Tarot Wisdom.", zh: "与专业塔罗师一对一在线实时授课，按照自己的节奏探索塔罗奥秘，开启塔罗智慧之旅。" } },
 { id: legacyProducts[2].id, slug: legacyProducts[2].slug, category: "readings", image: "taoluozixun", priceCents: 14378, title: { en: "TAROT CONSULTATION", zh: "塔罗咨询" }, intro: { en: "Explore Tarot Through Live, One-on-One Online Consultations with Professional Tarot Readers — Gain Clarity, Discover New Perspectives, and Find Guidance for Your Journey.", zh: "与专业塔罗师一对一在线实时咨询，探索塔罗智慧，获得清晰洞察与全新视角，为人生旅程寻找指引。" } },
   { id: "celestial-jewelry", slug: "celestial-jewelry", category: "physical", image: "celestial-jewelry", priceCents: 6900, title: { en: "Celestial Jewelry", zh: "星辰首饰" }, intro: { en: "Jewelry inspired by celestial symbols. Materials, sizing and availability will be confirmed before ordering opens.", zh: "以星辰符号为灵感的首饰。材质、尺寸及供货信息将在开放购买前确认。" } },
@@ -181,7 +182,7 @@ const offerings = [
 ] satisfies Omit<Product, "date" | "sections">[];
 
 export const products: Product[] = offerings.map((item, index) => ({
-  ...item, image: `/products/${item.image}.png`, date: `2026-01-0${index + 1}`,
+  ...item, image: serviceGuideImages[item.id] ?? `/products/${item.image}.png`, date: `2026-01-0${index + 1}`,
   sections: [{ title: { en: "Details & Arrangements", zh: "详情与安排" }, paragraphs: [item.intro, { en: "This is a product preview with an example AUD price. Checkout is not available yet. Contact us for availability, booking or delivery details.", zh: "目前为商品预览，AUD 价格仅为示例，尚未开放结算。课程预约、供货与配送安排请联系我们确认。" }] }],
 }));
 

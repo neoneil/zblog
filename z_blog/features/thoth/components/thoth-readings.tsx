@@ -8,6 +8,7 @@ import { Button, ButtonLink } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { usePreferences } from '@/components/site/preferences-provider';
+import TarotReadingNotice from '@/components/tarot/tarot-reading-notice';
 import { readingSpreads } from '../data/reading-spreads';
 import { cardNameZh } from '../data/card-translations';
 import { catalogCards, cardImagePath, cardMeaning, cardSlug } from '../lib/card-catalog';
@@ -96,6 +97,7 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
           <div className={`relative h-44 w-28 ${session.stage==='shuffling'?styles.shuffling:''}`}><Image src={thothCardBack} alt={text('牌背','Card back')} fill sizes="112px" className="rounded-[var(--radius-sm)] object-cover shadow-[var(--shadow-md)]" /></div>
           <Button onClick={shuffle} disabled={session.stage==='shuffling'}>{session.stage==='shuffling'?text('正在洗牌…','Shuffling…'):text('洗牌','Shuffle the Deck')}</Button>
         </section>}
+        <TarotReadingNotice />
         {session.stage==='selecting' && <section className="overflow-hidden py-6" aria-label={text('选择塔罗牌','Select cards')}>
           <p role="status" aria-live="polite" className="text-center text-sm font-medium">{text('请选择牌背','Choose a card')} · {session.picked.length} / {spread.positions.length}</p>
           <div className={styles.fan}>{session.deck.slice(0,15).map((_,index)=><button key={index} type="button" disabled={session.picked.includes(index)} onClick={()=>pick(index)} aria-label={`${text('选择第','Choose card ')}${index+1}${text('张牌','')}`} className={`${styles.fanCard} cursor-pointer rounded-[var(--radius-sm)] border border-[var(--border-strong)] shadow-[var(--shadow-md)] outline-offset-4 focus-visible:outline-2 focus-visible:outline-[var(--ring)] disabled:cursor-default disabled:opacity-20`} style={{'--angle':`${-24+index*(48/14)}deg`} as CSSProperties}><Image src={thothCardBack} alt="" fill sizes="88px" className="rounded-[var(--radius-sm)] object-cover" /></button>)}</div>

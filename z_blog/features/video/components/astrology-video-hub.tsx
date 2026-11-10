@@ -9,7 +9,7 @@ import archiveStyles from "@/features/thoth/components/knowledge-entries.module.
 
 const modules = [
   {
-    id: "channel", icon: Play, image: "/video-hub/youtube-channel.png",
+    id: "channel", icon: Play, image: "/video-hub/xingchenyingyuan01.png",
     alt: { zh: "Stellarnests YouTube 频道", en: "Stellarnests YouTube channel" },
     category: "STELLARNESTS",
     title: { zh: "星空下的频道", en: "A CHANNEL UNDER THE STARS" },
@@ -18,7 +18,7 @@ const modules = [
     href: "https://www.youtube.com/@Stellarnests", external: true,
   },
   {
-    id: "stories", icon: Film, image: "/video-hub/stardust-stories.png",
+    id: "stories", icon: Film, image: "/video-hub/xingchenyingyuan02.png",
     alt: { zh: "让我们再死一次小说影像", en: "Let Us Die Once More story videos" },
     category: "ASTROLOGY STORIES",
     title: { zh: "星尘物语", en: "STARDUST STORIES" },
@@ -27,7 +27,7 @@ const modules = [
     href: "/tarot-novel", external: false,
   },
   {
-    id: "waite-course", icon: Clapperboard, image: "/video-hub/waite-course.png",
+    id: "waite-course", icon: Clapperboard, image: "/video-hub/xingxueyingyuan03.png",
     alt: { zh: "韦特塔罗课程", en: "Rider–Waite tarot course" },
     category: "RIDER–WAITE TAROT",
     title: { zh: "韦特塔罗课程", en: "Rider–Waite Tarot Course" },
@@ -35,7 +35,7 @@ const modules = [
     action: { zh: "筹备中", en: "In Development" },
   },
   {
-    id: "thoth-course", icon: Clapperboard, image: "/video-hub/thoth-course.png",
+    id: "thoth-course", icon: Clapperboard, image: "/video-hub/xingchenyingyuan04.png",
     alt: { zh: "透特塔罗课程", en: "Thoth tarot course" },
     category: "THOTH TAROT",
     title: { zh: "透特塔罗课程", en: "Thoth Tarot Course" },
@@ -43,7 +43,7 @@ const modules = [
     action: { zh: "筹备中", en: "In Development" },
   },
   {
-    id: "astrology-course", icon: Clapperboard, image: "/video-hub/astrology-course.png",
+    id: "astrology-course", icon: Clapperboard, image: "/video-hub/xingchenyingyuan05.png",
     alt: { zh: "占星术课程", en: "Astrology course" },
     category: "ASTROLOGY",
     title: { zh: "占星术课程", en: "Astrology Course" },

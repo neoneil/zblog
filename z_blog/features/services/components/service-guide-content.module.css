@@ -1,0 +1,132 @@
+.guide {
+  margin: 40px 0 56px;
+  color: var(--archive-text);
+  font-size: 16px;
+  line-height: 1.85;
+}
+.guide .paragraph,
+.guide li,
+.guide dd {
+  color: var(--archive-text);
+}
+.guide .paragraph {
+  margin: 18px 0;
+  overflow-wrap: anywhere;
+}
+.guide a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.introduction {
+  padding: 8px 0 32px;
+}
+.section,
+.closing {
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 100px;
+}
+.heading {
+  margin-bottom: 24px;
+}
+.guide h2 {
+  font-size: 23px;
+  line-height: 1.5;
+  margin: 0 0 14px;
+  color: var(--heading);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.guide h3 {
+  font-size: 18px;
+  margin: 0 0 14px;
+  color: var(--heading);
+  font-weight: 700;
+}
+.guide .tagline {
+  color: var(--archive-text);
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 12px 0;
+}
+.lists {
+  display: grid;
+  gap: 28px;
+  margin: 28px 0;
+}
+.lists ul {
+  padding-left: 22px;
+  margin: 0;
+  list-style: disc;
+}
+.lists li {
+  padding-left: 4px;
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+.highlights {
+  display: grid;
+  gap: 24px;
+  margin: 28px 0;
+}
+.highlights > div {
+  min-width: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.highlights dt {
+  color: var(--heading);
+  font-weight: 700;
+  font-size: 18px;
+}
+.highlights dd {
+  margin: 10px 0 0;
+  overflow-wrap: anywhere;
+}
+.guide .note {
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.85;
+  margin: 24px 0 0;
+}
+.actions {
+  margin-top: 24px;
+}
+.actions button {
+  display: inline-flex;
+  gap: 10px;
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+.guide .motto {
+  color: var(--heading);
+  font-weight: 700;
+  margin: 28px 0;
+}
+@media (min-width: 640px) {
+  .guide {
+    font-size: 18px;
+  }
+  .guide h2 {
+    font-size: 26px;
+  }
+  .guide .tagline {
+    font-size: 20px;
+  }
+  .section,
+  .closing {
+    padding: 40px 0;
+  }
+}
+@media (min-width: 900px) {
+  .lists,
+  .highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 40px;
+  }
+  .lists > div:only-child {
+    grid-column: 1 / -1;
+  }
+}

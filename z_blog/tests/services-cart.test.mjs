@@ -22,7 +22,9 @@ function load(path, imports = {}) {
   );
   return exports;
 }
-const catalog = load("../features/services/lib/catalog.ts");
+const catalog = load("../features/services/lib/catalog.ts", {
+  "./service-guide-assets": load("../features/services/lib/service-guide-assets.ts"),
+});
 const cart = load("../features/services/lib/cart.ts", { "./catalog": catalog });
 
 test("seven bilingual products have distinct local images, minor-unit AUD prices and valid routes", () => {

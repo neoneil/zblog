@@ -18,8 +18,11 @@ import { products, formatPrice, type Product } from "../lib/catalog";
 import { useCart } from "./use-cart";
 import { MAX_QUANTITY } from "../lib/cart";
 import { ProductCard, QuantityControl, ShopShell, styles } from "./shop-shared";
+import { serviceGuides } from "../lib/service-guides";
+import ServiceGuideContent from "./service-guide-content";
 
 export default function ProductDetail({ product }: { product: Product }) {
+  const guide = serviceGuides[product.id];
   const { t, language } = usePreferences(),
     cart = useCart();
   const [quantity, setQuantity] = useState(1),
@@ -78,24 +81,30 @@ export default function ProductDetail({ product }: { product: Product }) {
             </Button>
           </div>
           <div className={styles.copy}>
-            <p>{t(product.intro)}</p>
-            {product.sections.map((section) => (
-              <section key={section.title.en}>
-                <h2>{t(section.title)}</h2>
-                {section.paragraphs?.map((paragraph) => (
-                  <p key={paragraph.en}>{t(paragraph)}</p>
-                ))}
-                {section.bullets && (
-                  <ul>
-                    {section.bullets.map((item) => (
-                      <li key={item.en}>{t(item)}</li>
+            {guide ? (
+              <p className={styles.serviceTagline}>{t(guide.tagline)}</p>
+            ) : (
+              <>
+                <p>{t(product.intro)}</p>
+                {product.sections.map((section) => (
+                  <section key={section.title.en}>
+                    <h2>{t(section.title)}</h2>
+                    {section.paragraphs?.map((paragraph) => (
+                      <p key={paragraph.en}>{t(paragraph)}</p>
                     ))}
-                  </ul>
-                )}
-              </section>
-            ))}
+                    {section.bullets && (
+                      <ul>
+                        {section.bullets.map((item) => (
+                          <li key={item.en}>{t(item)}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </section>
+                ))}
+              </>
+            )}
             <Link
-              href="/aboutus#contact-title"
+              href={guide ? "/contact" : "/aboutus#contact-title"}
               className="text-[var(--primary)]"
             >
               {t({ en: "Contact us", zh: "联系我们" })}
@@ -120,6 +129,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           </nav>
         </div>
       </div>
+      {guide && <ServiceGuideContent guide={guide} />}
       <section className={styles.recommend}>
         <h2>{t({ en: "You May Also Like", zh: "你可能也喜欢" })}</h2>
         <div className={styles.grid}>

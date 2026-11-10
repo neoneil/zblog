@@ -16,7 +16,12 @@ function visit(node) {
 }
 visit(ast);
 const catalog = {};
-new Function('exports', ts.transpileModule(read('features/services/lib/catalog.ts'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(catalog);
+const assets = {};
+new Function('exports', ts.transpileModule(read('features/services/lib/service-guide-assets.ts'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(assets);
+new Function('exports', 'require', ts.transpileModule(read('features/services/lib/catalog.ts'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(catalog, name => {
+  if(name === './service-guide-assets') return assets;
+  throw new Error(name);
+});
 
 test('all six hero actions link to existing tool, membership or product pages', () => {
   assert.equal(actions.length, 6);

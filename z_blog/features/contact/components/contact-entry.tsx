@@ -12,7 +12,7 @@ export default function ContactEntry() {
     <Link href="/contact" className="group block w-full flex-1">
       <Card className={`${styles.card} transition-colors group-hover:border-[var(--primary)]`}>
         <div className={styles.media}>
-          <Image src="/knowledge/send-a-message.png" alt="" fill sizes="(max-width: 639px) 100vw, 576px" className={styles.image} />
+          <Image src="/knowledge/xingyuchuanxun.png" alt="" fill sizes="(max-width: 639px) 100vw, 576px" className={styles.image} />
         </div>
         <CardContent className={styles.copy}>
           <h2 className="text-xl font-semibold text-[var(--heading)]">{t({ en: "SEND A MESSAGE", zh: "星语传讯" })}</h2>

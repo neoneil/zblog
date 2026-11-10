@@ -8,6 +8,7 @@ import { tarotModes, tarotModeOrder, type TarotReadingMode } from "@/lib/tarot/r
 import { getYesNoAnswer, tarotAnswerLabels } from "@/lib/tarot/yes-no";
 import TarotAtmosphere from "./tarot-atmosphere";
 import TarotSpreadGuide from "./tarot-spread-guide";
+import TarotReadingNotice from "./tarot-reading-notice";
 import spreadStyles from "./tarot-spreads.module.css";
 import styles from "./tarot-experience.module.css";
 import TarotCard from "@/components/tarot/tarot-card";
@@ -224,6 +225,7 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
             <h1>{stage === "idle" ? mode === "three-cards" ? t({ zh: "向塔罗轻声提问", en: "Whisper to the Tarot" }) : config.title[language] : collected ? t({ zh: `你的${countLabel}张牌`, en: "Your cards" }) : t({ zh: "想着你的问题", en: "Focus on your question" })}</h1>
             {accessLabel && <p className={styles.access}>{accessLabel}</p>}
           </header>
+          {stage === "idle" && <TarotReadingNotice />}
 
           <section className={styles.table} aria-label="塔罗抽牌">
             {stage === "idle" ? config.fixedQuestion ? <TarotSpreadGuide mode={mode} /> : (
@@ -283,6 +285,7 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
             </motion.div>}
             </div>
           </section>
+          {stage !== "idle" && <TarotReadingNotice />}
           {mode === "yes-no" && (loading || reading) && <p className={styles.verdict} role="status">{tarotAnswerLabels[getYesNoAnswer(selectedCards)]}</p>}
           {(loading || reading) && <section className={styles.reading} aria-label="塔罗解读结果" aria-live="polite">
             <TarotReadingPanel reading={reading} sections={readingSections} cards={selectedCards} loading={loading} mode={mode} />

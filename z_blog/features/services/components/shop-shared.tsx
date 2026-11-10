@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { formatPrice, productHref, type Product } from "../lib/catalog";
 import { MAX_QUANTITY } from "../lib/cart";
 import { useCart } from "./use-cart";
+import { serviceGuideImages } from "../lib/service-guide-assets";
 import styles from "./services.module.css";
 
 export { styles };
@@ -26,7 +27,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Card className={styles.productCard}>
       <Link className={styles.productLink} href={productHref(product)}>
-        <div className={`${styles.cardImage} ${product.category !== "physical" ? styles.onlineImage : ""}`}>
+        <div className={`${styles.cardImage} ${product.category !== "physical" ? styles.onlineImage : ""} ${serviceGuideImages[product.id] ? styles.documentImage : ""}`}>
           <Image
             src={product.image}
             alt={t(product.title)}

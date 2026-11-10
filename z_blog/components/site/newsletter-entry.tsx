@@ -10,7 +10,7 @@ export default function NewsletterEntry() {
   const { t } = usePreferences();
   return <Card className={styles.card}>
     <div className={styles.media}>
-      <Image src="/knowledge/letters-from-the-stars.png" alt="" fill sizes="(max-width: 639px) 100vw, 672px" className={styles.image} />
+      <Image src="/knowledge/xingchenlaixin.png" alt="" fill sizes="(max-width: 639px) 100vw, 672px" className={styles.image} />
     </div>
     <CardContent className={styles.copy}>
       <h2 className="text-xl font-semibold text-[var(--heading)]">{t({ en: "NEWSLETTER", zh: "星辰来信" })}</h2>
