@@ -9,20 +9,7 @@ const root = new URL("../", import.meta.url),
   require = createRequire(import.meta.url),
   cache = new Map();
 let accessCalls = 0,
-  allowed = true,
-  completion;
-class FakeOpenAI {
-  chat = {
-    completions: {
-      create: async (args) => {
-        completion = args;
-        return {
-          choices: [{ message: { content: "A personalized reading." } }],
-        };
-      },
-    },
-  };
-}
+  openaiLoads = 0;
 function load(file) {
   if (cache.has(file)) return cache.get(file);
   const exports = {};
@@ -39,19 +26,15 @@ function load(file) {
       return {
         NextResponse: { json: (value, init) => Response.json(value, init) },
       };
-    if (name === "openai") return { __esModule: true, default: FakeOpenAI };
+    if (name === "openai") {
+      openaiLoads++;
+      throw new Error("Stella must not load OpenAI.");
+    }
     if (name === "@/features/billing/lib/ai-access")
       return {
         consumeAiAccess: async () => {
           accessCalls++;
-          return allowed
-            ? { allowed: true }
-            : {
-                allowed: false,
-                message: "Sign in",
-                code: "login_required",
-                httpStatus: 401,
-              };
+          throw new Error("Stella must not consume a reading allowance.");
         },
       };
     if (name.startsWith("@/")) return load(name.slice(2) + ".ts");
@@ -180,76 +163,77 @@ test("planetary hours, angles and Saturn return roots are computable", () => {
       new Date(returns[0].time).getUTCFullYear() <= 2016,
   );
 });
-test("reading API validates requests and enforces existing access", async () => {
+test("retired Stella reading API never loads OpenAI or consumes access", async () => {
   const { POST } = load("app/api/stella-reading/route.ts");
   const request = (body) =>
     new Request("http://localhost/api/stella-reading", {
       method: "POST",
       body: JSON.stringify(body),
     });
-  const body = {
-    birth,
-    topic: "energy",
-    style: "overview",
-    period: "today",
-    language: "en",
-    date: "2026-11-09T12:00Z",
-  };
-  const prior = process.env.OPENAI_API_KEY;
-  process.env.OPENAI_API_KEY = "test-key";
-  try {
-    for (const invalid of [
-      { ...body, birth: { ...birth, day: 32 } },
-      { ...body, topic: "bad" },
-      { ...body, date: "bad" },
-      { ...body, detail: 123 },
-    ]) {
-      assert.equal((await POST(request(invalid))).status, 400);
-    }
-    assert.equal(
-      (
-        await POST(
-          request({
-            ...body,
-            topic: "life-moment",
-            detail: JSON.stringify({ date: "2026-02-31" }),
-          }),
-        )
-      ).status,
-      400,
-    );
-    assert.equal(accessCalls, 0);
-    allowed = false;
-    assert.equal((await POST(request(body))).status, 401);
-    assert.equal(completion, undefined);
-    allowed = true;
+  for (const body of [
+    { birth, language: "en" },
+    { birth, language: "zh" },
+    {},
+    null,
+  ]) {
     const response = await POST(request(body));
-    assert.equal(response.status, 200);
-    assert.equal((await response.json()).reading, "A personalized reading.");
-    assert.match(completion.messages[0].content, /exclusively in English/);
-    const payload = JSON.parse(completion.messages[1].content);
-    assert.equal(payload.context.birthUtc, "1985-03-27T02:30:00Z");
-    assert.equal(payload.context.chart.planets.length, 13);
-    const moment = await POST(
-      request({
-        ...body,
-        topic: "life-moment",
-        language: "zh",
-        detail: JSON.stringify({
-          date: "2020-01-01",
-          category: "Career",
-          description: "A change",
-        }),
-      }),
-    );
-    assert.equal(moment.status, 200);
+    assert.equal(response.status, 410);
+    const result = await response.json();
     assert.equal(
-      JSON.parse(completion.messages[1].content).context.date,
-      "2020-01-01T12:00:00.000Z",
+      result.consultationUrl,
+      "/services/natal-chart-interpretation-masterclass",
     );
-    assert.match(completion.messages[0].content, /Simplified Chinese/);
-  } finally {
-    if (prior === undefined) delete process.env.OPENAI_API_KEY;
-    else process.env.OPENAI_API_KEY = prior;
+    assert.equal(result.code, "consultation_required");
+    assert.ok(result.message.en && result.message.zh);
   }
+  assert.equal(accessCalls, 0);
+  assert.equal(openaiLoads, 0);
+});
+
+test("Stella reading actions use the consultation URL without generation requests", () => {
+  for (const file of [
+    "features/stella/components/stella-analysis.tsx",
+    "features/stella/components/stella-ask.tsx",
+  ]) {
+    const source = readFileSync(new URL(file, root), "utf8");
+    assert.ok(source.includes("STELLA_CONSULTATION_HREF"));
+    assert.ok(source.includes("href={STELLA_CONSULTATION_HREF}"));
+    assert.ok(!source.includes("/api/stella-reading"));
+    assert.ok(!source.includes("fetch("));
+    assert.ok(!source.includes('from "openai"'));
+  }
+});
+
+test("birth panel removes save/share and JSON export while linking consultation actions", () => {
+  const source = readFileSync(
+    new URL("features/stella/components/stella-client.tsx", root),
+    "utf8",
+  );
+  const analysisSource = readFileSync(
+    new URL("features/stella/components/stella-analysis.tsx", root),
+    "utf8",
+  );
+  for (const removed of [
+    "SaveShare",
+    "saveBirth",
+    "setSaved",
+    "downloadData",
+    "Download Chart Data",
+    "下载星盘数据",
+    "stella-natal-chart.json",
+  ])
+    assert.ok(!source.includes(removed), removed);
+  assert.ok(!analysisSource.includes("export function SaveShare"));
+  assert.match(
+    source,
+    /<Link className=\{styles\.secondary\} href=\{STELLA_CONSULTATION_HREF\}>/,
+  );
+  assert.match(
+    source,
+    /<Link className=\{styles\.chartQuestion\} href=\{STELLA_CONSULTATION_HREF\}>/,
+  );
+  assert.ok(
+    source.includes("scene.current?.download()"),
+    "chart-image download remains independent of removed JSON export",
+  );
 });

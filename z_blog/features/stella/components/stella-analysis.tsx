@@ -12,16 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import {
-  ChevronRight,
-  Copy,
-  RefreshCw,
-  Share2,
-  ThumbsDown,
-  ThumbsUp,
-  X,
-} from "lucide-react";
+import { ChevronRight, Share2, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { usePreferences } from "@/components/site/preferences-provider";
 import type { BirthForm, OpenAIChartJson } from "@/lib/astrology/natal-chart";
 import { analysisText, generalReading, topicNames } from "../lib/app-copy";
@@ -54,6 +45,7 @@ import {
 } from "../lib/sky";
 import { ZodiacConstellation } from "./zodiac-constellation";
 import s from "./stella-analysis.module.css";
+import { STELLA_CONSULTATION_HREF } from "../lib/consultation";
 
 type Context = {
   chart: OpenAIChartJson | null;
@@ -221,24 +213,17 @@ export function Feedback({ id }: { id: string }) {
     </div>
   );
 }
-function DeepButton({
-  topic,
-  detail,
-}: {
-  topic: AnalysisTopic;
-  detail?: string;
-}) {
-  const { open } = useAnalysis();
+function DeepButton({ topic }: { topic: AnalysisTopic; detail?: string }) {
   const { t } = usePreferences();
   return (
-    <button
-      type="button"
+    <Link
       className={s.link}
-      onClick={() => open(topic, detail)}
+      href={STELLA_CONSULTATION_HREF}
+      data-analysis-topic={topic}
     >
       {t({ en: "Go Deeper", zh: "深入解读" })}
       <ChevronRight size={13} />
-    </button>
+    </Link>
   );
 }
 function Insight({
@@ -280,13 +265,7 @@ function AnalysisDialog({
   const context = useAnalysis(),
     { language, t } = usePreferences();
   const [style, setStyle] = useState<AnalysisStyle>("overview");
-  const [results, setResults] = useState<Record<string, string>>({});
-  const [busy, setBusy] = useState(false),
-    [error, setError] = useState(""),
-    [access, setAccess] = useState("");
   const dialog = useRef<HTMLDivElement>(null);
-  const abort = useRef<AbortController | null>(null);
-  const previousLanguage = useRef(language);
   useEffect(() => {
     const prior = document.activeElement as HTMLElement | null;
     dialog.current?.focus();
@@ -315,64 +294,9 @@ function AnalysisDialog({
     document.addEventListener("keydown", key);
     return () => {
       document.removeEventListener("keydown", key);
-      abort.current?.abort();
       prior?.focus();
     };
   }, [close]);
-  useEffect(() => {
-    if (previousLanguage.current !== language) {
-      abort.current?.abort();
-      setBusy(false);
-      setError("");
-      previousLanguage.current = language;
-    }
-  }, [language]);
-  const resultKey = language + ":" + style;
-  async function generate() {
-    if (busy || !context.birth) return;
-    setBusy(true);
-    setError("");
-    setAccess("");
-    const controller = new AbortController();
-    abort.current = controller;
-    try {
-      const response = await fetch("/api/stella-reading", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: controller.signal,
-        body: JSON.stringify({
-          birth: context.birth,
-          topic,
-          style,
-          period: context.period,
-          date: context.date.toISOString(),
-          language,
-          detail,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        setAccess(
-          response.status === 401
-            ? "/login?next=%2Fstella"
-            : data.upgradeUrl || "",
-        );
-        throw new Error(
-          data.error ||
-            t({
-              en: "Reading unavailable. Please try again.",
-              zh: "暂时无法解读，请稍后重试。",
-            }),
-        );
-      }
-      setResults((old) => ({ ...old, [resultKey]: data.reading }));
-    } catch (e) {
-      if (!controller.signal.aborted)
-        setError(e instanceof Error ? e.message : "Request failed");
-    } finally {
-      if (!controller.signal.aborted) setBusy(false);
-    }
-  }
   return (
     <div
       className={s.backdrop}
@@ -418,76 +342,47 @@ function AnalysisDialog({
           ))}
         </div>
         {detail && <p>{detail}</p>}
-        {results[resultKey] ? (
-          <ReactMarkdown>{results[resultKey]}</ReactMarkdown>
-        ) : (
-          <>
-            <p>
-              {context.chart &&
-                analysisText(
-                  topic,
-                  context.chart,
-                  context.sky,
-                  language,
-                  context.period,
-                  context.utc,
-                  context.date,
-                )}
-            </p>
-            <p className={s.muted}>
-              {t({
-                en: {
-                  overview:
-                    "Connect the key chart factors without treating them as a fixed outcome.",
-                  practical:
-                    "Choose one observable behavior and a realistic next step for this theme.",
-                  spiritual:
-                    "Consider how awareness, care and responsibility can change your response.",
-                  detailed:
-                    "A personalized consultation combines precise positions, houses, aspects and timing.",
-                }[style],
-                zh: {
-                  overview: "综合观察核心星盘因素，不将象征主题视为固定结果。",
-                  practical:
-                    "选择一个可以观察的行为，为这个主题制定切实可行的下一步。",
-                  spiritual: "反思觉察、关怀与责任如何改变你的回应方式。",
-                  detailed: "个性化咨询结合具体位置、宫位、相位及时间背景。",
-                }[style],
-              })}
-            </p>
-          </>
-        )}
-        <div className={s.actions}>
-          <button
-            className={s.action}
-            type="button"
-            onClick={() => void generate()}
-            disabled={busy || !context.birth}
-          >
-            <RefreshCw size={14} />
-            {busy
-              ? t({ en: "Preparing reading…", zh: "正在解读…" })
-              : results[resultKey]
-                ? t({ en: "Refresh this reading", zh: "重新解读" })
-                : t({ en: "Request personal reading", zh: "获取个人解读" })}
-          </button>
-        </div>
-        <p className={s.muted}>
-          {t({
-            en: "Personal consultations use your existing astrology reading access. Nothing is charged automatically when you open this panel.",
-            zh: "个性化咨询使用现有占星解读权限。打开面板不会自动消耗额度。",
-          })}
-        </p>
-        {error && (
-          <p role="alert" className={s.error}>
-            {error}
+        <>
+          <p>
+            {context.chart &&
+              analysisText(
+                topic,
+                context.chart,
+                context.sky,
+                language,
+                context.period,
+                context.utc,
+                context.date,
+              )}
           </p>
-        )}
-        {access && (
-          <Link href={access}>
-            {t({ en: "Sign in / view access", zh: "登录或查看权限" })}
+          <p className={s.muted}>
+            {t({
+              en: {
+                overview:
+                  "Connect the key chart factors without treating them as a fixed outcome.",
+                practical:
+                  "Choose one observable behavior and a realistic next step for this theme.",
+                spiritual:
+                  "Consider how awareness, care and responsibility can change your response.",
+                detailed:
+                  "A personalized consultation combines precise positions, houses, aspects and timing.",
+              }[style],
+              zh: {
+                overview: "综合观察核心星盘因素，不将象征主题视为固定结果。",
+                practical:
+                  "选择一个可以观察的行为，为这个主题制定切实可行的下一步。",
+                spiritual: "反思觉察、关怀与责任如何改变你的回应方式。",
+                detailed: "个性化咨询结合具体位置、宫位、相位及时间背景。",
+              }[style],
+            })}
+          </p>
+        </>
+        <div className={s.actions}>
+          <Link className={s.action} href={STELLA_CONSULTATION_HREF}>
+            <ChevronRight size={14} />
+            {t({ en: "Request personal reading", zh: "获取个人解读" })}
           </Link>
-        )}
+        </div>
       </div>
     </div>
   );
@@ -1324,77 +1219,6 @@ export function LifeMomentAndReflection() {
         </button>
         {message && <p role="status">{message}</p>}
       </section>
-    </>
-  );
-}
-
-export function SaveShare({
-  save,
-  saved,
-}: {
-  save: () => void;
-  saved: boolean;
-}) {
-  const { chart } = useAnalysis(),
-    { t } = usePreferences();
-  const [message, setMessage] = useState("");
-  return (
-    <>
-      <button className={s.action} type="button" onClick={save}>
-        {t({
-          en: saved ? "Saved in This Browser" : "Save Chart",
-          zh: saved ? "已保存在此浏览器" : "保存星盘",
-        })}
-      </button>
-      <button
-        className={s.action}
-        type="button"
-        onClick={() =>
-          void (async () => {
-            try {
-              if (!chart) return;
-              const file = new File(
-                [JSON.stringify(chart, null, 2)],
-                "stella-chart.json",
-                { type: "application/json" },
-              );
-              if (navigator.canShare?.({ files: [file] }) && navigator.share) {
-                if (
-                  !window.confirm(
-                    t({
-                      en: "Share this file with your birth details?",
-                      zh: "文件包含出生信息，确认分享吗？",
-                    }),
-                  )
-                )
-                  return;
-                await navigator.share({ files: [file], title: "Stella" });
-              } else {
-                await navigator.clipboard.writeText(
-                  new URL("/stella", location.origin).href,
-                );
-              }
-              setMessage(
-                t({
-                  en: "Shared / public link copied (no birth details in link).",
-                  zh: "已分享或复制公开链接（链接不含出生信息）。",
-                }),
-              );
-            } catch {
-              setMessage(
-                t({
-                  en: "Sharing canceled or unavailable.",
-                  zh: "分享已取消或暂不可用。",
-                }),
-              );
-            }
-          })()
-        }
-      >
-        <Copy size={13} />
-        {t({ en: "Share", zh: "分享" })}
-      </button>
-      {message && <small role="status">{message}</small>}
     </>
   );
 }

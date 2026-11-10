@@ -75,7 +75,8 @@
   border-color: var(--stella-accent);
   box-shadow: 0 0 12px var(--stella-purple-glow);
 }
-.link {
+.link,
+.section .link {
   display: inline-flex;
   align-items: center;
   gap: 5px;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { ChevronDown, ChevronUp, Download, Maximize2, Minus, Pause, Play, Plus, Rewind, RotateCcw, Search, Send, Settings2, X } from "lucide-react";
 import { usePreferences } from "@/components/site/preferences-provider";
 import { calculateNatalChart, type BirthForm, type OpenAIChartJson } from "@/lib/astrology/natal-chart";
@@ -10,8 +11,9 @@ import StellaScene, { type SceneHandle, type SceneOptions } from "./stella-scene
 import styles from "./stella.module.css";
 import { ZodiacConstellation } from "./zodiac-constellation";
 import { enrichStellaChart, planetRays } from "../lib/app-analysis";
-import { AnalysisProvider, BirthInsights, LifeMomentAndReflection, ReadingsPanel, SaveShare, SkyPanel, pointSymbols } from "./stella-analysis";
+import { AnalysisProvider, BirthInsights, LifeMomentAndReflection, ReadingsPanel, SkyPanel, pointSymbols } from "./stella-analysis";
 import StellaAsk from "./stella-ask";
+import { STELLA_CONSULTATION_HREF } from "../lib/consultation";
 
 type BirthFields = { name: string; date: string; time: string; place: string; latitude: string; longitude: string };
 type Place = { display_name: string; lat: string; lon: string };
@@ -72,7 +74,6 @@ export default function StellaClient() {
   const [mobileOpen,setMobileOpen] = useState(false), [settingsOpen,setSettingsOpen] = useState(false);
   const [options,setOptions] = useState(initialOptions), [status,setStatus] = useState<"loading"|"ready"|"error">("loading");
   const [places,setPlaces] = useState<Place[]>([]), [lookupBusy,setLookupBusy] = useState(false), [geoError,setGeoError] = useState("");
-  const [saved,setSaved] = useState(false);
   const settingsRef=useRef<HTMLDivElement>(null),settingsButton=useRef<HTMLButtonElement>(null);
   const calculating=useRef(false),alive=useRef(true),birthVersion=useRef(0);
   const tick = Math.floor(epoch/1000);
@@ -122,7 +123,7 @@ export default function StellaClient() {
 
   async function calculate(event:FormEvent){
     event.preventDefault();if(calculating.current)return;
-    setChartError("");setSaved(false);
+    setChartError("");
     try{
       const form=parseBirth(fields,houseSystem);birthVersion.current++;calculating.current=true;setChartBusy(true);
       const json=await calculateNatalChart(form);
@@ -146,8 +147,6 @@ export default function StellaClient() {
     }catch{setGeoError(t({zh:"城市查询暂不可用，请手动输入坐标。",en:"City lookup is unavailable. Enter coordinates manually."}));}
     finally{setLookupBusy(false);}
   }
-  function saveBirth(){if(!submitted)return;try{localStorage.setItem(storageKey,JSON.stringify(submitted));setSaved(true);}catch{setChartError(t({zh:"无法保存到当前浏览器。",en:"Unable to save in this browser."}));}}
-  function downloadData(){if(!chart)return;const url=URL.createObjectURL(new Blob([JSON.stringify(chart,null,2)],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="stella-natal-chart.json";a.click();URL.revokeObjectURL(url);}
   function selectPlanet(key:string){setTab("sky");setMobileOpen(true);scene.current?.focusPlanet(key);}
   function selectTab(next:typeof tab){if(next===tab&&window.innerWidth<=700)setMobileOpen(value=>!value);else{setTab(next);setMobileOpen(true);}if(window.innerWidth<=700)setBirthOpen(false);}
   const anglePoints=chart?[...chart.planets.filter(p=>p.key==="sun"||p.key==="moon"),...chart.angles]:[];
@@ -166,7 +165,7 @@ export default function StellaClient() {
           <div className={styles.periods}>{(["today","week","month"] as const).map(key=><button type="button" key={key} aria-pressed={period===key} onClick={()=>setPeriod(key)}>{t({zh:{today:"今日",week:"一周",month:"一月"}[key],en:{today:"Today",week:"Week",month:"Month"}[key]})}</button>)}</div>
           <ReadingsPanel sign={sign} setSign={setSign} hasBirth={hasBirth} signText={signCopy[language][sign]} enterBirth={()=>{setBirthOpen(true);if(window.innerWidth<=700)setMobileOpen(false);}}/>
         </>}
-        {tab==="ask"&&<StellaAsk key={JSON.stringify(birth)} birth={hasBirth?birth:null} date={date} period={period} enterBirth={()=>{setBirthOpen(true);if(window.innerWidth<=700)setMobileOpen(false);}}/>}
+        {tab==="ask"&&<StellaAsk hasBirth={hasBirth} enterBirth={()=>{setBirthOpen(true);if(window.innerWidth<=700)setMobileOpen(false);}}/>}
         {tab==="ask"&&<LifeMomentAndReflection/>}
         {tab==="sky"&&<SkyPanel selectPlanet={selectPlanet}/>}
       </div>
@@ -190,9 +189,9 @@ export default function StellaClient() {
             <strong>{language==="zh"?p.signZh:p.sign}</strong>{" "}<ZodiacConstellation sign={p.sign} size="tiny"/>
             <span title={`${p.absoluteDegrees.toFixed(6)}°`}>{formatDegrees(p.signDegrees)}</span>
           </div>)}</div>
-          <div className={styles.smallActions}><SaveShare save={saveBirth} saved={saved}/><button type="button" className={styles.secondary} onClick={()=>{setTab("ask");setMobileOpen(true);if(window.innerWidth<=700)setBirthOpen(false);}}><Send size={13}/>{t({zh:"询问星盘",en:"Ask My Chart"})}</button></div>
+          <div className={styles.smallActions}><Link className={styles.secondary} href={STELLA_CONSULTATION_HREF}><Send size={13}/>{t({zh:"询问星盘",en:"Ask My Chart"})}</Link></div>
           <BirthInsights/>
-          <button type="button" className={styles.chartQuestion} onClick={()=>{setTab("ask");setMobileOpen(true);if(window.innerWidth<=700)setBirthOpen(false);}}><strong>{t({en:"Ask Your Chart",zh:"问问你的星盘"})}</strong><span>{t({en:"Explore the questions that matter to you →",zh:"探索对你真正重要的问题 →"})}</span></button>
+          <Link className={styles.chartQuestion} href={STELLA_CONSULTATION_HREF}><strong>{t({en:"Ask Your Chart",zh:"问问你的星盘"})}</strong><span>{t({en:"Explore the questions that matter to you →",zh:"探索对你真正重要的问题 →"})}</span></Link>
           <section className={styles.section}>
             <h3>{t({zh:"行星位置",en:"PLANETARY POSITIONS"})}</h3>
             <ul className={styles.positionList}>{chart.planets.map(p=><li key={p.key}>
@@ -207,7 +206,6 @@ export default function StellaClient() {
               <span title={`${h.cuspDegrees.toFixed(6)}°`}>{formatDegrees(h.signDegrees)}</span>
             </li>)}</ul>
           </details>
-          <button type="button" className={styles.secondary} onClick={downloadData}><Download size={13}/>{t({zh:"下载星盘数据",en:"Download Chart Data"})}</button>
         </section>}
       </div>}
     </aside>
