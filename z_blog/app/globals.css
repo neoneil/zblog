@@ -2,9 +2,18 @@
 @plugin "@tailwindcss/typography";
 
 :root {
+  --title-ink-light: #246b9a;
+  --title-ink-dark: #9edcff;
+  --subtitle-ink-light: #216d59;
+  --subtitle-ink-dark: #a8e6cf;
+  --reading-ink-light: #31414e;
+  --reading-ink-dark: #e5edf3;
+  --title-ink: var(--title-ink-light);
+  --subtitle-ink: var(--subtitle-ink-light);
+  --reading-ink: var(--reading-ink-light);
   --archive-overlay: rgba(0, 0, 0, .65);
-  --archive-heading: #f0c84a;
-  --archive-text: #f0e6ce;
+  --archive-heading: var(--title-ink);
+  --archive-text: var(--reading-ink);
   --novel-gold: #e6bd62;
   --novel-hero-scrim: rgba(0, 0, 0, .92);
   --hero-brand-ink: #ecdca9;
@@ -17,7 +26,7 @@
   --explore-hover: #282043;
   --explore-text: #e0e0e0;
   --explore-muted: #9995aa;
-  --explore-title: #c5b5f5;
+  --explore-title: var(--title-ink);
   --explore-border: #30294f;
   --explore-accent: #8065df;
   --explore-white: #ffffff;
@@ -38,7 +47,7 @@
   --stella-bg: #020205;
   --stella-panel: rgba(3, 3, 7, .88);
   --stella-text: #d6d2df;
-  --stella-heading: #d7cdb9;
+  --stella-heading: var(--title-ink-dark);
   --stella-muted: #8d879c;
   --stella-faint: #696374;
   --stella-white: #ffffff;
@@ -79,7 +88,7 @@ html[data-theme="light"] {
   --explore-hover: #e1ebfa;
   --explore-text: #233349;
   --explore-muted: #52647b;
-  --explore-title: #315a97;
+  --explore-title: var(--title-ink);
   --explore-border: #cfdaea;
   --explore-accent: #426ab0;
   --explore-success: #13704a;
@@ -101,7 +110,7 @@ html[data-theme="light"] {
   --surface-raised: #ffffff;
   --surface-accent: #eee7d5;
 
-  --text: #30283c;
+  --text: var(--reading-ink);
   --text-soft: #70667f;
   --text-faint: #867a95;
   --text-inverse: #0d0a1a;
@@ -147,7 +156,7 @@ html[data-theme="light"] {
   --app-gradient: linear-gradient(var(--bg), var(--bg));
   --section-gradient: linear-gradient(135deg, var(--surface-raised), var(--card-soft));
   --focus-outline: 0 0 0 3px color-mix(in srgb, var(--ring) 42%, transparent);
-  --heading: #8b6815;
+  --heading: var(--title-ink);
   --button-glow: rgba(196, 154, 42, .35);
   --particle: #ffe69a;
   --particle-halo: #ffc340;
@@ -155,6 +164,9 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
+  --title-ink: var(--title-ink-dark);
+  --subtitle-ink: var(--subtitle-ink-dark);
+  --reading-ink: var(--reading-ink-dark);
   color-scheme: dark;
   --bg: #0d0a1a;
   --bg-soft: #160f2a;
@@ -166,7 +178,7 @@ html[data-theme="dark"] {
   --surface-raised: #241844;
   --surface-accent: #2a2140;
 
-  --text: #e8d8f0;
+  --text: var(--reading-ink);
   --text-soft: #8870a0;
   --text-faint: #8870a0;
   --text-inverse: #0d0a1a;
@@ -209,7 +221,7 @@ html[data-theme="dark"] {
   --app-gradient: linear-gradient(var(--bg), var(--bg));
   --section-gradient: linear-gradient(135deg, var(--surface-raised), var(--card-soft));
   --focus-outline: 0 0 0 3px color-mix(in srgb, var(--ring) 48%, transparent);
-  --heading: #f0c84a;
+  --heading: var(--title-ink);
   --button-glow: rgba(196, 154, 42, .35);
   --particle: #ffe69a;
   --particle-halo: #ffc340;
@@ -527,6 +539,11 @@ body :is(h1, h2, h3, h4, h5, h6),
 body :is(h1, h2, h3, h4, h5, h6) :where(span, strong, em, a):not([data-element]) {
   color: var(--archive-heading) !important;
   font-weight: 700 !important;
+}
+body .site-subtitle,
+body [data-text-role="subtitle"],
+body main header > :is(h1, h2, h3) + p:not(.text-xs):not(:has(time)) {
+  color: var(--subtitle-ink) !important;
 }
 .btn-secondary { color: var(--primary); border-color: var(--primary); background: transparent; }
 .btn-secondary:hover { background: var(--primary-soft); }

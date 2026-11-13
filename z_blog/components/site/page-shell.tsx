@@ -64,7 +64,7 @@ export function PageHero({
             {title}
           </h1>
           {description ? (
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--text-soft)] sm:text-base lg:text-lg">
+            <p className="site-subtitle mt-4 max-w-3xl text-sm leading-7 sm:text-base lg:text-lg">
               {description}
             </p>
           ) : null}

@@ -11,6 +11,9 @@
 .hero:focus-visible { outline: 2px solid var(--novel-gold); outline-offset: 4px; }
 .page .bookTitle { font-size: 19px; font-weight: 700; white-space: nowrap; line-height: 1.3; letter-spacing: 0; }
 .heroText p { max-width: 650px; line-height: 1.8; }
+.heroText { --title-ink: var(--title-ink-dark); --archive-heading: var(--title-ink); }
+.page .heroText > p:last-of-type { color: var(--subtitle-ink-dark); }
+.reader .body { color: var(--reading-ink); }
 .heroText > a { justify-self: start; }
 .chapters { display: grid; align-items: start; gap: 28px; margin-top: 28px; scroll-margin-top: 100px; }
 .page h2 { font-size: 22px; margin: 16px 0; }

@@ -154,7 +154,7 @@ export default function StellaClient() {
 
   return <AnalysisProvider chart={hasBirth?chart:null} birth={hasBirth?birth:null} utc={birthUtc} timezone={birthTimezone} sky={sky} date={date} period={period}><main ref={root} className={styles.experience} data-testid="stella-experience">
     <StellaScene ref={scene} sky={sky} date={date} chart={chart} options={options} language={language} onStatus={setStatus} onPlanet={selectPlanet} />
-    <h1 className={styles.brand}>STELLA</h1>
+    <h1 className={styles.brand}>STELLARNESTS</h1>
     {status!=="ready"&&<div className={styles.sceneNotice} data-error={status==="error"} role="status">{status==="error"?<div><p>{t({zh:"3D 场景暂不可用，请确认浏览器已开启硬件加速。",en:"The 3D scene is unavailable. Check browser hardware acceleration."})}</p><button className={styles.secondary} type="button" onClick={()=>window.location.reload()}>{t({zh:"重试",en:"Retry"})}</button></div>:t({zh:"星空正在展开…",en:"Opening the sky…"})}</div>}
     <aside className={styles.panel+" "+styles.readingsPanel} data-mobile-open={mobileOpen}>
       <div className={styles.tabs} role="tablist" aria-label={t({zh:"Stella 面板",en:"Stella panels"})}>

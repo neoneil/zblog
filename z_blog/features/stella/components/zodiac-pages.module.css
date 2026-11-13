@@ -65,6 +65,7 @@
   margin: 0 auto 40px;
 }
 .intro p {
+  color: var(--subtitle-ink);
   max-width: 760px;
   margin: 16px auto;
 }
@@ -72,6 +73,7 @@
   text-align: center;
   margin-bottom: 40px;
 }
+.root .profileHeader > p { color: var(--subtitle-ink); }
 .symbol {
   display: block;
   color: var(--explore-title);

@@ -5,6 +5,10 @@
   font-display: swap;
 }
 .experience {
+  --title-ink: var(--title-ink-dark);
+  --subtitle-ink: var(--subtitle-ink-dark);
+  --archive-heading: var(--title-ink);
+  --heading: var(--title-ink);
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -131,9 +135,9 @@
 }
 @media (max-width: 700px) {
   .experience { min-height: 560px; }
-  .brand { top: 13px; left: 16px; transform: none; font-size: 21px; }
+  .brand { top: 13px; left: 16px; transform: none; font-size: 18px; max-width: calc(100% - 76px); white-space: nowrap; }
   .birthPanel { top: 58px; right: 12px; width: calc(100% - 24px); max-height: calc(100% - 205px); }
-  .birthPanel[data-open="false"] { width: 170px; top: 9px; right: 58px; }
+  .birthPanel[data-open="false"] { width: 170px; top: 58px; right: 12px; }
   .panelHeading { padding: 11px 12px; font-size: 14px !important; }
   .readingsPanel { top: auto; left: 12px; right: 12px; bottom: 95px; width: auto; max-height: 46%; }
   .readingsPanel[data-mobile-open="false"] .readingsBody { display: none; }

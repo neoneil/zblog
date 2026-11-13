@@ -45,7 +45,7 @@
   font-weight: 700;
 }
 .guide .tagline {
-  color: var(--archive-text);
+  color: var(--subtitle-ink);
   font-size: 18px;
   line-height: 1.8;
   margin: 12px 0;
@@ -101,7 +101,7 @@
   text-align: center;
 }
 .guide .motto {
-  color: var(--heading);
+  color: var(--subtitle-ink);
   font-weight: 700;
   margin: 28px 0;
 }

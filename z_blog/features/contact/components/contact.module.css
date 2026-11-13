@@ -26,6 +26,9 @@
   font-size: 14px;
   color: var(--text-faint);
 }
+.about h1 + p,
+.about h2 + p,
+.newsletter h2 + p { color: var(--subtitle-ink); }
 .contact h2,
 .newsletter h2 {
   text-align: center;

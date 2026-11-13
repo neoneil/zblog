@@ -16,7 +16,7 @@
   font-size: 32px;
   font-weight: 750;
   line-height: 1.2;
-  color: var(--home-hero-ice);
+  color: var(--title-ink-dark);
   letter-spacing: 0;
   margin: 0;
 }
@@ -34,7 +34,7 @@
   background: linear-gradient(90deg, transparent, var(--home-hero-blue), transparent);
 }
 .content .motto {
-  color: var(--home-hero-ice);
+  color: var(--subtitle-ink-dark);
   font-size: 22px;
   font-weight: 700;
   font-style: normal;
@@ -89,7 +89,7 @@
 }
 body .content h1.title,
 body .content h1.title span {
-  color: var(--home-hero-ice) !important;
+  color: var(--title-ink-dark) !important;
   text-shadow: 0 0 24px var(--home-hero-glow);
 }
 .content { animation: arrive .8s ease-out both; }

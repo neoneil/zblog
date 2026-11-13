@@ -42,7 +42,7 @@ export function HandbookShell({module,children}:{module:string;children:ReactNod
           <Button size="sm" variant={language==='en'?'primary':'secondary'} aria-pressed={language==='en'} onClick={()=>changeLanguage('en')}>English</Button>
         </div>
       </div>
-      <header className="my-5"><h1 className="text-3xl font-semibold">{text(entry.zh,entry.en)}</h1><p className="mt-3 text-sm leading-6 text-[var(--text-soft)]">{text(entry.description.zh,entry.description.en)}</p></header>
+      <header className="my-5"><h1 className="text-3xl font-semibold">{text(entry.zh,entry.en)}</h1><p className="site-subtitle mt-3 text-sm leading-6">{text(entry.description.zh,entry.description.en)}</p></header>
       <nav aria-label={text('透特知识库','Thoth handbook')} className="mb-6 flex flex-wrap gap-2">
         {knowledgeEntries.map(item=><ButtonLink key={item.slug} size="sm" variant={module===item.slug?'primary':'secondary'} href={`/thoth/${item.slug}?lang=${language}`} aria-current={module===item.slug?'page':undefined}>{text(item.zh,item.en)}</ButtonLink>)}
       </nav>

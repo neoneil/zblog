@@ -57,7 +57,7 @@ export default function SynastryClient({ accessStatus }: { accessStatus: AiAcces
       <header className="mb-8 border-b border-[var(--border)] pb-6">
         <p className="mb-2 text-xs text-[var(--primary)]">SYNASTRY</p>
         <h1 className="text-3xl sm:text-4xl">{t({ zh: "双人合盘", en: "Synastry" })}</h1>
-        <p className="mt-3 max-w-3xl text-sm leading-7">{t({ zh: "比较两人的本命盘、跨盘相位与双向宫位叠加，探索关系中的互动模式。", en: "Compare natal charts, cross-chart aspects and mutual house overlays to explore patterns in a relationship." })}</p>
+        <p className="site-subtitle mt-3 max-w-3xl text-sm leading-7">{t({ zh: "比较两人的本命盘、跨盘相位与双向宫位叠加，探索关系中的互动模式。", en: "Compare natal charts, cross-chart aspects and mutual house overlays to explore patterns in a relationship." })}</p>
       </header>
       <form onSubmit={e => { e.preventDefault(); void request("calculate"); }}>
         <fieldset disabled={!!pending} className="min-w-0 disabled:opacity-60">

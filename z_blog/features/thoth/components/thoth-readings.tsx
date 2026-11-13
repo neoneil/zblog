@@ -72,7 +72,7 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
       <header className="py-8 sm:py-10">
         <p className="mb-3 text-sm font-medium text-[var(--primary)]">THOTH TAROT {spread && `· ${spread.positions.length} ${text('张牌','CARDS')}`}</p>
         <h1 className="text-3xl font-semibold">{spread?spread.name[language]:text('选择你的牌阵','Choose Your Spread')}</h1>
-        <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--text-soft)]">{spread?spread.description[language]:text('六种牌阵，从一张牌的静观到生命之树的完整探索。','Six spreads, from the contemplation of a single card to an exploration of the Tree of Life.')}</p>
+        <p className="site-subtitle mt-4 max-w-3xl text-sm leading-7">{spread?spread.description[language]:text('六种牌阵，从一张牌的静观到生命之树的完整探索。','Six spreads, from the contemplation of a single card to an exploration of the Tree of Life.')}</p>
       </header>
 
       {!spread ? <>
