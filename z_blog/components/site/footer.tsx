@@ -9,10 +9,10 @@ export default function Footer() {
       <Container>
         <div className="py-10 sm:py-12">
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-[var(--text)]">
+            <h2 className="text-2xl font-bold text-[var(--text)]">
               <LocalizedText copy={siteCopy.brand} />
             </h2>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--text-soft)]">
+            <p className="mt-3 max-w-xl text-base leading-7 text-[var(--subtitle-ink)]">
               <LocalizedText copy={siteCopy.footerDescription} />
             </p>
           </div>

@@ -8,7 +8,7 @@ const requireNext=createRequire(require.resolve("next/package.json"));
 const postcss=requireNext("postcss");
 const root=new URL("../",import.meta.url);
 const read=file=>readFileSync(new URL(file,root),"utf8");
-const sheet=postcss.parse(read("app/globals.css"));
+const sheet=postcss.parse(read("app/globals.css")+"\n"+read("app/typography-theme.css"));
 function palette(theme){
   const result={};
   sheet.walkRules(rule=>{
@@ -34,7 +34,10 @@ test("titles, subtitles and reading text use separate global semantic colors",()
       assert.ok(contrast(color(token),color("--card"))>=4.5,`${theme} card ${token}`);
     }
     assert.equal(color("--primary"),"#c49a2a");
-    assert.equal(color("--text-soft"),theme==="dark"?"#8870a0":"#70667f");
+    assert.equal(color("--text-soft"),theme==="dark"?"#ffffff":"#31414e");
+    if(theme==="dark"){
+      for(const token of ["--reading-ink","--subtitle-ink","--text-faint","--explore-muted","--stella-muted"])assert.equal(color(token),"#ffffff");
+    }
     assert.equal(color("--element-fire"),"#ff6b4a");
   }
 });

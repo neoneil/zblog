@@ -26,8 +26,8 @@ export const siteCopy = {
   heroPrimaryCta: { zh: "开始阅读", en: "Start reading" },
   heroSecondaryCta: { zh: "浏览分类", en: "Browse categories" },
   footerDescription: {
-    zh: "一个关于童年、学习、情绪与想象力的温柔空间。",
-    en: "A gentle space for childhood, learning, emotional wisdom, and imagination.",
+    zh: "身处混沌，始终自有中心。",
+    en: "Amidst Chaos, Always Centered.",
   },
   footerRights: { zh: "保留所有权利。", en: "All rights reserved." },
   footerBuiltBy: { zh: "制作：", en: "Built by " },

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { usePreferences } from "./preferences-provider";
 import { siteNavigation } from "./navigation-data";
 import styles from "./site-navigation.module.css";
+import glowStyles from "./navigation-link.module.css";
 
 export default function SiteNavigation({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?: () => void }) {
   const { t, language } = usePreferences();
@@ -36,7 +37,7 @@ export default function SiteNavigation({ mobile = false, onNavigate }: { mobile?
           }
         }}>
         {entry.children ? <>
-          <Button type="button" variant="ghost" className={styles.trigger} aria-expanded={open === entry.id} aria-controls={`${prefix}-${entry.id}`}
+          <Button type="button" variant="ghost" className={`${styles.trigger} ${glowStyles.link}`} aria-expanded={open === entry.id} aria-controls={`${prefix}-${entry.id}`}
             onClick={() => setOpen(open === entry.id ? null : entry.id)}
             onKeyDown={event => {
               if (event.key === "ArrowDown") {
@@ -56,10 +57,10 @@ export default function SiteNavigation({ mobile = false, onNavigate }: { mobile?
               const target = event.key === "Home" ? 0 : event.key === "End" ? links.length - 1 : (index + (event.key === "ArrowDown" ? 1 : -1) + links.length) % links.length;
               links[target]?.focus();
             }}>
-            {entry.children.map(child => <li key={child.href}><Link href={child.localizedQuery ? `${child.href}?lang=${language}` : child.href}
+            {entry.children.map(child => <li key={child.href}><Link className={glowStyles.link} href={child.localizedQuery ? `${child.href}?lang=${language}` : child.href}
               onClick={() => { setOpen(null); onNavigate?.(); }}>{t(child.label)}</Link></li>)}
           </ul>
-        </> : <Link className={styles.link} href={entry.href!} aria-current={pathname === entry.href ? "page" : undefined} onClick={() => { setOpen(null); onNavigate?.(); }}>{t(entry.label)}</Link>}
+        </> : <Link className={`${styles.link} ${glowStyles.link}`} href={entry.href!} aria-current={pathname === entry.href ? "page" : undefined} onClick={() => { setOpen(null); onNavigate?.(); }}>{t(entry.label)}</Link>}
       </li>)}
     </ul>
   </nav>;

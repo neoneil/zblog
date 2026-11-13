@@ -6,7 +6,7 @@
   padding: 0 0 24px;
   border-bottom: 1px solid var(--border);
   list-style: none;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   font-weight: 700;
   color: var(--heading);
@@ -20,7 +20,7 @@
 .title {
   margin: 0 0 14px;
   color: var(--heading);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   font-weight: 700;
   overflow-wrap: anywhere;
@@ -32,8 +32,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  color: var(--text-soft);
-  font-size: 14px;
+  color: var(--navigation-ink);
+  font-size: 16px;
   line-height: 1.7;
 }
 .children a, .directLinks a {
@@ -44,9 +44,8 @@
   transition: color 160ms ease;
 }
 .children a:hover, .directLinks a:hover {
-  color: var(--primary);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  color: var(--title-ink);
+  background: var(--navigation-hover);
 }
 .children a:focus-visible, .directLinks a:focus-visible {
   border-radius: 2px;
@@ -61,4 +60,7 @@
 }
 @media (min-width: 1280px) {
   .groups { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .children a, .directLinks a { transition: none; }
 }

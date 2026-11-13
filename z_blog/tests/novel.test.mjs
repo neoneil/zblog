@@ -19,8 +19,9 @@ test("public readers filter publication and admin writes require shared guard", 
 });
 test("chapter selection, bilingual reading, and safe plain text rendering", () => {
   const source = read("../features/tarot-novel/components/astrology-tarot-novel.tsx");
-  assert.match(source, /setSelected\(item.id\)/);
-  assert.match(source, /阅读本章节/);
+  const directory = read("../features/tarot-novel/components/novel-experience.tsx");
+  assert.match(directory, /setSelected\(item.number\)/);
+  assert.match(directory, /阅读本章节/);
   assert.match(source, /field\(current, "content"\)/);
   assert.doesNotMatch(source, /dangerouslySetInnerHTML|给小小探索者的线索|海王星：梦与想象/);
 });

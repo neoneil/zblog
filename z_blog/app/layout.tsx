@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./tables.css";
 import "./home-hero-theme.css";
+import "./navigation-theme.css";
+import "./typography-theme.css";
 import Navbar from "@/components/site/navbar";
 import Footer from "@/components/site/footer";
 import { Analytics } from "@vercel/analytics/next";

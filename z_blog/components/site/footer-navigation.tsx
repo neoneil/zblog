@@ -4,6 +4,7 @@ import Link from "next/link";
 import { siteNavigation } from "./navigation-data";
 import { usePreferences } from "./preferences-provider";
 import styles from "./footer-navigation.module.css";
+import glowStyles from "./navigation-link.module.css";
 
 export default function FooterNavigation() {
   const { language, t } = usePreferences();
@@ -13,7 +14,7 @@ export default function FooterNavigation() {
       <ul className={styles.directLinks}>
         {siteNavigation.filter((entry) => !entry.children).map((entry) => (
           <li key={entry.id}>
-            <Link href={entry.href!}>{t(entry.label)}</Link>
+            <Link className={glowStyles.link} href={entry.href!}>{t(entry.label)}</Link>
           </li>
         ))}
       </ul>
@@ -26,7 +27,7 @@ export default function FooterNavigation() {
             <ul className={styles.children}>
               {entry.children!.map((child) => (
                 <li key={child.href}>
-                  <Link href={child.localizedQuery ? `${child.href}?lang=${language}` : child.href}>
+                  <Link className={glowStyles.link} href={child.localizedQuery ? `${child.href}?lang=${language}` : child.href}>
                     {t(child.label)}
                   </Link>
                 </li>

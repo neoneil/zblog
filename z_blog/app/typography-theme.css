@@ -1,0 +1,25 @@
+/* Body copy shares one on-dark token; headings and semantic status colors stay separate. */
+:root {
+  --body-ink-on-dark: #ffffff;
+  --reading-ink-dark: var(--body-ink-on-dark);
+  --subtitle-ink-dark: var(--body-ink-on-dark);
+  --explore-text: var(--body-ink-on-dark);
+  --explore-muted: var(--body-ink-on-dark);
+  --stella-text: var(--body-ink-on-dark);
+  --stella-muted: var(--body-ink-on-dark);
+  --stella-faint: var(--body-ink-on-dark);
+  --stella-star-label: var(--body-ink-on-dark);
+  --hero-brand-muted: var(--body-ink-on-dark);
+  --home-hero-muted: var(--body-ink-on-dark);
+}
+html[data-theme="dark"] {
+  --text-soft: var(--body-ink-on-dark);
+  --text-faint: var(--body-ink-on-dark);
+}
+html[data-theme="light"] {
+  --explore-text: var(--reading-ink-light);
+  --explore-muted: var(--reading-ink-light);
+  --subtitle-ink: var(--reading-ink-light);
+  --text-soft: var(--reading-ink-light);
+  --text-faint: var(--reading-ink-light);
+}

@@ -1,0 +1,6 @@
+:root {
+  --navigation-ink: var(--reading-ink);
+  --navigation-glow: rgba(103, 190, 255, .32);
+  --navigation-hover: rgba(103, 190, 255, .09);
+  --navigation-shine: rgba(158, 220, 255, .23);
+}

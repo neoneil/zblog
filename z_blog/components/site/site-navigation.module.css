@@ -9,14 +9,14 @@
   height: auto;
   border-radius: 4px;
   padding: 10px 9px;
-  color: var(--text-soft);
-  font-size: 12px;
+  color: var(--navigation-ink);
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
   background: transparent;
   white-space: nowrap;
 }
-.link:hover, .link[aria-current="page"], .item .trigger:hover, .item .trigger[aria-expanded="true"] { color: var(--text); background: var(--card-muted); }
+.link:hover, .link[aria-current="page"], .item .trigger:hover, .item .trigger[aria-expanded="true"] { color: var(--title-ink); background: var(--navigation-hover); }
 .link:focus-visible, .item .trigger:focus-visible, .panel a:focus-visible { outline: 2px solid var(--element-air); outline-offset: 2px; }
 .trigger svg { flex-shrink: 0; transition: transform .2s ease; }
 .chevronOpen { transform: rotate(180deg); }
@@ -36,14 +36,14 @@
   box-shadow: var(--shadow-lg);
 }
 .item:nth-last-child(-n+3) .panel { left: auto; right: 0; }
-.panel a { display: block; padding: 12px; border-radius: 4px; font-size: 14px; line-height: 1.5; color: var(--text); overflow-wrap: anywhere; }
-.panel a:hover { background: var(--card-muted); }
+.panel a { display: block; padding: 12px; border-radius: 4px; font-size: 16px; line-height: 1.5; color: var(--navigation-ink); overflow-wrap: anywhere; }
+.panel a:hover { color: var(--title-ink); background: var(--navigation-hover); }
 .mobile .items { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
-.mobile .link, .mobile .item .trigger { width: 100%; justify-content: space-between; font-size: 14px; padding: 12px; }
+.mobile .link, .mobile .item .trigger { width: 100%; justify-content: space-between; font-size: 16px; padding: 12px; }
 .mobile .panel { position: static; width: 100%; max-width: none; max-height: none; border: 0; border-left: 1px solid var(--border-strong); border-radius: 0; background: transparent; box-shadow: none; margin: 4px 0 8px; }
 .desktop { padding: 0; }
 .desktop .items { justify-content: space-evenly; flex-wrap: nowrap; gap: 4px; }
-.desktop .link, .desktop .item .trigger { font-size: 14px; padding: 8px 5px; min-height: 42px; gap: 4px; white-space: normal; text-align: center; line-height: 1.35; max-width: 122px; }
+.desktop .link, .desktop .item .trigger { font-size: 15px; padding: 8px 5px; min-height: 42px; gap: 4px; white-space: normal; text-align: center; line-height: 1.35; max-width: 122px; }
 :global(html[lang="en"]) .desktop .item[data-nav-group="archive"] { flex: 0 0 144px; }
 :global(html[lang="en"]) .desktop .item[data-nav-group="archive"] .trigger { max-width: none; }
 @media (prefers-reduced-motion: reduce) { .trigger svg { transition: none; } }

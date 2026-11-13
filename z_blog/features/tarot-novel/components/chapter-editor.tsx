@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import type { NovelChapter } from "../lib/chapters";
 import type { NovelComment } from "../lib/comments";
 import AdminChapterComments from "./admin-chapter-comments";
+import { novelTitle } from "../lib/novel-world";
 
 export default function ChapterEditor({ chapter, comments = [] }: { chapter?: NovelChapter; comments?: NovelComment[] }) {
   const [message, setMessage] = useState("");
@@ -25,7 +26,7 @@ export default function ChapterEditor({ chapter, comments = [] }: { chapter?: No
     <label>链接标识（如 chapter-1，发布后建议保持不变）<Input name="slug" pattern="[a-z0-9]+(-[a-z0-9]+)*" maxLength={120} defaultValue={chapter?.slug ?? ""} required /></label>
     <div className="grid gap-5 sm:grid-cols-2">
       {(["zh", "en"] as const).map((lang) => <div key={lang} className="grid gap-5">
-        <label>{lang === "zh" ? "中文主标题" : "英文主标题"}<Input name={`title_${lang}`} maxLength={300} defaultValue={chapter?.[`title_${lang}`] ?? (lang === "zh" ? "让我们再死一次" : "LET US DIE ONCE MORE")} required /></label>
+        <label>{lang === "zh" ? "中文主标题" : "英文主标题"}<Input name={`title_${lang}`} maxLength={300} defaultValue={chapter?.[`title_${lang}`] ?? novelTitle[lang]} required /></label>
         <label>{lang === "zh" ? "中文副标题 / 章节名称" : "英文副标题 / Chapter title"}<Input name={`subtitle_${lang}`} maxLength={300} defaultValue={chapter?.[`subtitle_${lang}`] ?? ""} required /></label>
         <label>{lang === "zh" ? "中文正文" : "英文正文"}<Textarea name={`content_${lang}`} rows={18} maxLength={200000} defaultValue={chapter?.[`content_${lang}`] ?? ""} /></label>
       </div>)}

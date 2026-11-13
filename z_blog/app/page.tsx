@@ -48,8 +48,8 @@ export default async function HomePage() {
           <CategoriesSection homeLayout />
 
           <ServicesList embedded />
-          <StellarHousesEntry />
-          <div className="grid items-stretch gap-6 lg:grid-cols-2">
+          <div className="grid items-stretch gap-6 lg:grid-cols-3">
+            <StellarHousesEntry />
             <ContactEntry />
             <section
               id="home-newsletter"

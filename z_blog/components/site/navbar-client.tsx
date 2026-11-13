@@ -15,6 +15,7 @@ import styles from "./navbar-client.module.css";
 import glassStyles from "@/components/ui/glass-action.module.css";
 import SiteNavigation from "./site-navigation";
 import { CartLink } from "@/features/services/components/shop-shared";
+import glowStyles from "./navigation-link.module.css";
 
 type NavbarClientProps = {
   user: {
@@ -45,7 +46,7 @@ export default function NavbarClient({ user, canManagePosts }: NavbarClientProps
 
   const name = user?.user_metadata?.full_name || user?.user_metadata?.name || t({ zh: "用户", en: "User" });
   const avatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || "/default-avatar.png";
-  const utilityClass = "inline-flex min-h-11 items-center justify-center rounded-md px-3 py-2 text-sm font-medium text-[var(--text-soft)] transition hover:bg-[var(--card-muted)] hover:text-[var(--text)]";
+  const utilityClass = `${glowStyles.link} inline-flex min-h-11 items-center justify-center rounded-md px-3 py-2 text-base font-medium`;
   const membershipClass = `${glassStyles.action} inline-flex min-h-11 items-center justify-center px-4 py-2 text-sm font-semibold`;
 
   function accountControls(mobile = false) {

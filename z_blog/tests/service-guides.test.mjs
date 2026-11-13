@@ -52,7 +52,13 @@ test("Word-defined guides and embedded images apply to exactly four online produ
   }
   for (const product of products.filter((p) => p.category === "physical")) {
     assert.equal(serviceGuides[product.id], undefined);
-    assert.equal(product.image, `/products/${product.id}.png`);
+    const physicalImages = {
+      "celestial-jewelry": "/products/star.png",
+      "mystic-fragrances": "/products/letter.png",
+      "arcane-creations": "/products/apple.png",
+    };
+    assert.equal(product.image, physicalImages[product.id]);
+    assert.ok(existsSync(new URL("public" + product.image, root)));
   }
   assert.deepEqual(
     products.slice(0, 4).map((p) => p.priceCents),

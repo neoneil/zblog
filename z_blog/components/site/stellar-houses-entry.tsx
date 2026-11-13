@@ -9,15 +9,15 @@ import styles from "@/features/thoth/components/knowledge-entries.module.css";
 export default function StellarHousesEntry() {
   const { t } = usePreferences();
   return (
-    <section id="home-stellar-houses" className="grid gap-6 py-8 sm:py-10 lg:grid-cols-2">
-      <Link href="/community" className="group block">
+    <section id="home-stellar-houses" className="flex w-full min-w-0 flex-col py-8 sm:py-10">
+      <Link href="/community" className="group block w-full flex-1">
       <Card className={`${styles.card} group-hover:border-[var(--primary)] group-hover:shadow-[0_0_20px_var(--button-glow)]`}>
         <div className={styles.media}>
           <Image
-            src="/knowledge/stellar-houses.png"
-            alt={t({ en: "Twelve zodiac guardians surrounding a celestial castle", zh: "十二星座守护者环绕星辰城堡" })}
+            src="/knowledge/starplate.png"
+            alt={t({ en: "A celestial chart of planets and glowing orbital paths", zh: "行星与发光轨道交织的星辰图" })}
             fill
-            sizes="(max-width: 1023px) 100vw, 640px"
+            sizes="(max-width: 1023px) 100vw, 33vw"
             className={styles.image}
           />
         </div>
