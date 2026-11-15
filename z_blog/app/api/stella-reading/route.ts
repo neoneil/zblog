@@ -8,8 +8,8 @@ export async function POST() {
       code: "consultation_required",
       consultationUrl: STELLA_CONSULTATION_HREF,
       message: {
-        zh: "请前往星盘咨询页面获取专业解读。",
-        en: "Please visit the chart consultation page for a professional reading.",
+        zh: "请前往星盘在线语音咨询页面获取专业解读。",
+        en: "Please visit the LIVE CHART CONSULTATION page for a professional reading.",
       },
     },
     { status: 410, headers: { "Cache-Control": "no-store" } },

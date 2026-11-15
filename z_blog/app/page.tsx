@@ -15,6 +15,7 @@ import Container from "@/components/site/container";
 import CategoriesSection from "@/components/site/categories-section";
 import HomeHeroContent from "@/components/site/home-hero-content";
 import StellarHousesEntry from "@/components/site/stellar-houses-entry";
+import EventAnnouncement from "@/features/services/components/event-announcement";
 
 export default async function HomePage() {
   return (
@@ -59,6 +60,7 @@ export default async function HomePage() {
             </section>
           </div>
           <AboutSection embedded />
+          <EventAnnouncement />
         </Container>
       </div>
     </main>

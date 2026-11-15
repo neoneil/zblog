@@ -38,9 +38,9 @@ const ids = [
 ];
 
 test("Word-defined guides and embedded images apply to exactly four online products", () => {
-  assert.deepEqual(Object.keys(serviceGuides).sort(), ids.slice().sort());
+  assert.deepEqual(Object.keys(serviceGuides).sort(), [...ids, "personal-tarot-email", "mystic-salons", "stellar-soul-sigil"].sort());
   assert.deepEqual(Object.keys(serviceGuideImages).sort(), ids.slice().sort());
-  assert.equal(products.length, 7);
+  assert.equal(products.length, 10);
   for (const id of ids) {
     const product = products.find((p) => p.id === id);
     assert.equal(product.image, serviceGuideImages[id]);

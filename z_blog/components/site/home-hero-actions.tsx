@@ -10,8 +10,8 @@ const actions = [
   { en: "STELLAR BIRTH CHART", zh: "星辰命盘", href: "/stella" },
   { en: "RIDER–WAITE READING", zh: "韦特占卜", href: "/tarot-ai" },
   { en: "MEMBERSHIP", zh: "成为会员", href: "/pricing" },
-  { en: "CHART CONSULTATION", zh: "星盘咨询", href: "/services/natal-chart-interpretation-masterclass" },
-  { en: "TAROT CONSULTATION", zh: "塔罗咨询", href: "/services/tarot-reading" },
+  { en: "LIVE CHART CONSULTATION", zh: "星盘在线语音咨询", href: "/services/natal-chart-interpretation-masterclass" },
+  { en: "LIVE TAROT CONSULTATION", zh: "塔罗在线语音咨询", href: "/services/tarot-reading" },
 ];
 
 export default function HomeHeroActions() {

@@ -1,4 +1,4 @@
-import { getProduct } from "./catalog";
+import { getProduct, isProductPurchasable } from "./catalog";
 
 export type CartLine = { productId: string; quantity: number };
 export const CART_KEY = "cosmic-childhood-cart-v1";
@@ -10,7 +10,7 @@ export function normaliseCart(value: unknown): CartLine[] {
     if (
       !line ||
       typeof line !== "object" ||
-      !getProduct(line.productId) ||
+      !isProductPurchasable(getProduct(line.productId)) ||
       !Number.isInteger(line.quantity) ||
       line.quantity < 1 ||
       line.quantity > MAX_QUANTITY
@@ -35,7 +35,7 @@ export function changeQuantity(
   quantity: number,
 ) {
   if (
-    !getProduct(productId) ||
+    !isProductPurchasable(getProduct(productId)) ||
     !Number.isInteger(quantity) ||
     quantity < 0 ||
     quantity > MAX_QUANTITY

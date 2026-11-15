@@ -1,4 +1,6 @@
 import type { LocalizedCopy as Copy } from "@/components/site/preferences-provider";
+import { emailReadingGuide } from "./email-reading-guide";
+import { lecturesGuide, soulSigilGuide } from "./special-product-guides";
 
 type InlinePart = string | { label: string; href?: string };
 export type ServiceParagraph = Copy | { en: InlinePart[]; zh: InlinePart[] };
@@ -9,6 +11,7 @@ export type ServiceSection = {
   paragraphs?: ServiceParagraph[];
   lists?: { title: Copy; items: Copy[] }[];
   highlights?: { label: Copy; text: Copy }[];
+  table?: { columns: Copy[]; rows: Copy[][] };
   note?: Copy;
   cta?: Copy;
 };
@@ -48,6 +51,9 @@ const memberAccess = [
 ];
 
 export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
+  "mystic-salons": lecturesGuide,
+  "stellar-soul-sigil": soulSigilGuide,
+  "personal-tarot-email": emailReadingGuide,
   "transits-course": {
     tagline: c(
       "学习星辰的语言，探索内在的智慧。",
@@ -286,8 +292,8 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
                 "Develop card analysis, logical synthesis and communication through case practice.",
               ),
               c(
-                "学习塔罗咨询中的提问方式、沟通技巧、隐私保护与伦理边界。",
-                "Study question framing, communication, privacy and ethical boundaries in tarot consultations.",
+                "学习塔罗在线语音咨询中的提问方式、沟通技巧、隐私保护与伦理边界。",
+                "Study question framing, communication, privacy and ethical boundaries in LIVE TAROT CONSULTATIONs.",
               ),
               c(
                 "根据个人学习进度获得针对性的练习建议。",
@@ -300,8 +306,8 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
           {
             label: audience,
             text: c(
-              "希望深入研究塔罗、提高独立解牌能力，或有志于进一步学习塔罗咨询方法的学习者。",
-              "Learners who want to explore tarot in depth, improve independent reading, or continue studying tarot consultation methods.",
+              "希望深入研究塔罗、提高独立解牌能力，或有志于进一步学习塔罗在线语音咨询方法的学习者。",
+              "Learners who want to explore tarot in depth, improve independent reading, or continue studying LIVE TAROT CONSULTATION methods.",
             ),
           },
           {
@@ -497,8 +503,8 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
       {
         id: "monthly-membership",
         title: c(
-          "月度会员 · 15分钟在线占星咨询或塔罗咨询",
-          "Monthly Membership · A 15-Minute Online Astrology or Tarot Consultation",
+          "月度会员 · 15分钟在线占星咨询或塔罗在线语音咨询",
+          "Monthly Membership · A 15-Minute Online Astrology or LIVE TAROT CONSULTATION",
         ),
         tagline: c(
           "每个月，为自己留出一段探索星辰的时间。",
@@ -509,7 +515,7 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
             zh: [
               "成为 STELLARNESTS 月度付费会员，即可在当月会员有效期内，享受一次",
               {
-                label: "15分钟的一对一在线占星咨询或塔罗咨询服务",
+                label: "15分钟的一对一在线占星咨询或塔罗在线语音咨询服务",
                 href: "/classroom",
               },
               "。",
@@ -518,7 +524,7 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
               "Become a STELLARNESTS monthly paid member to receive one ",
               {
                 label:
-                  "15-minute one-to-one online astrology or tarot consultation",
+                  "15-minute one-to-one online astrology or LIVE TAROT CONSULTATION",
                 href: "/classroom",
               },
               " during your active membership month.",
@@ -534,8 +540,8 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
             title: monthlyBenefits,
             items: [
               c(
-                "当月享有一次15分钟的一对一在线占星或塔罗咨询。",
-                "One 15-minute one-to-one online astrology or tarot consultation during the membership month.",
+                "当月享有一次15分钟的一对一在线占星或塔罗在线语音咨询。",
+                "One 15-minute one-to-one online astrology or LIVE TAROT CONSULTATION during the membership month.",
               ),
               c(
                 "可围绕一个具体问题或主题进行交流。",
@@ -634,16 +640,16 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
         "At STELLARNESTS, we bring the symbolic systems of Rider–Waite and Thoth Tarot into one-to-one online consultations, helping you organise your thoughts around complex questions, understand inner needs and explore the possibilities of different choices.",
       ),
       c(
-        "无论你希望通过简短的塔罗咨询探索一个具体问题，还是希望获得更深入的牌阵解析，我们都为你提供灵活的咨询方式。",
-        "Whether you want a brief tarot consultation about a specific question or a deeper spread interpretation, we offer flexible consultation options.",
+        "无论你希望通过简短的塔罗在线语音咨询探索一个具体问题，还是希望获得更深入的牌阵解析，我们都为你提供灵活的咨询方式。",
+        "Whether you want a brief LIVE TAROT CONSULTATION about a specific question or a deeper spread interpretation, we offer flexible consultation options.",
       ),
     ],
     sections: [
       {
         id: "individual-consultation",
         title: c(
-          "单次塔罗咨询 · 60分钟一对一在线服务",
-          "Standalone Tarot Consultation · 60-Minute One-to-One Online Session",
+          "单次塔罗在线语音咨询 · 60分钟一对一在线服务",
+          "Standalone LIVE TAROT CONSULTATION · 60-Minute One-to-One Online Session",
         ),
         tagline: c(
           "更深入的解读，更清晰的视角。",
@@ -679,8 +685,8 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
             title: purchaseBenefits,
             items: [
               c(
-                "一次完整的60分钟一对一在线塔罗咨询。",
-                "One complete 60-minute one-to-one online tarot consultation.",
+                "一次完整的60分钟一对一在线塔罗在线语音咨询。",
+                "One complete 60-minute one-to-one online LIVE TAROT CONSULTATION.",
               ),
               c(
                 "根据预约时提交的咨询主题进行针对性的牌阵选择与解读。",
@@ -705,7 +711,7 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
       {
         id: "monthly-membership",
         title: c(
-          "月度会员 · 15分钟在线塔罗咨询或占星咨询服务",
+          "月度会员 · 15分钟在线塔罗在线语音咨询或占星咨询服务",
           "Monthly Membership · A 15-Minute Online Tarot or Astrology Consultation",
         ),
         tagline: c(
@@ -714,7 +720,7 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
         ),
         paragraphs: [
           c(
-            "成为 STELLARNESTS 月度付费会员，即可在当月会员有效期内，享受一次15分钟的一对一在线塔罗咨询或占星咨询服务。",
+            "成为 STELLARNESTS 月度付费会员，即可在当月会员有效期内，享受一次15分钟的一对一在线塔罗在线语音咨询或占星咨询服务。",
             "Become a STELLARNESTS monthly paid member to receive one 15-minute one-to-one online tarot or astrology consultation during your active membership month.",
           ),
           c(
@@ -727,7 +733,7 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
             title: monthlyBenefits,
             items: [
               c(
-                "当月享有一次15分钟的一对一在线塔罗咨询或占星咨询。",
+                "当月享有一次15分钟的一对一在线塔罗在线语音咨询或占星咨询。",
                 "One 15-minute one-to-one online tarot or astrology consultation during the membership month.",
               ),
               c(
@@ -743,7 +749,7 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
       },
       {
         id: "why-consult",
-        title: c("为什么选择塔罗咨询？", "Why Choose a Tarot Consultation?"),
+        title: c("为什么选择塔罗在线语音咨询？", "Why Choose a LIVE TAROT CONSULTATION?"),
         highlights: [
           {
             label: c("01 · 探索内在自我", "01 · Self-Discovery"),
@@ -800,8 +806,8 @@ export const serviceGuides: Partial<Record<string, ServiceGuide>> = {
         ),
       ],
       disclaimer: c(
-        "塔罗咨询属于文化性、象征性与自我探索服务，不保证对未来事件的准确预测，也不构成医疗、心理、法律、投资或其他专业建议。",
-        "Tarot consultations are cultural, symbolic and self-exploratory services. They do not guarantee accurate predictions of future events or constitute medical, psychological, legal, investment or other professional advice.",
+        "塔罗在线语音咨询属于文化性、象征性与自我探索服务，不保证对未来事件的准确预测，也不构成医疗、心理、法律、投资或其他专业建议。",
+        "LIVE TAROT CONSULTATIONs are cultural, symbolic and self-exploratory services. They do not guarantee accurate predictions of future events or constitute medical, psychological, legal, investment or other professional advice.",
       ),
     },
   },

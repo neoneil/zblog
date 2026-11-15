@@ -90,10 +90,42 @@
   .onlineGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .physicalGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+@media (min-width: 640px) {
+  .onlineGrid > [data-product-id="personal-tarot-email"] { grid-column: 1 / -1; }
+  .onlineGrid > [data-product-id="personal-tarot-email"] .productLink { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+  .onlineGrid > [data-product-id="personal-tarot-email"] .cardImage { aspect-ratio: 696 / 479; }
+  .onlineGrid > [data-product-id="personal-tarot-email"] .cardImage img { object-fit: contain; }
+}
 .productCard {
   overflow: hidden;
   border-radius: 8px;
   height: 100%;
+}
+.shopEntry { display: block; max-width: 720px; margin-inline: auto; border-radius: var(--radius-md); }
+.shopEntry:hover .productCard { border-color: var(--title-ink); box-shadow: 0 0 24px var(--navigation-glow); }
+.entryImage { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+.entryImage img { object-fit: cover; }
+.entryCopy { display: grid; gap: 16px; padding: 24px; }
+.entryCopy h3 { font-size: 24px; font-weight: 700; }
+.entryCopy p { color: var(--subtitle-ink); font-size: 18px; line-height: 1.8; }
+.entryCopy > span { display: inline-flex; align-items: center; gap: 10px; color: var(--title-ink); font-size: 16px; font-weight: 700; }
+.shopEntry:focus-visible { outline: 2px solid var(--title-ink); outline-offset: 5px; }
+.viewToggle { display: inline-flex; flex: none; gap: 2px; border: 1px solid var(--border); padding: 3px; border-radius: var(--radius-md); }
+.viewToggle button { color: var(--text); }
+.viewToggle button[aria-pressed="true"] { color: var(--title-ink); background: var(--navigation-hover); box-shadow: inset 0 -2px 0 var(--title-ink); }
+.productList { display: grid; gap: 16px; }
+.listCard .productLink { display: grid; grid-template-columns: 96px minmax(0,1fr); align-items: start; }
+.listCard .cardImage, .listCard .cardImage.onlineImage.documentImage { aspect-ratio: 1; width: 100%; }
+.listCard .cardImage img { object-fit: contain; }
+.listCard .cardContent { min-width: 0; padding: 14px; }
+.listCard .cardContent h2 { font-size: 18px; margin-bottom: 8px; }
+.listCard .cardContent .cardDescription { font-size: 14px; line-height: 1.7; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.listCard .cardContent p { margin-top: 4px; }
+@media (min-width: 640px) {
+  .listCard .productLink { grid-template-columns: 180px minmax(0,1fr); }
+  .listCard .cardContent { padding: 20px 24px; }
+  .listCard .cardContent h2 { font-size: 20px; }
+  .listCard .cardContent .cardDescription { font-size: 16px; }
 }
 .productLink {
   display: flex;
@@ -144,9 +176,14 @@
 .mainImage img {
   object-fit: contain;
 }
+.mainImage.emailMainImage { aspect-ratio: 696 / 479; }
 .productInfo {
   min-width: 0;
 }
+.availabilityNote { border-left: 2px solid var(--title-ink); padding-left: 14px; font-size: 14px; }
+.productGallery { margin: 32px 0; }
+.productGallery > img { display: block; width: 100%; height: auto; }
+.productGallery figcaption { text-align: center; margin-top: 14px; color: var(--text-soft); font-size: 14px; }
 .productInfo h1 {
   font-size: 28px;
 }

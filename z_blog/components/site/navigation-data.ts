@@ -1,4 +1,3 @@
-import { products, productHref } from "@/features/services/lib/catalog";
 import type { LocalizedCopy } from "./preferences-provider";
 
 export type NavigationLink = { label: LocalizedCopy; href: string; localizedQuery?: boolean };
@@ -39,7 +38,7 @@ export const siteNavigation: NavigationEntry[] = [
       { label: { en: "LEARNING VIDEOS", zh: "星学影苑" }, href: "/parentinglab/healingdaily/videos?category=general" },
     ],
   },
-  { id: "shop", label: { en: "SHOP", zh: "奥秘商店" }, children: products.map(product => ({ label: product.title, href: productHref(product) })) },
+  { id: "shop", label: { en: "SHOP", zh: "奥秘商店" }, href: "/services" },
   { id: "community", label: { en: "COMMUNITY", zh: "社群" }, href: "/community" },
   { id: "contact", label: { en: "CONTACT US", zh: "联系我们" }, children: [
     { label: { en: "ONLINE CLASS", zh: "在线课堂" }, href: "/classroom" },

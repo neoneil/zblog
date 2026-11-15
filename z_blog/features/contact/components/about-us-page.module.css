@@ -1,0 +1,231 @@
+.page {
+  background: var(--bg);
+  color: var(--reading-ink);
+  padding: 24px 0 64px;
+  overflow: clip;
+}
+.hero {
+  position: relative;
+  isolation: isolate;
+  height: 300px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--novel-hero-scrim), transparent 65%);
+  pointer-events: none;
+}
+.heroCopy {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  --archive-heading: var(--title-ink-dark);
+  --reading-ink: var(--text-white);
+  animation: founderIntro 0.8s ease-out both;
+}
+.heroCopy p {
+  color: var(--text-white);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.page .heroCopy h1 {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  max-width: 1050px;
+  overflow-wrap: anywhere;
+}
+.manifesto {
+  max-width: 920px;
+  margin-inline: auto;
+  padding: 40px 0;
+  text-align: center;
+}
+.manifesto h2 {
+  font-size: 22px;
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+.manifesto p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--reading-ink);
+}
+.manifesto .promise {
+  color: var(--title-ink);
+  font-size: 20px;
+  line-height: 1.7;
+  max-width: 860px;
+  margin: 0 auto 28px;
+}
+.manifesto .brand {
+  font-weight: 700;
+  color: var(--title-ink);
+}
+.manifesto .motto {
+  font-size: 14px;
+  margin: 6px 0 16px;
+}
+.story {
+  max-width: 920px;
+  margin-inline: auto;
+}
+.section {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 112px;
+}
+.section header {
+  margin-bottom: 24px;
+}
+.index {
+  display: block;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.section h2 {
+  font-size: 24px;
+  line-height: 1.5;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.section h3 {
+  font-size: 21px;
+  line-height: 1.5;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.section p {
+  color: var(--reading-ink);
+  font-size: 17px;
+  line-height: 2;
+  overflow-wrap: anywhere;
+}
+.prose {
+  display: grid;
+  gap: 18px;
+}
+.experiences {
+  margin-top: 36px;
+}
+.experiences ul {
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+.experiences li {
+  border-top: 1px solid var(--border);
+}
+.experiences li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+.experiences a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-size: 16px;
+  line-height: 1.9;
+  padding: 16px 12px;
+}
+.experiences a svg {
+  flex-shrink: 0;
+}
+.experiences a:focus-visible {
+  outline: 2px solid var(--title-ink);
+  outline-offset: 3px;
+}
+.letter .salutation {
+  margin-bottom: 22px;
+  font-weight: 700;
+  color: var(--title-ink);
+}
+.signature {
+  padding-top: 24px;
+  margin-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.signature p:last-child {
+  color: var(--title-ink);
+  font-weight: 700;
+}
+.page[data-motion="true"] [data-about-section] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s ease;
+}
+.page[data-motion="true"] [data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+@keyframes founderIntro {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width: 640px) {
+  .hero {
+    height: 440px;
+  }
+  .heroCopy {
+    padding: 28px;
+  }
+  .page .heroCopy h1 {
+    font-size: 36px;
+  }
+  .manifesto {
+    padding: 48px 0;
+  }
+}
+@media (min-width: 1024px) {
+  .hero {
+    height: min(620px, calc(100svh - 200px));
+    min-height: 400px;
+  }
+  .heroCopy {
+    padding: 36px;
+  }
+  .page .heroCopy h1 {
+    font-size: 44px;
+  }
+  .manifesto h2 {
+    font-size: 26px;
+  }
+  .manifesto .promise {
+    font-size: 24px;
+  }
+  .section {
+    padding-block: 52px;
+  }
+  .section h2 {
+    font-size: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy,
+  .page[data-motion="true"] [data-about-section] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

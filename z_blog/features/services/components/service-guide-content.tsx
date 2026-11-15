@@ -90,6 +90,30 @@ export default function ServiceGuideContent({
               ))}
             </dl>
           )}
+          {section.table && (
+            <div className={styles.tableWrap}>
+              <table>
+                <thead>
+                  <tr>
+                    {section.table.columns.map((column) => (
+                      <th key={column.en} scope="col">
+                        {t(column)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {section.table.rows.map((row, index) => (
+                    <tr key={index}>
+                      {row.map((cell, cellIndex) => (
+                        <td key={cellIndex}>{t(cell)}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
           {section.note && <p className={styles.note}>{t(section.note)}</p>}
           {section.cta && (
             <div className={styles.actions}>

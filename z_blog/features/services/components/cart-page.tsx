@@ -8,10 +8,17 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { formatPrice, getProduct, productHref } from "../lib/catalog";
 import { useCart } from "./use-cart";
 import { QuantityControl, ShopShell, styles } from "./shop-shared";
+import { EMAIL_READING_PRODUCT_ID } from "../lib/email-reading-order";
+import {
+  useEmailReadingDraft,
+  setEmailReadingDraft,
+} from "./use-email-reading-draft";
+import emailStyles from "./email-reading.module.css";
 
 export default function CartPage() {
   const { t, language } = usePreferences(),
     { cart, subtotalCents, setQuantity } = useCart();
+  const emailDraft = useEmailReadingDraft();
   return (
     <ShopShell>
       <header className={styles.cartHeader}>
@@ -72,13 +79,64 @@ export default function CartPage() {
                           </Link>
                           <Button
                             variant="ghost"
-                            onClick={() => setQuantity(product.id, 0)}
+                            onClick={() => {
+                              setQuantity(product.id, 0);
+                              if (product.id === EMAIL_READING_PRODUCT_ID)
+                                setEmailReadingDraft(null);
+                            }}
                             aria-label={`${t({ en: "Remove", zh: "移除" })}: ${t(product.title)}`}
                             title={t({ en: "Remove item", zh: "移除商品" })}
                           >
                             <Trash2 size={14} aria-hidden />
                             {t({ en: "Remove", zh: "移除" })}
                           </Button>
+                          {product.id === EMAIL_READING_PRODUCT_ID && (
+                            <>
+                              {emailDraft &&
+                              emailDraft.questions.length === line.quantity ? (
+                                <details className={emailStyles.review}>
+                                  <summary>
+                                    {t({
+                                      zh: "查看咨询资料",
+                                      en: "Review consultation details",
+                                    })}
+                                  </summary>
+                                  <p>
+                                    {emailDraft.name} · {emailDraft.email}
+                                  </p>
+                                  {emailDraft.birthDate && (
+                                    <p>{emailDraft.birthDate}</p>
+                                  )}
+                                  <ol>
+                                    {emailDraft.questions.map(
+                                      (question, index) => (
+                                        <li key={index}>{question}</li>
+                                      ),
+                                    )}
+                                  </ol>
+                                  {emailDraft.background && (
+                                    <p>{emailDraft.background}</p>
+                                  )}
+                                </details>
+                              ) : (
+                                <p>
+                                  {t({
+                                    zh: "咨询资料尚未填写或已随页面刷新清空。",
+                                    en: "Consultation details are missing or were cleared on page refresh.",
+                                  })}
+                                </p>
+                              )}
+                              <Link
+                                className={emailStyles.reviewLink}
+                                href={`${productHref(product)}#email-reading-order`}
+                              >
+                                {t({
+                                  zh: "填写或编辑问题",
+                                  en: "Enter or edit questions",
+                                })}
+                              </Link>
+                            </>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -86,11 +144,20 @@ export default function CartPage() {
                       {formatPrice(product.priceCents, language)}
                     </td>
                     <td data-label={t({ en: "Quantity", zh: "数量" })}>
-                      <QuantityControl
-                        value={line.quantity}
-                        onChange={(value) => setQuantity(product.id, value)}
-                        label={`${t({ en: "Quantity", zh: "数量" })}: ${t(product.title)}`}
-                      />
+                      {product.id === EMAIL_READING_PRODUCT_ID ? (
+                        <span>
+                          {t({
+                            zh: `${line.quantity} 个独立问题`,
+                            en: `${line.quantity} independent question${line.quantity === 1 ? "" : "s"}`,
+                          })}
+                        </span>
+                      ) : (
+                        <QuantityControl
+                          value={line.quantity}
+                          onChange={(value) => setQuantity(product.id, value)}
+                          label={`${t({ en: "Quantity", zh: "数量" })}: ${t(product.title)}`}
+                        />
+                      )}
                     </td>
                     <td data-label={t({ en: "Total", zh: "合计" })}>
                       {formatPrice(

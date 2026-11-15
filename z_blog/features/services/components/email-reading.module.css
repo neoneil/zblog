@@ -1,0 +1,79 @@
+.form {
+  display: grid;
+  gap: 18px;
+  padding-block: 20px;
+  scroll-margin-top: 112px;
+}
+.form label {
+  display: grid;
+  gap: 8px;
+  color: var(--reading-ink);
+  font-size: 15px;
+}
+.form input,
+.form textarea {
+  margin-top: 8px;
+  background: var(--card);
+  color: var(--reading-ink);
+  border-color: var(--border);
+}
+.fields {
+  display: grid;
+  gap: 16px;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.total strong {
+  font-size: 22px;
+  color: var(--title-ink);
+}
+.form .delivery {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.form .notice {
+  font-size: 13px;
+  line-height: 1.7;
+  border-left: 2px solid var(--title-ink);
+  padding-left: 12px;
+}
+.form > button {
+  gap: 10px;
+}
+.review {
+  margin-top: 12px;
+  max-width: 500px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.review summary {
+  cursor: pointer;
+  color: var(--title-ink);
+  font-weight: 700;
+}
+.review p,
+.review li {
+  font-size: 14px;
+}
+.review ol {
+  list-style: decimal;
+  padding-left: 20px;
+}
+.reviewLink {
+  display: inline-block;
+  color: var(--title-ink);
+  margin-top: 10px;
+}
+@media (min-width: 640px) {
+  .fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

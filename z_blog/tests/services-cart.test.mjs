@@ -27,11 +27,11 @@ const catalog = load("../features/services/lib/catalog.ts", {
 });
 const cart = load("../features/services/lib/cart.ts", { "./catalog": catalog });
 
-test("seven bilingual products have distinct local images, minor-unit AUD prices and valid routes", () => {
-  assert.equal(catalog.products.length, 7);
-  assert.equal(new Set(catalog.products.map((p) => p.id)).size, 7);
-  assert.equal(new Set(catalog.products.map((p) => p.slug)).size, 7);
-  assert.equal(new Set(catalog.products.map((p) => p.image)).size, 7);
+test("ten bilingual products have distinct local images, minor-unit AUD prices and valid routes", () => {
+  assert.equal(catalog.products.length, 10);
+  assert.equal(new Set(catalog.products.map((p) => p.id)).size, 10);
+  assert.equal(new Set(catalog.products.map((p) => p.slug)).size, 10);
+  assert.equal(new Set(catalog.products.map((p) => p.image)).size, 10);
   for (const p of catalog.products) {
     assert.ok(existsSync(new URL(`../public${p.image}`, import.meta.url)));
     assert.ok(Number.isSafeInteger(p.priceCents) && p.priceCents > 0);
@@ -45,8 +45,9 @@ test("seven bilingual products have distinct local images, minor-unit AUD prices
 test("filters and all sort options work without mutating the catalog", () => {
   const before = JSON.stringify(catalog.products);
   assert.equal(catalog.selectProducts("courses", "title-asc").length, 2);
-  assert.equal(catalog.selectProducts("readings", "title-asc").length, 2);
+  assert.equal(catalog.selectProducts("readings", "title-asc").length, 3);
   assert.equal(catalog.selectProducts("physical", "title-asc").length, 3);
+  assert.equal(catalog.selectProducts("special", "title-asc").length, 2);
   for (const field of ["title", "price", "date"]) {
     const asc = catalog.selectProducts("all", `${field}-asc`).map((p) => p.id);
     const desc = catalog

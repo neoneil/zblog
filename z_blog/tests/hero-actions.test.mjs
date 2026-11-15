@@ -26,7 +26,7 @@ new Function('exports', 'require', ts.transpileModule(read('features/services/li
 test('all six hero actions link to existing tool, membership or product pages', () => {
   assert.equal(actions.length, 6);
   assert.deepEqual(actions.slice(0, 4).map(action => action.href), ['/tarot-novel', '/stella', '/tarot-ai', '/pricing']);
-  for (const title of ['CHART CONSULTATION', 'TAROT CONSULTATION']) {
+  for (const title of ['LIVE CHART CONSULTATION', 'LIVE TAROT CONSULTATION']) {
     const product = catalog.products.find(product => product.title.en === title);
     assert.ok(product);
     assert.equal(actions.find(action => action.en === title).href, catalog.productHref(product));

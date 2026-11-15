@@ -28,14 +28,14 @@ test('top level follows the requested order with Community as a direct link', ()
   assert.equal(byId('contact').label.zh, '联系我们');
 });
 
-test('five category dropdowns have 4/4/4/4/7 links matching home destinations', () => {
-  assert.deepEqual(['archive','tarot','blueprints','celestial','shop'].map(id => byId(id).children.length), [4,4,4,4,7]);
+test('four category dropdowns retain their links and Shop opens the complete catalog', () => {
+  assert.deepEqual(['archive','tarot','blueprints','celestial'].map(id => byId(id).children.length), [4,4,4,4]);
   assert.deepEqual(byId('archive').children.map(item => item.href), ['/thoth/tree-of-life','/thoth/tarot','/thoth/astrology','/thoth/library']);
   assert.deepEqual(byId('tarot').children.map(item => item.href), ['/tarot-ai','/feishu-docs','/thoth-tarot/readings','/thoth-tarot']);
   assert.deepEqual(byId('blueprints').children.map(item => item.href), ['/astroplate','/synastry','/stella','/stella/numerology']);
   assert.deepEqual(byId('celestial').children.map(item => item.href), ['/categories/understanding-children','/stella/zodiac','/stella/horoscope','/parentinglab/healingdaily/videos?category=general']);
-  const { products, productHref } = load('features/services/lib/catalog.ts');
-  assert.deepEqual(byId('shop').children.map(item => item.href), products.map(productHref));
+  assert.equal(byId('shop').href, '/services');
+  assert.equal(byId('shop').children, undefined);
   assert.deepEqual(byId('contact').children.map(item => item.href), ['/classroom','/aboutus','/contact','/#home-newsletter']);
 });
 
@@ -64,5 +64,5 @@ test('footer reuses navbar groups with vertical children and no legacy link coll
   assert.ok(navigation.includes('child.localizedQuery'));
   assert.ok(navigation.includes('t(child.label)'));
   assert.match(css, /\.children\s*\{[^}]*flex-direction:\s*column/s);
-  assert.equal(entries.flatMap(entry => entry.children || [entry]).length, 30);
+  assert.equal(entries.flatMap(entry => entry.children || [entry]).length, 24);
 });

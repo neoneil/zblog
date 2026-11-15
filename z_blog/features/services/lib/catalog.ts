@@ -7,7 +7,9 @@ export type Product = {
   title: Copy;
   image: string;
   priceCents: number;
-  category: "courses" | "readings" | "physical";
+  availabilityNote?: Copy;
+  gallery?: { src: string; alt: Copy; width: number; height: number }[];
+  category: "courses" | "readings" | "physical" | "special";
   date: string;
   intro: Copy;
   sections: { title: Copy; paragraphs?: Copy[]; bullets?: Copy[] }[];
@@ -173,29 +175,33 @@ const legacyProducts: Product[] = [
 
 const offerings = [
   { id: legacyProducts[0].id, slug: legacyProducts[0].slug, category: "courses", image: "zhanxingyanxi", priceCents: 29900, title: { en: "ASTROLOGY COURSES", zh: "占星研习" }, intro: { en: "Explore Astrology Through Live, One-on-One Online Lessons with Professional Astrologers — Learn at Your Own Pace and Unlock Cosmic Wisdom.", zh: "与专业占星师一对一在线实时授课，按照自己的节奏探索占星奥秘，开启星象智慧之旅。" } },
-  { id: legacyProducts[1].id, slug: legacyProducts[1].slug, category: "readings", image: "xingpanzixun", priceCents: 18900, title: { en: "CHART CONSULTATION", zh: "星盘咨询" }, intro: { en: "Explore Your Birth Chart Through Live, One-on-One Online Consultations with Professional Astrologers — Discover Cosmic Insights and Gain Deeper Self-Understanding.", zh: "与专业占星师一对一在线实时咨询，深入解读个人星盘，探索星象奥秘，开启更深层的自我认知之旅。" } },
+  { id: legacyProducts[1].id, slug: legacyProducts[1].slug, category: "readings", image: "xingpanzixun", priceCents: 18900, title: { en: "LIVE CHART CONSULTATION", zh: "星盘在线语音咨询" }, intro: { en: "Explore Your Birth Chart Through Live, One-on-One Online Consultations with Professional Astrologers — Discover Cosmic Insights and Gain Deeper Self-Understanding.", zh: "与专业占星师一对一在线实时咨询，深入解读个人星盘，探索星象奥秘，开启更深层的自我认知之旅。" } },
   { id: "tarot-course", slug: "tarot-course", category: "courses", image: "tarot-course", priceCents: 24900, title: { en: "TAROT COURSES", zh: "塔罗研习" }, intro: { en: "Explore Tarot Through Live, One-on-One Online Lessons with Professional Tarot Readers — Learn at Your Own Pace and Unlock Tarot Wisdom.", zh: "与专业塔罗师一对一在线实时授课，按照自己的节奏探索塔罗奥秘，开启塔罗智慧之旅。" } },
-{ id: legacyProducts[2].id, slug: legacyProducts[2].slug, category: "readings", image: "taoluozixun", priceCents: 14378, title: { en: "TAROT CONSULTATION", zh: "塔罗咨询" }, intro: { en: "Explore Tarot Through Live, One-on-One Online Consultations with Professional Tarot Readers — Gain Clarity, Discover New Perspectives, and Find Guidance for Your Journey.", zh: "与专业塔罗师一对一在线实时咨询，探索塔罗智慧，获得清晰洞察与全新视角，为人生旅程寻找指引。" } },
-  { id: "celestial-jewelry", slug: "celestial-jewelry", category: "physical", image: "star", priceCents: 6900, title: { en: "Celestial Jewelry", zh: "星辰首饰" }, intro: { en: "Jewelry inspired by celestial symbols. Materials, sizing and availability will be confirmed before ordering opens.", zh: "以星辰符号为灵感的首饰。材质、尺寸及供货信息将在开放购买前确认。" } },
-  { id: "mystic-fragrances", slug: "mystic-fragrances", category: "physical", image: "letter", priceCents: 4900, title: { en: "Mystic Fragrances", zh: "神秘香氛" }, intro: { en: "Fragrances inspired by the mysteries. Ingredients, sizes and product details will be confirmed before ordering opens.", zh: "以神秘意象为灵感的香氛。成分、规格及商品详情将在开放购买前确认。" } },
-  { id: "arcane-creations", slug: "arcane-creations", category: "physical", image: "apple", priceCents: 3900, title: { en: "Arcane Creations", zh: "神秘文创" }, intro: { en: "Creative objects inspired by tarot and the stars. Final designs and specifications will be confirmed before ordering opens.", zh: "以塔罗与星辰为灵感的文创商品。最终设计及规格将在开放购买前确认。" } },
+{ id: legacyProducts[2].id, slug: legacyProducts[2].slug, category: "readings", image: "taoluozixun", priceCents: 14378, title: { en: "LIVE TAROT CONSULTATION", zh: "塔罗在线语音咨询" }, intro: { en: "Explore Tarot Through Live, One-on-One Online Consultations with Professional Tarot Readers — Gain Clarity, Discover New Perspectives, and Find Guidance for Your Journey.", zh: "与专业塔罗师一对一在线实时咨询，探索塔罗智慧，获得清晰洞察与全新视角，为人生旅程寻找指引。" } },
+  { id: "personal-tarot-email", slug: "personal-tarot-reading-by-email", category: "readings", image: "personal-tarot-email", priceCents: 4900, title: { en: "PERSONAL TAROT READING BY EMAIL", zh: "塔罗师私人占卜 · 专属邮件解读" }, intro: { en: "No appointments. No video calls. Just your questions and a personal tarot reading delivered to your inbox.", zh: "无需预约，无需通话。只需写下心中的疑问，让塔罗为你带来新的视角。" } },
+  { id: "mystic-salons", slug: "lectures-and-mystic-salons", category: "special", image: "lectures-mystic-salons", priceCents: 7800, title: { en: "STELLARNESTS LECTURES & MYSTIC SALONS", zh: "主题讲座 · 私享沙龙" }, intro: { en: "Online and in-person gatherings exploring tarot, astrology, mythology and self-discovery. New themes and experiences every month.", zh: "不止于聆听，更是一场关于星辰、命运与自我探索的相遇。每月不同主题，线上线下共同探索。" }, availabilityNote: { en: "AUD 78 is a preview price. Event themes, dates, locations and available places are awaiting confirmation. Adding to cart does not reserve a place or make a payment.", zh: "AUD 78 为示例价格，具体活动主题、日期、地点与名额待公布。加入购物车不代表已预约席位或付款。" } },
+  { id: "stellar-soul-sigil", slug: "stellar-soul-sigil", category: "special", image: "stellar-soul-sigil", priceCents: 8800, title: { en: "STELLAR SOUL SIGIL", zh: "星魂图腾" }, intro: { en: "The Mark of an Awakened Soul. Explore a fictional emblem of celestial connection, self-awareness and guardianship in the STELLARNESTS story.", zh: "觉醒灵魂的印记。探索 STELLARNESTS 品牌故事中关于星辰之力、灵魂觉醒与守护契约的艺术象征。" }, availabilityNote: { en: "AUD 88 is a preview price. This page presents the sigil's concept and symbolism; the product format and delivery arrangements are awaiting confirmation. Checkout is not enabled.", zh: "AUD 88 为示例价格。本页展示图腾的概念与象征，具体商品形式和交付方式待确认，目前结算尚未开放。" }, gallery: [{src:"/products/stellar-soul-awakening.png",alt:{zh:"星魂启愿咒及其文化象征用途示意图",en:"Stellar Soul Awakening Spell artwork and its symbolic uses"},width:1176,height:669}] },
+  { id: "celestial-jewelry", slug: "celestial-jewelry", category: "physical", image: "star", priceCents: 6900, title: { en: "Celestial Jewelry", zh: "香薰星星蜡烛" }, intro: { en: "Jewelry inspired by celestial symbols. Materials, sizing and availability will be confirmed before ordering opens.", zh: "以星辰符号为灵感的首饰。材质、尺寸及供货信息将在开放购买前确认。" } },
+  { id: "mystic-fragrances", slug: "mystic-fragrances", category: "physical", image: "letter", priceCents: 4900, title: { en: "STELLAR WISHES", zh: "星语心愿" }, intro: { en: "Fragrances inspired by the mysteries. Ingredients, sizes and product details will be confirmed before ordering opens.", zh: "以神秘意象为灵感的香氛。成分、规格及商品详情将在开放购买前确认。" } },
+  { id: "arcane-creations", slug: "arcane-creations", category: "physical", image: "apple", priceCents: 3900, title: { en: "Arcane Creations", zh: "香薰苹果蜡烛" }, intro: { en: "Creative objects inspired by tarot and the stars. Final designs and specifications will be confirmed before ordering opens.", zh: "以塔罗与星辰为灵感的文创商品。最终设计及规格将在开放购买前确认。" } },
 ] satisfies Omit<Product, "date" | "sections">[];
 
 export const products: Product[] = offerings.map((item, index) => ({
-  ...item, image: serviceGuideImages[item.id] ?? `/products/${item.image}.png`, date: `2026-01-0${index + 1}`,
+  ...item, image: serviceGuideImages[item.id] ?? `/products/${item.image}.png`, date: `2026-01-${String(index + 1).padStart(2, "0")}`,
   sections: [{ title: { en: "Details & Arrangements", zh: "详情与安排" }, paragraphs: [item.intro, { en: "This is a product preview with an example AUD price. Checkout is not available yet. Contact us for availability, booking or delivery details.", zh: "目前为商品预览，AUD 价格仅为示例，尚未开放结算。课程预约、供货与配送安排请联系我们确认。" }] }],
 }));
 
 export const getProduct = (id: string) =>
   products.find((product) => product.id === id);
 export const productHref = (product: Product) => `/services/${product.slug}`;
+export const isProductPurchasable = (product: Product | undefined): product is Product => Boolean(product && Number.isSafeInteger(product.priceCents) && product.priceCents > 0);
 export const formatPrice = (cents: number, language = "en") =>
   new Intl.NumberFormat(language === "zh" ? "zh-CN" : "en-AU", {
     style: "currency",
     currency: "AUD",
     currencyDisplay: "code",
   }).format(cents / 100);
-export type ProductFilter = "all" | "courses" | "readings" | "physical";
+export type ProductFilter = "all" | "courses" | "readings" | "physical" | "special";
 export type ProductSort =
   | "title-asc"
   | "title-desc"
@@ -208,8 +214,9 @@ export function selectProducts(filter: ProductFilter, sort: ProductSort) {
     (product) => filter === "all" || product.category === filter,
   );
   return selected.sort((a, b) => {
-    if (sort.startsWith("price"))
-      return (a.priceCents - b.priceCents) * (sort === "price-asc" ? 1 : -1);
+    if (sort.startsWith("price")) {
+      return (a.priceCents - b.priceCents || a.id.localeCompare(b.id)) * (sort === "price-asc" ? 1 : -1);
+    }
     if (sort.startsWith("date"))
       return a.date.localeCompare(b.date) * (sort === "date-asc" ? 1 : -1);
     return (

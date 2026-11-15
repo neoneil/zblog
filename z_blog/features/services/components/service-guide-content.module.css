@@ -93,6 +93,10 @@
 .actions {
   margin-top: 24px;
 }
+.tableWrap { width: 100%; overflow-x: auto; margin-top: 24px; }
+.tableWrap table { width: 100%; border-collapse: collapse; text-align: left; }
+.tableWrap th, .tableWrap td { padding: 16px; vertical-align: top; border-bottom: 1px solid var(--border); color: var(--reading-ink); overflow-wrap: anywhere; }
+.tableWrap th:first-child, .tableWrap td:first-child { width: 28%; min-width: 100px; }
 .actions button {
   display: inline-flex;
   gap: 10px;

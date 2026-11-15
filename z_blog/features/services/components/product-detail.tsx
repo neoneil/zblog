@@ -14,23 +14,32 @@ import {
 } from "lucide-react";
 import { usePreferences } from "@/components/site/preferences-provider";
 import { Button, ButtonLink } from "@/components/ui/button";
-import { products, formatPrice, type Product } from "../lib/catalog";
+import {
+  products,
+  formatPrice,
+  isProductPurchasable,
+  type Product,
+} from "../lib/catalog";
 import { useCart } from "./use-cart";
 import { MAX_QUANTITY } from "../lib/cart";
 import { ProductCard, QuantityControl, ShopShell, styles } from "./shop-shared";
 import { serviceGuides } from "../lib/service-guides";
 import ServiceGuideContent from "./service-guide-content";
+import EmailReadingForm from "./email-reading-form";
+import { EMAIL_READING_PRODUCT_ID } from "../lib/email-reading-order";
 
 export default function ProductDetail({ product }: { product: Product }) {
   const guide = serviceGuides[product.id];
+  const emailReading = product.id === EMAIL_READING_PRODUCT_ID;
   const { t, language } = usePreferences(),
     cart = useCart();
   const [quantity, setQuantity] = useState(1),
     [open, setOpen] = useState(false);
   const canAdd =
+    isProductPurchasable(product) &&
     (cart.cart.find((line) => line.productId === product.id)?.quantity ?? 0) +
       quantity <=
-    MAX_QUANTITY;
+      MAX_QUANTITY;
   return (
     <ShopShell>
       <Link className={styles.back} href="/services">
@@ -38,7 +47,9 @@ export default function ProductDetail({ product }: { product: Product }) {
         {t({ en: "All products", zh: "全部产品" })}
       </Link>
       <div className={styles.detail}>
-        <figure className={styles.mainImage}>
+        <figure
+          className={`${styles.mainImage} ${emailReading ? styles.emailMainImage : ""}`}
+        >
           <Image
             src={product.image}
             alt={t(product.title)}
@@ -51,35 +62,62 @@ export default function ProductDetail({ product }: { product: Product }) {
           <h1>{t(product.title)}</h1>
           <p className={styles.price}>
             {formatPrice(product.priceCents, language)}
-          </p>
-          <div className={styles.buy}>
-            <div>
-              <p>{t({ en: "Quantity", zh: "数量" })}</p>
-              <QuantityControl
-                value={quantity}
-                onChange={setQuantity}
-                label={t({ en: "Product quantity", zh: "商品数量" })}
-              />
-            </div>
-            {!canAdd && (
-              <p role="status" className="text-[var(--danger)]">
+            {emailReading && (
+              <span className={styles.minor}>
                 {t({
-                  en: "A maximum of 99 of this item can be added to your cart.",
-                  zh: "购物车中此商品的数量上限为99。",
+                  zh: " / 每个独立问题 · 预览价格",
+                  en: " / independent question · preview price",
                 })}
-              </p>
+              </span>
             )}
-            <Button
-              disabled={!canAdd}
-              onClick={() => {
-                cart.add(product.id, quantity);
-                setOpen(true);
-              }}
-            >
-              <ShoppingBag size={18} aria-hidden />
-              {t({ en: "Add to cart", zh: "加入购物车" })}
-            </Button>
-          </div>
+          </p>
+          {product.availabilityNote && (
+            <p className={styles.availabilityNote} role="status">
+              {t(product.availabilityNote)}
+            </p>
+          )}
+          {emailReading ? (
+            <>
+              <p>{t(product.intro)}</p>
+              <EmailReadingForm
+                priceCents={product.priceCents}
+                onAdd={(draft) => {
+                  cart.setQuantity(product.id, draft.questions.length);
+                  setQuantity(draft.questions.length);
+                  setOpen(true);
+                }}
+              />
+            </>
+          ) : (
+            <div className={styles.buy}>
+              <div>
+                <p>{t({ en: "Quantity", zh: "数量" })}</p>
+                <QuantityControl
+                  value={quantity}
+                  onChange={setQuantity}
+                  label={t({ en: "Product quantity", zh: "商品数量" })}
+                />
+              </div>
+              {!canAdd && (
+                <p role="status" className="text-[var(--danger)]">
+                  {t({
+                    en: "A maximum of 99 of this item can be added to your cart.",
+                    zh: "购物车中此商品的数量上限为99。",
+                  })}
+                </p>
+              )}
+              <Button
+                disabled={!canAdd}
+                onClick={() => {
+                  cart.add(product.id, quantity);
+                  setOpen(true);
+                }}
+              >
+                <ShoppingBag size={18} aria-hidden />
+                {t({ en: "Add to cart", zh: "加入购物车" })}
+              </Button>
+            </div>
+          )}
           <div className={styles.copy}>
             {guide ? (
               <p className={styles.serviceTagline}>{t(guide.tagline)}</p>
@@ -104,7 +142,7 @@ export default function ProductDetail({ product }: { product: Product }) {
               </>
             )}
             <Link
-              href={guide ? "/contact" : "/aboutus#contact-title"}
+              href="/contact"
               className="text-[var(--primary)]"
             >
               {t({ en: "Contact us", zh: "联系我们" })}
@@ -130,6 +168,26 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
       </div>
       {guide && <ServiceGuideContent guide={guide} />}
+      {product.gallery?.map((image) => (
+        <figure key={image.src} className={styles.productGallery}>
+          <Image
+            src={image.src}
+            alt={t(image.alt)}
+            width={image.width}
+            height={image.height}
+            sizes="(max-width: 1152px) 100vw, 1120px"
+          />
+          <figcaption>{t(image.alt)}</figcaption>
+        </figure>
+      ))}
+      {emailReading && (
+        <ButtonLink href="#email-reading-order" variant="secondary">
+          {t({
+            zh: "立即购买私人塔罗占卜",
+            en: "BOOK YOUR PERSONAL TAROT READING",
+          })}
+        </ButtonLink>
+      )}
       <section className={styles.recommend}>
         <h2>{t({ en: "You May Also Like", zh: "你可能也喜欢" })}</h2>
         <div className={styles.grid}>

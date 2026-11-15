@@ -74,8 +74,8 @@ export const homeSections = [
     items: [
       "Astrology Course · 占星课程",
       "Tarot Course · 塔罗课程",
-      "Tarot Reading · 塔罗咨询",
-      "Chart Consultation · 星盘咨询",
+      "Tarot Reading · 塔罗在线语音咨询",
+      "LIVE CHART CONSULTATION · 星盘在线语音咨询",
     ],
     description:
       "每项连接在线支付、订单确认与团队通知。课程和真人咨询独立售卖，不包含在会员费内。",
@@ -127,7 +127,7 @@ export const moduleRequirements = [
   ["05 占星系统", "STELLAR、十二星座、星座运势、学习视频，桌面四列。"],
   [
     "06 Products / Services",
-    "占星课程、塔罗课程、塔罗咨询、星盘咨询，分别连接在线支付与订单邮件。",
+    "占星课程、塔罗课程、塔罗在线语音咨询、星盘在线语音咨询，分别连接在线支付与订单邮件。",
   ],
   ["07 Contact Me", "收集客户邮箱及文字留言，由网站接收。"],
   ["08 Newsletter", "邮箱确认订阅后自动发送欢迎邮件，并引导进入星盘测算。"],

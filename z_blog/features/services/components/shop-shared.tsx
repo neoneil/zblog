@@ -22,10 +22,10 @@ export function ShopShell({ children }: { children: React.ReactNode }) {
     </main>
   );
 }
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, layout = "grid" }: { product: Product; layout?: "grid" | "list" }) {
   const { t, language } = usePreferences();
   return (
-    <Card className={styles.productCard}>
+    <Card data-product-id={product.id} className={`${styles.productCard} ${layout === "list" ? styles.listCard : ""}`}>
       <Link className={styles.productLink} href={productHref(product)}>
         <div className={`${styles.cardImage} ${product.category !== "physical" ? styles.onlineImage : ""} ${serviceGuideImages[product.id] ? styles.documentImage : ""}`}>
           <Image
@@ -37,7 +37,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         <div className={styles.cardContent}>
           <h2>{t(product.title)}</h2>
-          {product.category !== "physical" && <div className={styles.cardDescription}>{t(product.intro)}</div>}
+          {(product.category !== "physical" || layout === "list") && <div className={styles.cardDescription}>{t(product.intro)}</div>}
           <p>{formatPrice(product.priceCents, language)}</p>
         </div>
       </Link>
