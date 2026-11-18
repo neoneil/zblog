@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { consumeAiAccess } from "@/features/billing/lib/ai-access";
+import { beginReading, type ReadingLease } from "@/features/billing/lib/reading-billing";
 import { tarotDeck } from "@/lib/tarot/full-deck";
 import { getTarotReadingSchema, isTarotReadingResult, readingResultToMarkdown } from "@/lib/tarot/reading-result";
 import { isTarotReadingMode, tarotModes } from "@/lib/tarot/reading-modes";
@@ -11,8 +11,11 @@ import type { DrawnTarotCard } from "@/types/tarot";
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req: Request) {
+  let lease:ReadingLease|undefined;
   try {
-    const body = await req.json();
+    const raw = await req.text();
+    if (raw.length > 24000) return NextResponse.json({ error: "请求过大 / Request too large." }, { status: 413 });
+    const body = JSON.parse(raw);
     const mode = body.mode ?? "three-cards";
     if (!isTarotReadingMode(mode)) {
       return NextResponse.json({ error: "未知牌阵 / Unknown reading mode." }, { status: 400 });
@@ -38,10 +41,8 @@ export async function POST(req: Request) {
     if (mode === "yes-no" && !question) {
       return NextResponse.json({ error: "请输入一个明确的是非问题。 / Please enter a clear yes-or-no question." }, { status: 400 });
     }
-    const access = await consumeAiAccess("tarot");
-    if (!access.allowed) {
-      return NextResponse.json({ error: access.message, code: access.code, upgradeUrl: "/pricing?scope=tarot" }, { status: access.httpStatus });
-    }
+    lease=await beginReading(req,mode==='one-card'?'waite-single':'waite-multi',body);
+    if(lease.response)return lease.response;
 
     const answer = mode === "yes-no" ? getYesNoAnswer(cards) : undefined;
     const prompts = buildTarotReadingPrompts(mode, cards, question);
@@ -54,13 +55,15 @@ export async function POST(req: Request) {
         { role: "user", content: prompts.user },
       ],
     });
+    if (completion.choices[0]?.finish_reason !== "stop") throw new Error("解读未完整生成，请稍后重试。 / The reading was not completed.");
     const content = completion.choices[0]?.message?.content;
     if (!content) throw new Error("暂时没有生成解读。 / No reading was generated.");
     const result: unknown = JSON.parse(content);
     if (!isTarotReadingResult(result, mode)) throw new Error("解读格式不完整，请稍后重试。 / The reading is incomplete. Please try again.");
     const sections = { ...result, ...(answer ? { answer } : {}) };
-    return NextResponse.json({ mode, reading: readingResultToMarkdown(sections, mode), sections });
+    return await lease.complete({ mode, reading: readingResultToMarkdown(sections, mode), sections });
   } catch (error: unknown) {
+    await lease?.release();
     console.error("tarot-reading error:", error);
     return NextResponse.json({ error: error instanceof Error ? error.message : "解读失败 / Failed to generate tarot reading." }, { status: 500 });
   }

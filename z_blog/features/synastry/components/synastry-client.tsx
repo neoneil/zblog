@@ -1,4 +1,5 @@
 "use client";
+import { readingFetch } from "@/features/billing/lib/reading-fetch";
 
 import { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -37,17 +38,17 @@ export default function SynastryClient({ accessStatus }: { accessStatus: AiAcces
     catch (err) { setError(err instanceof Error ? err.message : "Invalid input"); return; }
     inFlight.current = true; setPending(action); setError("");
     try {
-      const response = await fetch("/api/synastry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...input, action }) });
+      const response = action==='read'?await readingFetch('/api/synastry',{...input,action}):await fetch("/api/synastry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...input, action }) });
       const data = await response.json();
       if (!response.ok) {
-        if (data.code === "daily_limit_reached") setLimited(true);
+        if (data.code === "insufficient" || data.code === "unpriced") setLimited(true);
         throw new Error(data.error || "Request failed");
       }
       if (action === "read" && !isBilingualSynastryReading(data.reading)) throw new Error(t({ zh: "解读格式不完整，请重新生成。", en: "Incomplete reading. Please generate it again." }));
       setResult(data.result); setSnapshot(input);
       if (action === "read") {
         setReading(data.reading);
-        if (!accessStatus.isAdmin && !accessStatus.isPaid) setLimited(true);
+        if (!accessStatus.isAdmin && (accessStatus.remainingReadings??0)<=1) setLimited(true);
       }
     } catch (err) { setError(err instanceof Error ? err.message : "Request failed"); }
     finally { setPending(null); inFlight.current = false; }
@@ -93,8 +94,8 @@ export default function SynastryClient({ accessStatus }: { accessStatus: AiAcces
         </section>
         <section className="border-t border-[var(--border)] py-8">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-4"><h2 className="text-2xl">{t({ zh: "关系解读", en: "Relationship Reading" })}</h2><Button type="button" disabled={!!pending || limited} onClick={() => void request("read")} className="gap-2"><Sparkles size={16} />{t({ zh: reading ? "重新生成解读" : "生成 AI 解读", en: reading ? "Regenerate Reading" : "Generate AI Reading" })}</Button></div>
-          {!accessStatus.isAdmin && !accessStatus.isPaid && <p className="mb-5 text-sm">{t({ zh: "AI 解读与单人星盘共用每日 1 次免费额度；计算星盘不消耗额度。", en: "AI readings share the natal chart allowance of one free reading per day. Chart calculations do not use it." })}</p>}
-          {limited && <div className="mb-5 flex flex-wrap items-center gap-3 text-sm"><p>{t({ zh: "今日免费 AI 额度已用完，已生成内容仍可查看。", en: "Today's free AI allowance is used. Existing results remain available." })}</p><ButtonLink href="/pricing?scope=astroplate" variant="secondary" size="sm">{t({ zh: "查看时间包", en: "View Access Plans" })}</ButtonLink></div>}
+          {!accessStatus.isAdmin && <p className="mb-5 text-sm">{t({zh:'AI解读使用独立合盘会员次数；计算星盘不消耗次数。',en:'AI reports use a synastry membership allowance. Chart calculations do not use allowances.'})}</p>}
+          {limited && <div className="mb-5 flex flex-wrap items-center gap-3 text-sm"><p>{t({ zh: "暂无可用合盘次数，已生成内容仍可查看。", en: "No synastry allowances remain. Existing reports are still available." })}</p><ButtonLink href="/wallet" variant="secondary" size="sm">{t({ zh: "会员与钱包", en: "Membership & Wallet" })}</ButtonLink></div>}
           <div role="tablist" aria-label={t({ zh: "合盘主题", en: "Synastry topics" })} className="flex flex-wrap gap-2">{topics.map((item, index) => <button key={item.key} id={"tab-" + item.key} role="tab" type="button" aria-selected={topic === item.key} aria-controls="synastry-topic" tabIndex={topic === item.key ? 0 : -1} onClick={() => setTopic(item.key)} onKeyDown={e => { const next = e.key === "ArrowRight" ? (index + 1) % topics.length : e.key === "ArrowLeft" ? (index + topics.length - 1) % topics.length : e.key === "Home" ? 0 : e.key === "End" ? topics.length - 1 : -1; if (next >= 0) { e.preventDefault(); setTopic(topics[next].key); document.getElementById("tab-" + topics[next].key)?.focus(); } }} className={"min-h-11 border-b-2 px-3 py-2 text-sm " + (topic === item.key ? "border-[var(--primary)] text-[var(--primary)]" : "border-transparent text-[var(--text-soft)]")}>{item[language]}</button>)}</div>
           <div id="synastry-topic" role="tabpanel" aria-labelledby={"tab-" + topic} tabIndex={0} className="mt-6 min-w-0">
             {localizedReading ? <div lang={language === "zh" ? "zh-CN" : "en"} className="max-w-4xl space-y-5 text-base leading-8 [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-semibold"><p className="border-l-2 border-[var(--primary)] pl-4">{localizedReading.overview}</p><ReactMarkdown>{localizedReading.sections[topic]}</ReactMarkdown></div> : <p className="text-sm leading-7">{t({ zh: "生成 AI 解读后，可在这里切换六个主题。下方的相位与宫位数据无需 AI 即可查看。", en: "Generate an AI reading to explore the six topics. Calculated aspects and overlays are available below without AI." })}</p>}

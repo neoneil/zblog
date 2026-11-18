@@ -13,9 +13,8 @@ export const astroCopy: Record<string, string> = {
   "黄道类型": "Zodiac type", "回归黄道": "Tropical", "恒星黄道": "Sidereal", "生成中...": "Calculating…", "生成星盘 ✦": "Generate chart ✦", "已生成的本命盘 Natal Chart": "Your natal chart", "生成后会在这里显示星盘": "Your chart will appear here", "正在生成星盘...": "Calculating your chart…",
   "星盘信息概览": "Chart overview", "出生时间": "Birth date and time", "出生地点": "Birth location", "宫位系统": "House system", "经纬度为 0 时，宫位、上升、天顶的精确性可能下降。": "Zero coordinates reduce the accuracy of houses, the Ascendant and Midheaven.",
   "AI 解读": "Astrology consultation", "星盘中文分析": "Birth chart analysis", "你想问 AI 的问题（可选）": "Your astrology consultation question (optional)", "例如：我的感情模式是什么？我的事业方向适合什么类型？不输入也可，由 AI 概括体验。": "For example: What are my relationship patterns? What career paths suit me? Leave blank for a general reading.",
-  "AI 解读生成中...": "Preparing your reading…", "AI 解读星盘 ✦": "Read my chart ✦", "请先生成星盘，然后点击上方按钮进行解读。": "Generate your chart first, then request a reading.", "今日免费 AI 解读次数已用完。购买 Astroplate AI 时间包后可无限使用。": "Your free reading allowance is used up. An astrology reading pass unlocks further readings.",
+  "AI 解读生成中...": "Preparing your reading…", "AI 解读星盘 ✦": "Read my chart ✦", "请先生成星盘，然后点击上方按钮进行解读。": "Generate your chart first, then request a reading.",
   "解读结果": "Reading result", "复制解读": "Copy reading", "正在生成解读，请稍等...": "Preparing your reading. Please wait…", "这里会显示 AI 返回的中文解读结果……": "Your personalised astrology reading will appear here…",
-  "已开通付费权限，无限制使用": "Paid access active", "今日免费 AI 解读次数已用完": "Your free reading allowance is used up", "普通用户每日可免费 AI 解读 1 次": "One free AI reading per day",
   "暂时没有生成解读。": "No reading was generated.", "AI 解读生成失败。": "Could not prepare your reading.",
 };
 
@@ -25,8 +24,5 @@ export const astroConsultationZh: Record<string, string> = {
   "AI 解读生成中...": "正在准备专属解读…",
   "AI 解读星盘 ✦": "获取专属星盘解读 ✦",
   "这里会显示 AI 返回的中文解读结果……": "这里将呈现你的专属星盘解读……",
-  "今日免费 AI 解读次数已用完。购买 Astroplate AI 时间包后可无限使用。": "今日免费解读次数已用完，开通占星解读时间包后可继续使用。",
-  "今日免费 AI 解读次数已用完": "今日免费解读次数已用完",
-  "普通用户每日可免费 AI 解读 1 次": "普通用户每日可免费获取 1 次星盘解读",
   "AI 解读生成失败。": "暂时无法准备解读，请稍后重试。",
 };

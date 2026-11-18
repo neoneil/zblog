@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { getAiAccessStatus, consumeAiAccess } from "@/features/billing/lib/ai-access";
+import { getAiAccessStatus } from "@/features/billing/lib/ai-access";
+import { beginReading, type ReadingLease } from "@/features/billing/lib/reading-billing";
 import { calculateSynastry, isBilingualSynastryReading, parseSynastryInput, relationships, topics } from "@/lib/astrology/synastry";
 
 export async function POST(req: Request) {
+  let lease:ReadingLease|undefined;
   try {
     const raw = await req.text();
     if (raw.length > 16000) return NextResponse.json({ error: "请求过大 / Request too large." }, { status: 413 });
@@ -17,8 +19,8 @@ export async function POST(req: Request) {
     if (requestBody.action === "calculate") return NextResponse.json({ result });
     if (requestBody.action !== "read") return NextResponse.json({ error: "Invalid action." }, { status: 400 });
     if (!process.env.OPENAI_API_KEY) return NextResponse.json({ error: "AI 服务暂不可用 / AI service unavailable." }, { status: 503 });
-    const access = await consumeAiAccess("astroplate");
-    if (!access.allowed) return NextResponse.json({ error: access.message, code: access.code, upgradeUrl: "/pricing?scope=astroplate" }, { status: access.httpStatus });
+    lease=await beginReading(req,'synastry',requestBody);
+    if(lease.response)return lease.response;
     const relationship = relationships.find(item => item.key === input.relationship)!;
     const localizedSchema = {
       type: "object",
@@ -60,12 +62,14 @@ zh 和 en 均包含 overview 简短总览，以及 sections 六个主题。每�
         }) },
       ],
     });
+    if (completion.choices[0]?.finish_reason !== "stop") throw new Error("Incomplete AI response");
     const content = completion.choices[0]?.message?.content;
     if (!content) throw new Error("Empty AI response");
     const reading = JSON.parse(content);
     if (!isBilingualSynastryReading(reading)) throw new Error("Invalid AI response");
-    return NextResponse.json({ result, reading });
+    return await lease.complete({ result, reading });
   } catch (error) {
+    await lease?.release();
     console.error("Synastry request failed:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: "合盘生成失败，请检查出生信息后重试 / Unable to generate synastry. Check the birth details and retry." }, { status: 500 });
   }

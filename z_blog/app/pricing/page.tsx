@@ -1,44 +1,17 @@
-import { PricingClient } from "@/features/billing/components/pricing-client";
-import { getAiAccessStatus } from "@/features/billing/lib/ai-access";
-import type { AiProductScope } from "@/features/billing/lib/types";
+import { WalletClient } from "@/features/billing/components/wallet-client";
+import { walletSnapshot } from "@/features/billing/lib/stardust-server";
 import { PageShell } from "@/components/site/page-shell";
-import { createClient } from "@/lib/supabase/server";
+import { billingSchema } from "@/features/billing/lib/billing-db";
 
-type PricingPageProps = {
-  searchParams: Promise<{
-    scope?: string;
-  }>;
-};
-
-function getInitialScope(value: string | undefined): AiProductScope {
-  return value === "astroplate" ? "astroplate" : "tarot";
-}
-
-export default async function PricingPage({ searchParams }: PricingPageProps) {
-  const { scope } = await searchParams;
-  const initialScope = getInitialScope(scope);
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const [tarotStatus, astroplateStatus] = user
-    ? await Promise.all([
-        getAiAccessStatus("tarot"),
-        getAiAccessStatus("astroplate"),
-      ])
-    : [null, null];
-
+export default async function PricingPage() {
+  const snapshot = await walletSnapshot();
   return (
-    <PageShell className="px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <PricingClient
-          initialScope={initialScope}
-          tarotStatus={tarotStatus}
-          astroplateStatus={astroplateStatus}
-          isLoggedIn={Boolean(user)}
-        />
-      </div>
+    <PageShell className="px-4 py-8 sm:px-6">
+      <WalletClient
+        sandbox={billingSchema() === "stardust_sandbox"}
+        snapshot={snapshot}
+        checkoutEnabled={process.env.STARDUST_CHECKOUT_ENABLED === "true"}
+      />
     </PageShell>
   );
 }

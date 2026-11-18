@@ -1,4 +1,5 @@
 "use client";
+import { readingFetch } from "@/features/billing/lib/reading-fetch";
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
@@ -227,22 +228,12 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
     setReading("");
 
     try {
-      const res = await fetch("/api/astroplate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          question: userQuestion,
-          language,
-          chartJson,
-        }),
-      });
+      const res = await readingFetch("/api/astroplate", {question:userQuestion,language,chartJson});
 
       const data = await res.json();
 
       if (!res.ok) {
-        if (data?.code === "daily_limit_reached") {
+        if (data?.code === "insufficient" || data?.code === "unpriced") {
           setDailyLimitReached(true);
         }
 
@@ -250,7 +241,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
       }
 
       setReading(data?.reading || tr("暂时没有生成解读。"));
-      if (!accessStatus.isAdmin && !accessStatus.isPaid) {
+      if (!accessStatus.isAdmin && (accessStatus.remainingReadings??0)<=1) {
         setDailyLimitReached(true);
       }
     } catch (error) {
@@ -264,11 +255,9 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
 
   const accessLabel = accessStatus.isAdmin
     ? null
-    : accessStatus.isPaid
-      ? tr("已开通付费权限，无限制使用")
-      : dailyLimitReached
-        ? tr("今日免费 AI 解读次数已用完")
-        : tr("普通用户每日可免费 AI 解读 1 次");
+    : dailyLimitReached
+      ? t({zh:"暂无本命盘会员次数；积分价格待确认。",en:"No natal allowance available; STARS pricing is pending."})
+      : t({zh:"将使用本命盘会员次数，报告生成失败不扣次数。",en:"Uses a natal membership allowance; failed reports are not charged."});
 
   return (
     <main className={`${styles.page} min-h-screen bg-[var(--card-soft)] px-4 py-5 text-[var(--primary)] sm:px-5 md:px-6 md:py-8 lg:px-8`}>
@@ -653,7 +642,7 @@ export default function AstrologyPage({ accessStatus }: AstrologyClientProps) {
                 ) : null}
 
                 {dailyLimitReached ? (
-                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">{tr("今日免费 AI 解读次数已用完。购买 Astroplate AI 时间包后可无限使用。")}</div>
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--card-soft)] px-4 py-3 text-sm text-[var(--primary)]">{t({zh:"暂无可用会员次数，请前往星尘钱包。",en:"No membership allowance available. Visit your Stardust Wallet."})}</div>
                 ) : null}
 
                 {readingError ? (

@@ -1,0 +1,283 @@
+-- STARDUST WALLET v1. Run manually in Supabase SQL Editor. No legacy payment records are deleted.
+begin;
+drop function if exists public.extend_ai_entitlement(uuid,text,integer);
+create table if not exists public.stardust_settings (
+  id integer primary key check(id=1), launch_at timestamptz not null default now()
+);
+insert into public.stardust_settings(id) values(1) on conflict do nothing;
+create table if not exists public.stardust_wallets (
+  user_id uuid primary key references auth.users(id), paid bigint not null default 0 check(paid>=0),
+  reward bigint not null default 0 check(reward>=0), blocked boolean not null default false
+);
+create table if not exists public.stardust_topups (
+  id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id),
+  request_key uuid not null, amount_cents integer not null check(amount_cents in(1000,2500,5000,10000,20000,50000)),
+  session_id text unique, payment_intent text unique, status text not null default 'pending' check(status in('pending','paid','expired','failed','review')),
+  created_at timestamptz not null default now(), paid_at timestamptz, unique(user_id,request_key)
+);
+create table if not exists public.stardust_memberships (
+  user_id uuid not null references auth.users(id), plan text not null check(plan in('annual','monthly')),
+  valid_until timestamptz not null, primary key(user_id,plan)
+);
+create table if not exists public.stardust_allowances (
+  id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id),
+  service text not null, origin text not null, family text not null, remaining integer not null check(remaining>=0),
+  expires_at timestamptz not null, unique(user_id,service,origin)
+);
+create table if not exists public.stardust_access (
+  user_id uuid not null references auth.users(id), course text not null check(course in('waite','thoth','astrology')),
+  valid_until timestamptz not null, primary key(user_id,course)
+);
+create table if not exists public.stardust_requests (
+  id uuid primary key, user_id uuid not null references auth.users(id), sku text not null, fingerprint text not null,
+  state text not null check(state in('held','completed','released')), paid bigint not null default 0,
+  reward bigint not null default 0, allowance_id uuid references public.stardust_allowances(id),
+  created_at timestamptz not null default now(), expires_at timestamptz not null default now()+interval '10 minutes',
+  result jsonb, check(paid>=0 and reward>=0)
+);
+create table if not exists public.stardust_ledger (
+  id bigint generated always as identity primary key, user_id uuid not null references auth.users(id),
+  kind text not null, reference text not null, paid_delta bigint not null, reward_delta bigint not null,
+  created_at timestamptz not null default now(), unique(kind,reference)
+);
+create table if not exists public.stardust_webhooks (
+  event_id text primary key, event_type text not null, processed_at timestamptz not null default now()
+);
+alter table public.stardust_webhooks add column if not exists payment_intent text;
+alter table public.stardust_webhooks add column if not exists risk boolean not null default false;
+create index if not exists stardust_risk_lookup on public.stardust_webhooks(payment_intent) where risk;
+create table if not exists public.stardust_mail (
+  id uuid primary key default gen_random_uuid(), user_id uuid not null references auth.users(id),
+  dedupe_key text not null unique, subject text not null, body text not null,
+  state text not null default 'pending' check(state in('pending','sending','sent')), attempts integer not null default 0,
+  locked_at timestamptz, created_at timestamptz not null default now()
+);
+create index if not exists stardust_allowance_lookup on public.stardust_allowances(user_id,service,expires_at);
+create index if not exists stardust_request_lookup on public.stardust_requests(user_id,state,expires_at);
+create index if not exists stardust_ledger_lookup on public.stardust_ledger(user_id,created_at desc);
+
+-- All mutation RPCs below are service-role-only. Browsers have no balance-write access.
+do $$ declare n text; begin
+  foreach n in array array['stardust_settings','stardust_wallets','stardust_topups','stardust_memberships','stardust_allowances','stardust_access','stardust_requests','stardust_ledger','stardust_webhooks','stardust_mail'] loop
+    execute format('alter table public.%I enable row level security',n);
+    execute format('revoke all on public.%I from anon, authenticated',n);
+  end loop;
+  foreach n in array array['stardust_wallets','stardust_topups','stardust_memberships','stardust_allowances','stardust_access','stardust_requests','stardust_ledger'] loop
+    execute format('grant select on public.%I to authenticated',n);
+    execute format('drop policy if exists own_read on public.%I',n);
+    execute format('create policy own_read on public.%I for select to authenticated using(user_id=auth.uid())',n);
+  end loop;
+end $$;
+grant all on public.stardust_settings,public.stardust_wallets,public.stardust_topups,public.stardust_memberships,public.stardust_allowances,public.stardust_access,public.stardust_requests,public.stardust_ledger,public.stardust_webhooks,public.stardust_mail to service_role;
+grant usage,select on sequence public.stardust_ledger_id_seq to service_role;
+
+create or replace function public.stardust_bootstrap(p_user uuid) returns void
+language plpgsql security definer set search_path=public,pg_temp as $$
+declare anchor_at timestamptz; month_start timestamp; i integer; begin
+  select greatest(u.created_at,u.email_confirmed_at,s.launch_at) into anchor_at
+    from auth.users u cross join stardust_settings s where u.id=p_user and u.email_confirmed_at is not null and s.id=1;
+  if anchor_at is null then raise exception 'EMAIL_VERIFICATION_REQUIRED'; end if;
+  insert into stardust_wallets(user_id) values(p_user) on conflict do nothing;
+  perform 1 from stardust_wallets where user_id=p_user for update;
+  if anchor_at>now() then return; end if;
+  month_start:=date_trunc('month',anchor_at at time zone 'Australia/Sydney');
+  for i in 0..6 loop
+    if month_start+make_interval(months=>i) <= (now() at time zone 'Australia/Sydney') then
+      insert into stardust_allowances(user_id,service,origin,family,remaining,expires_at)
+      values(p_user,'tarot','free:'||to_char(month_start+make_interval(months=>i),'YYYY-MM'),'free',3,
+        (month_start+make_interval(months=>i+1)) at time zone 'Australia/Sydney') on conflict do nothing;
+    end if;
+  end loop;
+end $$;
+
+create or replace function public.stardust_release(p_id uuid,p_user uuid) returns void
+language plpgsql security definer set search_path=public,pg_temp as $$
+declare r stardust_requests%rowtype; begin
+  perform 1 from stardust_wallets where user_id=p_user for update;
+  select * into r from stardust_requests where id=p_id and user_id=p_user for update;
+  if not found or r.state<>'held' then return; end if;
+  update stardust_wallets set paid=paid+r.paid,reward=reward+r.reward where user_id=p_user;
+  if r.allowance_id is not null then update stardust_allowances set remaining=remaining+1 where id=r.allowance_id; end if;
+  insert into stardust_ledger(user_id,kind,reference,paid_delta,reward_delta) values(p_user,'release',r.id::text,r.paid,r.reward);
+  update stardust_requests set state='released' where id=r.id;
+end $$;
+
+create or replace function public.stardust_reserve(p_user uuid,p_id uuid,p_sku text,p_fingerprint text,p_confirm boolean default false)
+returns jsonb language plpgsql security definer set search_path=public,pg_temp as $$
+declare r stardust_requests%rowtype; w stardust_wallets%rowtype; a stardust_allowances%rowtype;
+  price integer; svc text; rp bigint:=0; pp bigint:=0; expired uuid;
+begin
+  perform stardust_bootstrap(p_user);
+  select * into w from stardust_wallets where user_id=p_user for update;
+  if w.blocked then raise exception 'ACCOUNT_REVIEW'; end if;
+  select * into r from stardust_requests where id=p_id for update;
+  if found then
+    if r.user_id<>p_user or r.sku<>p_sku or r.fingerprint<>p_fingerprint then raise exception 'REQUEST_CONFLICT'; end if;
+    if r.state='completed' then return jsonb_build_object('status','completed','result',r.result); end if;
+    if r.state='held' and r.expires_at<=now() then
+      perform stardust_release(p_id,p_user);
+      return jsonb_build_object('status','released');
+    end if;
+    if r.state='held' then return jsonb_build_object('status','processing'); end if;
+    raise exception 'REQUEST_RELEASED';
+  end if;
+  for expired in select id from stardust_requests where user_id=p_user and state='held' and expires_at<=now() loop
+    perform stardust_release(expired,p_user);
+  end loop;
+  select * into w from stardust_wallets where user_id=p_user;
+  price:=case p_sku when 'waite-multi' then 300 when 'thoth' then 100
+    when 'membership-annual' then 158000 when 'membership-monthly' then 15800
+    when 'course-waite' then 50000 when 'course-thoth' then 50000 when 'course-astrology' then 50000 else null end;
+  svc:=case when p_sku in('waite-single','waite-multi','thoth') then 'tarot'
+    when p_sku='natal' then 'natal' when p_sku='synastry' then 'synastry' when p_sku='numerology' then 'numerology' else null end;
+  if price is null and svc is null then raise exception 'PRODUCT_NOT_AVAILABLE'; end if;
+  if svc is not null and exists(select 1 from profiles where id=p_user and role='admin') then
+    insert into stardust_requests(id,user_id,sku,fingerprint,state) values(p_id,p_user,p_sku,p_fingerprint,'held');
+    return jsonb_build_object('status','reserved','id',p_id,'stars',0);
+  end if;
+  if p_sku like 'course-%' and (exists(select 1 from stardust_access where user_id=p_user and course=substring(p_sku from 8) and valid_until>now())
+    or exists(select 1 from stardust_memberships where user_id=p_user and plan='annual' and valid_until>now())) then raise exception 'ALREADY_INCLUDED'; end if;
+  if p_sku like 'course-%' and exists(select 1 from stardust_requests where user_id=p_user and sku=p_sku and state='held' and expires_at>now()) then
+    return jsonb_build_object('status','processing');
+  end if;
+  if svc is not null then
+    select * into a from stardust_allowances where user_id=p_user and service=svc and remaining>0 and expires_at>now()
+      order by expires_at,id limit 1 for update;
+  end if;
+  if a.id is not null then
+    update stardust_allowances set remaining=remaining-1 where id=a.id;
+  else
+    if price is null then return jsonb_build_object('status','unpriced'); end if;
+    if p_confirm is not true then return jsonb_build_object('status','confirmation_required','stars',price); end if;
+    if w.paid+w.reward<price then return jsonb_build_object('status','insufficient','stars',price); end if;
+    rp:=least(w.reward,price); pp:=price-rp;
+    update stardust_wallets set paid=paid-pp,reward=reward-rp where user_id=p_user;
+  end if;
+  insert into stardust_requests(id,user_id,sku,fingerprint,state,paid,reward,allowance_id)
+    values(p_id,p_user,p_sku,p_fingerprint,'held',pp,rp,a.id);
+  insert into stardust_ledger(user_id,kind,reference,paid_delta,reward_delta) values(p_user,'reserve',p_id::text,-pp,-rp);
+  return jsonb_build_object('status','reserved','id',p_id,'stars',pp+rp);
+end $$;
+
+create or replace function public.stardust_complete(p_user uuid,p_id uuid,p_result jsonb) returns jsonb
+language plpgsql security definer set search_path=public,pg_temp as $$
+declare r stardust_requests%rowtype; expiry timestamptz; plan_name text; service_name text; qty integer; begin
+  perform 1 from stardust_wallets where user_id=p_user for update;
+  select * into r from stardust_requests where id=p_id and user_id=p_user for update;
+  if not found then raise exception 'REQUEST_NOT_FOUND'; end if;
+  if r.state='completed' then return r.result; end if;
+  if r.state<>'held' or r.expires_at<=now() then raise exception 'RESERVATION_EXPIRED'; end if;
+  if exists(select 1 from stardust_wallets where user_id=p_user and blocked) then raise exception 'ACCOUNT_REVIEW'; end if;
+  if p_result is null then raise exception 'EMPTY_RESULT'; end if;
+  if r.sku in('membership-annual','membership-monthly') then
+    plan_name:=substring(r.sku from 12);
+    select greatest(valid_until,now()) into expiry from stardust_memberships where user_id=p_user and plan=plan_name;
+    expiry:=coalesce(expiry,now());
+    if plan_name='annual' then expiry:=((expiry at time zone 'Australia/Sydney')+interval '12 months') at time zone 'Australia/Sydney';
+    else expiry:=expiry+interval '30 days'; end if;
+    insert into stardust_memberships values(p_user,plan_name,expiry) on conflict(user_id,plan) do update set valid_until=excluded.valid_until;
+    update stardust_allowances set expires_at=expiry where user_id=p_user and family=plan_name and expires_at>now();
+    foreach service_name in array array['natal','synastry','numerology','email','consultation-15','consultation-60','tarot'] loop
+      qty:=case service_name when 'email' then 3 when 'tarot' then case when plan_name='annual' then 36 else 0 end
+        when 'consultation-60' then case when plan_name='annual' then 3 else 0 end
+        when 'consultation-15' then case when plan_name='monthly' then 1 else 0 end else 1 end;
+      if qty>0 then insert into stardust_allowances(user_id,service,origin,family,remaining,expires_at)
+        values(p_user,service_name,p_id::text,plan_name,qty,expiry); end if;
+    end loop;
+    insert into stardust_mail(user_id,dedupe_key,subject,body) values(p_user,'member:'||p_id,'Membership activated · 会员已开通',plan_name||' · Valid until / 有效期至 '||expiry::text);
+  elsif r.sku like 'course-%' then
+    insert into stardust_access values(p_user,substring(r.sku from 8),now()+interval '90 days')
+      on conflict(user_id,course) do update set valid_until=excluded.valid_until;
+  end if;
+  update stardust_requests set state='completed',result=p_result where id=p_id;
+  insert into stardust_ledger(user_id,kind,reference,paid_delta,reward_delta) values(p_user,'complete',p_id::text,0,0);
+  return p_result;
+end $$;
+
+create or replace function public.stardust_create_topup(p_user uuid,p_key uuid,p_amount integer) returns jsonb
+language plpgsql security definer set search_path=public,pg_temp as $$
+declare r stardust_topups%rowtype; begin
+  perform stardust_bootstrap(p_user);
+  if exists(select 1 from stardust_wallets where user_id=p_user and blocked) then raise exception 'ACCOUNT_REVIEW'; end if;
+  if p_amount not in(1000,2500,5000,10000,20000,50000) then raise exception 'INVALID_AMOUNT'; end if;
+  select * into r from stardust_topups where user_id=p_user and request_key=p_key;
+  if found then
+    if r.amount_cents<>p_amount then raise exception 'REQUEST_CONFLICT'; end if;
+    return to_jsonb(r);
+  end if;
+  select * into r from stardust_topups where user_id=p_user and amount_cents=p_amount and status='pending' and created_at>now()-interval '23 hours' order by created_at limit 1;
+  if found then return to_jsonb(r); end if;
+  insert into stardust_topups(user_id,request_key,amount_cents) values(p_user,p_key,p_amount) returning * into r;
+  return to_jsonb(r);
+end $$;
+
+create or replace function public.stardust_credit_topup(p_event text,p_type text,p_order uuid,p_user uuid,p_session text,p_intent text,p_amount integer,p_currency text) returns void
+language plpgsql security definer set search_path=public,pg_temp as $$
+declare r stardust_topups%rowtype; begin
+  perform pg_advisory_xact_lock(hashtextextended(p_intent,0));
+  perform 1 from stardust_wallets where user_id=p_user for update;
+  select * into r from stardust_topups where id=p_order and user_id=p_user for update;
+  if not found or p_amount is null or r.amount_cents<>p_amount or p_currency is distinct from 'aud' or p_session is null or p_session='' or p_intent is null or p_intent='' then raise exception 'PAYMENT_MISMATCH'; end if;
+  if r.session_id is not null and r.session_id<>p_session then raise exception 'SESSION_MISMATCH'; end if;
+  if r.status in('paid','review') and r.payment_intent is not null then
+    if r.payment_intent<>p_intent then raise exception 'PAYMENT_MISMATCH'; end if;
+    insert into stardust_webhooks(event_id,event_type) values(p_event,p_type) on conflict do nothing; return;
+  end if;
+  if r.status not in('pending') then raise exception 'ORDER_NOT_CREDITABLE'; end if;
+  insert into stardust_webhooks(event_id,event_type) values(p_event,p_type) on conflict do nothing;
+  if not found then return; end if;
+  if exists(select 1 from stardust_webhooks where payment_intent=p_intent and risk) then
+    update stardust_topups set status='review',session_id=p_session,payment_intent=p_intent where id=p_order;
+    update stardust_wallets set blocked=true where user_id=p_user;
+    return;
+  end if;
+  update stardust_wallets set paid=paid+p_amount where user_id=p_user;
+  insert into stardust_ledger(user_id,kind,reference,paid_delta,reward_delta) values(p_user,'topup',p_order::text,p_amount,0);
+  update stardust_topups set status='paid',paid_at=now(),session_id=p_session,payment_intent=p_intent where id=p_order;
+  insert into stardust_mail(user_id,dedupe_key,subject,body) values(p_user,'topup:'||p_order,'Your Stardust top-up was successful · 星尘充值成功',p_amount||' STARS · Order / 订单 '||p_order);
+end $$;
+
+create or replace function public.stardust_risk_event(p_event text,p_type text,p_intent text) returns void
+language plpgsql security definer set search_path=public,pg_temp as $$
+declare uid uuid; begin
+  perform pg_advisory_xact_lock(hashtextextended(p_intent,0));
+  insert into stardust_webhooks(event_id,event_type,payment_intent,risk) values(p_event,p_type,p_intent,true) on conflict do nothing;
+  if not found then return; end if;
+  select user_id into uid from stardust_topups where payment_intent=p_intent;
+  if uid is not null then
+    perform 1 from stardust_wallets where user_id=uid for update;
+    update stardust_topups set status='review' where payment_intent=p_intent;
+    update stardust_wallets set blocked=true where user_id=uid;
+  end if;
+end $$;
+
+-- Renewal reminders and abandoned AI reservations. Call from the authenticated server cron.
+create or replace function public.stardust_maintenance() returns void
+language plpgsql security definer set search_path=public,pg_temp as $$
+declare r record; d integer; begin
+  for r in select id,user_id from stardust_requests where state='held' and expires_at<=now() order by user_id loop
+    perform stardust_release(r.id,r.user_id);
+  end loop;
+  foreach d in array array[7,1] loop
+    insert into stardust_mail(user_id,dedupe_key,subject,body)
+      select user_id,'renew:'||plan||':'||valid_until::text||':'||d,'Membership renewal reminder · 会员续费提醒',
+        plan||' · Expires / 到期 '||valid_until::text||' · No automatic renewal / 不自动续费'
+      from stardust_memberships where (valid_until at time zone 'Australia/Sydney')::date=((now() at time zone 'Australia/Sydney')::date+d)
+      on conflict(dedupe_key) do nothing;
+  end loop;
+end $$;
+
+-- Retry-safe outbox lease: sending workers cannot claim the same message concurrently.
+create or replace function public.stardust_claim_mail() returns setof public.stardust_mail
+language sql security definer set search_path=public,pg_temp as $$
+  update stardust_mail set state='sending',locked_at=now(),attempts=attempts+1 where id in
+    (select id from stardust_mail where state='pending' or (state='sending' and locked_at<now()-interval '10 minutes') order by created_at for update skip locked limit 20)
+  returning *;
+$$;
+do $$ declare r record; begin
+  for r in select p.oid::regprocedure as signature from pg_proc p join pg_namespace n on p.pronamespace=n.oid where n.nspname='public' and p.proname like 'stardust_%' loop
+    execute format('revoke all on function %s from public,anon,authenticated',r.signature);
+    execute format('grant execute on function %s to service_role',r.signature);
+  end loop;
+end $$;
+commit;

@@ -15,6 +15,7 @@ import { catalogCards, cardImagePath, cardMeaning, cardSlug } from '../lib/card-
 import { prepareThothDeck, readingDignities, type DrawnThothCard } from '../lib/reading-engine';
 import { useHandbookLanguage } from './handbook-shell';
 import styles from './thoth-reading.module.css';
+import { readingFetch } from '@/features/billing/lib/reading-fetch';
 
 type Session = {stage:'idle'|'shuffling'|'selecting'|'results';deck:DrawnThothCard[];picked:number[];complete:boolean};
 const emptySession:Session = {stage:'idle',deck:[],picked:[],complete:false};
@@ -29,6 +30,9 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
   const spread=readingSpreads.find(item=>item.id===spreadId);
   const [allowReversals,setAllowReversals]=useState(false);
   const [session,setSession]=useState<Session>(emptySession);
+  const [report,setReport]=useState<{id:string;interpretation:string[]}[]|null>(null);
+  const [billingPending,setBillingPending]=useState(false);
+  const [billingError,setBillingError]=useState('');
   const href=(id?:string)=>`/thoth-tarot/readings${id?`/${id}`:''}?lang=${language}`;
   const cardName=(card:typeof catalogCards[number])=>zh?cardNameZh(card):cardMeaning(card).title;
   const drawn=session.picked.map(index=>session.deck[index]);
@@ -47,7 +51,21 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
     router.replace(`${pathname}?${nextParams}`,{scroll:false});
   }
   function shuffle() {
+    setReport(null);setBillingError('');
     setSession({stage:'shuffling',deck:prepareThothDeck(catalogCards,allowReversals),picked:[],complete:false});
+  }
+
+  async function openReport() {
+    if(!spread||billingPending)return;
+    setBillingPending(true);setBillingError('');
+    try {
+      const response=await readingFetch('/api/thoth-reading',{spread:spread.id,language,cards:drawn.map(({card,reversed})=>({id:card.id,reversed}))});
+      const result=await response.json();
+      if(!response.ok)throw new Error(result.error||'Reading unavailable');
+      setReport(result.report);
+      setSession(current=>({...current,complete:true}));
+    }catch(error){setBillingError(error instanceof Error?error.message:'Reading unavailable');}
+    finally{setBillingPending(false);}
   }
   function pick(index:number) {
     if (!spread) return;
@@ -120,14 +138,15 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
           <div id="reading-progress" className="mt-6 text-center text-sm text-[var(--text-soft)]" role="status">{session.stage==='results'?text('抽牌完成。','Cards revealed.'):text('继续选择，牌阵完成后呈现解读。','Continue selecting to complete the spread.')}</div>
         </section>}
 
-        {session.stage==='results' && <section className="border-t border-[var(--border)] py-8" aria-labelledby="reading-results">
+        {session.stage==='results'&&!report&&<section className="space-y-4 border-t border-[var(--border)] py-6"><p className="text-sm text-[var(--text-soft)]">{text('优先使用免费或会员次数，否则本次完整牌阵解读为100 STARS，支付前会请你确认。','Free/member credits are used first; otherwise this complete reading costs 100 STARS, subject to your confirmation.')}</p>{billingError&&<p role="alert">{billingError}</p>}<div className="flex flex-wrap gap-3"><Button disabled={billingPending} onClick={()=>void openReport()}>{billingPending?text('处理中…','Processing…'):text('查看完整解读','View full reading')}</Button>{spread.successive&&!session.complete&&<Button variant="secondary" disabled={billingPending} onClick={()=>pick(session.deck.findIndex((_,index)=>!session.picked.includes(index)))}>{text('再抽一张','Draw another card')}</Button>}<ButtonLink href="/wallet" variant="ghost">{text('会员与钱包','Membership & Wallet')}</ButtonLink></div></section>}
+        {session.stage==='results' && report && <section className="border-t border-[var(--border)] py-8" aria-labelledby="reading-results">
           <h2 id="reading-results" className="text-2xl font-semibold">{text('你的解读','Your Reading')}</h2>
           {allowReversals && <p className="mt-4 text-sm leading-6 text-[var(--text-faint)]">{text('逆位牌保留其基础牌义，供你从阻力、内化或延迟的角度反思。','Reversed cards retain their base meaning for reflection on resistance, internalisation or delay.')}</p>}
           <div className="mt-6 space-y-5">{drawn.map(({card,reversed},index)=>{
             const position=spread.positions[spread.successive?0:index];
             const meaning=cardMeaning(card,language);
             const dignity=dignities[index];
-            const interpretation=!reversed && dignity==='well'?[meaning.wellDignified]:!reversed && dignity==='ill'?[meaning.illDignified]:meaning.meaning;
+            const interpretation=report.find(item=>item.id===card.id)?.interpretation||[];
             const dignityName={well:text('元素协调','Well-Dignified'),ill:text('元素受阻','Ill-Dignified'),neutral:text('元素中性','Neutral'),none:text('大阿尔卡那','Major Arcana')}[dignity];
             return <Card key={card.id} id={`reading-card-${index}`} className="scroll-mt-28"><CardContent className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] md:gap-8">
               <Link href={`/thoth-tarot/${cardSlug(card)}?lang=${language}`} aria-label={`${text('查看牌义','View meaning')}: ${cardName(card)}`} className="relative mx-auto block aspect-[3/5] w-full max-w-80 overflow-hidden rounded-[var(--radius-sm)] md:order-last"><Image src={cardImagePath(card)} alt={cardName(card)} fill sizes="(min-width:768px) 320px, 85vw" className={`object-contain ${reversed?'rotate-180':''}`} /></Link>
@@ -141,7 +160,7 @@ export function ThothReadings({spreadId}:{spreadId?:string}) {
           })}</div>
           {spread.successive && !session.complete && <div className="mt-6 flex flex-wrap gap-3"><Button onClick={()=>pick(session.deck.findIndex((_,index)=>!session.picked.includes(index)))}>{text('再抽一张','Draw Another Card')}</Button><Button variant="secondary" onClick={()=>setSession(current=>({...current,complete:true}))}>{text('完成本次解读','Complete the Reading')}</Button></div>}
           {spread.successive && session.complete && <p role="status" className="mt-5 text-sm text-[var(--text-soft)]">{text('本次解读已结束。','This reading is complete.')}</p>}
-          <div className="mt-8 flex flex-wrap gap-3 border-t border-[var(--border)] pt-6"><Button onClick={()=>setSession(emptySession)}>{text('重新开始','Start Again')}</Button><ButtonLink href={href()} variant="secondary">{text('其他牌阵','Other Spreads')}</ButtonLink></div>
+          <div className="mt-8 flex flex-wrap gap-3 border-t border-[var(--border)] pt-6"><Button onClick={()=>{setSession(emptySession);setReport(null);setBillingError('');}}>{text('重新开始','Start Again')}</Button><ButtonLink href={href()} variant="secondary">{text('其他牌阵','Other Spreads')}</ButtonLink></div>
         </section>}
       </>}
     </div>

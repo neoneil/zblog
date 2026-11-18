@@ -1,157 +1,114 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getStripe } from "@/features/billing/lib/stripe";
-import { createAdminClient } from "@/lib/supabase/admin";
-
-function getStringMetadata(
-  metadata: Stripe.Metadata | null | undefined,
-  key: string,
-) {
-  return metadata?.[key] ? String(metadata[key]) : "";
-}
-
-async function markOrderFailed(session: Stripe.Checkout.Session) {
-  const orderId = getStringMetadata(session.metadata, "order_id");
-
-  if (!orderId) return;
-
-  const supabase = createAdminClient();
-
-  await supabase
-    .from("ai_checkout_orders")
-    .update({
-      status: "failed",
-      stripe_payment_intent_id:
-        typeof session.payment_intent === "string" ? session.payment_intent : null,
-      stripe_customer_id:
-        typeof session.customer === "string" ? session.customer : null,
-    })
-    .eq("id", orderId);
-}
-
-async function fulfillCheckoutSession(session: Stripe.Checkout.Session) {
-  if (session.payment_status !== "paid") return;
-
-  const orderId = getStringMetadata(session.metadata, "order_id");
-  const userId = getStringMetadata(session.metadata, "user_id");
-  const productScope = getStringMetadata(session.metadata, "product_scope");
-  const packageDays = Number(getStringMetadata(session.metadata, "package_days"));
-
-  if (!orderId || !userId || !productScope || !Number.isFinite(packageDays)) {
-    throw new Error("Stripe session metadata is incomplete.");
-  }
-
-  const supabase = createAdminClient();
-
-  const { data: existingOrder } = await supabase
-    .from("ai_checkout_orders")
-    .select("status")
-    .eq("id", orderId)
-    .single();
-
-  if (existingOrder?.status === "paid") return;
-
-  const { data: validUntil, error: entitlementError } = await supabase.rpc(
-    "extend_ai_entitlement",
-    {
-      p_user_id: userId,
-      p_product_scope: productScope,
-      p_days: packageDays,
-    },
-  );
-
-  if (entitlementError) {
-    throw entitlementError;
-  }
-
-  await supabase
-    .from("ai_checkout_orders")
-    .update({
-      status: "paid",
-      stripe_checkout_session_id: session.id,
-      stripe_payment_intent_id:
-        typeof session.payment_intent === "string" ? session.payment_intent : null,
-      stripe_customer_id:
-        typeof session.customer === "string" ? session.customer : null,
-      entitlement_started_at: new Date().toISOString(),
-      entitlement_valid_until: validUntil,
-    })
-    .eq("id", orderId);
-}
+import {
+  billingSchema,
+  createBillingAdminClient,
+} from "@/features/billing/lib/billing-db";
 
 export async function POST(request: Request) {
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  if (!webhookSecret) {
-    return NextResponse.json(
-      { error: "Missing STRIPE_WEBHOOK_SECRET." },
-      { status: 500 },
-    );
-  }
-
   const signature = request.headers.get("stripe-signature");
-
-  if (!signature) {
+  if (!signature)
+    return NextResponse.json({ error: "Signature required" }, { status: 400 });
+  if (!process.env.STRIPE_WEBHOOK_SECRET)
     return NextResponse.json(
-      { error: "Missing stripe-signature header." },
-      { status: 400 },
+      { error: "Webhook not configured" },
+      { status: 503 },
     );
-  }
-
-  const rawBody = await request.text();
-  const stripe = getStripe();
   let event: Stripe.Event;
-
   try {
-    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Invalid Stripe webhook signature.";
-
-    return NextResponse.json({ error: message }, { status: 400 });
-  }
-
-  const supabase = createAdminClient();
-  const { error: eventInsertError } = await supabase
-    .from("stripe_webhook_events")
-    .insert({
-      stripe_event_id: event.id,
-      event_type: event.type,
-      payload: event as unknown as Record<string, unknown>,
-    });
-
-  if (eventInsertError?.code === "23505") {
-    return NextResponse.json({ received: true, duplicate: true });
-  }
-
-  if (eventInsertError) {
-    console.error("Stripe webhook event insert failed:", eventInsertError);
-
-    return NextResponse.json(
-      { error: "Failed to record webhook event." },
-      { status: 500 },
+    event = getStripe().webhooks.constructEvent(
+      await request.text(),
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET,
     );
+  } catch {
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
-
   try {
+    if (event.livemode !== (billingSchema() === "public"))
+      return NextResponse.json(
+        { error: "Payment environment mismatch" },
+        { status: 400 },
+      );
+    const db = createBillingAdminClient();
     if (
       event.type === "checkout.session.completed" ||
       event.type === "checkout.session.async_payment_succeeded"
     ) {
-      await fulfillCheckoutSession(event.data.object as Stripe.Checkout.Session);
+      const session = event.data.object as Stripe.Checkout.Session;
+      // Old time-pack checkouts cannot grant access. Their historical records remain intact.
+      if (session.metadata?.flow !== "stardust_topup")
+        return NextResponse.json({ received: true, retired: true });
+      if (session.payment_status !== "paid")
+        return NextResponse.json({ received: true, pending: true });
+      if (
+        session.mode !== "payment" ||
+        session.currency !== "aud" ||
+        !session.metadata.user_id ||
+        session.client_reference_id !== session.metadata.user_id ||
+        !session.metadata.order_id ||
+        typeof session.payment_intent !== "string" ||
+        !Number.isSafeInteger(session.amount_total) ||
+        !session.amount_total ||
+        session.amount_total < 0
+      )
+        throw new Error("PAYMENT_MISMATCH");
+      const { error } = await db.rpc("stardust_credit_topup", {
+        p_event: event.id,
+        p_type: event.type,
+        p_order: session.metadata.order_id,
+        p_user: session.metadata.user_id,
+        p_session: session.id,
+        p_intent: session.payment_intent,
+        p_amount: session.amount_total,
+        p_currency: session.currency,
+      });
+      if (error) throw error;
+    } else if (
+      event.type === "checkout.session.expired" ||
+      event.type === "checkout.session.async_payment_failed"
+    ) {
+      const session = event.data.object as Stripe.Checkout.Session;
+      if (session.metadata?.flow === "stardust_topup") {
+        const { error } = await db
+          .from("stardust_topups")
+          .update({
+            status:
+              event.type === "checkout.session.expired" ? "expired" : "failed",
+          })
+          .eq("id", session.metadata.order_id)
+          .eq("user_id", session.metadata.user_id)
+          .eq("session_id", session.id)
+          .eq("status", "pending");
+        if (error) throw error;
+      }
+    } else if (
+      event.type === "charge.refunded" ||
+      event.type === "charge.dispute.created"
+    ) {
+      const charge = event.data.object as Stripe.Charge | Stripe.Dispute;
+      const intent =
+        typeof charge.payment_intent === "string"
+          ? charge.payment_intent
+          : charge.payment_intent?.id;
+      if (intent) {
+        const { error } = await db.rpc("stardust_risk_event", {
+          p_event: event.id,
+          p_type: event.type,
+          p_intent: intent,
+        });
+        if (error) throw error;
+      }
     }
-
-    if (event.type === "checkout.session.async_payment_failed") {
-      await markOrderFailed(event.data.object as Stripe.Checkout.Session);
-    }
-  } catch (error) {
-    console.error("Stripe webhook fulfillment failed:", error);
-
+    return NextResponse.json({ received: true });
+  } catch {
+    console.error(
+      "STARDUST webhook transaction failed; Stripe retry is required",
+    );
     return NextResponse.json(
-      { error: "Webhook fulfillment failed." },
+      { error: "Fulfillment pending; retry required" },
       { status: 500 },
     );
   }
-
-  return NextResponse.json({ received: true });
 }

@@ -1,5 +1,6 @@
 
 "use client";
+import { readingFetch } from "@/features/billing/lib/reading-fetch";
 
 import { useMemo, useRef, useState } from "react";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
@@ -58,22 +59,12 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
     setStage("reading");
 
     try {
-      const res = await fetch("/api/tarot-reading", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          question,
-          cards,
-          mode,
-        }),
-      });
+      const res = await readingFetch("/api/tarot-reading", {question,cards,mode});
 
       const data = await res.json();
 
       if (!res.ok) {
-        if (data?.code === "daily_limit_reached") {
+        if (data?.code === "insufficient" || data?.code === "unpriced") {
           setDailyLimitReached(true);
         }
 
@@ -202,11 +193,9 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
 
   const accessLabel = accessStatus.isAdmin
     ? null
-    : accessStatus.isPaid
-      ? t({ zh: "已开通付费权限，无限制使用", en: "Your paid access is active." })
-      : dailyLimitReached
-        ? t({ zh: "今日免费次数已用完", en: "Today's free reading has been used." })
-        : t({ zh: "普通用户每日可免费使用 1 次", en: "One free reading is available each day." });
+    : dailyLimitReached
+      ? t({zh:"暂无可用次数或积分，请前往星尘钱包。",en:"No available allowance or STARS. Visit your wallet."})
+      : t({zh:`剩余免费／会员次数 ${accessStatus.remainingReadings??0}；积分付费前会请你确认。`,en:`${accessStatus.remainingReadings??0} free/member readings remain. STARS payments require confirmation.`});
 
   const collected = stage === "gathering" || stage === "ready" || stage === "revealing" || stage === "reading" || stage === "done";
   const canFlip = stage === "ready" || stage === "revealing";
@@ -253,7 +242,7 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
               {stage !== "idle" && <button type="button" onClick={handleReset} disabled={loading}
                 className={styles.reset} aria-label={t({ zh: "重置抽牌", en: "Reset reading" })} title={t({ zh: "重置抽牌", en: "Reset reading" })}>↺</button>}
             </div>
-            {dailyLimitReached && <p className={styles.notice}>{t({ zh: "今日免费次数已用完，开通塔罗解读时长包后可继续使用。", en: "Today's free reading has been used. Purchase a tarot reading time pass to continue." })}</p>}
+            {dailyLimitReached && <p className={styles.notice}>{t({ zh: "暂无可用次数或足够积分，请前往会员与钱包查看。", en: "No allowance or sufficient STARS available. Please check Membership & Wallet." })}</p>}
             <p className={styles.stageStatus} role="status">
               {stage === "shuffling" && t({ zh: "静心片刻，准备好时停止洗牌", en: "Take a quiet moment, then stop shuffling when you are ready." })}
               {stage === "selecting" && t({ zh: `凭直觉，依次选择属于你的${countLabel}张牌`, en: `Follow your intuition and select ${cardCount} cards.` })}

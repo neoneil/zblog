@@ -1,0 +1,19 @@
+import { requireUser } from "@/lib/auth/require-user";
+import { walletSnapshot } from "@/features/billing/lib/stardust-server";
+import { WalletClient } from "@/features/billing/components/wallet-client";
+import { PageShell } from "@/components/site/page-shell";
+import { billingSchema } from "@/features/billing/lib/billing-db";
+
+export default async function WalletPage() {
+  await requireUser("/wallet");
+  const snapshot = await walletSnapshot();
+  return (
+    <PageShell className="px-4 py-8 sm:px-6">
+      <WalletClient
+        sandbox={billingSchema() === "stardust_sandbox"}
+        snapshot={snapshot}
+        checkoutEnabled={process.env.STARDUST_CHECKOUT_ENABLED === "true"}
+      />
+    </PageShell>
+  );
+}

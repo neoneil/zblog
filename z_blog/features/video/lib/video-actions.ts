@@ -10,6 +10,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { createClient } from "@/lib/supabase/server";
+import { billingUser, walletSnapshot } from "@/features/billing/lib/stardust-server";
 
 const R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET ?? "videos";
 const R2_PREFIX = "videos/";
@@ -283,6 +284,15 @@ export async function listAdminVideos(): Promise<AdminVideoItem[]> {
 }
 
 export async function listPublishedVideos(category?: string): Promise<AdminVideoItem[]> {
+  const courseCategories=['course-waite','course-thoth','course-astrology'];
+  if(category&&courseCategories.includes(category)) {
+    const context=await billingUser();
+    if(!context)return [];
+    if(!context.isAdmin) {
+      const snapshot=await walletSnapshot();
+      if(!snapshot?.ready||snapshot.wallet?.blocked||(!snapshot.memberships.some(item=>item.plan==='annual')&&!snapshot.courses.some(item=>`course-${item.course}`===category)))return [];
+    }
+  }
   const supabase = await createClient();
   let query = supabase
     .from("videos")
@@ -293,6 +303,8 @@ export async function listPublishedVideos(category?: string): Promise<AdminVideo
 
   if (category && category !== "all") {
     query = query.eq("category", category);
+  } else {
+    query = query.not('category','in','(course-waite,course-thoth,course-astrology)');
   }
 
   const { data, error } = await query;

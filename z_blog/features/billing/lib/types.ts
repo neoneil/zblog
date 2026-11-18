@@ -7,4 +7,6 @@ export type AiAccessStatus = {
   usedToday: boolean;
   remainingToday: number;
   validUntil: string | null;
+  remainingReadings?: number;
+  availableStars?: number;
 };

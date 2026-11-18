@@ -8,6 +8,7 @@ import Navbar from "@/components/site/navbar";
 import Footer from "@/components/site/footer";
 import { Analytics } from "@vercel/analytics/next";
 import { PreferencesProvider } from "@/components/site/preferences-provider";
+import ReadingConsent from "@/features/billing/components/reading-consent";
 
 export const metadata: Metadata = {
   title: {
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="zh-CN" data-theme="dark" suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <PreferencesProvider>
+          <ReadingConsent />
           <div className="flex min-h-screen flex-col">
             <Navbar />
             <div className="flex-1">{children}</div>
