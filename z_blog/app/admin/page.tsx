@@ -70,6 +70,9 @@ export default async function AdminPage() {
       <PageSection className="pt-0">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {profile.role === "admin" && (
+            <FeatureCard title="沙龙与活动" description="管理活动、价格、发布时间与报名名单，审核并确认名额。" href="/admin/events" badge="Events" meta="仅管理员" />
+          )}
+          {profile.role === "admin" && (
             <FeatureCard title="会员与充值订单" description="查看 Stripe 充值记录与支付状态。" href="/admin/billing" badge="Billing" meta="仅管理员" />
           )}
           {profile.role === "admin" && (

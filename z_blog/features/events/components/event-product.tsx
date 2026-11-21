@@ -1,14 +1,14 @@
 "use client";
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { CalendarDays, MapPin, Users } from 'lucide-react';
 import { Button, ButtonLink } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { usePreferences } from '@/components/site/preferences-provider';
 import { eventDate, eventStatus, statusCopy, type EventRecord } from '../lib/events';
 
-export default function EventProduct({initialEvent,initialNow}:{initialEvent:EventRecord|null;initialNow:number}) {
+export default function EventProduct({initialEvent,initialNow,registration}:{initialEvent:EventRecord|null;initialNow:number;registration:ReactNode}) {
   const {t,language}=usePreferences();
   const [event,setEvent]=useState(initialEvent);
   const [now,setNow]=useState(initialNow);
@@ -42,7 +42,7 @@ export default function EventProduct({initialEvent,initialNow}:{initialEvent:Eve
         <dl className="space-y-4 border-y border-[var(--border)] py-5 text-sm"><div><dt className="mb-1 flex items-center gap-2"><CalendarDays size={17}/>{t({zh:'活动时间',en:'Date & time'})}</dt><dd>{eventDate(event,language)} · {event.timezone}</dd></div><div><dt className="mb-1 flex items-center gap-2"><MapPin size={17}/>{t({zh:'地点',en:'Location'})}</dt><dd>{event[language==='zh'?'location_zh':'location_en']}</dd></div><div><dt className="mb-1 flex items-center gap-2"><Users size={17}/>{t({zh:'名额',en:'Places'})}</dt><dd>{Math.max(0,event.capacity-event.booked_count)} / {event.capacity}</dd></div></dl>
         <p className="my-6 whitespace-pre-line text-sm leading-7">{event[language==='zh'?'description_zh':'description_en']}</p>
         {!available&&<p role="alert" className="mb-4 text-sm text-[var(--danger)]">{t({zh:'暂时无法确认最新名额，报名已暂停。',en:'Availability cannot be confirmed. Registration is paused.'})}</p>}
-        <Button disabled>{!available?t({zh:'暂不可报名',en:'Registration unavailable'}):status!=='open'?t(statusCopy[status]):event.is_demo?t({zh:'演示活动 · 不接受付款',en:'Demo event · No payments'}):t({zh:'在线报名即将开放',en:'Online registration coming soon'})}</Button>
+        {available && status === 'open' ? registration : <><Button disabled>{!available?t({zh:'暂不可报名',en:'Registration unavailable'}):t(statusCopy[status])}</Button><div className="mt-4"><ButtonLink href="/events/my-registrations" variant="ghost">{t({zh:'查看我的报名',en:'My registrations'})}</ButtonLink></div></>}
         <div className="mt-5"><ButtonLink href="/#home-events" variant="secondary">{t({zh:'查看其他活动',en:'Other events'})}</ButtonLink></div>
       </article>
     </div>}

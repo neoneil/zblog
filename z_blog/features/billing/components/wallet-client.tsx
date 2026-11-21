@@ -37,6 +37,11 @@ export function WalletClient({
   const params = useSearchParams();
   const [pending, startTransition] = useTransition();
   const [message, setMessage] = useState("");
+  const [stalledTopup, setStalledTopup] = useState<string | null>(null);
+  const topupPolling = useRef<{ order: string | null; attempts: number }>({
+    order: null,
+    attempts: 0,
+  });
   const [purchase, setPurchase] = useState<{
     sku: string;
     stars: number;
@@ -69,10 +74,17 @@ export function WalletClient({
       topupState === "review"
     )
       return;
-    let count = 0;
+    if (topupPolling.current.order !== topup) {
+      topupPolling.current = { order: topup, attempts: 0 };
+    }
+    if (topupPolling.current.attempts >= 15) return;
     const timer = window.setInterval(() => {
+      topupPolling.current.attempts += 1;
       router.refresh();
-      if (++count >= 15) window.clearInterval(timer);
+      if (topupPolling.current.attempts >= 15) {
+        window.clearInterval(timer);
+        setStalledTopup(topup);
+      }
     }, 4000);
     return () => window.clearInterval(timer);
   }, [topup, topupState, router]);
@@ -215,10 +227,15 @@ export function WalletClient({
                     zh: "此支付未完成，请重新发起充值。",
                     en: "Payment was not completed. Please start again.",
                   })
-                : t({
-                    zh: "正在等待支付确认，请稍后刷新。请勿重复付款。",
-                    en: "Awaiting payment confirmation. Please refresh shortly; do not pay again.",
-                  })}
+                : stalledTopup === topup
+                  ? t({
+                      zh: "支付确认延迟，已暂停自动查询。如果 Stripe 已显示付款成功，请勿再次付款，请联系管理员核对回调并恢复原订单。",
+                      en: "Payment confirmation is delayed and automatic checks have stopped. If Stripe shows payment succeeded, do not pay again. Contact support to verify the callback and recover the original order.",
+                    })
+                  : t({
+                      zh: "正在等待支付确认，请稍后刷新。请勿重复付款。",
+                      en: "Awaiting payment confirmation. Please refresh shortly; do not pay again.",
+                    })}
         </p>
       )}
       {message && (

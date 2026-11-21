@@ -46,6 +46,7 @@ export default function AboutUsPage() {
         <section className={styles.hero} aria-labelledby="about-us-title">
           <Image
             src="/about/two-sides-one-universe.png"
+            data-brand-art
             alt={t({
               zh: "现实中的自己与星辰下的另一个自己，在湖畔相遇",
               en: "Two sides of the founder meet beneath the stars beside a lake",
@@ -131,26 +132,6 @@ export default function AboutUsPage() {
               </ul>
               <p>{t(content.purpose.invitation)}</p>
             </div>
-          </section>
-          <section
-            id="a-letter-for-you"
-            className={`${styles.section} ${styles.letter}`}
-            data-about-section
-          >
-            <header>
-              <span className={styles.index}>03 · STELLARNESTS</span>
-              <h2>{t(content.letter.title)}</h2>
-            </header>
-            <p className={styles.salutation}>{t(content.letter.salutation)}</p>
-            <div className={styles.prose}>
-              {content.letter.paragraphs.map((copy, index) => (
-                <p key={index}>{t(copy)}</p>
-              ))}
-            </div>
-            <footer className={styles.signature}>
-              <p>{t(content.letter.signoff)}</p>
-              <p>{t(content.letter.signature)}</p>
-            </footer>
           </section>
         </div>
       </Container>

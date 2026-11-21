@@ -47,6 +47,8 @@ export function ExploreShell({
   children,
   signs,
   tools = stellaTools,
+  afterTools,
+  toolsHeading,
 }: {
   title: Copy;
   description: Copy;
@@ -54,6 +56,8 @@ export function ExploreShell({
   children: React.ReactNode;
   signs?: number[];
   tools?: readonly (typeof stellaTools)[number][];
+  afterTools?: React.ReactNode;
+  toolsHeading?: Copy;
 }) {
   const { t } = useExplore();
   return (
@@ -73,19 +77,22 @@ export function ExploreShell({
         </header>
         {children}
         <section className={styles.section}>
-          <h2>{t({ en: "Explore", zh: "探索星象" })}</h2>
+          <h2>{t(toolsHeading ?? { en: "Explore", zh: "探索星象" })}</h2>
           <div className={styles.grid}>
-            {tools.map((tool) => (
+            {tools.map((tool, index) => (
               <Link
                 className={styles.link}
                 key={tool.slug}
                 href={stellaHref(tool.slug)}
+                data-stella-tool={tool.slug || 'calculator'}
+                data-tool-index={index + 1}
               >
                 {t(tool)}
                 <ArrowRight aria-hidden size={16} />
               </Link>
             ))}
           </div>
+          {afterTools}
         </section>
         <p className={styles.small}>
           {t({

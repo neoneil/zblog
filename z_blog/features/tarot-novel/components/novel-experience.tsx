@@ -11,7 +11,6 @@ import {
   type PointerEvent,
 } from "react";
 import {
-  ArrowDown,
   ArrowLeft,
   ArrowRight,
   ArrowUp,
@@ -31,7 +30,6 @@ import {
   guardians,
   guardianIntroduction,
   novelTitle,
-  plannedChapters,
   protagonists,
   promotion,
   synopsis,
@@ -39,7 +37,6 @@ import {
   type NovelCopy,
   type PlannedChapter,
 } from "../lib/novel-world";
-import { youtubeEmbed } from "../lib/youtube";
 import ReaderComments from "./reader-comments";
 import styles from "./novel-world.module.css";
 
@@ -138,18 +135,15 @@ function Art({
 }
 
 function Heading({
-  number,
   title,
   subtitle,
 }: {
-  number: string;
   title: NovelCopy;
   subtitle?: NovelCopy;
 }) {
   const { t } = useNovelText();
   return (
     <header className={styles.sectionHeading}>
-      <span className={styles.eyebrow}>{number} · STARDUST STORIES</span>
       <h2>{t(title)}</h2>
       {subtitle && <p>{t(subtitle)}</p>}
     </header>
@@ -184,17 +178,12 @@ function ChapterDirectory({
   chapters: NovelChapter[];
   initialAct?: number;
 }) {
-  const { t, text, language } = useNovelText();
+  const { t, text } = useNovelText();
   const [actNumber, setActNumber] = useState(initialAct);
-  const [selected, setSelected] = useState((initialAct - 1) * 10 + 1);
-  const current = plannedChapters.find((item) => item.number === selected)!;
-  const published = chapters.find((item) => item.chapter_number === selected);
-  const embed = youtubeEmbed(published?.youtube_url ?? null);
-  const href = `/tarot-novel/${published?.slug ?? current.slug}`;
+  const currentAct = acts.find((act) => act.number === actNumber) ?? acts[0];
   return (
     <section id="chapters" className={styles.section} data-reveal>
       <Heading
-        number="02"
         title={{
           zh: "故事进度 · 五幕五十章",
           en: "Story Progress · Five Acts, Fifty Chapters",
@@ -214,60 +203,35 @@ function ChapterDirectory({
             key={act.number}
             variant={act.number === actNumber ? "secondary" : "ghost"}
             aria-pressed={act.number === actNumber}
-            onClick={() => {
-              setActNumber(act.number);
-              setSelected(act.chapters[0].number);
-            }}
+            onClick={() => setActNumber(act.number)}
           >
             {t(act.name)}
           </Button>
         ))}
       </div>
       <div className={styles.chapterLayout}>
-        <Card className={styles.preview}>
-          <CardContent className="p-5 sm:p-7">
-            <span className={styles.eyebrow}>
-              {text("当前章节", "Current chapter")} ·{" "}
-              {String(selected).padStart(2, "0")}
-            </span>
+        <Card className={styles.preview} data-act-preview={currentAct.number}>
+          <CardContent className="p-0">
             <div className={styles.previewInner}>
-              {embed ? (
-                <iframe
-                  src={embed}
-                  className={styles.previewVideo}
-                  title={text("章节视频", "Chapter video")}
-                  allow="encrypted-media; picture-in-picture"
-                  allowFullScreen
-                />
-              ) : (
-                <Image
-                  src={acts[current.act - 1].image}
-                  alt={t(acts[current.act - 1].name)}
-                  width={320}
-                  height={180}
-                  className={styles.previewImage}
-                  sizes="240px"
-                />
-              )}
-              <div>
-                <h3>
-                  {published
-                    ? published[`subtitle_${language}`]
-                    : t(current.title)}
-                </h3>
-                <p>{t(current.summary)}</p>
-                <p className={styles.status}>
-                  {published
-                    ? text("已发布", "Published")
-                    : text(
-                        "章节规划 · 正文待更新",
-                        "Chapter outline · Story coming soon",
-                      )}
+              <Image
+                src={currentAct.image}
+                alt={t(currentAct.name)}
+                width={1200}
+                height={680}
+                className={styles.previewImage}
+                sizes="(min-width: 1024px) 78vw, 100vw"
+              />
+              <div className={styles.previewCopy}>
+                <span className={styles.eyebrow}>
+                  {text(
+                    `第 ${currentAct.chapters[0].number}–${currentAct.chapters.at(-1)!.number} 章`,
+                    `Chapters ${currentAct.chapters[0].number}–${currentAct.chapters.at(-1)!.number}`,
+                  )}
+                </span>
+                <h3>{t(currentAct.name)}</h3>
+                <p data-act-summary className={styles.actSummary}>
+                  {t(currentAct.content)}
                 </p>
-                <ButtonLink href={href} variant="secondary">
-                  <BookOpen size={16} />
-                  {text("阅读本章节", "Read this chapter")}
-                </ButtonLink>
               </div>
             </div>
           </CardContent>
@@ -276,68 +240,32 @@ function ChapterDirectory({
           className={styles.chapterList}
           aria-label={text("章节目录", "Chapter directory")}
         >
-          {plannedChapters
-            .filter((item) => item.act === actNumber)
-            .map((item) => (
-              <Button
+          {currentAct.chapters.map((item) => {
+            const published = chapters.find(
+              (row) => row.chapter_number === item.number,
+            );
+            return (
+              <ButtonLink
                 key={item.number}
+                href={`/tarot-novel/${published?.slug ?? item.slug}`}
+                data-chapter-number={item.number}
                 className={styles.chapterButton}
-                variant={selected === item.number ? "secondary" : "ghost"}
-                aria-pressed={selected === item.number}
-                onClick={() => setSelected(item.number)}
+                variant="ghost"
               >
                 <span>{String(item.number).padStart(2, "0")}</span>
                 <span>{t(item.title)}</span>
-                {chapters.some((row) => row.chapter_number === item.number) && (
+                {published && (
                   <BookOpen
                     size={14}
                     aria-label={text("已发布", "Published")}
                   />
                 )}
-              </Button>
-            ))}
+              </ButtonLink>
+            );
+          })}
         </div>
       </div>
     </section>
-  );
-}
-
-function ActCards() {
-  const { t, text } = useNovelText();
-  return (
-    <div className={styles.actGrid}>
-      {acts.map((act) => (
-        <Link
-          className={styles.actCard}
-          key={act.number}
-          href={`/tarot-novel/acts/${act.slug}`}
-          onPointerMove={tilt}
-          onPointerLeave={resetTilt}
-        >
-          <Image
-            src={act.image}
-            alt={t(act.name)}
-            width={1200}
-            height={680}
-            sizes="(max-width: 767px) 100vw, 560px"
-          />
-          <div>
-            <span className={styles.eyebrow}>
-              {text(
-                `第 ${(act.number - 1) * 10 + 1}–${act.number * 10} 章`,
-                `Chapters ${(act.number - 1) * 10 + 1}–${act.number * 10}`,
-              )}
-            </span>
-            <h3>{t(act.name)}</h3>
-            <p>{t(act.content)}</p>
-            <span className={styles.linkText}>
-              {text("探索本幕", "Explore this act")}
-              <ArrowRight size={16} />
-            </span>
-          </div>
-        </Link>
-      ))}
-    </div>
   );
 }
 
@@ -381,6 +309,7 @@ export function NovelLanding({
       <div className={styles.heroMedia}>
         <Image
           src="/stardust-stories-hero.png"
+          data-brand-art
           alt={text(
             "白雪公主、禁果与死亡的星辰世界",
             "Snow White, the forbidden apple, and a celestial world of death",
@@ -406,16 +335,6 @@ export function NovelLanding({
               "Seven stars. One lost goddess. A forbidden apple that could end the reign of the gods.",
             )}
           </p>
-          <div className={styles.actions}>
-            <ButtonLink href="#chapters" variant="secondary">
-              <BookOpen size={17} />
-              {text("开始阅读", "Start reading")}
-            </ButtonLink>
-            <ButtonLink href="#synopsis" variant="ghost">
-              {text("探索故事", "Explore the story")}
-              <ArrowDown size={17} />
-            </ButtonLink>
-          </div>
         </header>
       </div>
     </section>
@@ -430,7 +349,6 @@ export function NovelLanding({
         aria-label={text("小说导览", "Novel navigation")}
       >
         {[
-          ["acts", "五幕故事", "Five Acts"],
           ["chapters", "章节目录", "Chapters"],
           ["synopsis", "故事概要", "Synopsis"],
           ["relationships", "人物关系网", "Relationships"],
@@ -439,30 +357,37 @@ export function NovelLanding({
           ["trials", "命运试炼", "Trials"],
           ["forbidden-apple", "禁果之谜", "The Apple"],
         ].map(([id, zh, en]) => (
-          <Link href={`#${id}`} key={id}>
+          <ButtonLink href={`#${id}`} key={id} variant="secondary" size="lg" className={styles.jumpLink}>
             {text(zh, en)}
-          </Link>
+          </ButtonLink>
         ))}
       </nav>
-      <section id="acts" className={styles.section}>
-        <Heading
-          number="01"
-          title={{
-            zh: "五幕故事 · 从苏醒到审判",
-            en: "Five Acts · From Awakening to Judgment",
-          }}
-        />
-        <ActCards />
-      </section>
       <ChapterDirectory chapters={chapters} />
       <section id="synopsis" className={styles.section} data-reveal>
-        <Heading
-          number="03"
-          title={{
-            zh: "一个童话背后，未曾结束的审判",
-            en: "Behind a Fairy Tale, a Judgment That Never Ended",
-          }}
-        />
+        <div className={styles.synopsisArtwork}>
+          <Image
+            src="/home-stellarnests-hero.png"
+            data-brand-art
+            alt={text("北极星与星辰命运图", "Polaris and the celestial chart of destiny")}
+            width={1774}
+            height={887}
+            sizes="(max-width: 1200px) 100vw, 1152px"
+          />
+          <div className={styles.synopsisCopy}>
+            <p className={styles.synopsisEyebrow}>
+              {text("北极星 · 指引之星", "POLARIS · THE GUIDING STAR")}
+            </p>
+            <p className={styles.synopsisBrand}>
+              {text("星辰之巢", "STELLARNESTS")}
+            </p>
+            <p className={styles.synopsisMotto}>
+              {text("身处混沌，始终自有中心。", "Amidst Chaos, Always Centered.")}
+            </p>
+            <h2 className={styles.synopsisTitle}>
+              {text("一个童话背后，未曾结束的审判", "Behind a Fairy Tale, a Judgment That Never Ended")}
+            </h2>
+          </div>
+        </div>
         <div className={styles.synopsis}>
           <p className={styles.lead}>
             {text(
@@ -475,7 +400,6 @@ export function NovelLanding({
       </section>
       <section className={styles.section} data-reveal>
         <Heading
-          number="04"
           title={{ zh: "人物与命运档案", en: "Characters & Destiny Archives" }}
         />
         <div className={styles.archiveGrid}>
@@ -526,7 +450,6 @@ export function NovelLanding({
       </section>
       <section id="astrology" className={styles.section} data-reveal>
         <Heading
-          number="05"
           title={{ zh: "星辰神权体系", en: "Astrology · The Celestial Order" }}
           subtitle={{
             zh: "北极星、七大古典行星与三大外行星，交织成 STELLARNESTS 的星辰世界。",
@@ -585,7 +508,6 @@ export function NovelLanding({
       </section>
       <section id="trials" className={styles.section} data-reveal>
         <Heading
-          number="06"
           title={{
             zh: "塔罗 · 人物命运原型",
             en: "Tarot · Archetypes of Destiny",
@@ -676,7 +598,6 @@ export function NovelLanding({
       </section>
       <section id="forbidden-apple" className={styles.section} data-reveal>
         <Heading
-          number="07"
           title={{
             zh: "禁果衍生系列 · 原初审判禁果",
             en: "The Forbidden Apple · The Original Judgment",
@@ -704,7 +625,6 @@ export function NovelLanding({
       </section>
       <section className={`${styles.section} ${styles.ending}`} data-reveal>
         <Heading
-          number="08"
           title={{ zh: "星尘物语", en: "Stardust Stories" }}
         />
         <Paragraphs value={closing} />

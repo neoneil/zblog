@@ -19,6 +19,8 @@
   --hero-brand-ink: #ecdca9;
   --hero-brand-muted: #c5b89d;
   --hero-brand-rule: rgba(236, 220, 169, .32);
+  --home-explore-ink: var(--accent-hover);
+  --home-explore-muted: var(--primary-muted);
   --explore-bg: #0f0c29;
   --explore-surface: #19153b;
   --explore-calendar: #19162f;
@@ -164,6 +166,8 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
+  --home-explore-ink: var(--primary);
+  --home-explore-muted: color-mix(in srgb, var(--primary) 75%, var(--text) 25%);
   --title-ink: var(--title-ink-dark);
   --subtitle-ink: var(--subtitle-ink-dark);
   --reading-ink: var(--reading-ink-dark);

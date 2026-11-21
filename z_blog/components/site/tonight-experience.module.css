@@ -1,0 +1,33 @@
+.artwork {
+  position: relative;
+}
+.actions {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: center;
+  gap: 12px;
+  width: min(600px, 90%);
+  margin-inline: auto;
+}
+.actions > a,
+.actions > button {
+  height: auto;
+  min-height: 44px;
+  padding: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: normal;
+  color: var(--title-ink-dark);
+  border-color: var(--title-ink-dark);
+  background: var(--home-hero-button);
+}
+.actions > :is(a, button):is(:hover, :focus-visible) {
+  background: var(--home-hero-button-hover);
+  box-shadow: 0 0 20px var(--navigation-glow);
+}
+@media (min-width: 640px) {
+  .actions { gap: 24px; }
+  .actions > a, .actions > button { min-height: 56px; padding: 12px 20px; font-size: 18px; }
+}

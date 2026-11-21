@@ -7,7 +7,12 @@ export const novelTitle = copy(
   "DEATH'S FORBIDDEN APPLE: JUDGMENT OF THE GODS",
 );
 export const synopsis = copy(
-  source.synopsis.join("\n\n"),
+  // Preserve every original sentence, grouped by narrative beat for reading.
+  [0, 1, 4, 6, 10, 12, 16, 19, 22, 25, 27, 30, 33, 38, 40, 43, 47, 49, 52]
+    .map((start, index, starts) =>
+      source.synopsis.slice(start, starts[index + 1]).join(""),
+    )
+    .join("\n\n"),
   `Seven stars. One lost goddess. A forbidden apple that could end the reign of the gods.
 
 Everyone knows Snow White: a beautiful princess eats a witch's poisoned apple, falls into eternal sleep, and awakens to a prince's kiss and a happy ending. But what if that thousand-year-old fairy tale was an elaborate lie from the beginning?

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, Globe, Hash, Heart, Layers, Sparkles } from "lucide-react";
+import { BookOpen, Globe, Hash, Heart, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ButtonLink } from "@/components/ui/button";
 import { usePreferences, type LocalizedCopy } from "./preferences-provider";
@@ -18,48 +18,7 @@ type Entry = {
   guide?: string;
   image?: string;
 };
-const tarotEntries: Entry[] = [
-  {
-    title: { en: "RIDER–WAITE READING", zh: "韦特占卜" },
-    description: {
-      en: "Explore Love Tarot, Yes/No, One-Card and Three-Card Readings — Find Clarity, Guidance, and New Perspectives.",
-      zh: "探索爱情塔罗、是非占卜、单张牌与三张牌阵，寻找答案、指引与全新视角。",
-    },
-    href: "/tarot-ai",
-    icon: Sparkles,
-    image: "/knowledge/waite-reading.png",
-  },
-  {
-    title: { en: "RIDER–WAITE LIBRARY", zh: "韦特秘典" },
-    description: {
-      en: "Explore All 78 Tarot Cards — Discover Their Imagery, Decode Hidden Symbols, Learn Through Real Examples, and Master Practical Readings.",
-      zh: "探索韦特塔罗78张牌的画面奥秘，解读隐藏符号，结合真实案例，掌握实战占卜技巧。",
-    },
-    href: "/feishu-docs",
-    icon: BookOpen,
-    image: "/knowledge/waite-library.png",
-  },
-  {
-    title: { en: "THOTH TAROT READING", zh: "透特占卜" },
-    description: {
-      en: "Explore the Tree of Life, Abyss Crossing, Four Worlds, Golden Dawn 15-Card Method, One-Card Oracle, and Sacred Union — Six Mystical Spreads to Unveil Hidden Wisdom and Illuminate Your Path.",
-      zh: "探索生命之树、跨越深渊、四重世界、黄金黎明十五张牌阵、单张神谕与神圣结合六大牌阵，揭示隐秘智慧，照亮命运之路。",
-    },
-    href: "/thoth-tarot/readings",
-    icon: Sparkles,
-    image: "/knowledge/thoth-reading.png",
-  },
-  {
-    title: { en: "THOTH TAROT LIBRARY", zh: "透特秘典" },
-    description: {
-      en: "Explore All 78 Thoth Tarot Cards — Uncover Their Meanings, Elemental Energies, and Hidden Wisdom.",
-      zh: "探索透特塔罗78张牌的深层牌义、元素能量与状态，揭开每张牌蕴藏的神秘智慧。",
-    },
-    href: "/thoth-tarot",
-    icon: Layers,
-    image: "/knowledge/thoth-library.png",
-  },
-];
+import { tarotCollections, tarotSectionCopy } from '@/features/tarot/lib/entry-catalog';
 const calculatorEntries: Entry[] = [
   {
     title: { en: "NATAL CHART", zh: "本命星图" },
@@ -127,16 +86,17 @@ function EntryCard({ entry }: { entry: Entry }) {
     </Card>
   );
 }
-export function TarotHomeSection() {
+export function TarotCollection({ kind }: { kind: keyof typeof tarotCollections }) {
   const { t, language } = usePreferences();
+  const collection = tarotCollections[kind];
   return (
-    <section className={styles.section} id="home-tarot">
+    <section className={styles.section} id={`tarot-${kind}-collection`}>
       <header>
-        <h2 className={styles.goldHeading}>{t({ en: "TAROT ORACLES", zh: "塔罗神谕" })}</h2>
-        <div className={`${archiveStyles.subtitle} mt-3`}>{t({ en: "Seventy-eight mirrors of insight, revealing the unseen within.", zh: "七十八张命运之镜，映照心灵深处的答案。" })}</div>
+        <h1 className={styles.goldHeading}>{t(collection.title)}</h1>
+        <div className={`${archiveStyles.subtitle} mt-3`}>{t(tarotSectionCopy.description)}</div>
       </header>
-      <div className={archiveStyles.grid}>
-        {tarotEntries.map((entry) => <Link key={entry.href} href={entry.href === "/thoth-tarot/readings" ? `${entry.href}?lang=${language}` : entry.href} className="group block h-full">
+      <div className={`${archiveStyles.grid} ${styles.collectionGrid}`}>
+        {collection.entries.map((entry) => <Link key={entry.href} href={entry.href === "/thoth-tarot/readings" ? `${entry.href}?lang=${language}` : entry.href} className="group block h-full" data-tarot-entry={entry.href}>
           <Card className={`${archiveStyles.card} transition-colors group-hover:border-[var(--primary)]`}>
             <div className={archiveStyles.media}><Image src={entry.image!} alt="" fill sizes="(max-width: 1023px) 100vw, 25vw" className={archiveStyles.image} /></div>
             <CardContent className={archiveStyles.copy}>

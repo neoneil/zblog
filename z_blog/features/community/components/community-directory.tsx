@@ -40,6 +40,7 @@ export default function CommunityDirectory({ members, count, stats, unavailable,
     <ProfileEditor user={user} profile={profile} unavailable={unavailable} />
     <header className={styles.hero}>
       <h1>{t({ en: "Community", zh: "星辰社区" })}</h1>
+      <p>{t({ en: 'Your Sign. Your Guardian. Your People.', zh: '你的星座，你的守护者，你的星辰同伴。' })}</p>
       <p>{t({ en: "Meet the readers and curious minds exploring astrology, tarot and the stories written in the stars.", zh: "在星辰之间相遇，认识分享占星与塔罗智慧的服务者，以及寻求灵感与指引的同行者。" })}</p>
       <div className={styles.stats}>
         {[{ en: "Members", zh: "成员", value: stats.members }, { en: "Readers", zh: "占星服务者", value: stats.readers }, { en: "Customers", zh: "占星需求者", value: stats.customers }].map(item => <div key={item.en}><strong>{unavailable ? "—" : item.value}</strong><span>{t(item)}</span></div>)}

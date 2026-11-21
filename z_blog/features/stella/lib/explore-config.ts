@@ -1,4 +1,5 @@
 export type Copy = { en: string; zh: string };
+import { celestialEntries } from './celestial-entries';
 export const stellaTools = [
   { slug: "", en: "Birth Chart Calculator", zh: "出生星盘计算器" },
   { slug: "compatibility", en: "Compatibility", zh: "星座配对" },
@@ -11,6 +12,8 @@ export const stellaTools = [
   { slug: "numerology", en: "Numerology", zh: "生命数字" },
   { slug: "birthday", en: "Birthday Horoscope", zh: "生日密码" },
   { slug: "eclipse", en: "Eclipses", zh: "日月食" },
+  { slug: 'zodiac', ...celestialEntries[1].title },
+  { slug: 'horoscope', ...celestialEntries[2].title },
 ] as const;
 export const stellaHref = (slug: string) => `/stella${slug ? `/${slug}` : ""}`;
 export const stellaExplorerTools = stellaTools.filter(

@@ -1,0 +1,183 @@
+/* Brand seeds; all supporting surfaces derive from these four colors. */
+:root {
+  --brand-space: #30203f;
+  --brand-gold: #e7c49b;
+  --brand-moon: #f4e5d9;
+  --brand-midnight: #1c3554;
+  --brand-gold-ink: color-mix(in srgb, var(--brand-gold) 35%, var(--brand-space));
+  --brand-art-filter: saturate(.82) brightness(.98);
+  --brand-page-gradient: linear-gradient(
+    180deg,
+    var(--brand-space) 0%,
+    var(--brand-space) max(0px, calc(100% - 560px)),
+    var(--brand-moon) 100%
+  );
+  --title-ink-light: var(--brand-space);
+  --title-ink-dark: var(--brand-gold);
+  --subtitle-ink-light: color-mix(in srgb, var(--brand-space) 85%, var(--brand-midnight));
+  --subtitle-ink-dark: var(--brand-moon);
+  --reading-ink-light: var(--brand-space);
+  --reading-ink-dark: var(--brand-moon);
+  --body-ink-on-dark: var(--brand-moon);
+  --novel-gold: var(--brand-gold);
+  --hero-brand-ink: var(--brand-gold);
+  --hero-brand-muted: var(--brand-moon);
+  --hero-brand-rule: color-mix(in srgb, var(--brand-gold) 32%, transparent);
+  --home-hero-ice: var(--brand-moon);
+  --home-hero-blue: var(--brand-gold);
+  --home-hero-muted: var(--brand-moon);
+  --home-hero-line: color-mix(in srgb, var(--brand-gold) 35%, transparent);
+  --home-hero-glow: color-mix(in srgb, var(--brand-gold) 20%, transparent);
+  --home-hero-button: color-mix(in srgb, var(--brand-space) 84%, transparent);
+  --home-hero-button-hover: color-mix(in srgb, var(--brand-space) 82%, var(--brand-gold));
+  --home-hero-scrim: color-mix(in srgb, var(--brand-space) 88%, transparent);
+  --home-hero-clear: color-mix(in srgb, var(--brand-space) 0%, transparent);
+  --navigation-glow: color-mix(in srgb, var(--brand-gold) 24%, transparent);
+  --navigation-hover: color-mix(in srgb, var(--primary) 9%, transparent);
+  --navigation-shine: color-mix(in srgb, var(--brand-gold) 18%, transparent);
+  --particle: var(--brand-gold);
+  --particle-halo: color-mix(in srgb, var(--brand-gold) 82%, transparent);
+  --particle-core: var(--brand-moon);
+}
+
+:root,
+html[data-theme="light"],
+.brand-home-lower {
+  --bg: color-mix(in srgb, var(--brand-moon) 88%, var(--text-white));
+  --bg-soft: var(--brand-moon);
+  --bg-muted: color-mix(in srgb, var(--brand-moon) 90%, var(--brand-space));
+  --card: color-mix(in srgb, var(--brand-moon) 28%, var(--text-white));
+  --card-soft: color-mix(in srgb, var(--brand-moon) 72%, var(--text-white));
+  --card-muted: var(--bg-muted);
+  --surface: var(--card-soft);
+  --surface-raised: var(--card);
+  --surface-accent: color-mix(in srgb, var(--brand-gold) 35%, var(--brand-moon));
+  --text-soft: color-mix(in srgb, var(--brand-space) 78%, var(--brand-moon));
+  --text-faint: var(--text-soft);
+  --text-inverse: var(--brand-moon);
+  --primary: var(--brand-gold-ink);
+  --primary-hover: var(--brand-space);
+  --primary-soft: color-mix(in srgb, var(--brand-gold) 28%, transparent);
+  --primary-muted: var(--brand-gold-ink);
+  --accent: var(--brand-gold-ink);
+  --accent-hover: var(--brand-space);
+  --accent-soft: var(--primary-soft);
+  --accent-warm: var(--brand-gold-ink);
+  --accent-warm-soft: var(--surface-accent);
+  --border: color-mix(in srgb, var(--brand-space) 18%, var(--brand-moon));
+  --border-strong: color-mix(in srgb, var(--brand-gold) 60%, var(--brand-space));
+  --ring: var(--primary);
+  --navbar-bg: var(--bg);
+  --navbar-bg-hover: var(--bg-soft);
+  --footer-bg: var(--bg-soft);
+  --button-glow: color-mix(in srgb, var(--brand-gold) 24%, transparent);
+}
+
+.brand-home {
+  background: var(--brand-moon);
+}
+.brand-home-upper {
+  color-scheme: dark;
+  --bg: var(--brand-space);
+  --bg-soft: color-mix(in srgb, var(--brand-space) 92%, var(--brand-moon));
+  --card: color-mix(in srgb, var(--brand-space) 90%, var(--brand-midnight));
+  --card-soft: color-mix(in srgb, var(--brand-space) 94%, var(--brand-moon));
+  --surface: var(--card);
+  --surface-raised: var(--bg-soft);
+  --title-ink: var(--brand-gold);
+  --subtitle-ink: var(--brand-moon);
+  --reading-ink: var(--brand-moon);
+  --archive-heading: var(--brand-gold);
+  --archive-text: var(--brand-moon);
+  --heading: var(--brand-gold);
+  --text: var(--brand-moon);
+  --text-soft: var(--brand-moon);
+  --primary: var(--brand-gold);
+  --primary-muted: var(--brand-gold);
+  --text-inverse: var(--brand-space);
+  --home-explore-ink: var(--brand-gold);
+  --home-explore-muted: var(--brand-moon);
+  --border: color-mix(in srgb, var(--brand-gold) 22%, var(--brand-space));
+  --border-strong: color-mix(in srgb, var(--brand-gold) 52%, var(--brand-space));
+  display: flow-root;
+  background: var(--brand-page-gradient);
+  color: var(--text);
+}
+.brand-home-lower {
+  color-scheme: light;
+  --bg: var(--brand-moon);
+  --title-ink: var(--brand-space);
+  --subtitle-ink: var(--brand-space);
+  --reading-ink: var(--brand-space);
+  --archive-heading: var(--brand-space);
+  --archive-text: var(--brand-space);
+  --heading: var(--brand-space);
+  --text: var(--brand-space);
+  --muted: var(--text-soft);
+  --home-explore-ink: var(--brand-space);
+  --home-explore-muted: var(--brand-space);
+  color: var(--text);
+  background: var(--brand-moon);
+}
+
+html[data-theme="dark"] {
+  --bg: var(--brand-space);
+  --bg-soft: color-mix(in srgb, var(--brand-space) 92%, var(--brand-moon));
+  --bg-muted: color-mix(in srgb, var(--brand-space) 80%, var(--brand-midnight));
+  --card: color-mix(in srgb, var(--brand-space) 90%, var(--brand-midnight));
+  --card-soft: color-mix(in srgb, var(--brand-space) 94%, var(--brand-moon));
+  --card-muted: var(--bg-muted);
+  --surface: var(--card);
+  --surface-raised: var(--bg-soft);
+  --surface-accent: color-mix(in srgb, var(--brand-space) 82%, var(--brand-gold));
+  --text-soft: color-mix(in srgb, var(--brand-moon) 82%, var(--brand-space));
+  --text-faint: var(--text-soft);
+  --text-inverse: var(--brand-space);
+  --primary: var(--brand-gold);
+  --primary-hover: color-mix(in srgb, var(--brand-gold) 82%, var(--brand-moon));
+  --primary-soft: color-mix(in srgb, var(--brand-gold) 12%, transparent);
+  --primary-muted: color-mix(in srgb, var(--brand-gold) 82%, var(--brand-moon));
+  --accent: var(--brand-gold);
+  --accent-hover: var(--primary-hover);
+  --accent-soft: var(--primary-soft);
+  --accent-warm: var(--brand-gold);
+  --accent-warm-soft: var(--surface-accent);
+  --border: color-mix(in srgb, var(--brand-gold) 22%, var(--brand-space));
+  --border-strong: color-mix(in srgb, var(--brand-gold) 52%, var(--brand-space));
+  --ring: var(--brand-gold);
+  --navbar-bg: var(--brand-space);
+  --navbar-bg-hover: var(--bg-soft);
+  --footer-bg: color-mix(in srgb, var(--brand-space) 85%, var(--brand-midnight));
+  --button-glow: color-mix(in srgb, var(--brand-gold) 20%, transparent);
+}
+
+/* Keep module backgrounds consistent without changing planet/status colors. */
+:root,
+html[data-theme="light"],
+html[data-theme="dark"] {
+  --explore-bg: var(--bg);
+  --explore-surface: var(--card);
+  --explore-calendar: var(--card-soft);
+  --explore-input: var(--card);
+  --explore-hover: var(--bg-soft);
+  --explore-border: var(--border);
+  --explore-banner: var(--surface-accent);
+  --explore-accent: var(--primary);
+  --stella-bg: var(--brand-space);
+  --stella-panel: color-mix(in srgb, var(--brand-space) 94%, transparent);
+  --stella-control: color-mix(in srgb, var(--brand-space) 85%, var(--brand-midnight));
+  --stella-input: var(--stella-control);
+  --stella-border: color-mix(in srgb, var(--brand-gold) 22%, var(--brand-space));
+  --stella-divider: var(--stella-border);
+  --stella-settings: var(--stella-bg);
+  --stella-dock: color-mix(in srgb, var(--brand-space) 82%, var(--brand-midnight));
+  --stella-dock-button: var(--stella-control);
+  --stella-reading: color-mix(in srgb, var(--brand-space) 92%, transparent);
+}
+
+/* Non-destructive grading is limited to decorative brand art, not content uploads. */
+img[data-brand-art],
+#home-tarot img,
+#home-calculators img {
+  filter: var(--brand-art-filter);
+}
