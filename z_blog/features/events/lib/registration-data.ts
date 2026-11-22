@@ -1,6 +1,6 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
-import { requireUser } from "@/lib/auth/require-user";
+import { readServerUser } from "@/lib/supabase/server-reads";
 import type { EventRegistration } from "./registration-types";
 
 export const registrationFields = "id,event_id,user_id,contact_name,contact_email,status,admin_note,event_snapshot,created_at,updated_at";
@@ -16,7 +16,9 @@ export async function getRegistrationContext(eventId: string) {
 
 // Account pages can reuse this query and MyEventRegistrations without another ledger.
 export async function getMyEventRegistrations() {
-  const { supabase, user } = await requireUser("/events/my-registrations");
+  const supabase = await createClient();
+  const { user, unavailable } = await readServerUser(supabase);
+  if (!user) return { registrations: [] as EventRegistration[], available: !unavailable };
   const { data, error } = await supabase.from("event_registrations").select(registrationFields)
     .eq("user_id", user.id).order("created_at", { ascending: false }).limit(200);
   return { registrations: (data ?? []) as EventRegistration[], available: !error };

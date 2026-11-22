@@ -61,7 +61,13 @@ export async function POST(req: Request) {
     const result: unknown = JSON.parse(content);
     if (!isTarotReadingResult(result, mode)) throw new Error("解读格式不完整，请稍后重试。 / The reading is incomplete. Please try again.");
     const sections = { ...result, ...(answer ? { answer } : {}) };
-    return await lease.complete({ mode, reading: readingResultToMarkdown(sections, mode), sections });
+    return await lease.complete({ mode, reading: readingResultToMarkdown(sections, mode), sections }, {
+      kind: "tarot",
+      mode,
+      question,
+      ...(config.fixedQuestion && { fixedQuestion: config.fixedQuestion }),
+      cards: cards.map(({ id, position, reversed }) => ({ id, position, reversed })),
+    });
   } catch (error: unknown) {
     await lease?.release();
     console.error("tarot-reading error:", error);

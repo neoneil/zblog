@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
-export default function SignupForm() {
+export default function SignupForm({ returnTo = "/" }: { returnTo?: string }) {
   const supabase = createClient();
   const router = useRouter();
 
@@ -27,17 +27,20 @@ export default function SignupForm() {
         data: {
           full_name: fullName,
         },
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=/`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(returnTo)}`,
       },
     });
-
-    console.log("SIGNUP DATA:", data);
-    console.log("SIGNUP ERROR:", error);
 
     if (error) {
       console.error("SIGNUP FAILED:", error);
       setMessage(error.message);
       setLoading(false);
+      return;
+    }
+
+    if (data.session) {
+      router.refresh();
+      router.push(returnTo);
       return;
     }
 
@@ -55,7 +58,7 @@ export default function SignupForm() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(returnTo)}`,
       },
     });
 

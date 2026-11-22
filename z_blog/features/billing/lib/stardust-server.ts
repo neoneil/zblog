@@ -1,6 +1,7 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { billingSchema, createBillingAdminClient } from "./billing-db";
+import { reconcileTestTopup } from "./reconcile-test-topup";
 
 export async function billingUser() {
   const supabase = await createClient();
@@ -16,10 +17,16 @@ export async function billingUser() {
   return { user, isAdmin: profile?.role === "admin", supabase };
 }
 
-export async function walletSnapshot() {
+export async function walletSnapshot(returnedTopup?: string) {
   const context = await billingUser();
   if (!context) return null;
   const { user, supabase: userClient } = context;
+  const { full_name, name, avatar_url, picture } = user.user_metadata;
+  const account = {
+    name: [full_name, name].find((value) => typeof value === "string" && value.trim()) as string | undefined,
+    email: user.email,
+    avatar: [avatar_url, picture].find((value) => typeof value === "string" && value.startsWith("https://")) as string | undefined,
+  };
   try {
     const supabase = userClient.schema(billingSchema());
     const admin = createBillingAdminClient();
@@ -28,6 +35,7 @@ export async function walletSnapshot() {
     });
     if (error)
       return {
+        account,
         ready: false,
         verified: !!user.email_confirmed_at,
         wallet: null,
@@ -38,6 +46,13 @@ export async function walletSnapshot() {
         topups: [],
         reports: [],
       };
+    if (returnedTopup && billingSchema() === "stardust_sandbox") {
+      try {
+        await reconcileTestTopup(admin, user.id, returnedTopup);
+      } catch {
+        console.error("STARDUST could not confirm the returned test top-up");
+      }
+    }
     const now = new Date().toISOString();
     const results = await Promise.all([
       supabase
@@ -86,6 +101,7 @@ export async function walletSnapshot() {
     if (results.some((result) => result.error))
       throw new Error("SNAPSHOT_FAILED");
     return {
+      account,
       ready: true,
       verified: true,
       wallet: results[0].data as unknown as {
@@ -129,6 +145,7 @@ export async function walletSnapshot() {
     };
   } catch {
     return {
+      account,
       ready: false,
       verified: !!user.email_confirmed_at,
       wallet: null,

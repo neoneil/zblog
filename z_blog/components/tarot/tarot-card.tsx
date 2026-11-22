@@ -19,9 +19,10 @@ type TarotCardProps = {
   onFlip: (id: string) => void;
   onFlipped: (id: string) => void;
   layoutId?: string;
+  positionLabel?: string;
 };
 
-export default function TarotCard({ card, index, revealed, gathering, canFlip, onFlip, onFlipped, layoutId }: TarotCardProps) {
+export default function TarotCard({ card, index, revealed, gathering, canFlip, onFlip, onFlipped, layoutId, positionLabel }: TarotCardProps) {
   const reducedMotion = useReducedMotion();
   const { t, language } = usePreferences();
   const completed = useRef(false);
@@ -35,7 +36,7 @@ export default function TarotCard({ card, index, revealed, gathering, canFlip, o
     {revealed && <TarotSparkBurst key="flip" seed={index + 200} />}
     <motion.button type="button" className={styles.flipper}
       disabled={!canFlip || revealed}
-      aria-label={faceVisible ? (language === "zh" ? card.nameCn : card.name) : t({ zh: `翻开${getTarotPositionLabel(card.position, "zh")}的牌`, en: `Reveal ${getTarotPositionLabel(card.position, "en")}` })}
+      aria-label={faceVisible ? (language === "zh" ? card.nameCn : card.name) : t({ zh: `翻开${positionLabel ?? getTarotPositionLabel(card.position, "zh")}的牌`, en: `Reveal ${positionLabel ?? getTarotPositionLabel(card.position, "en")}` })}
       onClick={() => onFlip(card.id)}
       animate={{ rotateY: revealed ? 180 : 0, rotateX: revealed ? [0, -12, 0] : 0, z: revealed ? [0, 45, 0] : 0 }}
       transition={{ duration: reducedMotion ? 0 : 2.5, ease: [0.45, 0, 0.25, 1] }}

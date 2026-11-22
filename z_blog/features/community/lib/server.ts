@@ -25,8 +25,13 @@ export async function communityMember(username: string) {
   if (!/^[a-z0-9_]{3,32}$/.test(username)) return null;
   const supabase = await createClient();
   const { data, error } = await supabase.from("community_profiles").select(PUBLIC_FIELDS).eq("username", username).eq("is_public", true).maybeSingle();
-  if (error || !data) return null;
-  return data as CommunityProfile;
+  if (error) return null;
+  if (data) return data as CommunityProfile;
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+  const { data: own } = await supabase.from("community_profiles").select(PUBLIC_FIELDS)
+    .eq("username", username).eq("user_id", user.id).maybeSingle();
+  return own as CommunityProfile | null;
 }
 
 export async function relatedMembers(profile: CommunityProfile) {

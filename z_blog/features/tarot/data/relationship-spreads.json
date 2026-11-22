@@ -1,0 +1,2599 @@
+{
+  "layouts": {
+    "four-four-four": {
+      "ratio": 0.974576,
+      "cards": [
+        [
+          10.8696,
+          13.4244,
+          13.0435,
+          0.0
+        ],
+        [
+          36.9565,
+          13.4244,
+          13.0435,
+          0.0
+        ],
+        [
+          63.0435,
+          13.4244,
+          13.0435,
+          0.0
+        ],
+        [
+          89.1304,
+          13.4244,
+          13.0435,
+          0.0
+        ],
+        [
+          10.8696,
+          43.17,
+          13.0435,
+          0.0
+        ],
+        [
+          36.9565,
+          43.17,
+          13.0435,
+          0.0
+        ],
+        [
+          63.0435,
+          43.17,
+          13.0435,
+          0.0
+        ],
+        [
+          89.1304,
+          43.17,
+          13.0435,
+          0.0
+        ],
+        [
+          10.8696,
+          72.9157,
+          13.0435,
+          0.0
+        ],
+        [
+          36.9565,
+          72.9157,
+          13.0435,
+          0.0
+        ],
+        [
+          63.0435,
+          72.9157,
+          13.0435,
+          0.0
+        ],
+        [
+          89.1304,
+          72.9157,
+          13.0435,
+          0.0
+        ]
+      ]
+    },
+    "staggered-three-two": {
+      "ratio": 0.935454,
+      "cards": [
+        [
+          13.5,
+          21.5348,
+          23.0,
+          0.0
+        ],
+        [
+          50.0,
+          21.5348,
+          23.0,
+          0.0
+        ],
+        [
+          86.5,
+          21.5348,
+          23.0,
+          0.0
+        ],
+        [
+          31.02,
+          74.723,
+          23.0,
+          0.0
+        ],
+        [
+          67.52,
+          74.723,
+          23.0,
+          0.0
+        ]
+      ]
+    },
+    "five-five-one": {
+      "ratio": 0.949198,
+      "cards": [
+        [
+          10.5634,
+          12.7062,
+          12.6761,
+          0.0
+        ],
+        [
+          30.2817,
+          12.7062,
+          12.6761,
+          0.0
+        ],
+        [
+          50.0,
+          12.7062,
+          12.6761,
+          0.0
+        ],
+        [
+          69.7183,
+          12.7062,
+          12.6761,
+          0.0
+        ],
+        [
+          89.4366,
+          12.7062,
+          12.6761,
+          0.0
+        ],
+        [
+          10.5634,
+          43.5354,
+          12.6761,
+          0.0
+        ],
+        [
+          30.2817,
+          43.5354,
+          12.6761,
+          0.0
+        ],
+        [
+          50.0,
+          43.5354,
+          12.6761,
+          0.0
+        ],
+        [
+          69.7183,
+          43.5354,
+          12.6761,
+          0.0
+        ],
+        [
+          89.4366,
+          43.5354,
+          12.6761,
+          0.0
+        ],
+        [
+          10.5634,
+          74.3647,
+          12.6761,
+          0.0
+        ]
+      ]
+    },
+    "five-two": {
+      "ratio": 1.165501,
+      "cards": [
+        [
+          11.0,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          30.5,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          50.0,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          69.5,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          89.0,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          11.0,
+          73.5902,
+          18.0,
+          0.0
+        ],
+        [
+          30.5,
+          73.5902,
+          18.0,
+          0.0
+        ]
+      ]
+    },
+    "row-five": {
+      "ratio": 2.0,
+      "cards": [
+        [
+          13.5,
+          46.003,
+          23.0,
+          0.0
+        ],
+        [
+          31.75,
+          46.003,
+          23.0,
+          0.0
+        ],
+        [
+          50.0,
+          46.003,
+          23.0,
+          0.0
+        ],
+        [
+          68.25,
+          46.003,
+          23.0,
+          0.0
+        ],
+        [
+          86.5,
+          46.003,
+          23.0,
+          0.0
+        ]
+      ]
+    },
+    "row-four": {
+      "ratio": 2.0,
+      "cards": [
+        [
+          13.5,
+          46.003,
+          23.0,
+          0.0
+        ],
+        [
+          37.8333,
+          46.003,
+          23.0,
+          0.0
+        ],
+        [
+          62.1667,
+          46.003,
+          23.0,
+          0.0
+        ],
+        [
+          86.5,
+          46.003,
+          23.0,
+          0.0
+        ]
+      ]
+    },
+    "five-one": {
+      "ratio": 1.165501,
+      "cards": [
+        [
+          11.0,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          30.5,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          50.0,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          69.5,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          89.0,
+          21.7493,
+          18.0,
+          0.0
+        ],
+        [
+          11.0,
+          73.5902,
+          18.0,
+          0.0
+        ]
+      ]
+    },
+    "row-three": {
+      "ratio": 1.703578,
+      "cards": [
+        [
+          16.0,
+          46.5952,
+          28.0,
+          0.0
+        ],
+        [
+          50.0,
+          46.5952,
+          28.0,
+          0.0
+        ],
+        [
+          84.0,
+          46.5952,
+          28.0,
+          0.0
+        ]
+      ]
+    }
+  },
+  "positionZh": {
+    "A Step Toward Me": "走向自己的一步",
+    "A conversation about us": "关于我们的对话",
+    "A partner’s qualities": "伴侣的特质",
+    "A step towards meeting": "走向相遇的一步",
+    "A way out of the cycle": "走出循环的方法",
+    "Against": "不利因素",
+    "An honest step": "诚实地迈出一步",
+    "Body Language": "肢体语言",
+    "Children": "对孩子的考虑",
+    "Clarifying our plans": "理清双方的计划",
+    "Communication": "沟通",
+    "Daily Life": "日常相处",
+    "Direction of development": "关系发展方向",
+    "Emotional Closeness": "情感亲密度",
+    "Essence of Person 1": "第一位的核心特质",
+    "Essence of Person 2": "第二位的核心特质",
+    "Final Synthesis": "整体梳理",
+    "Finances": "金钱与资源",
+    "For": "支持因素",
+    "Guidance": "行动指引",
+    "Hidden": "尚未看清的因素",
+    "Hidden Factor": "隐藏因素",
+    "His Actions": "他的行动",
+    "His Bond with Her": "他与她的联系",
+    "His Draw": "吸引他的因素",
+    "His Fears": "他的顾虑",
+    "His Feelings": "他的感受",
+    "His Inner World": "他的内在状态",
+    "His Movement": "他可能的动向",
+    "His Readiness": "他的准备程度",
+    "His Thoughts": "他的想法",
+    "How Connection Begins": "联系如何开始",
+    "How I See Myself": "我怎样看自己",
+    "How They See You": "对方怎样看你",
+    "How to clarify": "怎样问清楚",
+    "Inner Block": "内在阻碍",
+    "Intentions": "可能的意向",
+    "Key or Block": "关键或阻碍",
+    "Marriage & Its Strength": "婚姻与稳定性",
+    "Me beside them": "在对方身边的我",
+    "Meeting Within 1–2 Years": "未来一至两年的相遇条件",
+    "Mixed signals": "彼此矛盾的信号",
+    "My Foundation": "我的内在基础",
+    "My actions": "我的行动",
+    "My attraction": "我的吸引感",
+    "My boundary": "我的界限",
+    "My expectations": "我的期待",
+    "My feelings": "我的感受",
+    "My feelings now": "我此刻的感受",
+    "My limit on waiting": "我愿意等待的界限",
+    "My next step": "我的下一步",
+    "My part": "我在其中的部分",
+    "My partner’s actions": "伴侣的行动",
+    "My partner’s feelings": "伴侣的感受",
+    "My partner’s perspective": "伴侣的视角",
+    "My partner’s side": "伴侣这一方",
+    "My previous marriage": "我的上一段婚姻",
+    "My readiness now": "我现在的准备程度",
+    "My side of the relationship": "我在关系中的位置",
+    "My thoughts": "我的想法",
+    "Obstacles": "障碍",
+    "Old Wound": "旧伤",
+    "Our plans now": "我们当前的计划",
+    "Our repeating cycle": "反复出现的模式",
+    "Potential": "发展潜力",
+    "Romance": "浪漫与亲密",
+    "Root Cause": "根本原因",
+    "Sign It's Near": "事情接近的信号",
+    "Signs of attraction": "吸引的信号",
+    "Space for meeting": "见面的空间",
+    "The Barrier": "目前的阻碍",
+    "The Cards' Counsel": "牌面的建议",
+    "The Core": "核心",
+    "The Crossroads": "眼前的分岔路",
+    "The First Path": "第一条路",
+    "The Future": "可能的未来",
+    "The Heart of It": "问题核心",
+    "The Lesson": "这段经历的功课",
+    "The Main Reason": "主要原因",
+    "The Meeting": "相遇的情境",
+    "The Nature of Your Relationship": "关系的性质",
+    "The Obstacle": "眼前的障碍",
+    "The Outcome": "可能的走向",
+    "The Outlook": "接下来的趋势",
+    "The Past": "过去",
+    "The Present": "现在",
+    "The Real Threat": "实际的压力",
+    "The Second Path": "第二条路",
+    "The Situation": "当下处境",
+    "The Spark": "吸引的火花",
+    "The Timing": "时机与条件",
+    "The Trajectory": "发展轨迹",
+    "The Verdict": "整体倾向",
+    "The Way Forward": "前进的方向",
+    "The basis of our friendship": "友谊的基础",
+    "The blind spot": "容易忽略的地方",
+    "The bond": "彼此的连接",
+    "The bond between us": "我们之间的连接",
+    "The near-term outlook": "近期走势",
+    "The outlook for this period": "这段时间的走向",
+    "The pause now": "当下的暂停",
+    "The possibility of a new partnership": "新伴侣关系的可能性",
+    "Their Appearance & Nature": "对方的外在与个性",
+    "Their Work & Calling": "对方的工作与志向",
+    "Them beside me": "在我身边的对方",
+    "Values": "价值观",
+    "What Comes Next": "接下来可能发生什么",
+    "What Drives Them": "对方的动力",
+    "What Helps": "有帮助的因素",
+    "What Hinders": "形成阻碍的因素",
+    "What Holds It Now": "现在维系它的因素",
+    "What I Need": "我需要的支持",
+    "What I give": "我给出的",
+    "What I need": "我的需要",
+    "What I receive": "我收到的",
+    "What I want from marriage": "我对婚姻的期待",
+    "What I want to preserve": "我想保留的部分",
+    "What Must Align": "需要协调的条件",
+    "What Person 1 Brings": "第一位带来的影响",
+    "What Person 2 Brings": "第二位带来的影响",
+    "What Pushes Away": "让彼此疏远的因素",
+    "What Speeds It Up": "可以推动进展的条件",
+    "What They Feel": "对方可能的感受",
+    "What They Hide": "对方未说出口的部分",
+    "What They Think": "对方可能的想法",
+    "What comes back": "重新出现的部分",
+    "What could bring us closer": "让彼此更靠近的事",
+    "What draws me closer": "让我走近的因素",
+    "What draws me in": "吸引我的地方",
+    "What gets in the way": "受阻的地方",
+    "What helps": "有助于进展的事",
+    "What is happening between us": "我们之间正在发生的事",
+    "What keeps me here": "我留下来的原因",
+    "What may delay it": "可能推迟的因素",
+    "What starts the cycle": "循环的触发点",
+    "What supports contact": "有助于联系的因素",
+    "What to Do": "可以采取的行动",
+    "What to look for": "值得留意的地方",
+    "What worries me": "我的担心",
+    "What's Hidden": "尚未明朗的部分",
+    "What's Inside Them": "对方的内在状态",
+    "Where He Is": "他目前的处境",
+    "Where I notice interest": "我在哪里察觉兴趣",
+    "Where It Leads": "这件事的走向",
+    "Where It's Headed": "接下来的方向",
+    "Where You Will Meet": "相遇的场合",
+    "Where the Bond Goes": "这段连接的走向",
+    "Where the Path Leads": "这条路的去向",
+    "Where this leads": "这样的互动将走向哪里",
+    "Who She Is": "她在这件事中的位置",
+    "Who They Are Now": "对方当下的状态",
+    "Who You Are Now": "你当下的状态",
+    "Worth Weighing": "值得权衡的因素",
+    "Your Draw": "吸引你的因素",
+    "Your Energy": "你此刻的状态",
+    "Your Part": "你在其中的部分",
+    "Your Shadow": "你的盲点",
+    "Your Standing": "你目前的位置",
+    "Your Strength": "你的力量"
+  },
+  "situations": [
+    {
+      "id": "compatibility",
+      "sourcePath": "/en/spreads/love-and-relationships/compatibility",
+      "sourceTitle": "Compatibility",
+      "question": {
+        "zh": "我们的性格、价值观和日常需求在哪些地方契合？",
+        "en": "How do our personalities, values and day-to-day needs fit together?"
+      },
+      "layout": "four-four-four",
+      "positions": [
+        "Essence of Person 1",
+        "Essence of Person 2",
+        "What Person 1 Brings",
+        "What Person 2 Brings",
+        "Romance",
+        "Daily Life",
+        "Communication",
+        "Emotional Closeness",
+        "Values",
+        "Finances",
+        "The Obstacle",
+        "Potential"
+      ]
+    },
+    {
+      "id": "his-feelings",
+      "sourcePath": "/en/spreads/love-and-relationships/his-feelings",
+      "sourceTitle": "His Feelings",
+      "question": {
+        "zh": "从我们的互动里，我能怎样理解他对我的感受？",
+        "en": "What can our interactions tell me about how he may feel toward me?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "His Thoughts",
+        "His Feelings",
+        "His Actions",
+        "His Fears",
+        "His Readiness"
+      ]
+    },
+    {
+      "id": "where-are-you-my-destined-one",
+      "sourcePath": "/en/spreads/love-and-relationships/where-are-you-my-destined-one",
+      "sourceTitle": "Where Are You, My Destined One?",
+      "question": {
+        "zh": "我怎样为遇见适合长期相处的人做好准备？",
+        "en": "How can I prepare to meet someone who might be right for a lasting relationship?"
+      },
+      "layout": "five-five-one",
+      "positions": [
+        "Meeting Within 1–2 Years",
+        "Their Appearance & Nature",
+        "Their Work & Calling",
+        "Where You Will Meet",
+        "How Connection Begins",
+        "The Nature of Your Relationship",
+        "Marriage & Its Strength",
+        "Obstacles",
+        "Children",
+        "Guidance",
+        "Final Synthesis"
+      ]
+    },
+    {
+      "id": "why-he-withdrew",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-withdrew",
+      "sourceTitle": "Why He Withdrew",
+      "question": {
+        "zh": "他为什么变得疏远，我能怎样理解这段距离？",
+        "en": "What might explain his growing distance, and how can I understand it?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "Root Cause",
+        "Your Part",
+        "His Inner World",
+        "Hidden Factor",
+        "The Trajectory"
+      ]
+    },
+    {
+      "id": "will-he-return",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-return",
+      "sourceTitle": "Will He Return",
+      "question": {
+        "zh": "如果他有可能回来，我该如何看待等待和重逢？",
+        "en": "If he might come back, how should I approach waiting and reconnecting?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "Where He Is",
+        "The Barrier",
+        "His Movement",
+        "Your Energy",
+        "The Outcome"
+      ]
+    },
+    {
+      "id": "on-the-rival",
+      "sourcePath": "/en/spreads/love-and-relationships/on-the-rival",
+      "sourceTitle": "On the Rival",
+      "question": {
+        "zh": "当我担心有第三者时，哪些迹象值得认真看待？",
+        "en": "When I worry about a rival, which signs deserve my attention?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "Who She Is",
+        "His Bond with Her",
+        "Your Standing",
+        "The Real Threat",
+        "What to Do"
+      ]
+    },
+    {
+      "id": "why-im-alone",
+      "sourcePath": "/en/spreads/love-and-relationships/why-im-alone",
+      "sourceTitle": "Why I'm Alone",
+      "question": {
+        "zh": "哪些处境或习惯影响了我和别人建立亲密关系？",
+        "en": "Which circumstances or habits might be getting in the way of closeness?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "Root Cause",
+        "Inner Block",
+        "What Pushes Away",
+        "The Way Forward",
+        "The Meeting"
+      ]
+    },
+    {
+      "id": "relationship-dynamic",
+      "sourcePath": "/en/spreads/love-and-relationships/relationship-dynamic",
+      "sourceTitle": "Relationship Dynamic",
+      "question": {
+        "zh": "在这段关系里，我们各自投入了什么，又形成了怎样的互动？",
+        "en": "What does each of us contribute, and what dynamic has grown between us?"
+      },
+      "layout": "five-two",
+      "positions": [
+        "Me beside them",
+        "Them beside me",
+        "The bond",
+        "What I give",
+        "What I receive",
+        "The blind spot",
+        "Where this leads"
+      ]
+    },
+    {
+      "id": "attraction",
+      "sourcePath": "/en/spreads/love-and-relationships/attraction",
+      "sourceTitle": "Attraction",
+      "question": {
+        "zh": "我们之间的吸引来自哪里，它能不能发展成更深的连接？",
+        "en": "Where does the attraction between us come from, and could it deepen?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Spark",
+        "Body Language",
+        "His Draw",
+        "Your Draw",
+        "Key or Block"
+      ]
+    },
+    {
+      "id": "does-he-love-me",
+      "sourcePath": "/en/spreads/love-and-relationships/does-he-love-me",
+      "sourceTitle": "Does He Love Me",
+      "question": {
+        "zh": "我们的相处中，哪些行为让我感受到他在乎我？",
+        "en": "Which of his actions give me reason to feel cared for?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "what-he-thinks-of-me",
+      "sourcePath": "/en/spreads/love-and-relationships/what-he-thinks-of-me",
+      "sourceTitle": "What He Thinks of Me",
+      "question": {
+        "zh": "从他和我的相处方式来看，他可能怎样看待我？",
+        "en": "What might his behaviour suggest about how he sees me?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "what-she-thinks-of-me",
+      "sourcePath": "/en/spreads/love-and-relationships/what-she-thinks-of-me",
+      "sourceTitle": "What She Thinks of Me",
+      "question": {
+        "zh": "从她和我的相处方式来看，她可能怎样看待我？",
+        "en": "What might her behaviour suggest about how she sees me?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "what-she-feels",
+      "sourcePath": "/en/spreads/love-and-relationships/what-she-feels",
+      "sourceTitle": "What She Feels",
+      "question": {
+        "zh": "她在我们相处时表达了怎样的感受？",
+        "en": "What feelings might she be expressing when we spend time together?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "whats-in-his-heart",
+      "sourcePath": "/en/spreads/love-and-relationships/whats-in-his-heart",
+      "sourceTitle": "What's in His Heart",
+      "question": {
+        "zh": "他有哪些感受还没说出口，我可以怎样理解？",
+        "en": "What feelings might he have left unsaid, and how can I approach that uncertainty?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "what-i-mean-to-him",
+      "sourcePath": "/en/spreads/love-and-relationships/what-i-mean-to-him",
+      "sourceTitle": "What I Mean to Him",
+      "question": {
+        "zh": "这段关系在他生活里的位置，可以从哪里看出来？",
+        "en": "What clues might show where this relationship fits into his life?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "what-he-likes-in-me",
+      "sourcePath": "/en/spreads/love-and-relationships/what-he-likes-in-me",
+      "sourceTitle": "What He Likes in Me",
+      "question": {
+        "zh": "他可能欣赏我身上的哪些特质？",
+        "en": "What qualities in me might he appreciate?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "his-attitude-to-me",
+      "sourcePath": "/en/spreads/love-and-relationships/his-attitude-to-me",
+      "sourceTitle": "His Attitude to Me",
+      "question": {
+        "zh": "他的态度和行动，给出了怎样的关系信号？",
+        "en": "What signals about this relationship do his attitude and actions give?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "what-he-wants-from-me",
+      "sourcePath": "/en/spreads/love-and-relationships/what-he-wants-from-me",
+      "sourceTitle": "What He Wants from Me",
+      "question": {
+        "zh": "他对我们之间的相处有什么期待？",
+        "en": "What might he be hoping for in the way we relate?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "what-he-wants-to-say",
+      "sourcePath": "/en/spreads/love-and-relationships/what-he-wants-to-say",
+      "sourceTitle": "What He Wants to Say",
+      "question": {
+        "zh": "我们之间有什么话还没有真正说开？",
+        "en": "What might still need to be said between us?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "his-plans-for-me",
+      "sourcePath": "/en/spreads/love-and-relationships/his-plans-for-me",
+      "sourceTitle": "His Plans for Me",
+      "question": {
+        "zh": "他对未来有没有具体打算，我可以从哪里判断？",
+        "en": "How can I tell whether he has concrete plans for our future?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "whos-in-love-with-me",
+      "sourcePath": "/en/spreads/love-and-relationships/whos-in-love-with-me",
+      "sourceTitle": "Who's in Love with Me",
+      "question": {
+        "zh": "我身边有没有可以认真留意的爱意信号？",
+        "en": "What signs of affection around me might be worth noticing?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "am-i-loved",
+      "sourcePath": "/en/spreads/love-and-relationships/am-i-loved",
+      "sourceTitle": "Am I Loved",
+      "question": {
+        "zh": "在这段关系里，我感受到了爱吗？",
+        "en": "Where do I feel loved in this relationship?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "how-deeply-im-loved",
+      "sourcePath": "/en/spreads/love-and-relationships/how-deeply-im-loved",
+      "sourceTitle": "How Deeply I'm Loved",
+      "question": {
+        "zh": "对方的关心有多深，又是怎样表达出来的？",
+        "en": "How deep does this care seem, and how is it expressed?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "is-he-sincere",
+      "sourcePath": "/en/spreads/love-and-relationships/is-he-sincere",
+      "sourceTitle": "Is He Sincere",
+      "question": {
+        "zh": "他的话和行动一致吗，我该如何判断真诚？",
+        "en": "Do his words and actions align, and what would help me assess sincerity?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "is-he-lying",
+      "sourcePath": "/en/spreads/love-and-relationships/is-he-lying",
+      "sourceTitle": "Is He Lying",
+      "question": {
+        "zh": "当我担心他说的不是真的，哪些事情可以核实？",
+        "en": "When I worry he may be dishonest, what can I verify?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "what-he-hides",
+      "sourcePath": "/en/spreads/love-and-relationships/what-he-hides",
+      "sourceTitle": "What He Hides",
+      "question": {
+        "zh": "我的不安来自哪些没有说清楚的事？",
+        "en": "What unanswered questions might be behind my unease with him?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What They Feel",
+        "What They Think",
+        "Intentions",
+        "What They Hide",
+        "Where It's Headed"
+      ]
+    },
+    {
+      "id": "is-he-jealous",
+      "sourcePath": "/en/spreads/love-and-relationships/is-he-jealous",
+      "sourceTitle": "Is He Jealous",
+      "question": {
+        "zh": "我们的互动里有嫉妒的迹象吗，该怎样回应？",
+        "en": "Are there signs of jealousy in our interactions, and how could I respond?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "should-i-trust-him",
+      "sourcePath": "/en/spreads/love-and-relationships/should-i-trust-him",
+      "sourceTitle": "Should I Trust Him",
+      "question": {
+        "zh": "有哪些经验和证据，可以帮助我决定是否信任他？",
+        "en": "What experiences and evidence can help me decide whether to trust him?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "is-my-partner-faithful",
+      "sourcePath": "/en/spreads/love-and-relationships/is-my-partner-faithful",
+      "sourceTitle": "Is My Partner Faithful",
+      "question": {
+        "zh": "我怎样看待关于伴侣忠诚度的担忧，并澄清彼此的约定？",
+        "en": "How can I examine concerns about fidelity and clarify our commitments?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "on-betrayal",
+      "sourcePath": "/en/spreads/love-and-relationships/on-betrayal",
+      "sourceTitle": "On Betrayal",
+      "question": {
+        "zh": "面对背叛的担忧或经历，我下一步最需要什么？",
+        "en": "What do I need next after experiencing or fearing a betrayal?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-faithfulness",
+      "sourcePath": "/en/spreads/love-and-relationships/on-faithfulness",
+      "sourceTitle": "On Faithfulness",
+      "question": {
+        "zh": "忠诚对我意味着什么，我们如何在行动中守住它？",
+        "en": "What does faithfulness mean to me, and how can we practise it?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "does-he-miss-me",
+      "sourcePath": "/en/spreads/love-and-relationships/does-he-miss-me",
+      "sourceTitle": "Does He Miss Me",
+      "question": {
+        "zh": "有哪些迹象能帮助我理解，他是否还想念我？",
+        "en": "What signs might help me understand whether he still misses me?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "does-he-remember-me",
+      "sourcePath": "/en/spreads/love-and-relationships/does-he-remember-me",
+      "sourceTitle": "Does He Remember Me",
+      "question": {
+        "zh": "过去的相处可能在他心中留下了什么？",
+        "en": "What might our time together have left with him?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "does-he-desire-me",
+      "sourcePath": "/en/spreads/love-and-relationships/does-he-desire-me",
+      "sourceTitle": "Does He Desire Me",
+      "question": {
+        "zh": "我怎样区分他对我的吸引和他愿意付出的行动？",
+        "en": "How can I distinguish his attraction from the actions he is willing to take?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "what-hes-doing-now",
+      "sourcePath": "/en/spreads/love-and-relationships/what-hes-doing-now",
+      "sourceTitle": "What He's Doing Now",
+      "question": {
+        "zh": "在不知道他近况时，我能怎样面对这份不确定？",
+        "en": "How can I handle not knowing what he is doing now?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "whats-in-his-life",
+      "sourcePath": "/en/spreads/love-and-relationships/whats-in-his-life",
+      "sourceTitle": "What's in His Life",
+      "question": {
+        "zh": "他的生活变化可能怎样影响我们之间的联系？",
+        "en": "How might changes in his life affect our connection?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "his-marriage-now",
+      "sourcePath": "/en/spreads/love-and-relationships/his-marriage-now",
+      "sourceTitle": "His Marriage Now",
+      "question": {
+        "zh": "如果他的婚姻影响了我们的关系，我该怎样看清自己的处境？",
+        "en": "If his marriage affects our relationship, how can I see my position more clearly?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "him-and-the-rival",
+      "sourcePath": "/en/spreads/love-and-relationships/him-and-the-rival",
+      "sourceTitle": "Him and the Rival",
+      "question": {
+        "zh": "我怎样面对他与另一个人的关系带来的影响？",
+        "en": "How do I handle the impact of his connection with someone else?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "will-he-divorce",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-divorce",
+      "sourceTitle": "Will He Divorce",
+      "question": {
+        "zh": "面对他可能离婚的说法，我应该依据什么作判断？",
+        "en": "What should I base my judgement on if he is talking about divorce?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-he-return-to-family",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-return-to-family",
+      "sourceTitle": "Will He Return to Family",
+      "question": {
+        "zh": "如果他选择回归家庭，我该怎样照顾自己的需要？",
+        "en": "How can I look after my needs if he chooses to return to his family?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-he-call",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-call",
+      "sourceTitle": "Will He Call",
+      "question": {
+        "zh": "在等他来电的时候，我可以怎样处理自己的期待？",
+        "en": "How can I manage my expectations while I wait for a call from him?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-he-text",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-text",
+      "sourceTitle": "Will He Text",
+      "question": {
+        "zh": "我该怎样看待他发不发消息这件事？",
+        "en": "How should I understand the possibility of hearing from him by message?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-he-come",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-come",
+      "sourceTitle": "Will He Come",
+      "question": {
+        "zh": "关于他会不会来见我，我能做哪些实际准备？",
+        "en": "What can I do practically while it is uncertain whether he will come to see me?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-he-kiss-me",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-kiss-me",
+      "sourceTitle": "Will He Kiss Me",
+      "question": {
+        "zh": "我怎样看待想和他亲近的期待，同时尊重彼此的意愿？",
+        "en": "How can I approach the hope of a kiss while respecting both our wishes?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-he-confess",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-confess",
+      "sourceTitle": "Will He Confess",
+      "question": {
+        "zh": "如果我期待他表露心意，我还可以怎样澄清我们的关系？",
+        "en": "If I hope he will express his feelings, how else might we gain clarity?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "should-i-text-first",
+      "sourcePath": "/en/spreads/love-and-relationships/should-i-text-first",
+      "sourceTitle": "Should I Text First",
+      "question": {
+        "zh": "我应该先发消息吗，怎样做才符合我的需要和界限？",
+        "en": "Should I reach out first, and what would respect my needs and boundaries?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "what-to-do-about-him",
+      "sourcePath": "/en/spreads/love-and-relationships/what-to-do-about-him",
+      "sourceTitle": "What to Do About Him",
+      "question": {
+        "zh": "面对与他的僵局，我下一步可以做什么？",
+        "en": "What is one constructive step I can take in this situation with him?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "will-we-be-together",
+      "sourcePath": "/en/spreads/love-and-relationships/will-we-be-together",
+      "sourceTitle": "Will We Be Together",
+      "question": {
+        "zh": "如果我们想在一起，需要具备哪些现实条件？",
+        "en": "What practical conditions would help us build a relationship together?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-i-be-happy-with-him",
+      "sourcePath": "/en/spreads/love-and-relationships/will-i-be-happy-with-him",
+      "sourceTitle": "Will I Be Happy with Him",
+      "question": {
+        "zh": "和他在一起，哪些现实条件会影响我的幸福感？",
+        "en": "What real-life conditions would affect my happiness with him?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-it-continue",
+      "sourcePath": "/en/spreads/love-and-relationships/will-it-continue",
+      "sourceTitle": "Will It Continue",
+      "question": {
+        "zh": "这段故事还有继续的空间吗，需要谁作出怎样的努力？",
+        "en": "Is there room for this story to continue, and what would it take from each of us?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "relationship-prospect",
+      "sourcePath": "/en/spreads/love-and-relationships/relationship-prospect",
+      "sourceTitle": "Relationship Prospect",
+      "question": {
+        "zh": "按现在的相处方式，这段关系可能朝哪里发展？",
+        "en": "Where might this relationship go if our current patterns continue?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "future-of-the-relationship",
+      "sourcePath": "/en/spreads/love-and-relationships/future-of-the-relationship",
+      "sourceTitle": "Future of the Relationship",
+      "question": {
+        "zh": "哪些变化会影响我们关系的长期发展？",
+        "en": "What changes would shape the long-term future of this relationship?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "clarify-the-relationship",
+      "sourcePath": "/en/spreads/love-and-relationships/clarify-the-relationship",
+      "sourceTitle": "Clarify the Relationship",
+      "question": {
+        "zh": "我们之间到底是什么关系，哪里需要进一步说清楚？",
+        "en": "What is happening between us, and what still needs to be clarified?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "what-blocks-us",
+      "sourcePath": "/en/spreads/love-and-relationships/what-blocks-us",
+      "sourceTitle": "What Blocks Us",
+      "question": {
+        "zh": "哪些障碍正在妨碍我们走近彼此？",
+        "en": "What obstacles are keeping us from getting closer?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "will-he-marry-me",
+      "sourcePath": "/en/spreads/love-and-relationships/will-he-marry-me",
+      "sourceTitle": "Will He Marry Me",
+      "question": {
+        "zh": "从我们已经谈过的承诺里，能看出他对结婚的准备吗？",
+        "en": "What do the commitments we have discussed say about his readiness for marriage?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "when-will-i-marry",
+      "sourcePath": "/en/spreads/love-and-relationships/when-will-i-marry",
+      "sourceTitle": "When Will I Marry",
+      "question": {
+        "zh": "哪些个人和现实条件会影响我进入婚姻的时机？",
+        "en": "What personal and practical conditions might shape when I am ready to marry?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What Holds It Now",
+        "What Must Align",
+        "Sign It's Near",
+        "The Timing",
+        "What Speeds It Up"
+      ]
+    },
+    {
+      "id": "does-he-want-to-return",
+      "sourcePath": "/en/spreads/love-and-relationships/does-he-want-to-return",
+      "sourceTitle": "Does He Want to Return",
+      "question": {
+        "zh": "如果他想回来，哪些行为能帮助我辨别他的意愿？",
+        "en": "If he wants to return, what actions would help me assess his intentions?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-the-ex-return",
+      "sourcePath": "/en/spreads/love-and-relationships/will-the-ex-return",
+      "sourceTitle": "Will the Ex Return",
+      "question": {
+        "zh": "如果前任重新出现，这次联系可能给我带来什么？",
+        "en": "What might renewed contact bring if a former partner reappears?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "does-he-regret-the-breakup",
+      "sourcePath": "/en/spreads/love-and-relationships/does-he-regret-the-breakup",
+      "sourceTitle": "Does He Regret the Breakup",
+      "question": {
+        "zh": "我们分开以后，哪些迹象能说明他怎样看待这次分手？",
+        "en": "What signs might suggest how he now sees our breakup?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "is-he-my-destiny",
+      "sourcePath": "/en/spreads/love-and-relationships/is-he-my-destiny",
+      "sourceTitle": "Is He My Destiny",
+      "question": {
+        "zh": "与其急着给这段缘分下结论，我更需要看清什么？",
+        "en": "Instead of deciding if he is my destiny, what do I need to understand about our bond?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who You Are Now",
+        "Your Strength",
+        "Your Shadow",
+        "The Lesson",
+        "Where the Path Leads"
+      ]
+    },
+    {
+      "id": "should-i-continue",
+      "sourcePath": "/en/spreads/love-and-relationships/should-i-continue",
+      "sourceTitle": "Should I Continue",
+      "question": {
+        "zh": "如果继续这段关系，我希望看到哪些改变？",
+        "en": "What changes would make continuing this relationship worthwhile for me?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "leave-or-stay",
+      "sourcePath": "/en/spreads/love-and-relationships/leave-or-stay",
+      "sourceTitle": "Leave or Stay",
+      "question": {
+        "zh": "离开和留下，各自会怎样影响我的生活？",
+        "en": "How would leaving or staying affect my life?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "a-pause-or-the-end",
+      "sourcePath": "/en/spreads/love-and-relationships/a-pause-or-the-end",
+      "sourceTitle": "A Pause or the End",
+      "question": {
+        "zh": "这是一段暂时需要空间的关系，还是到了告别的时候？",
+        "en": "Is this a pause that needs space, or is it time to say goodbye?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "wait-or-forget",
+      "sourcePath": "/en/spreads/love-and-relationships/wait-or-forget",
+      "sourceTitle": "Wait or Forget",
+      "question": {
+        "zh": "继续等待和放下，各自会带给我什么？",
+        "en": "What might I gain or lose by waiting or letting go?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "does-he-need-me",
+      "sourcePath": "/en/spreads/love-and-relationships/does-he-need-me",
+      "sourceTitle": "Does He Need Me",
+      "question": {
+        "zh": "在这段关系里，被需要和被关心有什么区别？",
+        "en": "In this relationship, how do I distinguish being needed from being cared for?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "whats-between-us",
+      "sourcePath": "/en/spreads/love-and-relationships/whats-between-us",
+      "sourceTitle": "What's Between Us",
+      "question": {
+        "zh": "我们之间最真实的连接是什么？",
+        "en": "What is the most genuine connection between us?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "is-there-someone-else",
+      "sourcePath": "/en/spreads/love-and-relationships/is-there-someone-else",
+      "sourceTitle": "Is There Someone Else",
+      "question": {
+        "zh": "如果我怀疑有别人，我知道的事实和自己的猜测分别是什么？",
+        "en": "If I suspect there is someone else, what do I know and what am I assuming?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "will-we-reconcile",
+      "sourcePath": "/en/spreads/love-and-relationships/will-we-reconcile",
+      "sourceTitle": "Will We Reconcile",
+      "question": {
+        "zh": "如果我们都愿意和解，下一步可以怎样做？",
+        "en": "If both of us want to reconcile, what might a realistic next step look like?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "wife-or-mistress",
+      "sourcePath": "/en/spreads/love-and-relationships/wife-or-mistress",
+      "sourceTitle": "Wife or Mistress",
+      "question": {
+        "zh": "当一段关系牵涉婚姻和第三者时，我能怎样看清自己的选择？",
+        "en": "How can I see my choices clearly when a relationship involves a marriage and a third person?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "why-he-avoids-me",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-avoids-me",
+      "sourceTitle": "Why He Avoids Me",
+      "question": {
+        "zh": "他回避我时，我有哪些方法可以澄清而不施压？",
+        "en": "When he avoids me, how could I ask for clarity without applying pressure?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-left-me",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-left-me",
+      "sourceTitle": "Why He Left Me",
+      "question": {
+        "zh": "分开可能受哪些因素影响，我能从中理解什么？",
+        "en": "What factors might have played a part in his leaving, and what can I learn?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-ignores-me",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-ignores-me",
+      "sourceTitle": "Why He Ignores Me",
+      "question": {
+        "zh": "面对他不回应的情况，我可以怎样保护自己的感受？",
+        "en": "How can I protect my feelings when he does not respond?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-disappeared",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-disappeared",
+      "sourceTitle": "Why He Disappeared",
+      "question": {
+        "zh": "他突然消失后，我怎样看清哪些事还能由我决定？",
+        "en": "After he disappeared without explanation, what is still within my control?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-fell-out-of-love",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-fell-out-of-love",
+      "sourceTitle": "Why He Fell Out of Love",
+      "question": {
+        "zh": "我们之间的感情发生了哪些变化，我能怎样面对？",
+        "en": "What changed between us, and how can I respond to those changes?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-betrayed-me",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-betrayed-me",
+      "sourceTitle": "Why He Betrayed Me",
+      "question": {
+        "zh": "背叛之后，我怎样理解这段经历并决定自己的界限？",
+        "en": "How can I make sense of a betrayal and decide what boundaries I need?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-chose-another",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-chose-another",
+      "sourceTitle": "Why He Chose Another",
+      "question": {
+        "zh": "他选择了别人，我该怎样理解这件事对我的影响？",
+        "en": "How can I understand the impact of his choosing someone else?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-acts-this-way",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-acts-this-way",
+      "sourceTitle": "Why He Acts This Way",
+      "question": {
+        "zh": "他反复出现的行为模式，可能让我看清什么？",
+        "en": "What can I learn from the patterns in his behaviour?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-no-one-loves-me",
+      "sourcePath": "/en/spreads/love-and-relationships/why-no-one-loves-me",
+      "sourceTitle": "Why No One Loves Me",
+      "question": {
+        "zh": "当我觉得没有人爱我时，我可以从哪里重新感受连接？",
+        "en": "When I feel unloved, where can I start to reconnect?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-my-love-life-stalls",
+      "sourcePath": "/en/spreads/love-and-relationships/why-my-love-life-stalls",
+      "sourceTitle": "Why My Love Life Stalls",
+      "question": {
+        "zh": "我的感情生活似乎停滞了，什么因素值得我留意？",
+        "en": "What might be keeping my love life stuck?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Main Reason",
+        "Your Part",
+        "What's Inside Them",
+        "Hidden Factor",
+        "The Outlook"
+      ]
+    },
+    {
+      "id": "why-he-appeared",
+      "sourcePath": "/en/spreads/love-and-relationships/why-he-appeared",
+      "sourceTitle": "Why He Appeared",
+      "question": {
+        "zh": "他的出现对我的生活产生了怎样的影响？",
+        "en": "What has his appearance in my life brought into focus?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who You Are Now",
+        "Your Strength",
+        "Your Shadow",
+        "The Lesson",
+        "Where the Path Leads"
+      ]
+    },
+    {
+      "id": "love-for-the-single",
+      "sourcePath": "/en/spreads/love-and-relationships/love-for-the-single",
+      "sourceTitle": "Love for the Single",
+      "question": {
+        "zh": "单身的我，怎样为新的亲密关系留出空间？",
+        "en": "How can I make room for new love while I am single?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-finding-love",
+      "sourcePath": "/en/spreads/love-and-relationships/on-finding-love",
+      "sourceTitle": "On Finding Love",
+      "question": {
+        "zh": "我可以做哪些改变，让自己更容易遇到合适的人？",
+        "en": "What could I change to make it easier to meet someone compatible?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "when-will-i-find-love",
+      "sourcePath": "/en/spreads/love-and-relationships/when-will-i-find-love",
+      "sourceTitle": "When Will I Find Love",
+      "question": {
+        "zh": "哪些条件成熟时，我更可能建立一段新的感情？",
+        "en": "What conditions might help a new relationship take shape?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What Holds It Now",
+        "What Must Align",
+        "Sign It's Near",
+        "The Timing",
+        "What Speeds It Up"
+      ]
+    },
+    {
+      "id": "whos-coming-into-my-life",
+      "sourcePath": "/en/spreads/love-and-relationships/whos-coming-into-my-life",
+      "sourceTitle": "Who's Coming into My Life",
+      "question": {
+        "zh": "下一段走进我生活的关系，可能具备哪些特征？",
+        "en": "What qualities might the next connection in my life bring?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "who-is-my-future-husband",
+      "sourcePath": "/en/spreads/love-and-relationships/who-is-my-future-husband",
+      "sourceTitle": "Who Is My Future Husband",
+      "question": {
+        "zh": "如果我在考虑长久婚姻，怎样的伴侣可能适合我？",
+        "en": "What qualities might suit me in a future marriage partner?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "A partner’s qualities",
+        "What could bring us closer",
+        "Space for meeting",
+        "What to look for",
+        "A step towards meeting"
+      ]
+    },
+    {
+      "id": "on-a-new-acquaintance",
+      "sourcePath": "/en/spreads/love-and-relationships/on-a-new-acquaintance",
+      "sourceTitle": "On a New Acquaintance",
+      "question": {
+        "zh": "遇到一个新认识的人时，我应该怎样认识这段联系？",
+        "en": "How can I approach a new acquaintance and learn what the connection offers?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "on-a-secret-admirer",
+      "sourcePath": "/en/spreads/love-and-relationships/on-a-secret-admirer",
+      "sourceTitle": "On a Secret Admirer",
+      "question": {
+        "zh": "如果我觉得有人默默关注我，怎样辨别真实信号？",
+        "en": "If I sense someone may secretly admire me, how can I recognise real signals?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Where I notice interest",
+        "Signs of attraction",
+        "My expectations",
+        "How to clarify",
+        "My next step"
+      ]
+    },
+    {
+      "id": "on-a-date",
+      "sourcePath": "/en/spreads/love-and-relationships/on-a-date",
+      "sourceTitle": "On a Date",
+      "question": {
+        "zh": "我怎样为这次约会做好准备，并留意自己的感受？",
+        "en": "How can I prepare for this date while checking in with my own feelings?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "love-triangle",
+      "sourcePath": "/en/spreads/love-and-relationships/love-triangle",
+      "sourceTitle": "Love Triangle",
+      "question": {
+        "zh": "牵涉三个人时，哪些感受、约定和界限需要厘清？",
+        "en": "When three people are involved, which feelings, agreements and boundaries need clarity?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "love-for-a-married-man",
+      "sourcePath": "/en/spreads/love-and-relationships/love-for-a-married-man",
+      "sourceTitle": "Love for a Married Man",
+      "question": {
+        "zh": "爱上已有婚姻的人后，我怎样看待自己的需要和处境？",
+        "en": "How can I assess my needs and circumstances when I love someone who is married?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "long-distance-love",
+      "sourcePath": "/en/spreads/love-and-relationships/long-distance-love",
+      "sourceTitle": "Long-Distance Love",
+      "question": {
+        "zh": "异地相处中，什么能帮助我们继续保持联系？",
+        "en": "What can help us sustain closeness while we are apart?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "about-my-ex",
+      "sourcePath": "/en/spreads/love-and-relationships/about-my-ex",
+      "sourceTitle": "About My Ex",
+      "question": {
+        "zh": "我和这位前任之间，还有哪些事情没有放下？",
+        "en": "What remains unresolved between me and this former partner?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "about-my-ex-her",
+      "sourcePath": "/en/spreads/love-and-relationships/about-my-ex-her",
+      "sourceTitle": "About My Ex (Her)",
+      "question": {
+        "zh": "对我和这位女性前任的关系，我还有什么想理解的？",
+        "en": "What do I still want to understand about my connection with this former girlfriend?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "about-a-man",
+      "sourcePath": "/en/spreads/love-and-relationships/about-a-man",
+      "sourceTitle": "About a Man",
+      "question": {
+        "zh": "从与这位男性相处的经历中，我想看清什么？",
+        "en": "What do I want to understand about my connection with this man?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "about-a-woman",
+      "sourcePath": "/en/spreads/love-and-relationships/about-a-woman",
+      "sourceTitle": "About a Woman",
+      "question": {
+        "zh": "从与这位女性相处的经历中，我想看清什么？",
+        "en": "What do I want to understand about my connection with this woman?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "about-my-husband",
+      "sourcePath": "/en/spreads/love-and-relationships/about-my-husband",
+      "sourceTitle": "About My Husband",
+      "question": {
+        "zh": "我与丈夫的相处，有哪些感受和需要值得说出来？",
+        "en": "What feelings or needs should I bring into conversation with my husband?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "about-my-wife",
+      "sourcePath": "/en/spreads/love-and-relationships/about-my-wife",
+      "sourceTitle": "About My Wife",
+      "question": {
+        "zh": "我与妻子的相处，有哪些感受和需要值得说出来？",
+        "en": "What feelings or needs should I bring into conversation with my wife?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "about-my-beloved",
+      "sourcePath": "/en/spreads/love-and-relationships/about-my-beloved",
+      "sourceTitle": "About My Beloved",
+      "question": {
+        "zh": "对我深爱的人，这段连接最值得我理解的是什么？",
+        "en": "What is most worth understanding about my bond with someone I love?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "about-a-named-person",
+      "sourcePath": "/en/spreads/love-and-relationships/about-a-named-person",
+      "sourceTitle": "About a Named Person",
+      "question": {
+        "zh": "回想与心里那个人的具体互动，有什么线索值得我留意？",
+        "en": "What clues stand out when I reflect on my actual interactions with this person?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "how-they-treat-me",
+      "sourcePath": "/en/spreads/love-and-relationships/how-they-treat-me",
+      "sourceTitle": "How They Treat Me",
+      "question": {
+        "zh": "对方待我的方式，怎样影响了我在这段关系里的感受？",
+        "en": "How does the way they treat me affect how I feel in the relationship?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Who They Are Now",
+        "How They See You",
+        "What Drives Them",
+        "What's Hidden",
+        "Where the Bond Goes"
+      ]
+    },
+    {
+      "id": "on-the-relationship",
+      "sourcePath": "/en/spreads/love-and-relationships/on-the-relationship",
+      "sourceTitle": "On the Relationship",
+      "question": {
+        "zh": "这段关系的现状、支持和挑战分别是什么？",
+        "en": "What is the current state of this relationship, and what supports or challenges it?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-the-couple",
+      "sourcePath": "/en/spreads/love-and-relationships/on-the-couple",
+      "sourceTitle": "On the Couple",
+      "question": {
+        "zh": "作为一对伴侣，我们有哪些需要协调的地方？",
+        "en": "What needs to be coordinated between us as a couple?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-marriage",
+      "sourcePath": "/en/spreads/love-and-relationships/on-marriage",
+      "sourceTitle": "On Marriage",
+      "question": {
+        "zh": "面对婚姻或婚礼，我有哪些期待需要和对方讨论？",
+        "en": "What expectations about marriage or a wedding should I discuss with my partner?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-divorce",
+      "sourcePath": "/en/spreads/love-and-relationships/on-divorce",
+      "sourceTitle": "On Divorce",
+      "question": {
+        "zh": "面对离婚的考虑，我需要看清哪些现实和情感因素？",
+        "en": "What practical and emotional factors matter as I consider divorce?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "on-past-relationships",
+      "sourcePath": "/en/spreads/love-and-relationships/on-past-relationships",
+      "sourceTitle": "On Past Relationships",
+      "question": {
+        "zh": "过去的关系给我留下了哪些值得带进未来的经验？",
+        "en": "What lessons from past relationships are worth carrying forward?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "what-awaits-us",
+      "sourcePath": "/en/spreads/love-and-relationships/what-awaits-us",
+      "sourceTitle": "What Awaits Us",
+      "question": {
+        "zh": "如果我们延续现在的做法，接下来可能出现什么变化？",
+        "en": "If we continue as we are, what changes might come next?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "will-my-ex-return",
+      "sourcePath": "/en/spreads/love-and-relationships/will-my-ex-return",
+      "sourceTitle": "Will My Ex Return",
+      "question": {
+        "zh": "如果我的前任回来，我想先确认什么？",
+        "en": "If my ex comes back, what would I want to clarify first?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "relationship-energy",
+      "sourcePath": "/en/spreads/love-and-relationships/relationship-energy",
+      "sourceTitle": "Relationship Energy",
+      "question": {
+        "zh": "目前流动在我们之间的情绪，透露出怎样的互动模式？",
+        "en": "What pattern can I notice in the feelings moving between us now?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "station-for-two",
+      "sourcePath": "/en/spreads/love-and-relationships/station-for-two",
+      "sourceTitle": "Station for Two",
+      "question": {
+        "zh": "我们各自的想法、感受和行动怎样影响彼此？",
+        "en": "How do each of our thoughts, feelings and actions affect the other person?"
+      },
+      "layout": "five-two",
+      "positions": [
+        "My thoughts",
+        "My feelings",
+        "My actions",
+        "My partner’s perspective",
+        "My partner’s feelings",
+        "My partner’s actions",
+        "The bond between us"
+      ]
+    },
+    {
+      "id": "lovers-pyramid",
+      "sourcePath": "/en/spreads/love-and-relationships/lovers-pyramid",
+      "sourceTitle": "Lovers’ Pyramid",
+      "question": {
+        "zh": "我们各自怎样看待这段关系，它的基础是什么？",
+        "en": "How does each of us see this relationship, and what foundation does it rest on?"
+      },
+      "layout": "row-four",
+      "positions": [
+        "My side of the relationship",
+        "My partner’s side",
+        "What is happening between us",
+        "Direction of development"
+      ]
+    },
+    {
+      "id": "do-they-love-me-or-use-me",
+      "sourcePath": "/en/spreads/love-and-relationships/do-they-love-me-or-use-me",
+      "sourceTitle": "Do They Love Me or Use Me?",
+      "question": {
+        "zh": "我怎样判断这段关系有没有互相付出，还是只有一方在索取？",
+        "en": "How can I distinguish mutual care from a pattern of one-sided taking?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "What draws me in",
+        "What I give",
+        "What comes back",
+        "My boundary",
+        "My next step"
+      ]
+    },
+    {
+      "id": "friendship-or-love",
+      "sourcePath": "/en/spreads/love-and-relationships/friendship-or-love",
+      "sourceTitle": "Friendship or Love?",
+      "question": {
+        "zh": "这份亲密更像友谊还是爱情，我们可以怎样谈清楚？",
+        "en": "Does this closeness feel like friendship or love, and how can we talk about it?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The basis of our friendship",
+        "My attraction",
+        "Mixed signals",
+        "What I want to preserve",
+        "A conversation about us"
+      ]
+    },
+    {
+      "id": "do-i-love-this-person",
+      "sourcePath": "/en/spreads/love-and-relationships/do-i-love-this-person",
+      "sourceTitle": "Do I Love This Person?",
+      "question": {
+        "zh": "我对这个人的感情，来自爱、习惯还是其他需要？",
+        "en": "Do my feelings for this person come from love, habit or another need?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "My feelings now",
+        "What draws me closer",
+        "What keeps me here",
+        "What I need",
+        "An honest step"
+      ]
+    },
+    {
+      "id": "when-will-they-reach-out",
+      "sourcePath": "/en/spreads/love-and-relationships/when-will-they-reach-out",
+      "sourceTitle": "When Will They Reach Out?",
+      "question": {
+        "zh": "当对方迟迟没有联系时，什么时候继续等才有意义？",
+        "en": "When contact is delayed, how can I decide whether it still makes sense to wait?"
+      },
+      "layout": "five-one",
+      "positions": [
+        "The pause now",
+        "What supports contact",
+        "What may delay it",
+        "The near-term outlook",
+        "My limit on waiting",
+        "My next step"
+      ]
+    },
+    {
+      "id": "will-we-meet",
+      "sourcePath": "/en/spreads/love-and-relationships/will-we-meet",
+      "sourceTitle": "Will We Meet?",
+      "question": {
+        "zh": "有什么现实条件会促成或推迟我们的见面？",
+        "en": "What practical conditions might help or delay our meeting?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Our plans now",
+        "What helps",
+        "What gets in the way",
+        "The outlook for this period",
+        "Clarifying our plans"
+      ]
+    },
+    {
+      "id": "marriage-again",
+      "sourcePath": "/en/spreads/love-and-relationships/marriage-again",
+      "sourceTitle": "Marriage Again",
+      "question": {
+        "zh": "经历过一段婚姻后，我怎样判断自己是否准备好再婚？",
+        "en": "After a previous marriage, how can I tell whether I am ready to marry again?"
+      },
+      "layout": "five-one",
+      "positions": [
+        "My previous marriage",
+        "My readiness now",
+        "What I want from marriage",
+        "What worries me",
+        "The possibility of a new partnership",
+        "My next step"
+      ]
+    },
+    {
+      "id": "karmic-relationships",
+      "sourcePath": "/en/spreads/love-and-relationships/karmic-relationships",
+      "sourceTitle": "Karmic Relationships",
+      "question": {
+        "zh": "为什么类似的相处模式会反复出现，我可以怎样改变它？",
+        "en": "Why might a relationship pattern keep repeating, and how can I change it?"
+      },
+      "layout": "five-one",
+      "positions": [
+        "Our repeating cycle",
+        "What draws me in",
+        "My part",
+        "What starts the cycle",
+        "My boundary",
+        "A way out of the cycle"
+      ]
+    },
+    {
+      "id": "three-cards",
+      "sourcePath": "/en/spreads/future-and-forecast/three-cards",
+      "sourceTitle": "Three Cards",
+      "question": {
+        "zh": "过去、现在和可能的未来，分别给这段关系什么线索？",
+        "en": "What do the past, present and possible future each reveal about this connection?"
+      },
+      "layout": "row-three",
+      "positions": [
+        "The Past",
+        "The Present",
+        "The Future"
+      ]
+    },
+    {
+      "id": "five-cards",
+      "sourcePath": "/en/spreads/self-discovery-and-growth/five-cards",
+      "sourceTitle": "Five Cards",
+      "question": {
+        "zh": "在这段感情困境里，我从过去走到了哪里，下一步会怎样？",
+        "en": "How did I arrive at this relationship situation, and what might come next?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "The Past",
+        "The Obstacle",
+        "The Situation",
+        "What Comes Next",
+        "The Outcome"
+      ]
+    },
+    {
+      "id": "self-love",
+      "sourcePath": "/en/spreads/soul-and-body/self-love",
+      "sourceTitle": "Self-Love",
+      "question": {
+        "zh": "我可以怎样在关系里更温柔地支持自己？",
+        "en": "How can I offer myself more kindness and support in relationships?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "How I See Myself",
+        "Old Wound",
+        "My Foundation",
+        "What I Need",
+        "A Step Toward Me"
+      ]
+    },
+    {
+      "id": "choosing-between-two",
+      "sourcePath": "/en/spreads/choice-and-decisions/choosing-between-two",
+      "sourceTitle": "Choosing Between Two",
+      "question": {
+        "zh": "面对两个关系选择，哪些差异值得我认真权衡？",
+        "en": "When choosing between two relationship paths, which differences should I weigh carefully?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    }
+  ]
+}

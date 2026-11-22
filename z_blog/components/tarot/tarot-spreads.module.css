@@ -38,3 +38,22 @@
   .guided[data-mode="free-flow"][data-card-count="5"] .selected { grid-template-columns: repeat(5,minmax(0,1fr)); }
   .guided .slot > div { max-width: 140px; }
 }
+
+.layoutPreview {
+  position: relative;
+  width: min(280px, 90%);
+  margin: 0 auto 14px;
+}
+
+.layoutPreview span {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  aspect-ratio: 625 / 1024;
+  border: 1px solid var(--tarot-line);
+  border-radius: 4px;
+  background: var(--tarot-glow);
+  color: var(--tarot-gold);
+  font-size: 12px;
+}

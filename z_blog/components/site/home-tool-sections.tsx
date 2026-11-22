@@ -95,7 +95,7 @@ export function TarotCollection({ kind }: { kind: keyof typeof tarotCollections 
         <h1 className={styles.goldHeading}>{t(collection.title)}</h1>
         <div className={`${archiveStyles.subtitle} mt-3`}>{t(tarotSectionCopy.description)}</div>
       </header>
-      <div className={`${archiveStyles.grid} ${styles.collectionGrid}`}>
+      <div className={`${archiveStyles.grid} ${styles.collectionGrid} ${kind === "readings" ? styles.readingsGrid : ""}`}>
         {collection.entries.map((entry) => <Link key={entry.href} href={entry.href === "/thoth-tarot/readings" ? `${entry.href}?lang=${language}` : entry.href} className="group block h-full" data-tarot-entry={entry.href}>
           <Card className={`${archiveStyles.card} transition-colors group-hover:border-[var(--primary)]`}>
             <div className={archiveStyles.media}><Image src={entry.image!} alt="" fill sizes="(max-width: 1023px) 100vw, 25vw" className={archiveStyles.image} /></div>

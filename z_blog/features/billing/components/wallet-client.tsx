@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CreditCard, RefreshCw, ShieldCheck, Wallet } from "lucide-react";
+import { CreditCard, RefreshCw, ShieldCheck, UserRound, Wallet } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { usePreferences } from "@/components/site/preferences-provider";
@@ -12,6 +12,7 @@ import {
 } from "../lib/stardust-actions";
 import { COURSES, MEMBERSHIPS, TOPUP_CENTS } from "../lib/stardust-config";
 import type { WalletSnapshot } from "../lib/stardust-server";
+import { MembershipActions } from "./membership-actions";
 
 const serviceNames: Record<string, { zh: string; en: string }> = {
   tarot: { zh: "塔罗解读", en: "Tarot readings" },
@@ -60,7 +61,22 @@ export function WalletClient({
     !snapshot?.ready ||
     !snapshot.verified ||
     !!snapshot.wallet?.blocked;
-  const topup = params.get("topup");
+  const guestLabel = t({ zh: "游客", en: "Guest" });
+  const freeMemberLabel = t({ zh: "免费会员", en: "Free membership" });
+  const paidMemberships = (["monthly", "annual"] as const)
+    .filter((plan) => snapshot?.memberships.some((item) => item.plan === plan))
+    .map((plan) => MEMBERSHIPS[plan][language]);
+  const currentMembership = snapshot
+    ? paidMemberships.join(language === "zh" ? "、" : " & ") || freeMemberLabel
+    : guestLabel;
+  const transactionTypes: Record<string, string> = {
+    topup: t({ zh: "充值到账", en: "Top-up credited" }),
+    reserve: t({ zh: "暂扣积分", en: "STARS held" }),
+    release: t({ zh: "暂扣积分退回", en: "Held STARS returned" }),
+    complete: t({ zh: "消费已确认", en: "Purchase confirmed" }),
+  };
+  const formatDelta = (delta: number) => delta > 0 ? `+${num(delta)}` : num(delta);
+  const topup = snapshot ? params.get("topup") : null;
   const topupState = snapshot?.topups.find(
     (order) => order.id === topup,
   )?.status;
@@ -169,9 +185,7 @@ export function WalletClient({
             {t({ zh: "刷新账户", en: "Refresh" })}
           </Button>
         ) : (
-          <ButtonLink href="/login?next=%2Fwallet">
-            {t({ zh: "登录账户", en: "Sign in" })}
-          </ButtonLink>
+          <MembershipActions signedIn={false} actions={["signIn"]} />
         )}
       </header>
 
@@ -327,14 +341,60 @@ export function WalletClient({
         <h2 className="text-xl font-semibold">
           {t({ zh: "选择会员", en: "Memberships" })}
         </h2>
-        <div className="grid gap-4 md:grid-cols-2">
+        <p
+          role="status"
+          className="rounded-[var(--radius-sm)] border border-rose-300/50 bg-rose-950 px-5 py-4 text-base font-semibold text-rose-50 sm:text-lg"
+        >
+          {snapshot
+            ? t({ zh: "您目前的会员", en: "Your current membership" })
+            : t({ zh: "您目前的身份", en: "Your current status" })}
+          <strong className="ml-3 text-xl text-rose-200">{currentMembership}</strong>
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <Card>
+            <CardContent className="space-y-4">
+              <h3 className="text-lg font-semibold">{guestLabel}</h3>
+              <UserRound aria-hidden="true" className="size-12 rounded-full bg-[var(--bg-soft)] p-3" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="space-y-4">
+              <h3 className="text-lg font-semibold">{freeMemberLabel}</h3>
+              <div className="flex flex-wrap items-center gap-3">
+                {snapshot?.account.avatar ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- OAuth avatars are served directly by their provider.
+                  <img
+                    src={snapshot.account.avatar}
+                    alt=""
+                    width={48}
+                    height={48}
+                    referrerPolicy="no-referrer"
+                    className="size-12 rounded-full object-cover"
+                  />
+                ) : (
+                  <UserRound aria-hidden="true" className="size-12 rounded-full bg-[var(--bg-soft)] p-3" />
+                )}
+                {snapshot && (
+                  <div className="min-w-0 break-words text-sm">
+                    <p className="font-medium">
+                      {snapshot.account.name || t({ zh: "用户", en: "User" })}
+                    </p>
+                    {snapshot.account.email && (
+                      <p className="text-[var(--text-soft)]">{snapshot.account.email}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+              <MembershipActions signedIn={!!snapshot} actions={["signUp"]} />
+            </CardContent>
+          </Card>
           {(["monthly", "annual"] as const).map((plan) => {
             const config = MEMBERSHIPS[plan];
             const active = snapshot?.memberships.find(
               (item) => item.plan === plan,
             );
             return (
-              <Card key={plan}>
+              <Card key={plan} id={`membership-${plan}`} className="scroll-mt-24">
                 <CardContent className="flex h-full flex-col gap-5">
                   <div>
                     <h3 className="text-lg font-semibold">
@@ -521,6 +581,12 @@ export function WalletClient({
           <h2 className="text-xl font-semibold">
             {t({ zh: "最近积分流水", en: "Recent transactions" })}
           </h2>
+          <p className="text-sm leading-6 text-[var(--text-soft)]">
+            {t({
+              zh: "暂扣积分会先从可用余额扣除。消费确认后，这笔暂扣转为实际消费；如果未完成，暂扣的积分会退回。",
+              en: "Held STARS are deducted from your available balance. The hold becomes a charge once confirmed, or is returned if the purchase does not complete.",
+            })}
+          </p>
           <div className="overflow-x-auto">
             <table className="w-full min-w-96 text-left text-sm">
               <thead>
@@ -542,17 +608,18 @@ export function WalletClient({
                   <tr key={row.id} className="border-b border-[var(--border)]">
                     <td className="py-3 pr-4">{date(row.created_at)}</td>
                     <td>
-                      {(
-                        {
-                          topup: t({ zh: "充值", en: "Top-up" }),
-                          reserve: t({ zh: "预留", en: "Reserved" }),
-                          release: t({ zh: "退回", en: "Released" }),
-                          complete: t({ zh: "完成", en: "Completed" }),
-                        } as Record<string, string>
-                      )[row.kind] || row.kind}
+                      {transactionTypes[row.kind] || row.kind}
                     </td>
-                    <td>{num(row.paid_delta)}</td>
-                    <td>{num(row.reward_delta)}</td>
+                    {row.kind === "complete" && Number(row.paid_delta) === 0 && Number(row.reward_delta) === 0 ? (
+                      <td colSpan={2} className="text-[var(--text-soft)]">
+                        {t({ zh: "本步骤无额外扣款", en: "No additional deduction at confirmation" })}
+                      </td>
+                    ) : (
+                      <>
+                        <td>{formatDelta(row.paid_delta)}</td>
+                        <td>{formatDelta(row.reward_delta)}</td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>

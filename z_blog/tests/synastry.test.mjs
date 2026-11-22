@@ -105,7 +105,7 @@ test("unknown times omit houses/angles and flag Moon data", async () => {
 });
 
 test("API validates before charging, protects access and uses canonical chart data", async () => {
-  let consumed = 0, calls = 0, authenticated = true, allowed = true, prompt;
+  let consumed = 0, calls = 0, authenticated = true, allowed = true, prompt, archiveContext;
   const reading = {
     zh: { overview: "关系总览", sections: Object.fromEntries(topics.map(t => [t.key, "中文解读"])) },
     en: { overview: "Relationship overview", sections: Object.fromEntries(topics.map(t => [t.key, "English reading"])) },
@@ -115,14 +115,22 @@ test("API validates before charging, protects access and uses canonical chart da
   assert.ok(!isBilingualSynastryReading({ zh: reading.zh, en: { overview: "", sections: {} } }));
   assert.ok(!isBilingualSynastryReading({ zh: reading.zh, en: { ...reading.en, sections: { ...reading.en.sections, emotional: "" } } }));
   class FakeOpenAI {
-    chat = { completions: { create: async (params) => { calls++; prompt = params; return { choices: [{ message: { content: JSON.stringify(reading) } }] }; } } };
+    chat = { completions: { create: async (params) => { calls++; prompt = params; return { choices: [{ finish_reason: "stop", message: { content: JSON.stringify(reading) } }] }; } } };
   }
   const route = loader({
     openai: FakeOpenAI,
-    "@/features/billing/lib/ai-access": {
-      getAiAccessStatus: async () => ({ authenticated }),
-      consumeAiAccess: async () => { consumed++; return allowed ? { allowed: true } : { allowed: false, message: "Limit", code: "daily_limit_reached", httpStatus: 403 }; },
-    },
+    "@/features/billing/lib/ai-access": { getAiAccessStatus: async () => ({ authenticated }) },
+    "@/features/billing/lib/reading-billing": { beginReading: async () => {
+      consumed++;
+      return {
+        response: allowed ? undefined : Response.json({ error: "Limit" }, { status: 403 }),
+        complete: async (result, context) => {
+          archiveContext = context;
+          return Response.json(result);
+        },
+        release: async () => {},
+      };
+    } },
   })("app/api/synastry/route.ts");
   const post = body => route.POST(new Request("http://localhost/api/synastry", { method: "POST", body: JSON.stringify(body) }));
   const previousKey = process.env.OPENAI_API_KEY;
@@ -139,6 +147,7 @@ test("API validates before charging, protects access and uses canonical chart da
     assert.equal(response.status, 200);
     const returnedReading = (await response.json()).reading;
     assert.deepEqual(returnedReading, reading);
+    assert.deepEqual(archiveContext, { kind: "synastry", input: parseSynastryInput(input) });
     for (const language of ["en", "zh", "en"]) {
       assert.equal(returnedReading[language].sections.communication, language === "en" ? "English reading" : "中文解读");
     }
@@ -160,12 +169,19 @@ test("API validates before charging, protects access and uses canonical chart da
 
 test("Stella can request English through the shared natal API without changing its default language", async () => {
   const prompts = [];
+  const archives = [];
   class FakeOpenAI {
-    chat = { completions: { create: async params => { prompts.push(params); return { choices: [{ message: { content: "Example reading" } }] }; } } };
+    chat = { completions: { create: async params => { prompts.push(params); return { choices: [{ finish_reason: "stop", message: { content: "Example reading" } }] }; } } };
   }
   const route = loader({
     openai: FakeOpenAI,
-    "@/features/billing/lib/ai-access": { consumeAiAccess: async () => ({ allowed: true }) },
+    "@/features/billing/lib/reading-billing": { beginReading: async () => ({
+      complete: async (result, context) => {
+        archives.push(context);
+        return Response.json(result);
+      },
+      release: async () => {},
+    }) },
   })("app/api/astroplate/route.ts");
   const chartJson = await calculateNatalChart(person);
   for (const language of ["en", undefined]) {
@@ -174,6 +190,9 @@ test("Stella can request English through the shared natal API without changing i
     }));
     assert.equal(response.status, 200);
   }
+  assert.deepEqual(archives, ["en", "zh"].map((language) => ({
+    kind: "natal", question: "My chart", chart: JSON.parse(JSON.stringify(chartJson)), language,
+  })));
   assert.match(prompts[0].messages[0].content, /respond entirely in English/);
   assert.doesNotMatch(prompts[1].messages[0].content, /respond entirely in English/);
 });

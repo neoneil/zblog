@@ -67,7 +67,7 @@ zh 和 en 均包含 overview 简短总览，以及 sections 六个主题。每�
     if (!content) throw new Error("Empty AI response");
     const reading = JSON.parse(content);
     if (!isBilingualSynastryReading(reading)) throw new Error("Invalid AI response");
-    return await lease.complete({ result, reading });
+    return await lease.complete({ result, reading }, { kind: "synastry", input });
   } catch (error) {
     await lease?.release();
     console.error("Synastry request failed:", error instanceof Error ? error.message : "Unknown error");

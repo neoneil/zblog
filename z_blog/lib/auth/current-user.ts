@@ -1,11 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { readServerUser } from "@/lib/supabase/server-reads";
 
 export async function getCurrentUserWithRole() {
   const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user } = await readServerUser(supabase);
 
   let role: string | null = null;
 

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { fetchWithReadDeadline, readServerUser } from "@/lib/supabase/server-reads";
 
 export async function proxy(request: NextRequest) {
   const response = NextResponse.next();
@@ -30,6 +31,7 @@ export async function proxy(request: NextRequest) {
   }
 
   const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
+    global: { fetch: fetchWithReadDeadline },
     cookies: {
       getAll() {
         return request.cookies.getAll();
@@ -40,7 +42,7 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  await supabase.auth.getUser();
+  await readServerUser(supabase);
 
   return response;
 }

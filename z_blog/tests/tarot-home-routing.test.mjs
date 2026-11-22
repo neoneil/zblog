@@ -128,7 +128,11 @@ try {
       await collection.waitFor();
       const cards = collection.locator("[data-tarot-entry]");
       await cards.first().waitFor();
-      assert.equal(await cards.count(), 2);
+      assert.equal(await cards.count(), kind === "readings" ? 4 : 2);
+      if (kind === "readings") {
+        assert.equal(await cards.nth(2).getAttribute("href"), "/tarot-ai/relationships");
+        assert.equal(await cards.nth(3).getAttribute("href"), "/tarot-ai/finances");
+      }
       assert.equal(
         await collection.locator("h1").textContent(),
         tarotCollections[kind].title[language],

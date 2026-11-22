@@ -10,7 +10,9 @@ export type TarotPosition = "past" | "present" | "future"
   | "choiceAState" | "choiceAOutcome" | "choiceAAdvice"
   | "choiceBState" | "choiceBOutcome" | "choiceBAdvice"
   | "current" | "crossing" | "subconscious" | "background" | "potential"
-  | "nearFuture" | "attitude" | "environment" | "hopes" | "outcome";
+  | "nearFuture" | "attitude" | "environment" | "hopes" | "outcome"
+  | `relationship-${number}`
+  | `finance-${number}`;
 
 export type TarotCard = {
   id: string;

@@ -1,7 +1,8 @@
 import type { TarotPosition } from "@/types/tarot";
+import { situationSpreads, type SituationLayout, type SituationMode } from "./situation-spreads";
 import { guidedSpreads, type GuidedSpreadMode } from "./guided-spreads";
 
-export type TarotReadingMode = "love" | "yes-no" | "one-card" | "three-cards" | GuidedSpreadMode;
+export type TarotReadingMode = "love" | "yes-no" | "one-card" | "three-cards" | GuidedSpreadMode | SituationMode;
 export type TarotModeCopy = { zh: string; en: string };
 export type TarotModeConfig = {
   title: TarotModeCopy;
@@ -10,11 +11,13 @@ export type TarotModeConfig = {
   image: string;
   fixedQuestion?: TarotModeCopy;
   interpretation?: TarotModeCopy;
+  layout?: SituationLayout;
   positions: { key: TarotPosition; label: TarotModeCopy; description?: TarotModeCopy }[];
 };
 
 export const tarotModes: Record<TarotReadingMode, TarotModeConfig> = {
   ...guidedSpreads,
+  ...situationSpreads,
   love: {
     title: { zh: "双方关系", en: "Love Tarot" },
     description: { zh: "探索关系模式、过去的影响与自我关爱。", en: "Explore relationship patterns, past influences, and self-love." },

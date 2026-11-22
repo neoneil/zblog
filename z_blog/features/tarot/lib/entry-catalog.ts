@@ -54,11 +54,31 @@ export const tarotSectionCopy = {
   },
 };
 
+const relationshipEntry: TarotEntry = {
+  title: { en: "RELATIONSHIP SITUATIONS", zh: "关系情境" },
+  description: {
+    en: "Explore 121 questions about love and relationships with Rider–Waite tarot.",
+    zh: "从 121 个情境中找到贴近你的感情问题，用韦特塔罗探索。",
+  },
+  href: "/tarot-ai/relationships",
+  image: "/NEW CARDS/The Lovers.png",
+};
+
+const financeEntry: TarotEntry = {
+  title: { en: "FINANCIAL SITUATIONS", zh: "财务情境" },
+  description: {
+    en: "Explore 25 questions about money habits, income and financial choices with Rider–Waite tarot.",
+    zh: "用韦特塔罗探索 25 个有关金钱习惯、收入和财务选择的情境。",
+  },
+  href: "/tarot-ai/finances",
+  image: "/NEW CARDS/Pentacles/Ten of Pentacles.png",
+};
+
 export const tarotCollections = {
   readings: {
     href: "/tarot-readings",
     title: { zh: "塔罗在线测算", en: "Tarot Online Reading" },
-    entries: [tarotEntries[0], tarotEntries[2]],
+    entries: [tarotEntries[0], tarotEntries[2], relationshipEntry, financeEntry],
   },
   library: {
     href: "/tarot-library",

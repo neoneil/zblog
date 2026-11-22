@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { requireUser } from "@/lib/auth/require-user";
 import {
   billingUser,
   walletSnapshot,
@@ -17,7 +16,6 @@ export default async function CoursePage({
 }) {
   const { course } = await params;
   if (!Object.prototype.hasOwnProperty.call(COURSES, course)) notFound();
-  await requireUser(`/learn/${course}`);
   const context = await billingUser();
   const snapshot = await walletSnapshot();
   const authorized =

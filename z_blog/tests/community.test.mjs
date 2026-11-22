@@ -11,6 +11,7 @@ function load(file) {
   }).outputText;
   new Function('exports', 'require', output)(exports, name => {
     if (name === '@/features/stella/lib/explore-config') return load('features/stella/lib/explore-config.ts');
+    if (name === './celestial-entries') return load('features/stella/lib/celestial-entries.ts');
     throw new Error(name);
   });
   return exports;
@@ -70,6 +71,7 @@ test('database access is owner scoped and never exposes account email or passwor
   const server = read('features/community/lib/server.ts');
   assert.match(server, /eq\("is_public", true\)/);
   assert.match(server, /range\(start, start \+ PAGE_SIZE - 1\)/);
+  assert.ok(server.includes('.eq("username", username).eq("user_id", user.id)'));
   const action = read('app/community/actions.ts');
   assert.match(action, /getCurrentUserWithRole\(\)/);
   assert.match(action, /user_id: user.id/);

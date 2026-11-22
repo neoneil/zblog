@@ -1,13 +1,14 @@
 import "server-only";
 import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
+import type { ReadingContext } from "@/features/account/reading-archive";
 import { billingUser } from "./stardust-server";
 import { createBillingAdminClient } from "./billing-db";
 import { billingMessage, isRequestId } from "./stardust-config";
 
 export type ReadingLease = {
   response?: NextResponse;
-  complete: (result: unknown) => Promise<NextResponse>;
+  complete: (result: Record<string, unknown>, context?: ReadingContext) => Promise<NextResponse>;
   release: () => Promise<void>;
 };
 function canonical(value: unknown): unknown {
@@ -20,6 +21,13 @@ function canonical(value: unknown): unknown {
     );
   return value;
 }
+function readingResponse(stored: Record<string, unknown> | null) {
+  if (!stored || !Object.hasOwn(stored, "archive")) return NextResponse.json(stored);
+  const response = { ...stored };
+  delete response.archive;
+  return NextResponse.json(response);
+}
+
 export async function beginReading(
   request: Request,
   sku: string,
@@ -74,7 +82,7 @@ export async function beginReading(
         { status: error.message.includes("REQUEST_RELEASED") ? 409 : 503 },
       ),
     );
-  if (data.status === "completed") return idle(NextResponse.json(data.result));
+  if (data.status === "completed") return idle(readingResponse(data.result));
   if (data.status === "processing")
     return idle(
       NextResponse.json(
@@ -116,16 +124,19 @@ export async function beginReading(
       ),
     );
   return {
-    complete: async (result) => {
+    complete: async (result, archiveContext) => {
+      const savedResult = archiveContext
+        ? { ...result, archive: { ...archiveContext, completedAt: new Date().toISOString() } }
+        : result;
       const { data: stored, error: settleError } = await db.rpc(
         "stardust_complete",
-        { p_user: user, p_id: id, p_result: result },
+        { p_user: user, p_id: id, p_result: savedResult },
       );
       if (settleError)
         throw new Error(
           "结算暂未完成，请前往钱包检查报告，勿重复付款。 / Settlement incomplete. Check your wallet before retrying.",
         );
-      return NextResponse.json(stored);
+      return readingResponse(stored);
     },
     release: async () => {
       const { error: releaseError } = await db.rpc("stardust_release", {

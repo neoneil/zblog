@@ -176,3 +176,61 @@
   .spark { opacity: .35; }
   .sparkBurst, .orbitBurst { display: none; }
 }
+
+.relationshipLink {
+  display: inline-flex;
+  margin-top: 16px;
+  border: 1px solid var(--tarot-line);
+  border-radius: 999px;
+  padding: 9px 16px;
+  color: var(--tarot-gold);
+}
+
+.experience[data-situation-layout="true"] .cardScene[data-collected="true"] {
+  min-height: 0;
+  padding: 16px 0 28px;
+}
+
+.experience[data-situation-layout="true"] .selected.situationBoard {
+  position: relative;
+  top: auto;
+  display: block;
+  width: min(860px, 100%);
+  max-width: none;
+}
+
+.experience[data-situation-layout="true"] .situationBoard .selectedSlot {
+  position: absolute;
+  padding-top: 0;
+  transform: translate(-50%, -50%);
+}
+
+.situationBoard .position {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  margin: 0 0 4px;
+  font-size: clamp(8px, 1.2vw, 13px);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.experience[data-situation-layout="true"] .situationBoard .selectedCard {
+  width: 100%;
+  max-width: none;
+}
+
+.situationBoard .cardCaption {
+  position: absolute;
+  inset: 100% 0 auto;
+  margin-top: 5px;
+}
+
+.situationBoard .cardCaption h3,
+.situationBoard .cardCaption p {
+  font-size: clamp(8px, 1.2vw, 13px);
+  line-height: 1.15;
+  margin-top: 2px;
+}

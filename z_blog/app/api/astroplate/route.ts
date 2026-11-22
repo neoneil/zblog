@@ -1,63 +1,11 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { beginReading, type ReadingLease } from "@/features/billing/lib/reading-billing";
+import type { OpenAIChartJson } from "@/lib/astrology/natal-chart";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-type ChartPointJson = {
-  key: string;
-  label: string;
-  labelZh: string;
-  absoluteDegrees: number;
-  sign: string;
-  signZh: string;
-  signDegrees: number;
-  retrograde?: boolean;
-  house?: number;
-};
-
-type AstrologyChartJson = {
-  meta: {
-    name: string;
-    generatedAt: string;
-    zodiac: string;
-    zodiacZh: string;
-    houseSystem: string;
-    houseSystemZh: string;
-    birth: {
-      year: number;
-      month: number;
-      day: number;
-      hour: number;
-      minute: number;
-      latitude: number;
-      longitude: number;
-    };
-    notes?: string[];
-  };
-  planets: ChartPointJson[];
-  angles: ChartPointJson[];
-  houses: Array<{
-    house: number;
-    cuspDegrees: number;
-    sign: string;
-    signZh: string;
-    signDegrees: number;
-  }>;
-  aspects: Array<{
-    point1Key: string;
-    point1Label: string;
-    point1LabelZh: string;
-    point2Key: string;
-    point2Label: string;
-    point2LabelZh: string;
-    label: string;
-    labelZh: string;
-    orb: number;
-  }>;
-};
 
 export async function POST(req: Request) {
   let lease:ReadingLease|undefined;
@@ -65,8 +13,8 @@ export async function POST(req: Request) {
     const raw = await req.text();
     if (raw.length > 100000) return NextResponse.json({ error: "请求过大 / Request too large." }, { status: 413 });
     const body = JSON.parse(raw);
-    const question: string = body.question ?? "";
-    const chartJson: AstrologyChartJson | null = body.chartJson ?? null;
+    const question = typeof body.question === "string" ? body.question.trim() : "";
+    const chartJson: OpenAIChartJson | null = body.chartJson ?? null;
 
     if (!chartJson) {
       return NextResponse.json(
@@ -245,7 +193,12 @@ ${aspectsText}
     if (completion.choices[0]?.finish_reason !== "stop") throw new Error("解读未完整生成，请稍后重试。 / The reading was not completed.");
     const reading = completion.choices[0]?.message?.content;
     if(!reading?.trim())throw new Error('No report generated');
-    return await lease.complete({ reading });
+    return await lease.complete({ reading }, {
+      kind: "natal",
+      question,
+      chart: chartJson,
+      language: body.language === "en" ? "en" : "zh",
+    });
   } catch (error: unknown) {
     await lease?.release();
     const errorRecord =

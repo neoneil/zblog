@@ -1,0 +1,466 @@
+{
+  "positionZh": {
+    "Against": "不利因素",
+    "Air · Thoughts": "风元素 · 想法",
+    "Current Flow": "目前的资金流",
+    "Earth · Body": "土元素 · 身体与现实",
+    "Fear of Money": "对金钱的顾虑",
+    "Fire · Will": "火元素 · 意志",
+    "For": "支持因素",
+    "Hidden": "尚未看清的因素",
+    "Hidden Factor": "隐藏因素",
+    "Hidden Resource": "尚未利用的资源",
+    "How It Ends": "可能的走向",
+    "Missed Opportunity": "容易忽略的机会",
+    "Origin": "根源",
+    "Overall Tone": "整体基调",
+    "Precise Step": "具体的一步",
+    "Spirit · Center": "精神 · 中心",
+    "The Cards' Counsel": "牌面的建议",
+    "The Core": "核心",
+    "The Core Block": "核心阻碍",
+    "The Crossroads": "眼前的分岔路",
+    "The First Path": "第一条路",
+    "The Heart of It": "问题核心",
+    "The Key": "解开困境的关键",
+    "The Leak": "资金流失的地方",
+    "The Outcome": "可能的走向",
+    "The Second Path": "第二条路",
+    "The Verdict": "整体倾向",
+    "Water · Feelings": "水元素 · 感受",
+    "What Helps": "有帮助的因素",
+    "What Hinders": "形成阻碍的因素",
+    "What to Avoid": "需要避开的做法",
+    "What to Notice": "值得留意的地方",
+    "What's Coming": "接下来可能出现的变化",
+    "Where It Leads": "这件事的走向",
+    "Worth Weighing": "值得权衡的因素"
+  },
+  "situations": [
+    {
+      "id": "money-blocks",
+      "sourcePath": "/en/spreads/finances/money-blocks",
+      "sourceTitle": "Money Blocks",
+      "question": {
+        "zh": "哪些习惯或处境正在妨碍我改善财务状况？",
+        "en": "Which habits or circumstances might be holding back my financial progress?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "The Core Block",
+        "Origin",
+        "Fear of Money",
+        "Missed Opportunity",
+        "The Key"
+      ]
+    },
+    {
+      "id": "how-to-increase-income",
+      "sourcePath": "/en/spreads/finances/how-to-increase-income",
+      "sourceTitle": "How to Increase Income",
+      "question": {
+        "zh": "我有什么技能或资源可以用来增加收入？",
+        "en": "What skills or resources could I put to work to increase my income?"
+      },
+      "layout": "staggered-three-two",
+      "positions": [
+        "Current Flow",
+        "The Leak",
+        "Hidden Resource",
+        "Precise Step",
+        "The Outcome"
+      ]
+    },
+    {
+      "id": "on-money",
+      "sourcePath": "/en/spreads/finances/on-money",
+      "sourceTitle": "On Money",
+      "question": {
+        "zh": "面对目前的金钱状况，我最需要弄清楚什么？",
+        "en": "What do I most need to understand about my current money situation?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "will-the-debt-return",
+      "sourcePath": "/en/spreads/finances/will-the-debt-return",
+      "sourceTitle": "Will the Debt Return",
+      "question": {
+        "zh": "如果有人欠我钱，我可以怎样确认还款安排和下一步？",
+        "en": "If someone owes me money, how can I clarify repayment and decide what to do next?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "where-money-goes",
+      "sourcePath": "/en/spreads/finances/where-money-goes",
+      "sourceTitle": "Where Money Goes",
+      "question": {
+        "zh": "我的钱都花在哪里，有哪些支出值得重新审视？",
+        "en": "Where is my money going, and which expenses deserve a closer look?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-a-lottery-win",
+      "sourcePath": "/en/spreads/finances/on-a-lottery-win",
+      "sourceTitle": "On a Lottery Win",
+      "question": {
+        "zh": "当我期待彩票中奖时，怎样看清自己对运气和风险的期待？",
+        "en": "What am I hoping a lottery win would solve, and how am I approaching the risk?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "on-luck",
+      "sourcePath": "/en/spreads/finances/on-luck",
+      "sourceTitle": "On Luck",
+      "question": {
+        "zh": "什么时候我把结果归于运气，却忽略了自己能做的事？",
+        "en": "When am I relying on luck and overlooking what I can influence?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Overall Tone",
+        "What's Coming",
+        "What to Notice",
+        "What to Avoid",
+        "How It Ends"
+      ]
+    },
+    {
+      "id": "on-selling-property",
+      "sourcePath": "/en/spreads/finances/on-selling-property",
+      "sourceTitle": "On Selling Property",
+      "question": {
+        "zh": "出售房产之前，我需要看清哪些准备、取舍和现实条件？",
+        "en": "What preparations, trade-offs and practical facts should I clarify before selling a property?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "how-to-attract-money",
+      "sourcePath": "/en/spreads/finances/how-to-attract-money",
+      "sourceTitle": "How to Attract Money",
+      "question": {
+        "zh": "我能做哪些具体改变，让自己更愿意留意收入机会？",
+        "en": "What practical changes could help me notice and pursue income opportunities?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "my-money-flow",
+      "sourcePath": "/en/spreads/finances/my-money-flow",
+      "sourceTitle": "My Money Flow",
+      "question": {
+        "zh": "我目前的收入、支出和储蓄模式是什么样的？",
+        "en": "What patterns can I see in my income, spending and saving?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "should-i-take-a-loan",
+      "sourcePath": "/en/spreads/finances/should-i-take-a-loan",
+      "sourceTitle": "Should I Take a Loan",
+      "question": {
+        "zh": "如果考虑借款，我需要问清哪些成本、风险和替代方案？",
+        "en": "If I am considering a loan, what costs, risks and alternatives should I understand?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "should-i-invest",
+      "sourcePath": "/en/spreads/finances/should-i-invest",
+      "sourceTitle": "Should I Invest",
+      "question": {
+        "zh": "在考虑投资时，我有哪些目标、假设和风险承受能力要先理清？",
+        "en": "Before considering an investment, what goals, assumptions and risk limits should I clarify?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "on-a-big-purchase",
+      "sourcePath": "/en/spreads/finances/on-a-big-purchase",
+      "sourceTitle": "On a Big Purchase",
+      "question": {
+        "zh": "面对一笔大额购买，我怎样权衡实际需求与预算？",
+        "en": "How can I weigh my actual needs against my budget for a major purchase?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "new-source-of-income",
+      "sourcePath": "/en/spreads/finances/new-source-of-income",
+      "sourceTitle": "New Source of Income",
+      "question": {
+        "zh": "哪种新收入来源与我目前的时间、技能和资源比较匹配？",
+        "en": "What additional income stream might fit my current time, skills and resources?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-savings",
+      "sourcePath": "/en/spreads/finances/on-savings",
+      "sourceTitle": "On Savings",
+      "question": {
+        "zh": "什么在帮助或妨碍我为未来储蓄？",
+        "en": "What is supporting or getting in the way of saving for my future?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "a-risky-deal",
+      "sourcePath": "/en/spreads/finances/a-risky-deal",
+      "sourceTitle": "A Risky Deal",
+      "question": {
+        "zh": "一笔看起来有风险的交易，有哪些条件和信息需要核实？",
+        "en": "What terms and information should I verify about a deal that feels risky?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Heart of It",
+        "For",
+        "Against",
+        "Hidden",
+        "The Verdict"
+      ]
+    },
+    {
+      "id": "on-inheritance",
+      "sourcePath": "/en/spreads/finances/on-inheritance",
+      "sourceTitle": "On Inheritance",
+      "question": {
+        "zh": "面对可能的继承，我有哪些财务期待、家庭沟通和资料需要理清？",
+        "en": "What expectations, family conversations and documents should I clarify around a possible inheritance?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "should-i-lend-money",
+      "sourcePath": "/en/spreads/finances/should-i-lend-money",
+      "sourceTitle": "Should I Lend Money",
+      "question": {
+        "zh": "如果有人向我借钱，我能承受哪些后果，应当说清哪些边界？",
+        "en": "If someone asks to borrow money, what consequences can I bear and what boundaries should I make clear?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Crossroads",
+        "The First Path",
+        "The Second Path",
+        "Worth Weighing",
+        "The Cards' Counsel"
+      ]
+    },
+    {
+      "id": "my-financial-goal",
+      "sourcePath": "/en/spreads/finances/my-financial-goal",
+      "sourceTitle": "My Financial Goal",
+      "question": {
+        "zh": "我的财务目标是什么，眼下最适合完成的一小步是什么？",
+        "en": "What is my financial goal, and what small step could move me toward it now?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "pentagram",
+      "sourcePath": "/en/spreads/self-discovery-and-growth/pentagram",
+      "sourceTitle": "Pentagram",
+      "question": {
+        "zh": "我的物质需要、情绪、想法和行动怎样影响我的金钱决定？",
+        "en": "How do my practical needs, feelings, thoughts and actions shape my money decisions?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "Earth · Body",
+        "Water · Feelings",
+        "Air · Thoughts",
+        "Fire · Will",
+        "Spirit · Center"
+      ]
+    },
+    {
+      "id": "work-and-money",
+      "sourcePath": "/en/spreads/career-and-work/work-and-money",
+      "sourceTitle": "Work and Money",
+      "question": {
+        "zh": "目前的工作和金钱状况怎样互相影响，我还可以调整什么？",
+        "en": "How do my work and finances affect each other, and what might I adjust?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "on-business",
+      "sourcePath": "/en/spreads/career-and-work/on-business",
+      "sourceTitle": "On Business",
+      "question": {
+        "zh": "经营一项生意时，哪些经营假设、资源和风险值得我重新审视？",
+        "en": "Which assumptions, resources and risks deserve a closer look in my business?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "buying-a-home",
+      "sourcePath": "/en/spreads/change-and-transition/buying-a-home",
+      "sourceTitle": "Buying a Home",
+      "question": {
+        "zh": "买房之前，哪些居住需要、预算和长期责任需要权衡？",
+        "en": "What housing needs, budget limits and long-term responsibilities should I weigh before buying a home?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "negotiation-and-deal",
+      "sourcePath": "/en/spreads/career-and-work/negotiation-and-deal",
+      "sourceTitle": "Negotiation & Deal",
+      "question": {
+        "zh": "谈判或达成交易之前，我该如何理清目标、底线和待核实的条款？",
+        "en": "How can I clarify my goals, limits and terms to verify before a negotiation or deal?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    },
+    {
+      "id": "new-home-and-renovation",
+      "sourcePath": "/en/spreads/change-and-transition/new-home-and-renovation",
+      "sourceTitle": "New Home & Renovation",
+      "question": {
+        "zh": "规划新家或装修时，我应该先怎样梳理预算、优先顺序和备用方案？",
+        "en": "How should I clarify my budget, priorities and alternatives for a new home or renovation?"
+      },
+      "layout": "row-five",
+      "positions": [
+        "The Core",
+        "What Helps",
+        "What Hinders",
+        "Hidden Factor",
+        "Where It Leads"
+      ]
+    }
+  ]
+}

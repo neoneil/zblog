@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, UserRound, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import LogoutButton from "@/components/auth/logout-button";
 import { Button } from "@/components/ui/button";
@@ -44,17 +44,26 @@ export default function NavbarClient({ user, canManagePosts }: NavbarClientProps
     return () => subscription.unsubscribe();
   }, [router]);
 
-  const name = user?.user_metadata?.full_name || user?.user_metadata?.name || t({ zh: "用户", en: "User" });
-  const avatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || "/default-avatar.png";
+  const avatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
+  const accountLabel = t({ zh: "我的星巢", en: "My Account" });
   const utilityClass = `${glowStyles.link} inline-flex min-h-11 items-center justify-center rounded-md px-3 py-2 text-base font-medium`;
   const membershipClass = `${glassStyles.action} inline-flex min-h-11 items-center justify-center px-4 py-2 text-sm font-semibold`;
 
   function accountControls(mobile = false) {
     return <div className={`${styles.account} ${mobile ? styles.mobileAccount : ""}`}>
       <Link href="/pricing" className={membershipClass} onClick={() => setMobileOpen(false)}>{t(siteCopy.navMembership)}</Link>
+      <Link href="/account" className={`${utilityClass} gap-2 whitespace-nowrap`} onClick={() => setMobileOpen(false)}>
+        {avatar ? (
+          <Image src={avatar} alt="" width={30} height={30} className={styles.avatar} />
+        ) : (
+          <span aria-hidden="true" className={`${styles.avatar} grid place-items-center bg-[var(--bg-soft)]`}>
+            <UserRound className="size-4" />
+          </span>
+        )}
+        <span>{accountLabel}</span>
+      </Link>
       {user ? <>
         {canManagePosts && <Link href="/admin" className={utilityClass} onClick={() => setMobileOpen(false)}>{t(siteCopy.navAdmin)}</Link>}
-        <Image src={avatar} alt={name} width={30} height={30} className={styles.avatar} />
         <LogoutButton />
       </> : <>
         <Link href="/login" className={utilityClass} onClick={() => setMobileOpen(false)}>{t(siteCopy.navLogin)}</Link>

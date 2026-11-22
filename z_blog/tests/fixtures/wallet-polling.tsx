@@ -28,6 +28,7 @@ function Fixture() {
         checkoutEnabled={false}
         sandbox
         snapshot={{
+          account: { name: "Test User", email: "member@example.test", avatar: undefined },
           ready: true,
           verified: true,
           wallet: { paid: 1000, reward: 0, blocked: false },
