@@ -16,7 +16,7 @@ import { usePreferences } from "@/components/site/preferences-provider";
 import { Button, ButtonLink } from "@/components/ui/button";
 import {
   products,
-  formatPrice,
+  formatProductPrice,
   isProductPurchasable,
   type Product,
 } from "../lib/catalog";
@@ -28,7 +28,7 @@ import ServiceGuideContent from "./service-guide-content";
 import EmailReadingForm from "./email-reading-form";
 import { EMAIL_READING_PRODUCT_ID } from "../lib/email-reading-order";
 
-export default function ProductDetail({ product }: { product: Product }) {
+export default function ProductDetail({ product, catalog = products }: { product: Product; catalog?: Product[] }) {
   const guide = serviceGuides[product.id];
   const emailReading = product.id === EMAIL_READING_PRODUCT_ID;
   const { t, language } = usePreferences(),
@@ -61,7 +61,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         <div className={styles.productInfo}>
           <h1>{t(product.title)}</h1>
           <p className={styles.price}>
-            {formatPrice(product.priceCents, language)}
+            {formatProductPrice(product, language)}
             {emailReading && (
               <span className={styles.minor}>
                 {t({
@@ -119,7 +119,7 @@ export default function ProductDetail({ product }: { product: Product }) {
             </div>
           )}
           <div className={styles.copy}>
-            {guide ? (
+            {guide && product.category !== "physical" ? (
               <p className={styles.serviceTagline}>{t(guide.tagline)}</p>
             ) : (
               <>
@@ -191,7 +191,7 @@ export default function ProductDetail({ product }: { product: Product }) {
       <section className={styles.recommend}>
         <h2>{t({ en: "You May Also Like", zh: "你可能也喜欢" })}</h2>
         <div className={styles.grid}>
-          {products
+          {catalog
             .filter((item) => item.id !== product.id)
             .map((item) => (
               <ProductCard key={item.id} product={item} />

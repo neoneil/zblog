@@ -8,6 +8,7 @@ import type { createClient } from "@/lib/supabase/server";
 import { archivedReadingSkus, type ReadingDetail, type ReadingSummary } from "./reading-archive";
 
 type Client = Awaited<ReturnType<typeof createClient>>;
+type AppleMessage = { id: string; body: string; created_at: string };
 type QueryError = { code: string };
 type Page<T> = { data: T[] | null; error: QueryError | null };
 
@@ -128,12 +129,13 @@ export async function loadGuestAccount(db: Client): Promise<Awaited<ReturnType<t
     events: events.records,
     eventsUnavailable: Boolean(events.error),
     timeline: { items: [], unavailable: false },
+    appleTree: { records: [], unavailable: false },
     readings: { records: [], unavailable: false },
   };
 }
 
 export async function loadAccount(db: Client, userId: string) {
-  const [memberships, profile, events, registrations, eventTickets, timeline, readings] = await Promise.all([
+  const [memberships, profile, events, registrations, eventTickets, timeline, readings, appleTree] = await Promise.all([
     db.schema(billingSchema()).from("stardust_memberships").select("plan,valid_until")
       .eq("user_id", userId).gt("valid_until", new Date().toISOString()),
     db.from("community_profiles").select("username").eq("user_id", userId).maybeSingle(),
@@ -143,6 +145,11 @@ export async function loadAccount(db: Client, userId: string) {
     tickets(db, userId),
     starTimeline(db, userId),
     readingSummaries(db, userId).catch(() => ({ records: [], unavailable: true })),
+    allRows<AppleMessage>((from, to) => db.from("apple_tree_messages")
+      .select("id,body,created_at").eq("user_id", userId)
+      .order("created_at", { ascending: false }).order("id").range(from, to))
+      .then(({ records, error }) => ({ records, unavailable: Boolean(error) }))
+      .catch(() => ({ records: [], unavailable: true })),
   ]);
 
   const booked = new Map<string, EventDetails & { status: "paid" | RegistrationStatus }>();
@@ -166,5 +173,6 @@ export async function loadAccount(db: Client, userId: string) {
     eventsUnavailable: Boolean(events.error),
     timeline,
     readings,
+    appleTree,
   };
 }

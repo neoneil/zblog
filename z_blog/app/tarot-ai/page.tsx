@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default async function TarotAiPage() {
-  return <TarotExperiencePage mode="three-cards" />;
+  return <TarotExperiencePage mode="three-cards" manualReading />;
 }

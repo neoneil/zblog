@@ -12,7 +12,6 @@ import { LanguageToggle, ThemeToggle } from "@/components/site/preference-contro
 import { usePreferences } from "@/components/site/preferences-provider";
 import { siteCopy } from "@/lib/i18n/copy";
 import styles from "./navbar-client.module.css";
-import glassStyles from "@/components/ui/glass-action.module.css";
 import SiteNavigation from "./site-navigation";
 import { CartLink } from "@/features/services/components/shop-shared";
 import glowStyles from "./navigation-link.module.css";
@@ -47,11 +46,9 @@ export default function NavbarClient({ user, canManagePosts }: NavbarClientProps
   const avatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
   const accountLabel = t({ zh: "我的星巢", en: "My Account" });
   const utilityClass = `${glowStyles.link} inline-flex min-h-11 items-center justify-center rounded-md px-3 py-2 text-base font-medium`;
-  const membershipClass = `${glassStyles.action} inline-flex min-h-11 items-center justify-center px-4 py-2 text-sm font-semibold`;
 
   function accountControls(mobile = false) {
     return <div className={`${styles.account} ${mobile ? styles.mobileAccount : ""}`}>
-      <Link href="/pricing" className={membershipClass} onClick={() => setMobileOpen(false)}>{t(siteCopy.navMembership)}</Link>
       <Link href="/account" className={`${utilityClass} gap-2 whitespace-nowrap`} onClick={() => setMobileOpen(false)}>
         {avatar ? (
           <Image src={avatar} alt="" width={30} height={30} className={styles.avatar} />

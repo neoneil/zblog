@@ -86,10 +86,28 @@ export function AccountDashboard({ account, signedIn = true }: { account: Accoun
             )}
           </CardContent>
         </Card>
-        <Card>
+        <Card id="my-apple-tree" className="scroll-mt-24">
           <CardContent className="space-y-3">
             <h2 className="text-lg font-semibold">{t({ zh: "种下我的苹果树", en: "Plant My Apple Tree" })}</h2>
-            <p className="text-sm text-[var(--text-soft)]">{t({ zh: "即将开放", en: "Coming soon" })}</p>
+            {signedIn && account.appleTree?.unavailable && <p role="status" className="text-sm text-[var(--text-soft)]">
+              {t({ zh: "暂时无法读取心声记录。", en: "Your messages are temporarily unavailable." })}
+            </p>}
+            {signedIn && !account.appleTree?.unavailable && !account.appleTree?.records.length && <p className="text-sm text-[var(--text-soft)]">
+              {t({ zh: "你还没有留下心声。", en: "You haven’t saved a message yet." })}
+            </p>}
+            {signedIn && Boolean(account.appleTree?.records.length) && (
+              <ul className="max-h-64 space-y-2 overflow-y-auto">
+                {account.appleTree.records.map((message) => (
+                  <li key={message.id} className="space-y-1 rounded-lg border border-[var(--border)] p-3">
+                    <p className="whitespace-pre-wrap break-words text-sm">{message.body}</p>
+                    <time dateTime={message.created_at} className="block text-xs text-[var(--text-soft)]">
+                      {shortDate.format(new Date(message.created_at))}
+                    </time>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <ButtonLink href="/apple-tree#write-apple-message" variant="secondary">{t({ zh: "写下我的心声", en: "Write a message" })}</ButtonLink>
           </CardContent>
         </Card>
       </div>

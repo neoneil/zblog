@@ -15,8 +15,10 @@ import { billingReadiness } from "./billing-readiness";
 export async function createStardustCheckout(
   amount: number,
   requestId: string,
+  returnTo?: "/recharge",
 ) {
-  const { user } = await requireUser("/wallet");
+  const returnPath = returnTo === "/recharge" ? "/recharge" : "/wallet";
+  const { user } = await requireUser(returnPath);
   if (
     !isRequestId(requestId) ||
     !(TOPUP_CENTS as readonly number[]).includes(amount)
@@ -94,8 +96,8 @@ export async function createStardustCheckout(
             user_id: user.id,
           },
         },
-        success_url: `${origin}/wallet?topup=${order.id}`,
-        cancel_url: `${origin}/wallet?cancelled=1`,
+        success_url: `${origin}${returnPath}?topup=${order.id}`,
+        cancel_url: `${origin}${returnPath}?cancelled=1`,
       },
       { idempotencyKey: `stardust-topup-${order.id}` },
     );

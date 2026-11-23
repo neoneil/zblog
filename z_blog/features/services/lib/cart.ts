@@ -3,6 +3,10 @@ import { getProduct, isProductPurchasable } from "./catalog";
 export type CartLine = { productId: string; quantity: number };
 export const CART_KEY = "cosmic-childhood-cart-v1";
 export const MAX_QUANTITY = 99;
+function isCartProduct(id: unknown): id is string {
+  return typeof id === "string" && (isProductPurchasable(getProduct(id)) ||
+    /^physical-[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(id));
+}
 export function normaliseCart(value: unknown): CartLine[] {
   if (!Array.isArray(value)) return [];
   const quantities = new Map<string, number>();
@@ -10,7 +14,7 @@ export function normaliseCart(value: unknown): CartLine[] {
     if (
       !line ||
       typeof line !== "object" ||
-      !isProductPurchasable(getProduct(line.productId)) ||
+      !isCartProduct(line.productId) ||
       !Number.isInteger(line.quantity) ||
       line.quantity < 1 ||
       line.quantity > MAX_QUANTITY
@@ -35,7 +39,7 @@ export function changeQuantity(
   quantity: number,
 ) {
   if (
-    !isProductPurchasable(getProduct(productId)) ||
+    !isCartProduct(productId) ||
     !Number.isInteger(quantity) ||
     quantity < 0 ||
     quantity > MAX_QUANTITY
@@ -58,7 +62,7 @@ export function cartTotals(cart: CartLine[]) {
       count: total.count + line.quantity,
       subtotalCents:
         total.subtotalCents +
-        getProduct(line.productId)!.priceCents * line.quantity,
+        (getProduct(line.productId)?.priceCents ?? 0) * line.quantity,
     }),
     { count: 0, subtotalCents: 0 },
   );

@@ -90,11 +90,13 @@
   .onlineGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .physicalGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (min-width: 640px) {
-  .onlineGrid > [data-product-id="personal-tarot-email"] { grid-column: 1 / -1; }
-  .onlineGrid > [data-product-id="personal-tarot-email"] .productLink { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
-  .onlineGrid > [data-product-id="personal-tarot-email"] .cardImage { aspect-ratio: 696 / 479; }
-  .onlineGrid > [data-product-id="personal-tarot-email"] .cardImage img { object-fit: contain; }
+@media (min-width: 1024px) {
+  .onlineGrid > :is([data-product-id="personal-tarot-email"], [data-product-id="mystic-salons"]) {
+    grid-column: span 2;
+  }
+}
+.onlineGrid > :is([data-product-id="personal-tarot-email"], [data-product-id="mystic-salons"]) .cardImage img {
+  object-fit: contain;
 }
 .productCard {
   overflow: hidden;

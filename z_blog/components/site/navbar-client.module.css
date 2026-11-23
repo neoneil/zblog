@@ -15,7 +15,6 @@
   .menuButton, .mobilePanel { display: none; }
   .account { gap: 6px; }
   .desktopAccount :is(a, button) { min-height: 38px; height: auto; padding: 6px; font-size: 15px; white-space: nowrap; }
-  .desktopAccount a[href="/pricing"] { max-width: 128px; padding: 7px 10px; white-space: normal; text-align: center; line-height: 1.3; }
   .desktopAccount .preferences button { width: 34px; min-width: 34px; height: 34px; min-height: 34px; padding: 0; }
   .cart a { width: 36px; height: 36px; min-height: 36px; padding: 0; }
 }

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ShoppingBag, Trash2 } from "lucide-react";
 import { usePreferences } from "@/components/site/preferences-provider";
 import { Button, ButtonLink } from "@/components/ui/button";
-import { formatPrice, getProduct, productHref } from "../lib/catalog";
+import { formatPrice, formatProductPrice, products, productHref, videoCourses, type Product } from "../lib/catalog";
 import { useCart } from "./use-cart";
 import { QuantityControl, ShopShell, styles } from "./shop-shared";
 import { EMAIL_READING_PRODUCT_ID } from "../lib/email-reading-order";
@@ -15,9 +15,14 @@ import {
 } from "./use-email-reading-draft";
 import emailStyles from "./email-reading.module.css";
 
-export default function CartPage() {
+export default function CartPage({ catalog = [...products, ...videoCourses] }: { catalog?: Product[] }) {
   const { t, language } = usePreferences(),
-    { cart, subtotalCents, setQuantity } = useCart();
+    { cart, setQuantity } = useCart();
+  const byId = new Map(catalog.map((product) => [product.id, product]));
+  const subtotal = cart.reduce((total, line) => {
+    const product = byId.get(line.productId);
+    return total + (product?.priceCents ?? 0) * line.quantity;
+  }, 0);
   const emailDraft = useEmailReadingDraft();
   return (
     <ShopShell>
@@ -62,7 +67,13 @@ export default function CartPage() {
             </thead>
             <tbody>
               {cart.map((line) => {
-                const product = getProduct(line.productId)!;
+                const product = byId.get(line.productId);
+                if (!product) return (
+                  <tr key={line.productId}>
+                    <td colSpan={3}>{t({ zh: "此商品暂不可用", en: "This product is unavailable" })}</td>
+                    <td><Button variant="ghost" onClick={() => setQuantity(line.productId, 0)}>{t({ zh: "移除", en: "Remove" })}</Button></td>
+                  </tr>
+                );
                 return (
                   <tr key={line.productId} data-product-id={line.productId}>
                     <td>
@@ -141,7 +152,7 @@ export default function CartPage() {
                       </div>
                     </td>
                     <td data-label={t({ en: "Price", zh: "单价" })}>
-                      {formatPrice(product.priceCents, language)}
+                      {formatProductPrice(product, language)}
                     </td>
                     <td data-label={t({ en: "Quantity", zh: "数量" })}>
                       {product.id === EMAIL_READING_PRODUCT_ID ? (
@@ -160,10 +171,7 @@ export default function CartPage() {
                       )}
                     </td>
                     <td data-label={t({ en: "Total", zh: "合计" })}>
-                      {formatPrice(
-                        product.priceCents * line.quantity,
-                        language,
-                      )}
+                      {formatProductPrice(product, language, line.quantity)}
                     </td>
                   </tr>
                 );
@@ -174,7 +182,7 @@ export default function CartPage() {
             <p>
               {t({ en: "Subtotal", zh: "小计" })}{" "}
               <strong data-testid="cart-subtotal">
-                {formatPrice(subtotalCents, language)}
+                {formatPrice(subtotal, language)}
               </strong>
             </p>
             <p className={styles.minor}>

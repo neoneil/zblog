@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import glassStyles from "@/components/ui/glass-action.module.css";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { formatPrice, productHref, type Product } from "../lib/catalog";
+import { formatProductPrice, productHref, type Product } from "../lib/catalog";
 import { MAX_QUANTITY } from "../lib/cart";
 import { useCart } from "./use-cart";
 import { serviceGuideImages } from "../lib/service-guide-assets";
@@ -38,7 +38,7 @@ export function ProductCard({ product, layout = "grid" }: { product: Product; la
         <div className={styles.cardContent}>
           <h2>{t(product.title)}</h2>
           {(product.category !== "physical" || layout === "list") && <div className={styles.cardDescription}>{t(product.intro)}</div>}
-          <p>{formatPrice(product.priceCents, language)}</p>
+          <p>{formatProductPrice(product, language)}</p>
         </div>
       </Link>
     </Card>

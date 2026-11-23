@@ -5,5 +5,6 @@ export type TarotStage =
   | "gathering"
   | "ready"
   | "revealing"
+  | "awaiting-reading"
   | "reading"
   | "done";

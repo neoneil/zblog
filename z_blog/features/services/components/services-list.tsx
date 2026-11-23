@@ -11,6 +11,7 @@ import { Select } from "@/components/ui/select";
 import {
   selectProducts,
   products,
+  type Product,
   type ProductFilter,
   type ProductSort,
 } from "../lib/catalog";
@@ -19,8 +20,10 @@ import archiveStyles from "@/features/thoth/components/knowledge-entries.module.
 
 export default function ServicesList({
   embedded = false,
+  catalog = products,
 }: {
   embedded?: boolean;
+  catalog?: Product[];
 }) {
   const { t } = usePreferences();
   const [filter, setFilter] = useState<ProductFilter>("all"),
@@ -28,8 +31,8 @@ export default function ServicesList({
   const [view, setView] = useState<"grid" | "list">("grid");
   const selected =
     sort === "featured"
-      ? products.filter((item) => filter === "all" || item.category === filter)
-      : selectProducts(filter, sort);
+      ? catalog.filter((item) => filter === "all" || item.category === filter)
+      : selectProducts(filter, sort, catalog);
   const title = t({ en: "THE ARCANE SHOP", zh: "奥秘商店" });
   const introduction = t({
     en: "From Ancient Wisdom to Everyday Magic — Discover Courses, Readings & Mystical Treasures.",

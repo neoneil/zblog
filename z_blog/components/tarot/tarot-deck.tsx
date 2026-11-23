@@ -23,7 +23,7 @@ export default function TarotDeck({ cards, stage, selectedIds, onSelectCard }: T
   const viewport = useRef<HTMLDivElement>(null);
   const idle = stage === "idle";
   const shuffling = stage === "shuffling";
-  const finished = stage === "gathering" || stage === "ready" || stage === "revealing" || stage === "reading" || stage === "done";
+  const finished = stage === "gathering" || stage === "ready" || stage === "revealing" || stage === "awaiting-reading" || stage === "reading" || stage === "done";
   const visibleCards = idle ? tarotDeck.slice(0, 22) : cards;
 
   useEffect(() => {

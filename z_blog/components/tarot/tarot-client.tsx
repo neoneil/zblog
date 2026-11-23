@@ -29,9 +29,10 @@ import { usePreferences } from "@/components/site/preferences-provider";
 type TarotClientProps = {
   accessStatus: AiAccessStatus;
   mode?: TarotReadingMode;
+  manualReading?: boolean;
 };
 
-export default function TarotClient({ accessStatus, mode = "three-cards" }: TarotClientProps) {
+export default function TarotClient({ accessStatus, mode = "three-cards", manualReading = false }: TarotClientProps) {
   const { t, language } = usePreferences();
   const config = tarotModes[mode];
   const positionOrder = config.positions.map(position => position.key);
@@ -58,6 +59,8 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
   const selectedIds = selectedCards.map((card) => card.id);
 
   async function generateReading(cards: DrawnTarotCard[]) {
+    if (readingRequested.current) return;
+    readingRequested.current = true;
     setLoading(true);
     setStage("reading");
 
@@ -156,11 +159,13 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
     if (stage !== "ready" && stage !== "revealing") return;
     if (!requestedFlips.current.has(id) || !selectedIds.includes(id)) return;
     completedFlips.current.add(id);
-    // Start the request only after every card's actual 3D animation finishes.
-    if (completedFlips.current.size === cardCount && !readingRequested.current) {
-      readingRequested.current = true;
-      if (accessStatus.authenticated) void generateReading(selectedCards);
-      else setStage("done");
+    if (completedFlips.current.size !== cardCount) return;
+    if (!accessStatus.authenticated) {
+      setStage("done");
+    } else if (manualReading) {
+      setStage("awaiting-reading");
+    } else {
+      void generateReading(selectedCards);
     }
   }
 
@@ -178,6 +183,7 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
             : stage === "reading"
               ? "正在解读..."
               : "再次抽牌";
+  const awaitingReading = stage === "awaiting-reading";
   const actionLabel = t({ zh: actionLabelZh, en:
     stage === "idle" ? "Start shuffling" : stage === "shuffling" ? "Stop shuffling"
       : stage === "selecting" ? `Choose ${cardCount} cards (${selectedCards.length}/${cardCount})`
@@ -203,7 +209,7 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
       ? t({zh:"暂无可用次数或积分，请前往星尘钱包。",en:"No available allowance or STARS. Visit your wallet."})
       : t({zh:`剩余免费／会员次数 ${accessStatus.remainingReadings??0}；积分付费前会请你确认。`,en:`${accessStatus.remainingReadings??0} free/member readings remain. STARS payments require confirmation.`});
 
-  const collected = stage === "gathering" || stage === "ready" || stage === "revealing" || stage === "reading" || stage === "done";
+  const collected = stage === "gathering" || stage === "ready" || stage === "revealing" || awaitingReading || stage === "reading" || stage === "done";
   const canFlip = stage === "ready" || stage === "revealing";
   const board = collected ? config.layout : undefined;
   const isFinanceSituation = config.href.startsWith("/tarot-ai/finances/");
@@ -252,11 +258,11 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
             )}
 
             <div className={styles.actions}>
-              <button type="button"
+              {!awaitingReading && <button type="button"
                 onClick={stage === "idle" || stage === "done" ? handleStartShuffle : handleStopShuffle}
                 disabled={actionDisabled} className={styles.action}>
                 <span>{actionLabel}</span>
-              </button>
+              </button>}
               {stage !== "idle" && <button type="button" onClick={handleReset} disabled={loading}
                 className={styles.reset} aria-label={t({ zh: "重置抽牌", en: "Reset reading" })} title={t({ zh: "重置抽牌", en: "Reset reading" })}>↺</button>}
             </div>
@@ -266,7 +272,9 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
               {stage === "selecting" && t({ zh: `凭直觉，依次选择属于你的${countLabel}张牌`, en: `Follow your intuition and select ${cardCount} cards.` })}
               {stage === "gathering" && t({ zh: `${countLabel}张牌正在汇聚`, en: "Your cards are gathering." })}
               {stage === "ready" && t({ zh: "翻开一张牌", en: "Reveal a card." })}
-              {stage === "revealing" && t({ zh: "点击尚未翻开的牌，全部揭晓后开始解读", en: "Reveal the remaining cards to begin your reading." })}
+              {stage === "revealing" && (manualReading
+                ? t({ zh: "请翻开剩余的牌", en: "Reveal the remaining cards." })
+                : t({ zh: "点击尚未翻开的牌，全部揭晓后开始解读", en: "Reveal the remaining cards to begin your reading." }))}
               {stage === "reading" && t({ zh: "正在为你解读牌中的讯息", en: "Your reading is being prepared." })}
               {stage === "done" && (!accessStatus.authenticated
                 ? t({ zh: "牌面已翻开。登录或免费注册后可使用 AI 解读。", en: "Your cards are revealed. Sign in or register for free to access AI readings." })
@@ -303,6 +311,19 @@ export default function TarotClient({ accessStatus, mode = "three-cards" }: Taro
               })}
             </motion.div>}
             </div>
+            {awaitingReading && (
+              <>
+                <div className={styles.actions}>
+                  <button type="button" className={styles.action} disabled={actionDisabled}
+                    onClick={() => void generateReading(selectedCards)}>
+                    <span>{t({ zh: "AI 解读", en: "AI Reading" })}</span>
+                  </button>
+                </div>
+                <p className={styles.stageStatus} role="status">
+                  {t({ zh: "所有牌已翻开，准备好后点击「AI 解读」。", en: "All cards are revealed. Select AI Reading when you are ready." })}
+                </p>
+              </>
+            )}
           </section>
           {!accessStatus.authenticated && stage === "done" && (
             <MembershipActions signedIn={false} actions={["signUp", "signIn"]} returnTo={config.href} />

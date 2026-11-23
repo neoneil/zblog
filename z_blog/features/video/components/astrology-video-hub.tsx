@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, ExternalLink, Film, Play, Clapperboard } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight, ExternalLink, Film, Play } from "lucide-react";
+import { productHref, videoCourses } from "@/features/services/lib/catalog";
 import { ButtonLink } from "@/components/ui/button";
 import { usePreferences } from "@/components/site/preferences-provider";
 import archiveStyles from "@/features/thoth/components/knowledge-entries.module.css";
@@ -26,30 +26,16 @@ const modules = [
     action: { zh: "探索小说视频", en: "Explore Novel Videos" },
     href: "/tarot-novel", external: false,
   },
-  {
-    id: "waite-course", icon: Clapperboard, image: "/video-hub/xingxueyingyuan03.png",
-    alt: { zh: "韦特塔罗课程", en: "Rider–Waite tarot course" },
-    category: "RIDER–WAITE TAROT",
-    title: { zh: "韦特塔罗课程", en: "Rider–Waite Tarot Course" },
-    description: { zh: "探索韦特塔罗牌面、象征与解读方法。", en: "Explore Rider–Waite tarot imagery, symbolism and reading methods." },
-    action: { zh: "筹备中", en: "In Development" },
-  },
-  {
-    id: "thoth-course", icon: Clapperboard, image: "/video-hub/xingchenyingyuan04.png",
-    alt: { zh: "透特塔罗课程", en: "Thoth tarot course" },
-    category: "THOTH TAROT",
-    title: { zh: "透特塔罗课程", en: "Thoth Tarot Course" },
-    description: { zh: "探索透特塔罗的牌义、生命之树与秘学象征。", en: "Explore Thoth tarot meanings, the Tree of Life and esoteric symbolism." },
-    action: { zh: "筹备中", en: "In Development" },
-  },
-  {
-    id: "astrology-course", icon: Clapperboard, image: "/video-hub/xingchenyingyuan05.png",
-    alt: { zh: "占星术课程", en: "Astrology course" },
-    category: "ASTROLOGY",
-    title: { zh: "占星术课程", en: "Astrology Course" },
-    description: { zh: "从星座、行星与宫位出发，学习本命盘与行运的解读。", en: "Study signs, planets and houses, and explore natal charts and transits." },
-    action: { zh: "筹备中", en: "In Development" },
-  },
+  ...videoCourses.map((course) => ({
+    id: course.id,
+    image: course.image,
+    alt: course.title,
+    title: course.title,
+    description: course.intro,
+    action: { zh: "查看课程", en: "View course" },
+    href: productHref(course),
+    external: false,
+  })),
 ] as const;
 
 export default function AstrologyVideoHub() {
@@ -72,12 +58,10 @@ export default function AstrologyVideoHub() {
                   <h2 id={item.id} className="text-2xl leading-snug text-[var(--heading)]">{t(item.title)}</h2>
                   <p className={`${archiveStyles.subtitle} mt-4`}>{t(item.description)}</p>
                   <div className="mt-6">
-                    {"href" in item ? (
-                      <ButtonLink href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined} className="max-w-full gap-2 whitespace-normal">
-                        {t(item.action)}
-                        {item.external ? <ExternalLink size={16} className="shrink-0" aria-hidden="true" /> : <ArrowRight size={16} className="shrink-0" aria-hidden="true" />}
-                      </ButtonLink>
-                    ) : <Badge variant="outline">{t(item.action)}</Badge>}
+                    <ButtonLink href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined} className="max-w-full gap-2 whitespace-normal">
+                      {t(item.action)}
+                      {item.external ? <ExternalLink size={16} className="shrink-0" aria-hidden="true" /> : <ArrowRight size={16} className="shrink-0" aria-hidden="true" />}
+                    </ButtonLink>
                   </div>
                 </div>
               </section>

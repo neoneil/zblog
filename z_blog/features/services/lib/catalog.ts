@@ -191,8 +191,37 @@ export const products: Product[] = offerings.map((item, index) => ({
   sections: [{ title: { en: "Details & Arrangements", zh: "详情与安排" }, paragraphs: [item.intro, { en: "This is a product preview with an example AUD price. Checkout is not available yet. Contact us for availability, booking or delivery details.", zh: "目前为商品预览，AUD 价格仅为示例，尚未开放结算。课程预约、供货与配送安排请联系我们确认。" }] }],
 }));
 
+export const videoCourses: Product[] = [
+  {
+    id: "waite-course", image: "/video-hub/xingxueyingyuan03.png",
+    title: { zh: "韦特塔罗课程", en: "Rider–Waite Tarot Course" },
+    intro: { zh: "探索韦特塔罗牌面、象征与解读方法。", en: "Explore Rider–Waite tarot imagery, symbolism and reading methods." },
+  },
+  {
+    id: "thoth-course", image: "/video-hub/xingchenyingyuan04.png",
+    title: { zh: "托特塔罗课程", en: "Thoth Tarot Course" },
+    intro: { zh: "探索透特塔罗的牌义、生命之树与秘学象征。", en: "Explore Thoth tarot meanings, the Tree of Life and esoteric symbolism." },
+  },
+  {
+    id: "astrology-course", image: "/video-hub/xingchenyingyuan05.png",
+    title: { zh: "摘星树课程", en: "Star-Picking Tree Course" },
+    intro: { zh: "从星座、行星与宫位出发，学习本命盘与行运的解读。", en: "Study signs, planets and houses, and explore natal charts and transits." },
+  },
+].map((course) => ({
+  ...course,
+  slug: course.id,
+  category: "courses",
+  priceCents: 48000,
+  date: "2026-11-23",
+  sections: [],
+  availabilityNote: {
+    zh: "可加入购物车。课程上线时间待公布。",
+    en: "You can add this course to your cart. The release date is to be announced.",
+  },
+}));
+
 export const getProduct = (id: string) =>
-  products.find((product) => product.id === id);
+  products.find((product) => product.id === id) ?? videoCourses.find((product) => product.id === id);
 export const productHref = (product: Product) => `/services/${product.slug}`;
 export const isProductPurchasable = (product: Product | undefined): product is Product => Boolean(product && Number.isSafeInteger(product.priceCents) && product.priceCents > 0);
 export const formatPrice = (cents: number, language = "en") =>
@@ -201,6 +230,8 @@ export const formatPrice = (cents: number, language = "en") =>
     currency: "AUD",
     currencyDisplay: "code",
   }).format(cents / 100);
+export const formatProductPrice = (product: Product, language: string, quantity = 1) =>
+  formatPrice(product.priceCents * quantity, language);
 export type ProductFilter = "all" | "courses" | "readings" | "physical" | "special";
 export type ProductSort =
   | "title-asc"
@@ -209,8 +240,8 @@ export type ProductSort =
   | "price-desc"
   | "date-asc"
   | "date-desc";
-export function selectProducts(filter: ProductFilter, sort: ProductSort) {
-  const selected = products.filter(
+export function selectProducts(filter: ProductFilter, sort: ProductSort, catalog = products) {
+  const selected = catalog.filter(
     (product) => filter === "all" || product.category === filter,
   );
   return selected.sort((a, b) => {

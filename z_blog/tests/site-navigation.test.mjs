@@ -45,7 +45,9 @@ test('all labels are bilingual, utility controls and authorization remain presen
     if (entry.href) assert.ok(entry.href.startsWith('/'));
   });
   const navbar = read('components/site/navbar-client.tsx');
-  for (const text of ['<CartLink />','href="/pricing"','canManagePosts &&','href="/admin"','<LogoutButton />','<ThemeToggle />','<LanguageToggle />','src={avatar}']) assert.ok(navbar.includes(text), text);
+  for (const text of ['<CartLink />','href="/account"','canManagePosts &&','href="/admin"','<LogoutButton />','<ThemeToggle />','<LanguageToggle />','src={avatar}']) assert.ok(navbar.includes(text), text);
+  assert.ok(!navbar.includes('href="/pricing"'));
+  assert.ok(read('features/account/account-dashboard.tsx').includes('href="/pricing"'));
   assert.ok(!navbar.includes('{email}'));
   assert.ok(!navbar.includes('>{name}</span>'));
   const nav = read('components/site/site-navigation.tsx');
