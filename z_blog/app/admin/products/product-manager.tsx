@@ -63,6 +63,15 @@ function Editor({ product }: { product?: PhysicalProduct }) {
             <input name={name} required maxLength={limit} defaultValue={product?.[name]} className={inputClass} />
           </label>
         ))}
+        {([
+          { name: "description_zh", label: "中文产品介绍（可选）" },
+          { name: "description_en", label: "英文产品介绍（可选）" },
+        ] as const).map(({ name, label }) => (
+          <label key={name} className="space-y-1 text-sm">
+            <span>{label}</span>
+            <textarea name={name} rows={5} maxLength={5000} defaultValue={product?.[name] ?? ""} className={inputClass} />
+          </label>
+        ))}
         <label className="space-y-1 text-sm">
           <span>价格（AUD）</span>
           <input name="price_aud" type="number" required min={0.01} max={1000000} step={0.01} defaultValue={product && (product.price_stars / 100).toFixed(2)} className={inputClass} />

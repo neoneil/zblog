@@ -27,10 +27,17 @@ export async function savePhysicalProduct(form: FormData): Promise<ProductAction
   }
   const amount = read("price_aud");
   const priceCents = /^\d{1,7}(?:\.\d{1,2})?$/.test(amount) ? Math.round(Number(amount) * 100) : NaN;
+  const descriptionZh = read("description_zh");
+  const descriptionEn = read("description_en");
+  if (descriptionZh.length > 5000 || descriptionEn.length > 5000) {
+    return { ok: false, message: "每种语言的产品介绍最多 5000 字符。" };
+  }
   const values = {
     title_zh: read("title_zh"), title_en: read("title_en"),
     subtitle_zh: read("subtitle_zh"), subtitle_en: read("subtitle_en"),
     price_stars: priceCents,
+    ...(form.has("description_zh") && { description_zh: descriptionZh }),
+    ...(form.has("description_en") && { description_en: descriptionEn }),
   };
   if (![values.title_zh, values.title_en].every((value) => value && value.length <= 120) ||
       ![values.subtitle_zh, values.subtitle_en].every((value) => value && value.length <= 500) ||
@@ -67,6 +74,9 @@ export async function savePhysicalProduct(form: FormData): Promise<ProductAction
       ? await table.update(row).eq("slug", slug).eq("updated_at", version).eq("archived", false).select("slug").maybeSingle()
       : await table.insert({ ...row, slug, image }).select("slug").single();
     // A lost response may follow a committed write. Keep the image if the outcome is uncertain.
+    if (result.error?.code === "PGRST204" && /description_(zh|en)/.test(result.error.message)) {
+      return fail("请先执行产品介绍 SQL，再保存商品。");
+    }
     if (result.error) return { ok: false, message: "商品保存状态无法确认，请刷新商品列表后再重试。" };
     if (!result.data) return fail("商品刚被修改或删除，请刷新后重试。");
   } catch {

@@ -4,7 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { products, type Product } from "./catalog";
 
 export const imageBucket = "physical-product-images";
-export const productFields = "slug,title_zh,title_en,subtitle_zh,subtitle_en,price_stars,image,created_at,updated_at,archived";
+// Select the row so the store can read both schemas during the description rollout.
+export const productFields = "*";
 
 export type PhysicalProduct = {
   slug: string;
@@ -12,6 +13,8 @@ export type PhysicalProduct = {
   title_en: string;
   subtitle_zh: string;
   subtitle_en: string;
+  description_zh?: string;
+  description_en?: string;
   price_stars: number;
   image: string;
   created_at: string;
@@ -35,6 +38,7 @@ function asProduct(row: PhysicalProduct): Product {
     category: "physical",
     date: row.created_at.slice(0, 10),
     intro: subtitle,
+    description: { zh: row.description_zh ?? "", en: row.description_en ?? "" },
     sections: [],
     availabilityNote: { zh: "结算暂未开放。", en: "Checkout is not available yet." },
   };

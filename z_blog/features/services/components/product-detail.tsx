@@ -141,6 +141,12 @@ export default function ProductDetail({ product, catalog = products }: { product
                 ))}
               </>
             )}
+            {product.category === "physical" && (
+              <section>
+                <h2>{t({ zh: "产品介绍", en: "Product description" })}</h2>
+                {product.description && <p className="whitespace-pre-wrap break-words">{t(product.description)}</p>}
+              </section>
+            )}
             <Link
               href="/contact"
               className="text-[var(--primary)]"

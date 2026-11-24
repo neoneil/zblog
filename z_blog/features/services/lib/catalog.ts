@@ -12,6 +12,7 @@ export type Product = {
   category: "courses" | "readings" | "physical" | "special";
   date: string;
   intro: Copy;
+  description?: Copy;
   sections: { title: Copy; paragraphs?: Copy[]; bullets?: Copy[] }[];
 };
 const legacyProducts: Product[] = [
